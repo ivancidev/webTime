@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Secular One";
+  src: url("/fonts/SecularOne-Regular.ttf") format("truetype");
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat-Bold.ttf") format("truetype");
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Reddit Sans";
+  src: url("/fonts/RedditSans-Medium.ttf") format("truetype");
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Open San";
+  src: url("/fonts/OpenSans-Regular.ttf") format("truetype");
+  font-style: normal;
+}
