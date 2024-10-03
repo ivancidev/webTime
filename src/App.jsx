@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import { Register } from './register'
 import './App.css'
 
 function App() {
@@ -29,7 +28,6 @@ function App() {
       <p className="text-3xl">
         Click on the Vite and React logos to learn more
       </p>
-      <Register/>
     </>
   )
 }
