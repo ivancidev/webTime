@@ -1,13 +1,13 @@
 import React from "react";
 
-export default function Dropdown({
+export const Dropdown=({
   label,
   options,
   value,
   onChange,
   placeholder = "",
   className = "",
-}) {
+}) => {
   return (
     <div>
       {label && <label className={`block`}>{label}</label>}

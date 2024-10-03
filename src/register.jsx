@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { Dropdown } from "./components/dropdown/dropdown"; // Asegúrate que el archivo y nombre son correctos
-import { Input } from "./components/Input"; // El Input ya está importado, no necesitas redefinirlo
-
-import "./App.css"; // Tus estilos
+import { Dropdown } from "./components/dropdown/dropdown";
+import { Input } from "./components/Input";
 
 export const Register = () => {
   // Estados separados para cada campo
@@ -12,21 +10,21 @@ export const Register = () => {
   const [idioma, setIdioma] = useState("");
   const [sinopsis, setSinopsis] = useState("");
 
-  // Opciones para los Dropdown
+  // Opciones para los Dropdown, cambiar según la bd
   const autores = ["Autor 1", "Autor 2", "Autor 3"];
   const categorias = ["Ficción", "No ficción", "Ciencia"];
-  const idiomas = ["Español", "Inglés", "Francés"];
+  const idiomas = ["Español", "Inglés"];
 
   return (
-    <div>
-      <h1 className="form-title">Formulario de Registro de Libro</h1>
-      <div>
+    <form>
+      <h1 className="form-title text-center">Formulario de Registro de Libro</h1>
+      <div className="flex justify-between">
         <Input
           label="Título"
           placeholder="Escribe aquí"
           value={titulo}
           onChange={(e) => setTitulo(e.target.value)}
-          className="border p-2 w-full"
+          className=""
         />
         <Dropdown
           label="Autor"
@@ -34,17 +32,17 @@ export const Register = () => {
           value={autor}
           onChange={(e) => setAutor(e.target.value)}
           placeholder="Seleccionar autor"
-          className="border p-2 w-full"
+          className=""
         />
       </div>
-      <div>
+      <div className="flex justify-between">
         <Dropdown
           label="Categoría"
           options={categorias}
           value={categoria}
           onChange={(e) => setCategoria(e.target.value)}
           placeholder="Seleccionar categoría"
-          className="border p-2 w-full"
+          className=""
         />
         <Dropdown
           label="Idioma"
@@ -52,7 +50,7 @@ export const Register = () => {
           value={idioma}
           onChange={(e) => setIdioma(e.target.value)}
           placeholder="Seleccionar idioma"
-          className="border p-2 w-full"
+          className=""
         />
       </div>
       <div>
@@ -61,10 +59,10 @@ export const Register = () => {
           placeholder="Escribe aquí"
           value={sinopsis}
           onChange={(e) => setSinopsis(e.target.value)}
-          className="border p-2 w-full"
+          className=""
         />
       </div>
-    </div>
+    </form>
   );
 };
 
