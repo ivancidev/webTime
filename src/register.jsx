@@ -16,50 +16,35 @@ export const Register = () => {
   const idiomas = ["Español", "Inglés"];
 
   return (
-    <form>
-      <h1 className="form-title text-center">Formulario de Registro de Libro</h1>
+    <form className="w-[795px] mx-auto">
+      <h1 className="text-center text-[#0297FF] m-[20px]">Formulario de Registro de Libro</h1>
       <div className="flex justify-between">
         <Input
-          label="Título"
-          placeholder="Escribe aquí"
-          value={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
-          className=""
+          label="Título" placeholder="Escribe aquí" value={titulo}
+          onChange={(e) => setTitulo(e.target.value)} className="bg-transparent border-2 rounded border-{#F4EFF4} w-[340px] h-[50px]"
         />
         <Dropdown
-          label="Autor"
-          options={autores}
-          value={autor}
+          label="Autor" options={autores} value={autor}
           onChange={(e) => setAutor(e.target.value)}
           placeholder="Seleccionar autor"
-          className=""
         />
       </div>
       <div className="flex justify-between">
         <Dropdown
-          label="Categoría"
-          options={categorias}
-          value={categoria}
+          label="Categoría" options={categorias} value={categoria}
           onChange={(e) => setCategoria(e.target.value)}
           placeholder="Seleccionar categoría"
-          className=""
         />
         <Dropdown
-          label="Idioma"
-          options={idiomas}
-          value={idioma}
-          onChange={(e) => setIdioma(e.target.value)}
+          label="Idioma" options={idiomas} value={idioma}
+          onChange={(e) => setIdioma(e.target.value)} 
           placeholder="Seleccionar idioma"
-          className=""
         />
       </div>
       <div>
         <Input
-          label="Sinopsis"
-          placeholder="Escribe aquí"
-          value={sinopsis}
-          onChange={(e) => setSinopsis(e.target.value)}
-          className=""
+          label="Sinopsis" placeholder="Escribe aquí" value={sinopsis}
+          onChange={(e) => setSinopsis(e.target.value)} className="bg-transparent border-2 rounded border-{#F4EFF4} w-full h-[130px]"
         />
       </div>
     </form>
