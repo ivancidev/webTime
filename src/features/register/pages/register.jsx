@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Dropdown } from "../../../components/dropdown/dropdown";
 import { Input } from "../../../components/Input";
+import { useForm } from "react-hook-form"
 
 export const Register = () => {
   // Estados separados para cada campo
@@ -15,8 +16,13 @@ export const Register = () => {
   const categories = ["Ficción", "No ficción", "Ciencia"];
   const languages = ["Español", "Inglés"];
 
+  //validacion de los campos
+  const {register, handleSubmit} = useForm();
+  const onSubmit = handleSubmit((data)=>{console.log(data)});
+
   return (
-    <form className="w-[795px] mx-auto">
+    <form onSubmit={onSubmit} 
+    className="w-[795px] mx-auto">
       <h1 className="text-center text-[#0297FF] m-[20px]">Formulario de Registro de Libro</h1>
       <div className="flex justify-between">
         <Input
@@ -47,6 +53,7 @@ export const Register = () => {
           onChange={(e) => setsynopsis(e.target.value)} className="bg-transparent border-2 rounded border-{#F4EFF4} w-full h-[130px]"
         />
       </div>
+      //<button class = "submit">miau</button>
     </form>
   );
 };
