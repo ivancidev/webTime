@@ -40,7 +40,7 @@ export default {
         "title-sm": ["18px", { lineHeight: "22px" }],
         "title-md": ["24px", { lineHeight: "28px" }],
         "title-lg": ["28px", { lineHeight: "32px" }],
-        "label-sm": ["12px", { lineHeight: "14px" }],
+        "label-sm": ["14px", { lineHeight: "16px" }],
         "label-md": ["16px", { lineHeight: "18px" }],
         "label-lg": ["22px", { lineHeight: "24px" }],
         "body-sm": ["12px", { lineHeight: "14px" }],
