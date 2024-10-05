@@ -1,8 +1,8 @@
 import React from "react";
-const Button = ({
+export const Button = ({
   type = "button",
   text,
-  image,
+  SvgIcon,
   variant = "combCol1",
   onClick,
   disabled = false,
@@ -23,10 +23,8 @@ const Button = ({
       disabled={disabled}
       className={`${baseButton} ${varCol[variant]}`}
     >
-      <img src={image} alt="" />
+      <SvgIcon />
       <p className="pl-2">{text}</p>
     </button>
   );
 };
-
-export default Button;
