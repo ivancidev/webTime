@@ -23,7 +23,6 @@ export const Dropdown = ({
         id={name}
         name={name}
         value={value}
-        onChange={onChange}
         className="w-[340px] h-[50px] bg-transparent border-2 rounded border-{#F4EFF4} font-body text-neutral-neu1 text-body-lg p-2"
         {...register(name, {
           required: {
@@ -31,6 +30,7 @@ export const Dropdown = ({
             message: `${label} es requerido`,
           },
         })}
+        onChange={onChange}
       >
         <option className="text-primary-pri1">{placeholder}</option>
         {options.map((option, index) => {
