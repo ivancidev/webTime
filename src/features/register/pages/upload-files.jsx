@@ -8,11 +8,18 @@ import FrontIcon from "../../../icons/front";
 import TextIcon from "../../../icons/text";
 import AudioIcon from "../../../icons/audio";
 import Button from "../../../components/buttons/button";
+import BackIcon from "../../../icons/back";
+import { Link } from "react-router-dom";
 export const Files = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <section className="flex flex-col justify-center items-center gap-10">
+      <div className="flex items-center p-2">
+        <Link to="/">
+          <BackIcon className="cursor-pointer" />
+        </Link>
+      </div>
+      <section className="flex flex-col justify-center items-center gap-4">
         <Card title="Imagen de portada" SVG={FrontIcon} ImageSVG={ImagePre} />
         <Card title="Archivo PDF" SVG={TextIcon} ImageSVG={ImagePre} />
         <Card title="Archivo de audio" SVG={AudioIcon} />

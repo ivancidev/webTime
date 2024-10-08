@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { InputText } from "../../../components/Input";
-import { Dropdown } from "../../../components/dropdown/Dropdown";
+import { Dropdown } from "../../../components/dropdown/dropdown";
+import { useFetch } from "../../../hooks/useFetch";
 import { useForm } from "react-hook-form";
 
 export default function FormBook() {
-  const authors = ["Autor 1", "Autor 2", "Autor 3"];
-  const categories = ["Ficción", "No ficción", "Ciencia"];
-  const languages = ["Español", "Inglés"];
+  const { data: authorsData  } = useFetch("authors");
+  const { data: categoriesData} = useFetch("categories");
+  const { data: languagesData } = useFetch("languages");
+
+  const categories = categoriesData.categorias || []; 
+  const languages = languagesData.idiomas || []; 
+  const authors = authorsData.autores || []; 
   
   const [title, setTitle] = useState("");
 
@@ -49,6 +54,8 @@ export default function FormBook() {
           placeholder="Seleccionar autor"
           register={register}
           errors={errors}
+          displayKey="autor"
+          valueKey="codAutor"
         />
       </div>
       <div className="flex justify-between">
@@ -59,6 +66,8 @@ export default function FormBook() {
           placeholder="Seleccionar categoría"
           register={register}
           errors={errors}
+          displayKey="nombreCategoria"
+          valueKey="codCategoria"
         />
         <Dropdown
           name="language"
@@ -67,6 +76,8 @@ export default function FormBook() {
           placeholder="Seleccionar idioma"
           register={register}
           errors={errors}
+          displayKey="idioma"
+          valueKey="codIdioma"
         />
       </div>
       <div className="mt-7">
