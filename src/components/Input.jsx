@@ -28,6 +28,10 @@ export const InputText = ({
         className={`${className} ${errors[name] ? 'border-red-500' : ''}`}
         {...register(name, {
           required: `${label} es requerido`,
+          pattern: {
+            value: /^[a-zA-Z0-9 ]*$/,
+            message: "Solo se permiten caracteres alfanuméricos",
+          },
           maxLength: {
             value: 255,
             message: "El título no debe ser mayor a 255 caracteres",
