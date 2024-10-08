@@ -3,7 +3,7 @@ import { Register } from "../features/register/pages/register-books";
 
 export const router = createBrowserRouter([
   {
-    path: "/registerbooks",
+    path: "/",
     element: <Register />,
   },
 ]);
