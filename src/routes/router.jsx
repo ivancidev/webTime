@@ -8,7 +8,7 @@ export const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "/files",
+    path: "/upload-files",
     element: <Files />,
   }
 ]);

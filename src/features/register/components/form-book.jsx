@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Input } from "../../../components/input/Input";
 import { Dropdown } from "../../../components/dropdown/dropdown";
+import { useFetch } from "../../../hooks/useFetch";
 
 export default function FormBook() {
   const [title, setTitle] = useState("");
@@ -8,10 +9,18 @@ export default function FormBook() {
   const [category, setCategory] = useState("");
   const [language, setlanguage] = useState("");
   const [synopsis, setsynopsis] = useState("");
+  const { data: authorsData  } = useFetch("authors");
+  const { data: categoriesData} = useFetch("categories");
+  const { data: languagesData } = useFetch("languages");
 
-  const authors = ["Autor 1", "Autor 2", "Autor 3"];
-  const categories = ["Ficción", "No ficción", "Ciencia"];
-  const languages = ["Español", "Inglés"];
+  const categories = categoriesData.categorias || []; // Asegúrate de que exista
+  const languages = languagesData.idiomas || []; // Ajusta según tu respuesta API
+  const authors = authorsData.autores || []; // Ajusta según tu respuesta API
+
+  console.log("Authors:", authors);
+  console.log("Categories:", categories);
+  console.log("Languages:", languages);
+
   return (
     <form className="w-full max-w-[795px] mx-auto px-10">
       <h1 className="text-center text-secondary-sec2 m-[20px] font-title text-title-lg">
@@ -31,7 +40,8 @@ export default function FormBook() {
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
           placeholder="Seleccionar autor"
-          className="w-full md:w-[340px]"
+          displayKey="autor"
+          valueKey="codAutor"
         />
       </div>
       <div className="flex flex-col md:flex-row md:justify-between mt-4">
@@ -41,7 +51,8 @@ export default function FormBook() {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           placeholder="Seleccionar categoría"
-          className="w-full md:w-[340px] mb-4 md:mb-0"
+          displayKey="nombreCategoria"
+          valueKey="codCategoria"
         />
         <Dropdown
           label="Idioma"
@@ -49,7 +60,8 @@ export default function FormBook() {
           value={language}
           onChange={(e) => setlanguage(e.target.value)}
           placeholder="Seleccionar idioma"
-          className="w-full md:w-[340px]"
+          displayKey="idioma"
+          valueKey="codIdioma"
         />
       </div>
       <div className="mt-7">
