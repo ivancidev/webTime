@@ -2,13 +2,13 @@ import React from "react";
 const Button = ({
   type = "button",
   text,
-  image,
+  SvgIcon = "",
   variant = "combCol1",
   onClick,
   disabled = false,
 }) => {
   const baseButton =
-    "font-label rounded-[20px] w-auto h-10 pl-4 pr-5 text-label-sm text-center flex items-center";
+    "font-label rounded-[20px] h-10 pl-4 pr-5 text-label-sm text-center flex items-center";
   const varCol = {
     combCol1: "text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1", //boton skyblue a blue
     combCol2:
@@ -23,7 +23,7 @@ const Button = ({
       disabled={disabled}
       className={`${baseButton} ${varCol[variant]}`}
     >
-      <img src={image} alt="" />
+      {SvgIcon && <SvgIcon />}
       <p className="pl-2">{text}</p>
     </button>
   );
