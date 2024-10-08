@@ -1,7 +1,7 @@
 import React from "react";
-import Button from "../../../components/buttons/button";
+import { Button } from "../../../components/buttons/button";
 
-export const Card = ({ title, textButton, icon, image }) => {
+export const Card = ({ title, icon, image }) => {
   return (
     <div className="w-[1000px] h-36 p-4 bg-transparent border border-neutral-neu2 rounded-[20px] flex flex-row justify-between">
       <div className="w-60 flex flex-col justify-center items-center">
@@ -11,7 +11,7 @@ export const Card = ({ title, textButton, icon, image }) => {
             {title}
           </h3>
         </div>
-        <Button text={textButton} />
+        <Button text="Elegir archivo" />
       </div>
       <div className="w-60 flex items-center">
         <p className="font-body text-body-lg text-primary-pri3">
