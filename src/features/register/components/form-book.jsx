@@ -1,5 +1,5 @@
-import React from "react"; 
-import { Input } from "../../../components/input/Input";
+import React, { useState } from "react";
+import { InputText } from "../../../components/Input";
 import { Dropdown } from "../../../components/dropdown/Dropdown";
 import { useForm } from "react-hook-form";
 
@@ -7,10 +7,13 @@ export default function FormBook() {
   const authors = ["Autor 1", "Autor 2", "Autor 3"];
   const categories = ["Ficción", "No ficción", "Ciencia"];
   const languages = ["Español", "Inglés"];
+  
+  const [title, setTitle] = useState("");
+
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     defaultValues: {
-      title: "",  
+      title: "",
       author: "",
       category: "",
       language: "",
@@ -20,7 +23,7 @@ export default function FormBook() {
 
   const onSubmit = (data) => {
     console.log(data);
-    reset();  
+    reset();
   };
 
   return (
@@ -29,13 +32,15 @@ export default function FormBook() {
         Formulario de Registro de Libro
       </h1>
       <div className="flex justify-between">
-        <Input
+        <InputText
           name="title"
           label="Titulo"
           placeholder="Escribe aquí"
-          className="bg-transparent border-2 rounded border-{#F4EFF4} w-[340px] h-[50px] p-2 text-primary-pri3 font-body text-body-lg"
+          className="bg-transparent border-2 rounded border-[#F4EFF4] w-[340px] h-[50px] p-2 text-primary-pri3 font-body text-body-lg"
           register={register}
           errors={errors}
+          value = {title}
+          onChange={(e)=>setTitle(e.target.value)}
         />
         <Dropdown
           name="author"
@@ -71,7 +76,7 @@ export default function FormBook() {
         <textarea
           id="synopsis"
           name="synopsis"
-          className="w-[800px] h-[130px] bg-transparent border-2 rounded border-{#F4EFF4} p-2 text-primary-pri3 font-body text-body-lg mt-2"
+          className="w-[800px] h-[130px] bg-transparent border-2 rounded border-[#F4EFF4] p-2 text-primary-pri3 font-body text-body-lg mt-2"
           placeholder="Escribe aquí"
           {...register("synopsis", {
             required: "La sinopsis no puede estar vacía",
@@ -80,8 +85,8 @@ export default function FormBook() {
               message: "Solo se permiten caracteres alfanuméricos",
             },
             maxLength: {
-              value: 255,
-              message: "No se permite más de 255 caracteres",
+              value: 1000,
+              message: "No se permite más de 1000 caracteres",
             },
             minLength: {
               value: 2,
@@ -95,6 +100,3 @@ export default function FormBook() {
     </form>
   );
 }
-
-
-
