@@ -2,12 +2,19 @@ import React from "react";
 
 export const Dropdown = ({
   label,
-  options,
+  options=[],
   value,
   onChange,
   placeholder = "",
+  displayKey = "",
+  valueKey = "",
 }) => {
   const validationAsterisk = <span className="text-error-err2">*</span>;
+
+  if (!Array.isArray(options)) {
+    console.error("options is not an array:", options);
+    return null; // O muestra un mensaje de error
+  }
   return (
     <div className="flex flex-col">
       {label && (
@@ -26,9 +33,9 @@ export const Dropdown = ({
             <option
               className="bg-primary-pri2 text-secondary-sec2 text-body-lg"
               key={index}
-              value={option}
+              value={option[valueKey]}
             >
-              {option}
+              {option[displayKey]}
             </option>
           );
         })}
