@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Input } from "../../../components/input/Input";
+import { Input } from "../../../components/input/input";
 import { Dropdown } from "../../../components/dropdown/dropdown";
-import { useFetch } from "../../../hooks/useFetch";
 
 export default function FormBook() {
   const [title, setTitle] = useState("");
@@ -9,30 +8,22 @@ export default function FormBook() {
   const [category, setCategory] = useState("");
   const [language, setlanguage] = useState("");
   const [synopsis, setsynopsis] = useState("");
-  const { data: authorsData  } = useFetch("authors");
-  const { data: categoriesData} = useFetch("categories");
-  const { data: languagesData } = useFetch("languages");
 
-  const categories = categoriesData.categorias || []; // Asegúrate de que exista
-  const languages = languagesData.idiomas || []; // Ajusta según tu respuesta API
-  const authors = authorsData.autores || []; // Ajusta según tu respuesta API
-
-  console.log("Authors:", authors);
-  console.log("Categories:", categories);
-  console.log("Languages:", languages);
-
+  const authors = ["Autor 1", "Autor 2", "Autor 3"];
+  const categories = ["Ficción", "No ficción", "Ciencia"];
+  const languages = ["Español", "Inglés"];
   return (
-    <form className="w-full max-w-[795px] mx-auto px-10">
+    <form className="w-[795px] mx-auto">
       <h1 className="text-center text-secondary-sec2 m-[20px] font-title text-title-lg">
         Formulario de Registro de Libro
       </h1>
-      <div className="flex flex-col md:flex-row md:justify-between">
+      <div className="flex justify-between">
         <Input
           label="Titulo"
           placeholder="Escribe aquí"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="bg-transparent border-2 rounded border-[#F4EFF4] w-[340px] h-[50px] p-2 text-primary-pri3 font-body text-body-lg mb-4 md:mb-0"
+          className="bg-transparent border-2 rounded border-{#F4EFF4} w-[340px] h-[50px] p-2 text-primary-pri3 font-body text-body-lg"
         />
         <Dropdown
           label="Autor"
@@ -40,19 +31,15 @@ export default function FormBook() {
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
           placeholder="Seleccionar autor"
-          displayKey="autor"
-          valueKey="codAutor"
         />
       </div>
-      <div className="flex flex-col md:flex-row md:justify-between mt-4">
+      <div className="flex justify-between">
         <Dropdown
           label="Categoría"
           options={categories}
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           placeholder="Seleccionar categoría"
-          displayKey="nombreCategoria"
-          valueKey="codCategoria"
         />
         <Dropdown
           label="Idioma"
@@ -60,8 +47,6 @@ export default function FormBook() {
           value={language}
           onChange={(e) => setlanguage(e.target.value)}
           placeholder="Seleccionar idioma"
-          displayKey="idioma"
-          valueKey="codIdioma"
         />
       </div>
       <div className="mt-7">
@@ -69,7 +54,7 @@ export default function FormBook() {
           Sinopsis
         </label>
         <textarea
-          className="w-full md:w-[800px] h-[130px] bg-transparent border-2 rounded border-[#F4EFF4] p-2 text-primary-pri3 font-body text-body-lg mt-2"
+          className="w-[800px] h-[130px] bg-transparent border-2 rounded border-{#F4EFF4} p-2 text-primary-pri3 font-body text-body-lg mt-2"
           placeholder="Escribe aquí"
           value={synopsis}
           onChange={(e) => setsynopsis(e.target.value)}
@@ -78,3 +63,5 @@ export default function FormBook() {
     </form>
   );
 }
+
+
