@@ -1,7 +1,9 @@
 import React from "react";
-import { Button } from "../../../components/buttons/button";
+// import { Button } from "../../../components/buttons/button";
+
 import CancelIcon from "../../../icons/cancel";
 import ContinueIcon from "../../../icons/continue";
+import Button from "../../../components/buttons/button";
 
 export default function FooterButtons() {
   return (
