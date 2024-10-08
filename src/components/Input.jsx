@@ -2,44 +2,38 @@ import React from "react";
 
 export const Input = ({
   label,
-  name="",
+  name = "",
   placeholder = "",
   type = "text",
-  value = "",
   className,
-  onChange,
-  disabled = false,
   register,
   errors = {},
 }) => {
-  const valiationAsterisk = <span className="text-error-err2">*</span>;
+  const validationAsterisk = <span className="text-error-err2">*</span>;
 
   return (
     <div className="flex flex-col">
-      <label htmlFor={name} className="mt-[20px] py-1 text-primary-pri3 font-label text-label-lg">
-        {label} {valiationAsterisk}
+      <label
+        htmlFor={name}
+        className={`mt-[20px] py-1 text-primary-pri3 font-label text-label-lg ${errors[name] ? 'text-error-err2' : ''}`}
+      >
+        {label} {validationAsterisk}
       </label>
       <input
         id={name}
-        name = {name}
+        name={name}
         placeholder={placeholder}
         type={type}
-        value={value}
-        className={className}
-        onChange={onChange}
-        disabled={disabled}
+        className={`${className} ${errors[name] ? 'border-red-500' : ''} border-2 rounded p-2`}
         {...register(name, {
-          required: {
-            value: true,
-            message: `${label} es requerido`,
-          },
+          required: `${label} es requerido`,
           maxLength: {
-            value: 20,
-            message: "El nombre no debe ser mayor a 20 caracteres",
+            value: 100,
+            message: "El título no debe ser mayor a 100 caracteres",
           },
           minLength: {
             value: 2,
-            message: "El nombre debe tener al menos 2 caracteres",
+            message: "El título debe tener al menos 2 caracteres",
           },
         })}
       />
