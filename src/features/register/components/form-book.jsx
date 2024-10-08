@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { InputText } from "../../../components/Input";
 import { Dropdown } from "../../../components/dropdown/dropdown";
 import { useFetch } from "../../../hooks/useFetch";
 import { useForm } from "react-hook-form";
+import { InputText } from "../../../components/input/input";
 
 export default function FormBook() {
   const { data: authorsData  } = useFetch("authors");
