@@ -43,7 +43,7 @@ export const Carousel = ({ books }) => {
           SvgIcon={BeforeIcon}
         />
 
-        <div className="flex overflow-hidden space-x-12">
+        <div className="flex overflow-hidden space-x-6 sm:space-x-9 md:space-x-12">
           {books
             .slice(currentIndex, currentIndex + itemsToShow)
             .map((book, index) => (
