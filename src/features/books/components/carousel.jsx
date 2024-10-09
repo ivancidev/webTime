@@ -23,6 +23,16 @@ export const Carousel = ({ books }) => {
     );
   };
 
+  if (!books.length) {
+    return (
+      <div className="w-screen text-center">
+        <h3 className="font-label text-label-md text-primary-pri3">
+          No existen libros disponibles actualmente
+        </h3>
+      </div>
+    );
+  }
+
   return (
     <div className="w-screen h-auto px-12">
       <div className="flex justify-between items-center">
