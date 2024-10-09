@@ -34,7 +34,7 @@ export default function FormBook() {
   });
 
   const onSubmit = (data) => {
-    navigation("/upload-files", {state: data});
+    navigation("/upload-files", { state: data });
   };
 
   return (
@@ -92,7 +92,7 @@ export default function FormBook() {
             htmlFor="synopsis"
             className="py-1 text-primary-pri3 font-label text-label-lg"
           >
-            Sinopsis
+            Sinopsis <span className="text-error-err2">*</span>
           </label>
           <textarea
             id="synopsis"
@@ -122,8 +122,5 @@ export default function FormBook() {
       </form>
       <FooterButtons handleSubmit={handleSubmit} onSubmit={onSubmit} />
     </div>
-    
   );
 }
-
-
