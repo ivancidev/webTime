@@ -24,7 +24,7 @@ export const Dropdown = ({
       <select
         id={name}
         name={name}
-        className="w-[340px] h-[50px] bg-transparent border-2 rounded border-[#F4EFF4] font-body text-neutral-neu1 text-body-lg p-2"
+        className="w-full md:w-[340px] h-[50px] bg-transparent border-2 rounded border-[#F4EFF4] font-body text-neutral-neu1 text-body-lg p-2"
         {...register(name, {
           required: `${label} es requerido`,
         })}
