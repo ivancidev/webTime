@@ -10,7 +10,6 @@ export const Register = () => {
       <main className="flex-grow">
         <FormBook />
       </main>
-      <FooterButtons />
     </div>
   );
 };

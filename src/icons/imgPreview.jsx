@@ -11,8 +11,8 @@ export default function ImagePreS() {
     >
       <rect width="260" height="106" rx="20" fill="#C9C5CA" />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M157.5 33C157.5 28.8579 154.142 25.5 150 25.5H110C105.858 25.5 102.5 28.8579 102.5 33V73C102.5 77.1423 105.858 80.5 110 80.5H150C154.142 80.5 157.5 77.1423 157.5 73V33ZM152.5 33C152.5 31.6193 151.381 30.5 150 30.5H110C108.619 30.5 107.5 31.6193 107.5 33V73C107.5 74.3807 108.619 75.5 110 75.5H150C151.381 75.5 152.5 74.3807 152.5 73V33Z"
         fill="black"
       />
