@@ -71,17 +71,6 @@ export const Files = () => {
           <BackIcon className="cursor-pointer" />
         </Link>
       </div>
-      {state ? (
-        <div>
-          <p className="text-white">Título: {state.title}</p>
-          <p className="text-white">Autor: {state.author}</p>
-          <p className="text-white">Categoría: {state.category}</p>
-          <p className="text-white">Idioma: {state.language}</p>
-          <p className="text-white">Sinopsis: {state.synopsis}</p>
-        </div>
-      ) : (
-        <p>No se encontraron datos del libro.</p>
-      )}
       <section className="flex flex-col justify-center items-center gap-4">
         <Card
           title="Imagen de portada"
