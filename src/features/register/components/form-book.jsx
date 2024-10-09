@@ -34,7 +34,7 @@ export default function FormBook() {
   });
 
   const onSubmit = (data) => {
-    navigation("/upload-files");
+    navigation("/upload-files", {state: data});
   };
 
   return (
