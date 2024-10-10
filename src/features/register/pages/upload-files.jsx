@@ -7,7 +7,7 @@ import UploadIcon from "../../../icons/upload";
 import FrontIcon from "../../../icons/front";
 import TextIcon from "../../../icons/text";
 import AudioIcon from "../../../icons/audio";
-import Button from "../../../components/Buttons/Button";
+import Button from "../../../components/buttons/button";
 import BackIcon from "../../../icons/back";
 import LinearWithValueLabel from "../../../components/progress/linear";
 import { Link, useLocation } from "react-router-dom";
@@ -22,6 +22,8 @@ export const Files = () => {
     audioFile: null,
   });
 
+  //const [isLoading, setIsLoading] = useState(false); // Controla la barra de progreso
+
   const handleFileChange = (title, file) => {
     setFiles((prevFiles) => ({
       ...prevFiles,
@@ -30,8 +32,9 @@ export const Files = () => {
   };
 
   const handleUpload = async () => {
-    const formData = new FormData();
+    //setIsLoading(true); // Mostrar la barra de progreso
 
+    const formData = new FormData();
     formData.append("archivoPDF", files.pdfFile); 
     formData.append("archivoAudio", files.audioFile);
     formData.append("archivoPortada", files.coverImage); 
@@ -61,14 +64,15 @@ export const Files = () => {
     } catch (error) {
       alert("Error al subir los archivos.");
       console.error(error);
-    }
+    }//finally {
+      //setIsLoading(false); // Ocultar la barra de progreso cuando termine la acción
+    //}
   };
 
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <dir>
-        <LinearWithValueLabel/>
       </dir>
       <div className="flex items-center p-2">
         <Link to="/">
