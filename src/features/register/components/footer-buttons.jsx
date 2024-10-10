@@ -1,5 +1,4 @@
 import React from "react";
-import CancelIcon from "../../../icons/cancel";
 import ContinueIcon from "../../../icons/continue";
 import Button from "../../../components/buttons/button";
 

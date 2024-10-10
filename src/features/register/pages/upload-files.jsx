@@ -7,7 +7,7 @@ import UploadIcon from "../../../icons/upload";
 import FrontIcon from "../../../icons/front";
 import TextIcon from "../../../icons/text";
 import AudioIcon from "../../../icons/audio";
-import Button from "../../../components/Buttons/Button";
+import Button from "../../../components/buttons/button";
 import BackIcon from "../../../icons/back";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
