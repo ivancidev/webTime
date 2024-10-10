@@ -9,36 +9,45 @@ export const Card = ({ title, SVG, ImageSVG, register, error, fileType, onFileCh
     setFile(selectedFile);
     onFileChange(event);  // Actualizar el estado en el formulario principal
   };
-
   const validationRules = {
     required: "Este campo es obligatorio.",
     validate: {
       fileType: (fileList) => {
         const file = fileList[0];
         if (!file) return "Debe seleccionar un archivo.";
-
+  
         switch (fileType) {
           case "audio":
-            return (
-              (file.type === "audio/mpeg" || file.type === "audio/mp3" || file.name.endsWith(".mp3")) ||
-              "Solo se permiten archivos de audio en formato .mp3"
-            );
+            if (!(file.type === "audio/mpeg" || file.type === "audio/mp3" || file.name.endsWith(".mp3"))) {
+              return "Solo se permiten archivos de audio en formato .mp3";
+            }
+            if (file.size > 600 * 1024 * 1024) { // 600 MB
+              return "El archivo audio no puede exceder 600MB";
+            }
+            break;
           case "pdf":
-            return (
-              (file.type === "application/pdf" || file.name.endsWith(".pdf")) ||
-              "Solo se permiten archivos en formato .pdf"
-            );
+            if (!(file.type === "application/pdf" || file.name.endsWith(".pdf"))) {
+              return "Solo se permiten archivos en formato .pdf";
+            }
+            if (file.size > 60 * 1024 * 1024) { // 60 MB
+              return "El archivo pdf no puede exceder 60MB";
+            }
+            break;
           case "image":
-            return (
-              (file.type === "image/jpeg" || file.type === "image/png" || file.name.endsWith(".jpg") || file.name.endsWith(".png")) ||
-              "Solo se permiten imágenes en formato .jpg o .png"
-            );
+            if (!(file.type === "image/jpeg" || file.type === "image/png" || file.name.endsWith(".jpg") || file.name.endsWith(".png"))) {
+              return "Solo se permiten imágenes en formato .jpg o .png";
+            }
+            if (file.size > 5 * 1024 * 1024) { // 5 MB
+              return "El archivo imagen no puede exceder 5MB";
+            }
+            break;
           default:
             return "Formato de archivo no permitido.";
         }
       },
     },
   };
+  
   const validationAsterisk = <span className="text-error-err2">*</span>;
   return (
     <div className="w-[1000px] h-36 p-6 bg-transparent border border-neutral-neu2 rounded-[20px] flex flex-row justify-between">
