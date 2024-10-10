@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "../../../components/buttons/button";
+import Button from "../../../components/buttons/Button";
 
 export const Card = ({ title, SVG, onFileChange }) => {
   const [file, setFile] = useState(null);
