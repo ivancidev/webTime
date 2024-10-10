@@ -9,12 +9,12 @@ import TextIcon from "../../../icons/text";
 import AudioIcon from "../../../icons/audio";
 import Button from "../../../components/buttons/Button";
 import BackIcon from "../../../icons/back";
-import LinearWithValueLabel from "../../../components/progress/linear";
 import { Link, useLocation } from "react-router-dom";
 
 export const Files = () => {
   const location = useLocation();
   const { state } = location;
+  const navigate = useNavigate();
 
   const [files, setFiles] = useState({
     coverImage: null,
@@ -22,12 +22,10 @@ export const Files = () => {
     audioFile: null,
   });
 
-  const [isLoading, setIsLoading] = useState(false); // Controla la barra de progreso
-
-  const handleFileChange = (title, file) => {
+  const handleFileChange = (fieldName, file) => {
     setFiles((prevFiles) => ({
       ...prevFiles,
-      [title.toLowerCase().replace(" ", "")]: file,
+      [fieldName]: file, // Usamos el nombre de campo correcto aquí
     }));
   };
 
@@ -35,26 +33,24 @@ export const Files = () => {
     setIsLoading(true); // Mostrar la barra de progreso
 
     const formData = new FormData();
+
     formData.append("archivoPDF", files.pdfFile); 
     formData.append("archivoAudio", files.audioFile);
-    formData.append("archivoPortada", files.coverImage); 
-    console.log("Estado antes de subir:", state);
+    formData.append("archivoPortada", files.coverImage);
 
     if (state) {
-      formData.append("nombreLibro", state.title); 
-      formData.append("sinopsis", state.synopsis); 
-      formData.append("codAutor", state.author); 
-      formData.append("codCategoria", state.category); 
-      formData.append("codIdioma", state.language); 
+      formData.append("nombreLibro", state.title);
+      formData.append("sinopsis", state.synopsis);
+      formData.append("codAutor", state.author);
+      formData.append("codCategoria", state.category);
+      formData.append("codIdioma", state.language);
     }
 
-    // Aquí es donde envías formData a tu backend
     try {
       const response = await fetch("http://localhost:4000/subirLibro", {
         method: "POST",
         body: formData,
       });
-      console.log(formData);
 
       if (response.ok) {
         alert("Archivos subidos correctamente.");
@@ -76,24 +72,27 @@ export const Files = () => {
         <LinearWithValueLabel isLoading={isLoading} onComplete={() => setIsLoading(false)}/>
       </dir>
       <div className="flex items-center p-2">
-        <Link to="/">
+        <Link to="/register">
           <BackIcon className="cursor-pointer" />
         </Link>
       </div>
       <section className="flex flex-col justify-center items-center gap-4 mx-3">
         <Card
+          fieldName="coverImage"
           title="Imagen de portada"
           SVG={FrontIcon}
           ImageSVG={ImagePre}
           onFileChange={handleFileChange}
         />
         <Card
+          fieldName="pdfFile"
           title="Archivo PDF"
           SVG={TextIcon}
           ImageSVG={ImagePre}
           onFileChange={handleFileChange}
         />
         <Card
+          fieldName="audioFile"
           title="Archivo de audio"
           SVG={AudioIcon}
           onFileChange={handleFileChange}
