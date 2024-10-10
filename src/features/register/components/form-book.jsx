@@ -39,16 +39,16 @@ export default function FormBook() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="w-[795px] mx-auto">
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-[795px] mx-auto w-full">
         <h1 className="text-center text-secondary-sec2 m-[20px] font-title text-title-lg">
           Formulario de Registro de Libro
         </h1>
-        <div className="flex justify-between">
+        <div className="px-10 md:px-3 lg:px-0 flex flex-col md:flex-row justify-between">
           <InputText
             name="title"
             label="Titulo"
             placeholder="Escribe aquí"
-            className="bg-transparent border-2 rounded border-[#F4EFF4] w-[340px] h-[50px] p-2 text-primary-pri3 font-body text-body-lg"
+            className="w-full bg-transparent border-2 rounded border-[#F4EFF4] md:w-[340px] h-[50px] p-2 text-primary-pri3 font-body text-body-lg"
             register={register}
             errors={errors}
             value={title}
@@ -65,7 +65,7 @@ export default function FormBook() {
             valueKey="codAutor"
           />
         </div>
-        <div className="flex justify-between">
+        <div className="px-10 md:px-3 lg:px-0 flex flex-col md:flex-row justify-between">
           <Dropdown
             name="category"
             label="Categoría"
@@ -87,7 +87,7 @@ export default function FormBook() {
             valueKey="codIdioma"
           />
         </div>
-        <div className="mt-7">
+        <div className="mt-7 px-10 md:px-3 lg:px-0">
           <label
             htmlFor="synopsis"
             className="py-1 text-primary-pri3 font-label text-label-lg"
@@ -97,7 +97,7 @@ export default function FormBook() {
           <textarea
             id="synopsis"
             name="synopsis"
-            className="w-[800px] h-[130px] bg-transparent border-2 rounded border-[#F4EFF4] p-2 text-primary-pri3 font-body text-body-lg mt-2"
+            className="w-full h-[130px] bg-transparent border-2 rounded border-[#F4EFF4] p-2 text-primary-pri3 font-body text-body-lg mt-2 resize-none"
             placeholder="Escribe aquí"
             {...register("synopsis", {
               required: "La sinopsis no puede estar vacía",
