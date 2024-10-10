@@ -71,7 +71,7 @@ export const Files = () => {
           <BackIcon className="cursor-pointer" />
         </Link>
       </div>
-      <section className="flex flex-col justify-center items-center gap-4 mx-4">
+      <section className="flex flex-col justify-center items-center gap-4 mx-3">
         <Card
           title="Imagen de portada"
           SVG={FrontIcon}
@@ -90,7 +90,8 @@ export const Files = () => {
           onFileChange={handleFileChange}
         />
       </section>
-      <div className="flex w-full justify-end gap-4 mx-auto p-14">
+      //flex w-full justify-center sm:justify-end gap-4 mx-auto p-14
+      <div className="flex flex-col sm:flex-row w-full justify-end gap-6 mx-auto px-14 p-3 sm:py-8">
         <Button text="Cancelar" variant="combCol2" SvgIcon={CancelIcon} />
         <Button
           text="Subir archivos"

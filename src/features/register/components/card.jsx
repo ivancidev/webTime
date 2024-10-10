@@ -13,7 +13,7 @@ export const Card = ({ title, SVG, onFileChange }) => {
   const renderFilePreview = () => {
     if (!file) {
       return (
-        <p className="font-body text-body-lg text-primary-pri3">
+        <p className="font-body text-body-lg text-primary-pri3 mx-3">
           No se eligió ningún archivo
         </p>
       );
