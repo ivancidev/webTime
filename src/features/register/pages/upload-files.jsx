@@ -71,7 +71,7 @@ export const Files = () => {
           <BackIcon className="cursor-pointer" />
         </Link>
       </div>
-      <section className="flex flex-col justify-center items-center gap-4">
+      <section className="flex flex-col justify-center items-center gap-4 mx-4">
         <Card
           title="Imagen de portada"
           SVG={FrontIcon}
