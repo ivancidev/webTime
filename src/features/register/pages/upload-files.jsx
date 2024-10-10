@@ -90,7 +90,7 @@ export const Files = () => {
         />
       </section>
       <div className="flex w-full justify-end gap-4 mx-auto p-14">
-        <Button text="Cancelar" variant="combCol2" SvgIcon={CancelIcon} />
+        <Button text="Cancelar" variant="combCol2" SvgIcon={CancelIcon} onClick={() => window.close()} />
         <Button
           text="Subir archivos"
           variant="combCol1"

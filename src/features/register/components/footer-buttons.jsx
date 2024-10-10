@@ -10,7 +10,7 @@ export default function FooterButtons({ handleSubmit, onSubmit }) {
 
   return (
     <footer className="flex w-full justify-end gap-4 mx-auto p-14">
-      <Button text="Cancelar" variant="combCol2" SvgIcon={CancelIcon} />
+      <Button text="Cancelar" variant="combCol2" SvgIcon={CancelIcon} onClick={() => window.close()} />
       <Button
         text="Continuar"
         variant="combCol1"
