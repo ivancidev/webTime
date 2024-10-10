@@ -9,6 +9,7 @@ import TextIcon from "../../../icons/text";
 import AudioIcon from "../../../icons/audio";
 import Button from "../../../components/buttons/button";
 import BackIcon from "../../../icons/back";
+import LinearWithValueLabel from "../../../components/progress/linear";
 import { Link, useLocation } from "react-router-dom";
 
 export const Files = () => {
@@ -66,6 +67,9 @@ export const Files = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
+      <dir>
+        <LinearWithValueLabel/>
+      </dir>
       <div className="flex items-center p-2">
         <Link to="/">
           <BackIcon className="cursor-pointer" />
