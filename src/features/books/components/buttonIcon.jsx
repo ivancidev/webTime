@@ -7,7 +7,7 @@ const ButtonIcon = ({
   onClick,
   disabled = false,
 }) => {
-  
+
   const baseButton =
     "rounded-[20px] w-10 h-10 flex flex-col items-center justify-center";
   const varCol = {
