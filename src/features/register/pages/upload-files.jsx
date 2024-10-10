@@ -90,8 +90,7 @@ export const Files = () => {
           onFileChange={handleFileChange}
         />
       </section>
-      //flex w-full justify-center sm:justify-end gap-4 mx-auto p-14
-      <div className="flex flex-col sm:flex-row w-full justify-end gap-6 mx-auto px-14 p-3 sm:py-8">
+      <div className="flex flex-col sm:flex-row w-full justify-end gap-6 mx-auto px-16 py-8 sm:py-10">
         <Button text="Cancelar" variant="combCol2" SvgIcon={CancelIcon} />
         <Button
           text="Subir archivos"
