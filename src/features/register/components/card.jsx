@@ -39,14 +39,14 @@ export const Card = ({ title, SVG, ImageSVG, register, error, fileType, onFileCh
       },
     },
   };
-  
+  const validationAsterisk = <span className="text-error-err2">*</span>;
   return (
     <div className="w-[1000px] h-36 p-6 bg-transparent border border-neutral-neu2 rounded-[20px] flex flex-row justify-between">
       <div className="w-60 flex flex-col justify-center items-center">
         <div className="flex flex-row mb-4">
           <SVG className="w-6 h-6" />
           <h3 className="font-title text-title-sm text-primary-pri3 ml-4">
-            {title}
+            {title} {validationAsterisk}
           </h3>
         </div>
 
@@ -68,7 +68,7 @@ export const Card = ({ title, SVG, ImageSVG, register, error, fileType, onFileCh
         </label>
         
         {error && (
-          <p className="text-red-500 text-sm mt-2">
+          <p className="text-error-err2 text-sm mt-2">
             {error.message}
           </p>
         )}
