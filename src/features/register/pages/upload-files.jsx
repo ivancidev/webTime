@@ -7,7 +7,7 @@ import UploadIcon from "../../../icons/upload";
 import FrontIcon from "../../../icons/front";
 import TextIcon from "../../../icons/text";
 import AudioIcon from "../../../icons/audio";
-import Button from "../../../components/buttons/button";
+import Button from "../../../components/Buttons/Button";
 import BackIcon from "../../../icons/back";
 import { Link, useLocation } from "react-router-dom";
 
@@ -90,7 +90,7 @@ export const Files = () => {
           onFileChange={handleFileChange}
         />
       </section>
-      <div className="flex flex-col sm:flex-row w-full justify-end gap-6 mx-auto px-16 py-8 sm:py-10">
+      <div className="flex flex-col-reverse sm:flex-row w-full justify-end gap-6 mx-auto px-16 py-8 sm:py-10">
         <Button text="Cancelar" variant="combCol2" SvgIcon={CancelIcon} />
         <Button
           text="Subir archivos"
