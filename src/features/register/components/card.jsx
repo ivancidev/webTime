@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import Button from "../../../components/buttons/button";
 
-export const Card = ({ title, SVG, onFileChange }) => {
+export const Card = ({ fieldName, title, SVG, onFileChange }) => {
   const [file, setFile] = useState(null);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
-    onFileChange(title, selectedFile);  // Llama a la función para informar el cambio
+    onFileChange(fieldName, selectedFile); 
   };
 
   const renderFilePreview = () => {
@@ -54,23 +53,22 @@ export const Card = ({ title, SVG, onFileChange }) => {
           </h3>
         </div>
 
-        {/* Input de archivo */}
         <input
           type="file"
           accept={
-            title === "Imagen de portada"
+            fieldName === "coverImage"
               ? "image/jpeg,image/png"
-              : title === "Archivo PDF"
+              : fieldName === "pdfFile"
               ? "application/pdf"
               : "audio/*"
           }
           onChange={handleFileChange}
           className="hidden"
-          id={`upload-${title}`}
+          id={`upload-${fieldName}`}
         />
 
-        <label htmlFor={`upload-${title}`} className="cursor-pointer">
-          <span className="text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1 font-label rounded-[20px] h-10 pl-4 pr-5 text-label-sm text-center flex items-center">
+        <label htmlFor={`upload-${fieldName}`} className="cursor-pointer flex justify-center">
+          <span className="text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1 font-label rounded-[20px] h-10 w-32 flex items-center justify-center text-label-sm">
             Elegir archivo
           </span>
         </label>
