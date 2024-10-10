@@ -9,11 +9,12 @@ import TextIcon from "../../../icons/text";
 import AudioIcon from "../../../icons/audio";
 import Button from "../../../components/buttons/button";
 import BackIcon from "../../../icons/back";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const Files = () => {
   const location = useLocation();
   const { state } = location;
+  const navigate = useNavigate();
 
   const [files, setFiles] = useState({
     coverImage: null,
@@ -63,7 +64,7 @@ export const Files = () => {
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <div className="flex items-center p-2">
-        <Link to="/">
+        <Link to="/register">
           <BackIcon className="cursor-pointer" />
         </Link>
       </div>
@@ -89,8 +90,7 @@ export const Files = () => {
           onFileChange={handleFileChange}
         />
       </section>
-      <div className="flex w-full justify-end gap-4 mx-auto p-14">
-        <Button text="Cancelar" variant="combCol2" SvgIcon={CancelIcon} onClick={() => window.close()} />
+      <div className="flex w-full justify-end mx-auto p-10">
         <Button
           text="Subir archivos"
           variant="combCol1"
