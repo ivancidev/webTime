@@ -1,4 +1,6 @@
+// src/pages/Files.jsx
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Navbar } from "../components/navbar";
 import { Card } from "../components/card";
 import ImagePre from "../../../icons/imgPreview";
@@ -14,6 +16,8 @@ import { Link, useLocation } from "react-router-dom";
 export const Files = () => {
   const location = useLocation();
   const { state } = location;
+  
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const [files, setFiles] = useState({
     coverImage: null,
@@ -21,36 +25,34 @@ export const Files = () => {
     audioFile: null,
   });
 
-  const handleFileChange = (title, file) => {
+  const handleFileChange = (event) => {
+    const { name, files } = event.target;
     setFiles((prevFiles) => ({
       ...prevFiles,
-      [title.toLowerCase().replace(" ", "")]: file,
+      [name]: files[0],
     }));
   };
 
-  const handleUpload = async () => {
+  const onSubmit = async (data) => {
     const formData = new FormData();
 
-    formData.append("archivoPDF", files.pdfFile); 
+    formData.append("archivoPDF", files.pdfFile);
     formData.append("archivoAudio", files.audioFile);
-    formData.append("archivoPortada", files.coverImage); 
-    console.log("Estado antes de subir:", state);
-
+    formData.append("archivoPortada", files.coverImage);
+    
     if (state) {
-      formData.append("nombreLibro", state.title); 
-      formData.append("sinopsis", state.synopsis); 
-      formData.append("codAutor", state.author); 
-      formData.append("codCategoria", state.category); 
-      formData.append("codIdioma", state.language); 
+      formData.append("nombreLibro", state.title);
+      formData.append("sinopsis", state.synopsis);
+      formData.append("codAutor", state.author);
+      formData.append("codCategoria", state.category);
+      formData.append("codIdioma", state.language);
     }
 
-    // Aquí es donde envías formData a tu backend
     try {
       const response = await fetch("http://localhost:4000/subirLibro", {
         method: "POST",
         body: formData,
       });
-      console.log(formData);
 
       if (response.ok) {
         alert("Archivos subidos correctamente.");
@@ -71,34 +73,43 @@ export const Files = () => {
           <BackIcon className="cursor-pointer" />
         </Link>
       </div>
-      <section className="flex flex-col justify-center items-center gap-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center items-center gap-4">
         <Card
           title="Imagen de portada"
           SVG={FrontIcon}
           ImageSVG={ImagePre}
+          register={register("coverImage", { required: "La imagen de portada es obligatoria." })}
+          error={errors.coverImage}
+          fileType="image"
           onFileChange={handleFileChange}
         />
         <Card
           title="Archivo PDF"
           SVG={TextIcon}
           ImageSVG={ImagePre}
+          register={register("pdfFile", { required: "El archivo PDF es obligatorio." })}
+          error={errors.pdfFile}
+          fileType="pdf"
           onFileChange={handleFileChange}
         />
         <Card
           title="Archivo de audio"
           SVG={AudioIcon}
+          register={register("audioFile", { required: "El archivo de audio es obligatorio." })}
+          error={errors.audioFile}
+          fileType="audio"
           onFileChange={handleFileChange}
         />
-      </section>
-      <div className="flex w-full justify-end gap-4 mx-auto p-14">
-        <Button text="Cancelar" variant="combCol2" SvgIcon={CancelIcon} />
-        <Button
-          text="Subir archivos"
-          variant="combCol1"
-          SvgIcon={UploadIcon}
-          onClick={handleUpload}
-        />
-      </div>
+        <div className="flex w-full justify-end gap-4 mx-auto p-14">
+          <Button text="Cancelar" variant="combCol2" SvgIcon={CancelIcon} />
+          <Button
+            type="submit"
+            text="Subir archivos"
+            variant="combCol1"
+            SvgIcon={UploadIcon}
+          />
+        </div>
+      </form>
     </div>
   );
 };

@@ -1,49 +1,45 @@
+// src/components/card.jsx
 import React, { useState } from "react";
-import Button from "../../../components/buttons/button";
 
-export const Card = ({ title, SVG, onFileChange }) => {
+export const Card = ({ title, SVG, ImageSVG, register, error, fileType, onFileChange }) => {
   const [file, setFile] = useState(null);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
-    onFileChange(title, selectedFile);  // Llama a la función para informar el cambio
+    onFileChange(event);  // Actualizar el estado en el formulario principal
   };
 
-  const renderFilePreview = () => {
-    if (!file) {
-      return (
-        <p className="font-body text-body-lg text-primary-pri3">
-          No se eligió ningún archivo
-        </p>
-      );
-    }
+  const validationRules = {
+    required: "Este campo es obligatorio.",
+    validate: {
+      fileType: (fileList) => {
+        const file = fileList[0];
+        if (!file) return "Debe seleccionar un archivo.";
 
-    if (file.type.startsWith("image/")) {
-      return (
-        <img
-          src={URL.createObjectURL(file)}
-          alt="Preview"
-          className="w-60 h-[106px] rounded-[20px]"
-        />
-      );
-    } else if (file.type === "application/pdf") {
-      return (
-        <iframe
-          src={URL.createObjectURL(file)}
-          title="PDF Preview"
-          className="w-60 h-[106px] rounded-[20px]"
-        ></iframe>
-      );
-    }
-
-    return (
-      <p className="font-body text-body-lg text-primary-pri3">
-        Archivo seleccionado: {file.name}
-      </p>
-    );
+        switch (fileType) {
+          case "audio":
+            return (
+              (file.type === "audio/mpeg" || file.type === "audio/mp3" || file.name.endsWith(".mp3")) ||
+              "Solo se permiten archivos de audio en formato .mp3"
+            );
+          case "pdf":
+            return (
+              (file.type === "application/pdf" || file.name.endsWith(".pdf")) ||
+              "Solo se permiten archivos en formato .pdf"
+            );
+          case "image":
+            return (
+              (file.type === "image/jpeg" || file.type === "image/png" || file.name.endsWith(".jpg") || file.name.endsWith(".png")) ||
+              "Solo se permiten imágenes en formato .jpg o .png"
+            );
+          default:
+            return "Formato de archivo no permitido.";
+        }
+      },
+    },
   };
-
+  
   return (
     <div className="w-[1000px] h-36 p-6 bg-transparent border border-neutral-neu2 rounded-[20px] flex flex-row justify-between">
       <div className="w-60 flex flex-col justify-center items-center">
@@ -54,17 +50,13 @@ export const Card = ({ title, SVG, onFileChange }) => {
           </h3>
         </div>
 
-        {/* Input de archivo */}
         <input
           type="file"
-          accept={
-            title === "Imagen de portada"
-              ? "image/jpeg,image/png"
-              : title === "Archivo PDF"
-              ? "application/pdf"
-              : "audio/*"
-          }
-          onChange={handleFileChange}
+          accept={ fileType === "audio" ? ".mp3" : fileType === "pdf" ? ".pdf" : "image/jpeg,image/png" }
+          {...register}
+          onChange={(e) => {
+            handleFileChange(e); // Actualizar el estado local
+          }}
           className="hidden"
           id={`upload-${title}`}
         />
@@ -74,9 +66,39 @@ export const Card = ({ title, SVG, onFileChange }) => {
             Elegir archivo
           </span>
         </label>
+        
+        {error && (
+          <p className="text-red-500 text-sm mt-2">
+            {error.message}
+          </p>
+        )}
       </div>
 
-      <div className="w-60 flex items-center">{renderFilePreview()}</div>
+      <div className="w-60 flex items-center">
+        {file ? (
+          file.type.startsWith("image/") ? (
+            <img
+              src={URL.createObjectURL(file)}
+              alt="Preview"
+              className="w-60 h-[106px] rounded-[20px]"
+            />
+          ) : file.type === "application/pdf" ? (
+            <iframe
+              src={URL.createObjectURL(file)}
+              title="PDF Preview"
+              className="w-60 h-[106px] rounded-[20px]"
+            ></iframe>
+          ) : (
+            <p className="font-body text-body-lg text-primary-pri3">
+              Archivo seleccionado: {file.name}
+            </p>
+          )
+        ) : (
+          <p className="font-body text-body-lg text-primary-pri3">
+            No se eligió ningún archivo
+          </p>
+        )}
+      </div>
     </div>
   );
 };
