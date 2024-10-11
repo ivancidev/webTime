@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "../../../components/buttons/button";
 
-export const Card = ({ title, SVG, register, error, fileType, onFileChange }) => {
+export const Card = ({ title, SVG, register, error, fileType, onFileChange, onRemoveFile }) => {
   const [file, setFile] = useState(null);
 
   const handleFileChange = (event) => {
@@ -14,7 +14,7 @@ export const Card = ({ title, SVG, register, error, fileType, onFileChange }) =>
 
   const removeFile = () => {
     setFile(null);
-    onFileChange({ target: { name: register.name, files: [] } }); // Limpia el archivo en el formulario principal
+    onRemoveFile(); // Llamar a la función que remueve el archivo en el formulario principal
   };
 
   const validationAsterisk = <span className="text-error-err2">*</span>;
@@ -37,21 +37,21 @@ export const Card = ({ title, SVG, register, error, fileType, onFileChange }) =>
           className="hidden"
           id={`upload-${title}`}
         />
-<div className="flex flex-row space-x-4 ">
-<label htmlFor={`upload-${title}`} className="cursor-pointer">
-          <span className="ml-40 whitespace-nowrap text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1 font-label rounded-[20px] h-10 pl-4 pr-5 text-label-sm text-center flex items-center">
-            Elegir archivo
-          </span>
-        </label>
+        <div className="flex flex-row space-x-4">
+          <label htmlFor={`upload-${title}`} className="cursor-pointer">
+            <span className="ml-40 whitespace-nowrap text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1 font-label rounded-[20px] h-10 pl-4 pr-5 text-label-sm text-center flex items-center">
+              Elegir archivo
+            </span>
+          </label>
 
-        <Button
-          type="button"
-          text="Quitar archivo"
-          onClick={removeFile}
-          disabled={!file} // Deshabilitado si no hay archivo seleccionado
-          variant={!file ? "combDesactivate" : "combCol1"} 
-        />
-</div>
+          <Button
+            type="button"
+            text="Quitar archivo"
+            onClick={removeFile}
+            disabled={!file} // Deshabilitado si no hay archivo seleccionado
+            variant={!file ? "combDesactivate" : "combCol1"}
+          />
+        </div>
 
         {error && (
           <p className="text-error-err2 text-sm mt-2">

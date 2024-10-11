@@ -1,4 +1,3 @@
-// src/pages/Files.jsx
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Navbar } from "../components/navbar";
@@ -16,8 +15,8 @@ import { Link, useLocation } from "react-router-dom";
 export const Files = () => {
   const location = useLocation();
   const { state } = location;
-  
-  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const { register, handleSubmit, formState: { errors }, clearErrors, setValue } = useForm();
 
   const [files, setFiles] = useState({
     coverImage: null,
@@ -31,6 +30,17 @@ export const Files = () => {
       ...prevFiles,
       [name]: files[0],
     }));
+  };
+
+  const handleRemoveFile = (fileType) => {
+    setFiles((prevFiles) => ({
+      ...prevFiles,
+      [fileType]: null,
+    }));
+
+    // Limpiar el valor del input del archivo en el formulario
+    setValue(fileType, null);
+    clearErrors(fileType); // Limpiar los errores de validación del archivo removido
   };
 
   const onSubmit = async (data) => {
@@ -82,6 +92,7 @@ export const Files = () => {
           error={errors.coverImage}
           fileType="image"
           onFileChange={handleFileChange}
+          onRemoveFile={() => handleRemoveFile("coverImage")}
         />
         <Card
           title="Archivo PDF"
@@ -91,6 +102,7 @@ export const Files = () => {
           error={errors.pdfFile}
           fileType="pdf"
           onFileChange={handleFileChange}
+          onRemoveFile={() => handleRemoveFile("pdfFile")}
         />
         <Card
           title="Archivo de audio"
@@ -99,6 +111,7 @@ export const Files = () => {
           error={errors.audioFile}
           fileType="audio"
           onFileChange={handleFileChange}
+          onRemoveFile={() => handleRemoveFile("audioFile")}
         />
         <div className="flex w-full justify-end gap-4 mx-auto p-14">
           <Button text="Cancelar" variant="combCol2" SvgIcon={CancelIcon} />
