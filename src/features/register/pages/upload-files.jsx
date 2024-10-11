@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
 import { Navbar } from "../components/navbar";
 import { Card } from "../components/card";
-import ImagePre from "../../../icons/imgPreview";
 import CancelIcon from "../../../icons/cancel";
 import UploadIcon from "../../../icons/upload";
 import FrontIcon from "../../../icons/front";
@@ -11,64 +10,80 @@ import AudioIcon from "../../../icons/audio";
 import Button from "../../../components/buttons/button";
 import BackIcon from "../../../icons/back";
 import { Link, useLocation } from "react-router-dom";
+import { supabase } from "../../../services/supabaseClient";
 
 export const Files = () => {
   const location = useLocation();
   const { state } = location;
 
-  const { register, handleSubmit, formState: { errors }, clearErrors, setValue } = useForm();
-
-  const [files, setFiles] = useState({
-    coverImage: null,
-    pdfFile: null,
-    audioFile: null,
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    clearErrors,
+  } = useForm({
+    defaultValues: {
+      coverImage: null,
+      pdfFile: null,
+      audioFile: null,
+    },
   });
 
-  const handleFileChange = (event) => {
-    const { name, files } = event.target;
-    setFiles((prevFiles) => ({
-      ...prevFiles,
-      [name]: files[0],
-    }));
-  };
+  const uploadFileToSupabase = async (file, folderName) => {
+    try {
+      const fileName = `${Date.now()}_${file.name}`;
+      const { data, error } = await supabase.storage
+        .from(folderName)
+        .upload(fileName, file);
 
-  const handleRemoveFile = (fileType) => {
-    setFiles((prevFiles) => ({
-      ...prevFiles,
-      [fileType]: null,
-    }));
+      if (error) {
+        console.error(`Error uploading to ${folderName}:`, error);
+        throw error;
+      }
 
-    // Limpiar el valor del input del archivo en el formulario
-    setValue(fileType, null);
-    clearErrors(fileType); // Limpiar los errores de validación del archivo removido
+      const { data: publicURL, error: errorURL } = supabase.storage
+        .from(folderName)
+        .getPublicUrl(fileName);
+
+      if (errorURL) {
+        console.error(`Error getting public URL for ${fileName}:`, errorURL);
+        throw errorURL;
+      }
+
+      return publicURL.publicUrl;
+    } catch (error) {
+      console.error("Error during file upload:", error);
+      throw error;
+    }
   };
 
   const onSubmit = async (data) => {
-    const formData = new FormData();
-
-    formData.append("archivoPDF", files.pdfFile);
-    formData.append("archivoAudio", files.audioFile);
-    formData.append("archivoPortada", files.coverImage);
-    
-    if (state) {
-      formData.append("nombreLibro", state.title);
-      formData.append("sinopsis", state.synopsis);
-      formData.append("codAutor", state.author);
-      formData.append("codCategoria", state.category);
-      formData.append("codIdioma", state.language);
-    }
-
     try {
-      const response = await fetch("http://localhost:4000/subirLibro", {
-        method: "POST",
-        body: formData,
-      });
+      const coverImageUrl = data.coverImage
+        ? await uploadFileToSupabase(data.coverImage, "imagenes")
+        : null;
+      const pdfFileUrl = data.pdfFile
+        ? await uploadFileToSupabase(data.pdfFile, "pdfs")
+        : null;
+      const audioFileUrl = data.audioFile
+        ? await uploadFileToSupabase(data.audioFile, "audios")
+        : null;
 
-      if (response.ok) {
-        alert("Archivos subidos correctamente.");
-      } else {
-        alert("Error al subir los archivos.");
-      }
+      const { error } = await supabase.from("libro").insert([
+        {
+          nombreLibro: state.title,
+          sinopsis: state.synopsis,
+          codAutor: state.author,
+          codCategoria: state.category,
+          codIdioma: state.language,
+          enlacePortada: coverImageUrl,
+          enlacePdf: pdfFileUrl,
+          enlaceAudio: audioFileUrl,
+        },
+      ]);
+      if (error) throw error;
+      alert("Archivos y datos subidos correctamente.");
     } catch (error) {
       alert("Error al subir los archivos.");
       console.error(error);
@@ -79,41 +94,112 @@ export const Files = () => {
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <div className="flex items-center p-2">
-        <Link to="/">
+        <Link to="/register">
           <BackIcon className="cursor-pointer" />
         </Link>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center items-center gap-4">
-        <Card
-          title="Imagen de portada"
-          SVG={FrontIcon}
-          ImageSVG={ImagePre}
-          register={register("coverImage", { required: "La imagen de portada es obligatoria." })}
-          error={errors.coverImage}
-          fileType="image"
-          onFileChange={handleFileChange}
-          onRemoveFile={() => handleRemoveFile("coverImage")}
-        />
-        <Card
-          title="Archivo PDF"
-          SVG={TextIcon}
-          ImageSVG={ImagePre}
-          register={register("pdfFile", { required: "El archivo PDF es obligatorio." })}
-          error={errors.pdfFile}
-          fileType="pdf"
-          onFileChange={handleFileChange}
-          onRemoveFile={() => handleRemoveFile("pdfFile")}
-        />
-        <Card
-          title="Archivo de audio"
-          SVG={AudioIcon}
-          register={register("audioFile", { required: "El archivo de audio es obligatorio." })}
-          error={errors.audioFile}
-          fileType="audio"
-          onFileChange={handleFileChange}
-          onRemoveFile={() => handleRemoveFile("audioFile")}
-        />
-        <div className="flex w-full justify-end gap-4 mx-auto p-14">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <section className="flex flex-col justify-center items-center gap-4 mx-3">
+          <Controller
+            name="coverImage"
+            control={control}
+            rules={{
+              required: "La imagen de portada es requerida.",
+              validate: {
+                fileType: (file) => {
+                  if (
+                    file &&
+                    !["image/png", "image/jpeg"].includes(file.type)
+                  ) {
+                    return "Solo se permiten archivos PNG o JPG.";
+                  }
+                  return true;
+                },
+                fileSize: (file) => {
+                  if (file && file.size > 5 * 1024 * 1024) {
+                    return "El archivo imagen no puede exceder 5MB.";
+                  }
+                  return true;
+                },
+              },
+            }}
+            render={({ field: { onChange, value } }) => (
+              <Card
+                fieldName="coverImage"
+                title="Imagen de portada"
+                SVG={FrontIcon}
+                onFileChange={onChange}
+                value={value}
+                error={errors.coverImage?.message}
+              />
+            )}
+          />
+
+          <Controller
+            name="pdfFile"
+            control={control}
+            rules={{
+              required: "El archivo PDF es requerido.",
+              validate: {
+                fileType: (file) => {
+                  if (file && file.type !== "application/pdf") {
+                    return "Solo se permiten archivos PDF.";
+                  }
+                  return true;
+                },
+                fileSize: (file) => {
+                  if (file && file.size > 60 * 1024 * 1024) {
+                    return "El archivo PDF no puede exceder 60MB.";
+                  }
+                  return true;
+                },
+              },
+            }}
+            render={({ field: { onChange, value } }) => (
+              <Card
+                fieldName="pdfFile"
+                title="Archivo PDF"
+                SVG={TextIcon}
+                onFileChange={onChange}
+                value={value}
+                error={errors.pdfFile?.message}
+              />
+            )}
+          />
+
+          <Controller
+            name="audioFile"
+            control={control}
+            rules={{
+              required: "El archivo de audio es requerido.",
+              validate: {
+                fileType: (file) => {
+                  if (file && !["audio/mpeg", "audio/mp3"].includes(file.type)) {
+                    return "Solo se permiten archivos MP3.";
+                  }
+                  return true;
+                },
+                fileSize: (file) => {
+                  if (file && file.size > 600 * 1024 * 1024) {
+                    return "El archivo audio no puede exceder 600MB.";
+                  }
+                  return true;
+                },
+              },
+            }}
+            render={({ field: { onChange, value } }) => (
+              <Card
+                fieldName="audioFile"
+                title="Archivo de audio"
+                SVG={AudioIcon}
+                onFileChange={onChange}
+                value={value}
+                error={errors.audioFile?.message}
+              />
+            )}
+          />
+        </section>
+        <div className="flex flex-col-reverse sm:flex-row w-full justify-end gap-6 mx-auto px-16 py-8 sm:py-10">
           <Button text="Cancelar" variant="combCol2" SvgIcon={CancelIcon} />
           <Button
             type="submit"

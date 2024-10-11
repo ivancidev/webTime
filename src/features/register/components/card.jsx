@@ -1,26 +1,71 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Button from "../../../components/buttons/button";
 
-export const Card = ({ title, SVG, register, error, fileType, onFileChange, onRemoveFile }) => {
-  const [file, setFile] = useState(null);
+export const Card = ({ fieldName, title, SVG, onFileChange, value, error }) => {
+  let preview = null;
 
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      onFileChange(event); // Actualizar el estado en el formulario principal solo si hay un nuevo archivo
+  if (value) {
+    if (value.type.startsWith("image/") || value.type === "application/pdf") {
+      preview = URL.createObjectURL(value);
     }
-  };
+  }
 
-  const removeFile = () => {
-    setFile(null);
-    onRemoveFile(); // Llamar a la función que remueve el archivo en el formulario principal
+  useEffect(() => {
+    // Cleanup the URL object when the component unmounts or value changes
+    return () => {
+      if (preview) {
+        URL.revokeObjectURL(preview);
+      }
+    };
+  }, [preview]);
+
+  const renderFilePreview = () => {
+    if (!value) {
+      return (
+        <p className="font-body text-body-lg text-primary-pri3 mx-3">
+          No se eligió ningún archivo
+        </p>
+      );
+    }
+
+    if (value.type.startsWith("image/")) {
+      return (
+        <img
+          src={preview}
+          alt="Preview"
+          className="w-60 h-[106px] rounded-[20px]"
+        />
+      );
+    } else if (value.type === "application/pdf") {
+      return (
+        <iframe
+          src={preview}
+          title="PDF Preview"
+          className="w-60 h-[106px] rounded-[20px]"
+        ></iframe>
+      );
+    }
+
+    return (
+      <p className="font-body text-body-md text-primary-pri3">
+        Archivo seleccionado: {value.name}
+      </p>
+    );
   };
 
   const validationAsterisk = <span className="text-error-err2">*</span>;
 
+  const handleInputChange = (event) => {
+    const selectedFile = event.target.files[0];
+    onFileChange(selectedFile);
+  };
+
+  const handleRemoveFile = () => {
+    onFileChange(null);
+  };
+
   return (
-    <div className="w-[1000px] h-36 p-6 bg-transparent border border-neutral-neu2 rounded-[20px] flex flex-row justify-between">
+    <div className="max-w-[1000px] w-full h-36 p-6 bg-transparent border border-neutral-neu2 rounded-[20px] flex flex-row justify-between px-4 mx-auto">
       <div className="w-60 flex flex-col justify-center items-center">
         <div className="flex flex-row mb-4">
           <SVG className="w-6 h-6" />
@@ -31,60 +76,38 @@ export const Card = ({ title, SVG, register, error, fileType, onFileChange, onRe
 
         <input
           type="file"
-          accept={fileType === "audio" ? ".mp3" : fileType === "pdf" ? ".pdf" : "image/jpeg,image/png"}
-          {...register}
-          onChange={handleFileChange}
+          accept={
+            fieldName === "coverImage"
+              ? "image/jpeg,image/png"
+              : fieldName === "pdfFile"
+              ? "application/pdf"
+              : "audio/mpeg, audio/mp3"
+          }
+          onChange={handleInputChange}
           className="hidden"
-          id={`upload-${title}`}
+          id={`upload-${fieldName}`}
         />
-        <div className="flex flex-row space-x-4">
-          <label htmlFor={`upload-${title}`} className="cursor-pointer">
-            <span className="ml-40 whitespace-nowrap text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1 font-label rounded-[20px] h-10 pl-4 pr-5 text-label-sm text-center flex items-center">
+        <div className="flex flex-row space-x-4 ml-20">
+          <label
+            htmlFor={`upload-${fieldName}`}
+            className="cursor-pointer flex justify-center"
+          >
+            <span className="text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1 font-label rounded-[20px] h-10 w-32 flex items-center justify-center text-label-sm">
               Elegir archivo
             </span>
           </label>
-
           <Button
             type="button"
             text="Quitar archivo"
-            onClick={removeFile}
-            disabled={!file} // Deshabilitado si no hay archivo seleccionado
-            variant={!file ? "combDesactivate" : "combCol1"}
+            onClick={handleRemoveFile}
+            disabled={!value}
+            variant={!value ? "combDesactivate" : "combCol1"}
           />
         </div>
-
-        {error && (
-          <p className="text-error-err2 text-sm mt-2">
-            {error.message}
-          </p>
-        )}
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
       </div>
 
-      <div className="w-60 flex items-center">
-        {file ? (
-          file.type.startsWith("image/") ? (
-            <img
-              src={URL.createObjectURL(file)}
-              alt="Preview"
-              className="w-60 h-[106px] rounded-[20px]"
-            />
-          ) : file.type === "application/pdf" ? (
-            <iframe
-              src={URL.createObjectURL(file)}
-              title="PDF Preview"
-              className="w-60 h-[106px] rounded-[20px]"
-            ></iframe>
-          ) : (
-            <p className="font-body text-body-lg text-primary-pri3">
-              Archivo seleccionado: {file.name}
-            </p>
-          )
-        ) : (
-          <p className="font-body text-body-lg text-primary-pri3">
-            No se eligió ningún archivo
-          </p>
-        )}
-      </div>
+      <div className="w-60 flex items-center">{renderFilePreview()}</div>
     </div>
   );
 };

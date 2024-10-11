@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CardBook } from "./cardBook";
 import BeforeIcon from "../../../icons/before";
-import ButtonIcon from "./buttonIcon";
+import ButtonIcon from "../../../components/buttons/buttonIcon";
 import NextIcon from "../../../icons/next";
 
 export const Carousel = ({ books }) => {
@@ -12,9 +12,9 @@ export const Carousel = ({ books }) => {
   // Ajustar itemsToShow según el tamaño de la ventana
   const handleResize = () => {
     const width = window.innerWidth;
-    if (width<700) {
+    if (width < 700) {
       setItemsToShow(1); // 1 tarjeta en pantallas pequeñas
-    } else if (width<1050) {
+    } else if (width < 1050) {
       setItemsToShow(2); // 2 tarjetas en pantallas medianas
     } else if (width < 1300) {
       setItemsToShow(3); // 3 tarjetas en pantallas grandes
