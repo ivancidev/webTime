@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import FormBook from "../components/form-book";
-import FooterButtons from "../components/footer-buttons";
 import { Navbar } from "../components/navbar";
 
 export const Register = () => {
