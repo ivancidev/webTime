@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Navbar } from "../components/navbar";
 import { Card } from "../components/card";
-import LinearProgressComp from "../../../components/progress/linear"; // Asegúrate de que la ruta sea correcta
+import LinearProgressComp from "../../../components/progress/linear";
 import ImagePre from "../../../icons/imgPreview";
 import CancelIcon from "../../../icons/cancel";
 import UploadIcon from "../../../icons/upload";
@@ -11,6 +11,9 @@ import AudioIcon from "../../../icons/audio";
 import Button from "../../../components/Buttons/Button";
 import BackIcon from "../../../icons/back";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 export const Files = () => {
   const location = useLocation();
@@ -23,42 +26,68 @@ export const Files = () => {
     audioFile: null,
   });
 
-  const [isLoading, setIsLoading] = useState(false); // Estado para mostrar el progreso
-  const [progress, setProgress] = useState(0); // Estado del progreso
+  const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [uploadedMessage, setUploadedMessage] = useState("");
 
+  const handleFileChange = (fieldName, file) => {
+    setProgress(0);
+    setIsLoading(true); // Activa la barra de progreso al seleccionar un archivo
+    setFiles((prevFiles) => ({
+      ...prevFiles,
+      [fieldName]: file,
+    }));
+    // Personalización del mensaje según el archivo subido
+    let message = "Archivo subido con éxito";
+    switch (fieldName) {
+      case "coverImage":
+        message = "Imagen de portada subida con éxito";
+        break;
+      case "pdfFile":
+        message = "Archivo PDF subido con éxito";
+        break;
+      case "audioFile":
+        message = "Archivo de audio subido con éxito";
+        break;
+      default:
+        message = "Archivo subido con éxito";
+    }
+    setUploadedMessage(message);
+  };
+  
   useEffect(() => {
     if (isLoading) {
-
       const timer = setInterval(() => {
         setProgress((prevProgress) =>
-          prevProgress >= 100 ? 100 : prevProgress + 10
+          prevProgress >= 100 ? 100 : prevProgress + 20
         );
-      }, 100); // Aumenta más rápido para una vista más corta
-
-      const minimumTime = setTimeout(() => {// Asegurar que la barra se muestre al menos 1.5 segundos
+      }, 100);
+  
+      const minimumTime = setTimeout(() => {
         clearInterval(timer);
         setProgress(100);
         setTimeout(() => {
           setIsLoading(false);
-        }, 250); // La barra sigue visible un breve momento después de llegar a 100%
-      }, 1500); // Mantener la barra visible por al menos 1.5 segundos
-
+          toast.success(uploadedMessage, {
+            position: "top-center",
+            className: "bg-[#0E1217] text-primary-pri3",
+            theme: "dark",
+            transition: Zoom,
+            autoClose: 1500,
+            hideProgressBar: true,
+            icon: false,
+          });
+        }, 250); // Retardo opcional para que el progreso se vea completo
+  
+      }, 1000); // Mantener la barra visible por al menos 1 segundo
+  
       return () => {
         clearTimeout(minimumTime);
         clearInterval(timer);
       };
     }
-  }, [isLoading]);
-
-  const handleFileChange = (fieldName, file) => {
-    setFiles((prevFiles) => ({
-      ...prevFiles,
-      [fieldName]: file,
-    }));
-    setProgress(0);
-    setIsLoading(true); // Activa la barra de progreso al seleccionar un archivo
-  };
-
+  }, [isLoading, uploadedMessage]);
+  
   const handleUpload = async () => {
     const formData = new FormData();
 
@@ -81,12 +110,13 @@ export const Files = () => {
       });
 
       if (response.ok) {
-        alert("Archivos subidos correctamente.");
+        alert("Archivos subidos correctamente");
+        
       } else {
-        alert("Error al subir los archivos.");
+        alert("Error al subir los archivos");
       }
     } catch (error) {
-      alert("Error al subir los archivos.");
+      alert("Error al subir los archivos");
       console.error(error);
     } finally {
       setIsLoading(false); // Desactiva el progreso al finalizar la carga
@@ -95,8 +125,9 @@ export const Files = () => {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <ToastContainer />
       <Navbar />
-      <div className = "h-5">
+      <div className="h-5">
         {isLoading && <LinearProgressComp progress={progress} />}
       </div>
       <div className="flex items-center p-2">
