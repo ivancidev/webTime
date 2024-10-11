@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar } from "../components/navbar";
 import { Card } from "../components/card";
+import LinearProgressComp from "../../../components/progress/linear"; // Asegúrate de que la ruta sea correcta
 import ImagePre from "../../../icons/imgPreview";
 import CancelIcon from "../../../icons/cancel";
 import UploadIcon from "../../../icons/upload";
 import FrontIcon from "../../../icons/front";
 import TextIcon from "../../../icons/text";
 import AudioIcon from "../../../icons/audio";
-import Button from "../../../components/buttons/Button";
+import Button from "../../../components/Buttons/Button";
 import BackIcon from "../../../icons/back";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const Files = () => {
   const location = useLocation();
@@ -22,19 +23,47 @@ export const Files = () => {
     audioFile: null,
   });
 
+  const [isLoading, setIsLoading] = useState(false); // Estado para mostrar el progreso
+  const [progress, setProgress] = useState(0); // Estado del progreso
+
+  useEffect(() => {
+    if (isLoading) {
+      //setProgress(0); // Resetea el progreso al iniciar
+
+      const timer = setInterval(() => {
+        setProgress((prevProgress) =>
+          prevProgress >= 100 ? 100 : prevProgress + 10
+        );
+      }, 100); // Aumenta más rápido para una vista más corta
+
+      const minimumTime = setTimeout(() => {// Asegurar que la barra se muestre al menos 1.5 segundos
+        clearInterval(timer);
+        setProgress(100);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 250); // La barra sigue visible un breve momento después de llegar a 100%
+      }, 1500); // Mantener la barra visible por al menos 1.5 segundos
+
+      return () => {
+        clearTimeout(minimumTime);
+        clearInterval(timer);
+      };
+    }
+  }, [isLoading]);
+
   const handleFileChange = (fieldName, file) => {
     setFiles((prevFiles) => ({
       ...prevFiles,
-      [fieldName]: file, // Usamos el nombre de campo correcto aquí
+      [fieldName]: file,
     }));
+    setProgress(0);
+    setIsLoading(true); // Activa la barra de progreso al seleccionar un archivo
   };
 
   const handleUpload = async () => {
-    setIsLoading(true); // Mostrar la barra de progreso
-
     const formData = new FormData();
 
-    formData.append("archivoPDF", files.pdfFile); 
+    formData.append("archivoPDF", files.pdfFile);
     formData.append("archivoAudio", files.audioFile);
     formData.append("archivoPortada", files.coverImage);
 
@@ -60,17 +89,18 @@ export const Files = () => {
     } catch (error) {
       alert("Error al subir los archivos.");
       console.error(error);
-    }finally {
-      setIsLoading(false); // Ocultar la barra de progreso cuando termine la acción
+    } finally {
+      console.error("Se subio archivo con éxito");
+      setIsLoading(false); // Desactiva el progreso al finalizar la carga
     }
   };
 
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <dir>
-        <LinearWithValueLabel isLoading={isLoading} onComplete={() => setIsLoading(false)}/>
-      </dir>
+      <div className = "h-5">
+        {isLoading && <LinearProgressComp progress={progress} />}
+      </div>
       <div className="flex items-center p-2">
         <Link to="/register">
           <BackIcon className="cursor-pointer" />
