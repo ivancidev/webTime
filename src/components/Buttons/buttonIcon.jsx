@@ -13,6 +13,8 @@ const ButtonIcon = ({
     combCol3: "bg-secondary-sec1 hover:bg-secondary-sec2", // boton blue a skyblue
     combDesactivate: "bg-secondary-sec2 opacity-25", //boton desactivado
     combColTrans: "text-primary-pri3 bg-transparent hover:text-secondary-sec2", // boton sin fondo y con icono blanco
+
+    combColPlay: "text-primary-pri2 bg-neutral-neu2 ", //boton con fondo plomo
   };
 
   return (
