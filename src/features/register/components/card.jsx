@@ -6,8 +6,10 @@ export const Card = ({ title, SVG, register, error, fileType, onFileChange }) =>
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
-    setFile(selectedFile);
-    onFileChange(event); // Actualizar el estado en el formulario principal
+    if (selectedFile) {
+      setFile(selectedFile);
+      onFileChange(event); // Actualizar el estado en el formulario principal solo si hay un nuevo archivo
+    }
   };
 
   const removeFile = () => {
@@ -47,7 +49,7 @@ export const Card = ({ title, SVG, register, error, fileType, onFileChange }) =>
           text="Quitar archivo"
           onClick={removeFile}
           disabled={!file} // Deshabilitado si no hay archivo seleccionado
-          variant="combCol1" // Usar un estilo de botón que prefieras
+          variant={!file ? "combDesactivate" : "combCol1"} 
         />
 </div>
 
