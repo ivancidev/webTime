@@ -37,7 +37,7 @@ export const Card = ({ fieldName, title, SVG, onFileChange }) => {
     }
 
     return (
-      <p className="font-body text-body-lg text-primary-pri3">
+      <p className="font-body text-body-md text-primary-pri3">
         Archivo seleccionado: {file.name}
       </p>
     );

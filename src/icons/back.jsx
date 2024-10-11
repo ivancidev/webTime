@@ -3,18 +3,18 @@ import React from "react";
 export default function BackIcon() {
   return (
     <svg
-      width="40px"
-      height="40px"
-      viewBox="0 0 1024 1024"
+      width="40"
+      height="40"
+      viewBox="0 0 40 40"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-      fill="#ffffff"
-        d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
-      />
-      <path
-        d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
-        fill="#ffffff"
+        d="M31.6667 20.0002H8.33333M8.33333 20.0002L20 31.6668M8.33333 20.0002L20 8.3335"
+        stroke="white"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
       />
     </svg>
   );

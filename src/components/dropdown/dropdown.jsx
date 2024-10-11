@@ -17,14 +17,17 @@ export const Dropdown = ({
   return (
     <div className="flex flex-col">
       {label && (
-        <label htmlFor={name} className="mt-[20px] py-1 text-primary-pri3 font-label text-label-lg">
+        <label
+          htmlFor={name}
+          className="mt-[20px] py-1 text-primary-pri3 font-label text-label-lg"
+        >
           {label} {validationAsterisk}
         </label>
       )}
       <select
         id={name}
         name={name}
-        className="w-full md:w-[340px] h-[50px] bg-transparent border-2 rounded border-[#F4EFF4] font-body text-neutral-neu1 text-body-lg p-2"
+        className="w-full md:w-[340px] h-[50px] bg-transparent border-2 rounded border-[#F4EFF4] font-body text-neutral-neu1 text-body-md p-2"
         {...register(name, {
           required: `${label} es requerido`,
         })}
@@ -38,13 +41,15 @@ export const Dropdown = ({
           <option
             key={index}
             value={option[valueKey]}
-            className="bg-primary-pri2 text-secondary-sec2 text-body-lg"
+            className="bg-primary-pri2 text-secondary-sec2 text-body-md"
           >
             {option[displayKey]}
           </option>
         ))}
       </select>
-      {errors[name] && <span className="text-error-err2">{errors[name].message}</span>}
+      {errors[name] && (
+        <span className="text-error-err2">{errors[name].message}</span>
+      )}
     </div>
   );
 };
