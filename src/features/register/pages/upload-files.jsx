@@ -10,7 +10,6 @@ import TextIcon from "../../../icons/text";
 import AudioIcon from "../../../icons/audio";
 import Button from "../../../components/Buttons/Button";
 import BackIcon from "../../../icons/back";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
