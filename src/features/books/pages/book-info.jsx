@@ -1,9 +1,9 @@
 import React from "react";
 import { NavbarO } from "../components/navbarO";
 import BackIcon from "../../../icons/back";
-import { Link } from "react-router-dom";
 import ListenIcon from "../../../icons/listen";
 import ReadIcon from "../../../icons/read";
+import ButtonIcon from "../../../components/buttons/buttonIcon";
 
 export const BookInfo = () => {
   const frontBook = "/src/assets/icons/logo.svg";
@@ -20,9 +20,7 @@ export const BookInfo = () => {
     <div className="flex min-h-screen flex-col ">
       <NavbarO />
       <div className="flex items-center ml-8 p-2 ">
-        <Link to="/">
-          <BackIcon className="cursor-pointer" />
-        </Link>
+        <ButtonIcon SvgIcon={BackIcon} variant="combColTrans" />
       </div>
       <div className="flex flex-row justify-evenly">
         <div className="relative w-[440px] h-[400px] bg-neutral-neu2 rounded-3xl">
@@ -37,8 +35,8 @@ export const BookInfo = () => {
               {titleBook}
             </h1>
             <div className="flex flex-row space-x-8">
-              <ListenIcon />
-              <ReadIcon />
+              <ButtonIcon SvgIcon={ListenIcon} variant="combColTrans2" />
+              <ButtonIcon SvgIcon={ReadIcon} variant="combColTrans2" />
             </div>
           </div>
 
