@@ -48,7 +48,7 @@ export default function FormBook() {
             name="title"
             label="Titulo"
             placeholder="Escribe aquí"
-            className="bg-transparent border-2 rounded border-[#F4EFF4] w-[340px] h-[50px] p-2 text-primary-pri3 font-body text-body-lg"
+            className="bg-transparent border-2 rounded border-[#F4EFF4] w-[340px] h-[50px] p-2 text-primary-pri3 font-body text-body-md"
             register={register}
             errors={errors}
             value={title}
@@ -97,7 +97,7 @@ export default function FormBook() {
           <textarea
             id="synopsis"
             name="synopsis"
-            className="w-[800px] h-[130px] bg-transparent border-2 rounded border-[#F4EFF4] p-2 text-primary-pri3 font-body text-body-lg mt-2"
+            className="w-[800px] h-[130px] bg-transparent border-2 rounded border-[#F4EFF4] p-2 text-primary-pri3 font-body text-body-md mt-2"
             placeholder="Escribe aquí"
             {...register("synopsis", {
               required: "La sinopsis no puede estar vacía",

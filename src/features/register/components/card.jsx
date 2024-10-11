@@ -7,13 +7,13 @@ export const Card = ({ title, SVG, onFileChange }) => {
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
-    onFileChange(title, selectedFile);  // Llama a la función para informar el cambio
+    onFileChange(title, selectedFile); // Llama a la función para informar el cambio
   };
 
   const renderFilePreview = () => {
     if (!file) {
       return (
-        <p className="font-body text-body-lg text-primary-pri3">
+        <p className="font-body text-body-md text-primary-pri3">
           No se eligió ningún archivo
         </p>
       );
@@ -38,7 +38,7 @@ export const Card = ({ title, SVG, onFileChange }) => {
     }
 
     return (
-      <p className="font-body text-body-lg text-primary-pri3">
+      <p className="font-body text-body-md text-primary-pri3">
         Archivo seleccionado: {file.name}
       </p>
     );
