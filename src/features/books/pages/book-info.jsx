@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavbarO } from "../components/navbarO";
 import BackIcon from "../../../icons/back";
 import { Link } from "react-router-dom";
 import ListenIcon from "../../../icons/listen";
 import ReadIcon from "../../../icons/read";
+import { AudioPlayer } from "./audiobook-player";
 
 export const BookInfo = () => {
+  const [showAudioPlayer, setShowAudioPlayer] = useState(false);
+
   const frontBook = "/src/assets/icons/logo.svg";
   const titleBook = "HTML y CSS";
   const autorBook = "Anonimo";
@@ -15,7 +18,9 @@ export const BookInfo = () => {
   const duration = "5" + " min";
   const synopsis =
     "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi, ipsa. Labore eveniet sint quidem reprehenderit, id distinctio laudantium similique dolores ex. Sapiente minima quam aliquid molestias a iusto sequi officiis.";
-
+  const handleListenClick = () => {
+    setShowAudioPlayer(true);
+  };
   return (
     <div className="flex min-h-screen flex-col ">
       <NavbarO />
@@ -37,7 +42,9 @@ export const BookInfo = () => {
               {titleBook}
             </h1>
             <div className="flex flex-row space-x-8">
-              <ListenIcon />
+              <button onClick={handleListenClick}>
+                <ListenIcon />
+              </button>
               <ReadIcon />
             </div>
           </div>
@@ -71,6 +78,11 @@ export const BookInfo = () => {
               {synopsis}
             </p>
           </div>
+          {showAudioPlayer && (
+            <div className="mt-8">
+              <AudioPlayer />
+            </div>
+          )}
         </div>
       </div>
     </div>
