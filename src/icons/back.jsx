@@ -11,7 +11,7 @@ export default function BackIcon() {
     >
       <path
         d="M31.6667 20.0002H8.33333M8.33333 20.0002L20 31.6668M8.33333 20.0002L20 8.3335"
-        stroke="white"
+        stroke="currentColor"
         stroke-width="4"
         stroke-linecap="round"
         stroke-linejoin="round"
