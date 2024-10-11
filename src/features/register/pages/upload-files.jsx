@@ -14,11 +14,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { Link, useLocation } from "react-router-dom";
+import { supabase } from "../../../services/supabaseClient";
 
 export const Files = () => {
   const location = useLocation();
   const { state } = location;
-  const navigate = useNavigate();
 
   const [files, setFiles] = useState({
     coverImage: null,
@@ -88,33 +89,59 @@ export const Files = () => {
     }
   }, [isLoading, uploadedMessage]);
   
-  const handleUpload = async () => {
-    const formData = new FormData();
-
-    formData.append("archivoPDF", files.pdfFile);
-    formData.append("archivoAudio", files.audioFile);
-    formData.append("archivoPortada", files.coverImage);
-
-    if (state) {
-      formData.append("nombreLibro", state.title);
-      formData.append("sinopsis", state.synopsis);
-      formData.append("codAutor", state.author);
-      formData.append("codCategoria", state.category);
-      formData.append("codIdioma", state.language);
-    }
-
+  const uploadFileToSupabase = async (file, folderName) => {
     try {
-      const response = await fetch("http://localhost:4000/subirLibro", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        alert("Archivos subidos correctamente");
-        
-      } else {
-        alert("Error al subir los archivos");
+      const fileName = `${Date.now()}_${file.name}`;
+      const { data, error } = await supabase.storage
+        .from(folderName)
+        .upload(fileName, file);
+      if (error) {
+        console.error(`Error uploading to ${folderName}:`, error);
+        throw error;
       }
+
+      const { data: publicURL, error: errorURL } = supabase.storage
+        .from(folderName)
+        .getPublicUrl(fileName);
+
+      if (errorURL) {
+        console.error(`Error getting public URL for ${fileName}:`, errorURL);
+        throw errorURL;
+      }
+
+      return publicURL.publicUrl;
+    } catch (error) {
+      console.error("Error during file upload:", error);
+      throw error;
+    }
+  };
+
+  const handleUpload = async () => {
+    try {
+      const coverImageUrl = await uploadFileToSupabase(
+        files.coverImage,
+        "imagenes"
+      );
+      const pdfFileUrl = await uploadFileToSupabase(files.pdfFile, "pdfs");
+      const audioFileUrl = await uploadFileToSupabase(
+        files.audioFile,
+        "audios"
+      );
+
+      const { error } = await supabase.from("libro").insert([
+        {
+          nombreLibro: state.title,
+          sinopsis: state.synopsis,
+          codAutor: state.author,
+          codCategoria: state.category,
+          codIdioma: state.language,
+          enlacePortada: coverImageUrl,
+          enlacePdf: pdfFileUrl,
+          enlaceAudio: audioFileUrl,
+        },
+      ]);
+      if (error) throw error;
+      alert("Archivos y datos subidos correctamente.");
     } catch (error) {
       alert("Error al subir los archivos");
       console.error(error);
