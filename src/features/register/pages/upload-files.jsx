@@ -31,7 +31,7 @@ export const Files = () => {
   const uploadFileToSupabase = async (file, folderName) => {
     try {
       const fileName = `${Date.now()}_${file.name}`;
-      const { error } = await supabase.storage
+      const { data, error } = await supabase.storage
         .from(folderName)
         .upload(fileName, file);
 
