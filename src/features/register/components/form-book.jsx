@@ -7,22 +7,16 @@ import FooterButtons from "../components/footer-buttons";
 import { useNavigate } from "react-router-dom";
 
 export default function FormBook() {
-  const { data: authorsData } = useFetch("authors");
-  const { data: categoriesData } = useFetch("categories");
-  const { data: languagesData } = useFetch("languages");
-
-  const categories = categoriesData.categorias || [];
-  const languages = languagesData.idiomas || [];
-  const authors = authorsData.autores || [];
-  const navigation = useNavigate();
-
+  const { data: authors } = useFetch("autor");
+  const { data: categories } = useFetch("categoria");
+  const { data: languages } = useFetch("idioma");
   const [title, setTitle] = useState("");
+  const navigation = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     defaultValues: {
       title: "",
@@ -36,10 +30,12 @@ export default function FormBook() {
   const onSubmit = (data) => {
     navigation("/upload-files", { state: data });
   };
-
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="max-w-[795px] mx-auto w-full">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="max-w-[795px] mx-auto w-full"
+      >
         <h1 className="text-center text-secondary-sec2 m-[20px] font-title text-title-lg">
           Formulario de Registro de Libro
         </h1>
@@ -61,7 +57,7 @@ export default function FormBook() {
             placeholder="Seleccionar autor"
             register={register}
             errors={errors}
-            displayKey="autor"
+            displayKey="nombreAutor"
             valueKey="codAutor"
           />
         </div>
