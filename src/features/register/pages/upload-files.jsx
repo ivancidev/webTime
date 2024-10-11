@@ -28,7 +28,6 @@ export const Files = () => {
 
   useEffect(() => {
     if (isLoading) {
-      //setProgress(0); // Resetea el progreso al iniciar
 
       const timer = setInterval(() => {
         setProgress((prevProgress) =>
@@ -90,7 +89,6 @@ export const Files = () => {
       alert("Error al subir los archivos.");
       console.error(error);
     } finally {
-      console.error("Se subio archivo con éxito");
       setIsLoading(false); // Desactiva el progreso al finalizar la carga
     }
   };
