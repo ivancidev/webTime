@@ -74,8 +74,8 @@ export const Carousel = ({ books }) => {
             .map((book, index) => (
               <CardBook
                 key={index}
-                titleBook={book.title}
-                frontBook={book.image}
+                titleBook={book.nombreLibro}
+                frontBook={book.enlacePortada}
               />
             ))}
         </div>
