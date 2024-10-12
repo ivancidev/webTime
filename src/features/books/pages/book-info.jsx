@@ -41,31 +41,31 @@ export const BookInfo = () => {
             </div>
           </div>
 
-          <div className="flex flex-col h-40 justify-between mt-8 px-4 md:px-0">
+          <div className="flex flex-col h-40 justify-around sm:justify-between mt-8">
             <div className="text-neutral-neu2 flex space-x-2">
-              <h3 className="font-label text-label-lg">Autor: </h3>
-              <h2 className="font-body text-body-lg mt-[2px]">{autorBook}</h2>
+              <h3 className="font-label text-label-md sm:text-label-lg">Autor: </h3>
+              <h2 className="font-body text-body-md sm:text-body-lg mt-[2px]">{autorBook}</h2>
             </div>
             <div className="text-neutral-neu2 flex space-x-2">
-              <h3 className="font-label text-label-lg">Idioma: </h3>
-              <h2 className="font-body text-body-lg mt-[2px]">
+              <h3 className="font-label text-label-md sm:text-label-lg">Idioma: </h3>
+              <h2 className="font-body text-body-md sm:text-body-lg mt-[2px]">
                 {lenguageBook}
               </h2>
             </div>
             <div className="text-neutral-neu2 flex space-x-2">
-              <h3 className="font-label text-label-lg">Categoria: </h3>
-              <h2 className="font-body text-body-lg mt-[2px]">{categBook}</h2>
+              <h3 className="font-label text-label-md sm:text-label-lg">Categoria: </h3>
+              <h2 className="font-body text-body-md sm:text-body-lg mt-[2px]">{categBook}</h2>
             </div>
             <div className="text-neutral-neu2 flex space-x-2 ">
-              <h3 className="font-label text-label-lg">Número de páginas: </h3>
-              <h2 className="font-body text-body-lg mt-[2px]">{numPages}</h2>
+              <h3 className="font-label text-label-md sm:text-label-lg">Número de páginas: </h3>
+              <h2 className="font-body text-body-md sm:text-body-lg mt-[2px]">{numPages}</h2>
             </div>
             <div className="text-neutral-neu2 flex space-x-2">
-              <h3 className="font-label text-label-lg">Duración del audio:</h3>
-              <h2 className="font-body text-body-lg mt-[2px]">{duration}</h2>
+              <h3 className="font-label text-label-md sm:text-label-lg">Duración del audio:</h3>
+              <h2 className="font-body text-body-md sm:text-body-lg mt-[2px]">{duration}</h2>
             </div>
           </div>
-          <div className="max-w-[500px] my-8 px-4 md:px-0">
+          <div className="max-w-[500px] my-8">
             <p className="font-body text-body-md text-neutral-neu2">
               {synopsis}
             </p>
