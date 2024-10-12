@@ -3,7 +3,7 @@ import { NavbarO } from "../components/navbarO";
 import BackIcon from "../../../icons/back";
 import ListenIcon from "../../../icons/listen";
 import ReadIcon from "../../../icons/read";
-import ButtonIcon from "../../../components/Buttons/buttonIcon";
+import ButtonIcon from "../../../components/buttons/buttonIcon";
 
 export const BookInfo = () => {
   const frontBook = "/src/assets/icons/logo.svg";

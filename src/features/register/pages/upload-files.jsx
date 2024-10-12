@@ -10,7 +10,7 @@ import AudioIcon from "../../../icons/audio";
 import BackIcon from "../../../icons/back";
 import { Link, useLocation } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
-import Button from "../../../components/Buttons/Button";
+import Button from "../../../components/buttons/button";
 
 export const Files = () => {
   const location = useLocation();
