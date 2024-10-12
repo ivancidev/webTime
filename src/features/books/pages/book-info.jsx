@@ -21,7 +21,7 @@ export const BookInfo = () => {
       <div className="flex items-center ml-8 p-2 ">
         <ButtonIcon SvgIcon={BackIcon} variant="combColTrans" />
       </div>
-      <div className="flex flex-row justify-evenly">
+      <div className="flex flex-col md:flex-row items-center md:justify-evenly">
         <div className="relative w-[440px] h-[400px] bg-neutral-neu2 rounded-3xl">
           <img
             src={frontBook}
@@ -29,11 +29,11 @@ export const BookInfo = () => {
           />
         </div>
         <div>
-          <div className="flex flex-row justify-between">
-            <h1 className="font-display text-display-lg text-secondary-sec2">
+          <div className="flex flex-col md:flex-row justify-center md:justify-between">
+            <h1 className="font-display text-display-lg text-secondary-sec2 mt-4">
               {titleBook}
             </h1>
-            <div className="flex flex-row space-x-8">
+            <div className="flex flex-row space-x-8 mt-4">
               <ButtonIcon SvgIcon={ListenIcon} variant="combColTrans2" />
               <ButtonIcon SvgIcon={ReadIcon} variant="combColTrans2" />
             </div>
