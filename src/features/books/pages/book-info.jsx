@@ -29,7 +29,7 @@ export const BookInfo = () => {
           />
         </div>
         <div>
-          <div className="flex flex-col md:flex-row justify-center md:justify-between">
+          <div className="flex flex-col md:flex-row items-center md:justify-between">
             <h1 className="font-display text-display-lg text-secondary-sec2 mt-4">
               {titleBook}
             </h1>
