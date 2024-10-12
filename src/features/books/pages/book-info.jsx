@@ -13,8 +13,7 @@ export const BookInfo = () => {
   const lenguageBook = "Español";
   const numPages = "3";
   const duration = "5" + " min";
-  const synopsis =
-    "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi, ipsa. Labore eveniet sint quidem reprehenderit, id distinctio laudantium similique dolores ex. Sapiente minima quam aliquid molestias a iusto sequi officiis.";
+  const synopsis = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi, ipsa. Labore eveniet sint quidem reprehenderit, id distinctio laudantium similique dolores ex. Sapiente minima quam aliquid molestias a iusto sequi officiis.";
 
   return (
     <div className="flex min-h-screen flex-col ">
