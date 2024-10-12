@@ -18,8 +18,10 @@ export const BookInfo = () => {
   return (
     <div className="flex min-h-screen flex-col ">
       <NavbarO />
-      <div className="flex items-center ml-8 p-2">
-        <ButtonIcon SvgIcon={BackIcon} variant="combColTrans" />
+      <div className="w-full h-[60px]">
+        <div className="fixed top-70 flex items-center bg-black bg-opacity-75 rounded-3xl ml-2 sm:ml-8 p-2 z-50">
+          <ButtonIcon SvgIcon={BackIcon} variant="combColTrans" />
+        </div>
       </div>
       <div className="flex flex-col lg:flex-row items-center md:justify-evenly px-5">
         <div className="relative w-full max-w-[80%] aspect-square md:w-[440px] md:h-[400px] bg-neutral-neu2 rounded-3xl">
@@ -30,7 +32,7 @@ export const BookInfo = () => {
         </div>
         <div className="mx-5">
           <div className="flex flex-col md:flex-row items-center md:justify-between">
-            <h1 className="font-display text-display-md md:text-display-lg text-secondary-sec2 mt-10">
+            <h1 className="font-display text-display-md md:text-display-lg text-secondary-sec2 mt-10 md:mt-5">
               {titleBook}
             </h1>
             <div className="flex flex-row space-x-8 mt-4">
