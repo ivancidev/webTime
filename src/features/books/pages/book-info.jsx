@@ -25,7 +25,7 @@ export const BookInfo = () => {
         <div className="relative w-[440px] h-[400px] bg-neutral-neu2 rounded-3xl">
           <img
             src={frontBook}
-            className=" w-72 h-[520px] rounded-3xl absolute inset-0 m-auto object-cover"
+            className=" w-72 h-[520px] rounded-3xl absolute inset-0 m-auto object-cover flex-none"
           />
         </div>
         <div>
@@ -39,7 +39,7 @@ export const BookInfo = () => {
             </div>
           </div>
 
-          <div className="flex flex-col h-40 justify-between mt-8">
+          <div className="flex flex-col h-40 justify-between mt-8 px-4 md:px-0">
             <div className="text-neutral-neu2 flex space-x-2">
               <h3 className="font-label text-label-lg">Autor: </h3>
               <h2 className="font-body text-body-lg mt-[2px]">{autorBook}</h2>
@@ -63,7 +63,7 @@ export const BookInfo = () => {
               <h2 className="font-body text-body-lg mt-[2px]">{duration}</h2>
             </div>
           </div>
-          <div className="w-[500px] mt-8">
+          <div className="w-full md:w-[600px] my-8 px-4 md:px-0">
             <p className="font-body text-body-md text-neutral-neu2">
               {synopsis}
             </p>
