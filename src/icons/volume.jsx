@@ -3,16 +3,16 @@ import React from "react";
 export default function Volume() {
   return (
     <svg
-      width="36"
-      height="36"
-      viewBox="0 0 36 36"
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M26.5475 14.4523C28.1488 16.0541 29.0484 18.2264 29.0484 20.4913C29.0484 22.7562 28.1488 24.9285 26.5475 26.5303M18.7917 8.5415L10.25 15.3748H3.41669V25.6248H10.25L18.7917 32.4582V8.5415Z"
+        d="M20.7201 11.2803C21.9699 12.5305 22.672 14.2259 22.672 15.9937C22.672 17.7614 21.9699 19.4568 20.7201 20.707M14.6667 6.66699L8.00008 12.0003H2.66675V20.0003H8.00008L14.6667 25.3337V6.66699Z"
         stroke="currentColor"
-        stroke-width="4"
+        stroke-width="3"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
