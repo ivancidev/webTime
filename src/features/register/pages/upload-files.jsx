@@ -23,6 +23,7 @@ export const Files = () => {
     setError,
     clearErrors,
   } = useForm({
+    mode: "onChange", // Cambiado a 'onChange' para validación inmediata
     defaultValues: {
       coverImage: null,
       pdfFile: null,
@@ -131,6 +132,7 @@ export const Files = () => {
                 onFileChange={onChange}
                 value={value}
                 error={errors.coverImage?.message}
+                disablePreview={!!errors.coverImage} // Asegúrate de que sea booleano
               />
             )}
           />
@@ -163,6 +165,7 @@ export const Files = () => {
                 onFileChange={onChange}
                 value={value}
                 error={errors.pdfFile?.message}
+                disablePreview={!!errors.pdfFile}
               />
             )}
           />
@@ -195,6 +198,7 @@ export const Files = () => {
                 onFileChange={onChange}
                 value={value}
                 error={errors.audioFile?.message}
+                disablePreview={!!errors.audioFile}
               />
             )}
           />

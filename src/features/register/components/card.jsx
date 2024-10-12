@@ -1,17 +1,25 @@
 import React, { useEffect } from "react";
 import Button from "../../../components/buttons/button";
 
-export const Card = ({ fieldName, title, SVG, onFileChange, value, error }) => {
+export const Card = ({
+  fieldName,
+  title,
+  SVG,
+  onFileChange,
+  value,
+  error,
+  disablePreview,
+  clearErrors, // Opcional: Solo si deseas limpiar errores
+}) => {
   let preview = null;
 
-  if (value) {
+  if (value && !disablePreview) {
     if (value.type.startsWith("image/") || value.type === "application/pdf") {
       preview = URL.createObjectURL(value);
     }
   }
 
   useEffect(() => {
-    // Cleanup the URL object when the component unmounts or value changes
     return () => {
       if (preview) {
         URL.revokeObjectURL(preview);
@@ -20,10 +28,10 @@ export const Card = ({ fieldName, title, SVG, onFileChange, value, error }) => {
   }, [preview]);
 
   const renderFilePreview = () => {
-    if (!value) {
+    if (!value || disablePreview) {
       return (
         <p className="font-body text-body-lg text-primary-pri3 mx-3">
-          No se eligió ningún archivo
+          No se eligió ningún archivo o el archivo no es válido.
         </p>
       );
     }
@@ -62,6 +70,7 @@ export const Card = ({ fieldName, title, SVG, onFileChange, value, error }) => {
 
   const handleRemoveFile = () => {
     onFileChange(null);
+    if (clearErrors) clearErrors(fieldName); // Limpia los errores si la función está disponible
   };
 
   return (
@@ -100,11 +109,11 @@ export const Card = ({ fieldName, title, SVG, onFileChange, value, error }) => {
             type="button"
             text="Quitar archivo"
             onClick={handleRemoveFile}
-            disabled={!value}
-            variant={!value ? "combDesactivate" : "combCol1"}
+            disabled={!value || disablePreview} // Actualización aquí
+            variant={!value || disablePreview ? "combDesactivate" : "combCol1"} // Actualización aquí
           />
         </div>
-        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+        {error && <p className="text-error-err2 text-sm mt-2">{error}</p>}
       </div>
 
       <div className="w-60 flex items-center">{renderFilePreview()}</div>
