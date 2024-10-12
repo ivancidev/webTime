@@ -7,7 +7,7 @@ const ButtonIcon = ({
   disabled = false,
 }) => {
   const baseButton =
-    "rounded-[20px] w-10 h-10 flex flex-col items-center justify-center";
+    "rounded-[20px] w-8 sm:w-10 h-8 sm:h-10 flex flex-col items-center justify-center";
   const varCol = {
     combCol1: "bg-secondary-sec2 hover:bg-secondary-sec1", //boton skyblue a blue
     combCol3: "bg-secondary-sec1 hover:bg-secondary-sec2", // boton blue a skyblue
