@@ -75,7 +75,7 @@ export const Card = ({
 
   return (
     <div className="max-w-[1000px] w-full h-36 p-6 bg-transparent border border-neutral-neu2 rounded-[20px] flex flex-row justify-between px-4 mx-auto">
-      <div className="w-60 flex flex-col justify-center items-center">
+      <div className="w-60 flex flex-col justify-center items-start">
         <div className="flex flex-row mb-4">
           <SVG className="w-6 h-6" />
           <h3 className="font-title text-title-sm text-primary-pri3 ml-4">
