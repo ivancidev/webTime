@@ -32,7 +32,7 @@ export const BookInfo = () => {
         </div>
         <div className="mx-5">
           <div className="flex flex-col md:flex-row items-center md:justify-between">
-            <h1 className="font-display text-display-md md:text-display-lg text-secondary-sec2 mt-10 md:mt-5">
+            <h1 className="font-display text-display-sm sm:text-display-lg text-secondary-sec2 mt-10 md:mt-5">
               {titleBook}
             </h1>
             <div className="flex flex-row space-x-8 mt-4">
