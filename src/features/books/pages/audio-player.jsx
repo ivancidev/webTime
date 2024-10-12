@@ -1,19 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import Play from "../../../icons/play";
+
 import Pause from "../../../icons/pause";
 import Volume from "../../../icons/volume";
-import Button from "../../../components/buttons/button";
+import Button from "../../../components/buttons/Button";
 import StartAudio from "../../../icons/startAudio";
 import Back10 from "../../../icons/back10";
 import Forward10 from "../../../icons/forward10";
 import EndAudio from "../../../icons/endAudio";
 import CloseIcon from "../../../icons/close";
+import Mute from "../../../icons/mute";
 
 export const AudioPlayer = () => {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
+  const [previousVolume, setPreviousVolume] = useState(1);
+  const [isMuted, setIsMuted] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [playbackRate, setPlaybackRate] = useState(1);
@@ -57,6 +61,25 @@ export const AudioPlayer = () => {
     const newVolume = e.target.value;
     audioRef.current.volume = newVolume;
     setVolume(newVolume);
+    if (newVolume === "0") {
+      setIsMuted(true);
+    } else {
+      setIsMuted(false);
+    }
+  };
+
+  const handleMuteUnmute = () => {
+    if (isMuted) {
+      // Si está silenciado, restaura el volumen anterior
+      audioRef.current.volume = previousVolume;
+      setVolume(previousVolume);
+    } else {
+      // Si no está silenciado, almacena el volumen actual y lo silencia
+      setPreviousVolume(volume);
+      audioRef.current.volume = 0;
+      setVolume(0);
+    }
+    setIsMuted(!isMuted);
   };
 
   const handlePlaybackRateChange = (rate) => {
@@ -76,6 +99,7 @@ export const AudioPlayer = () => {
     const audio = audioRef.current;
     audio.currentTime = 0;
     audio.play();
+    setIsPlaying(true);
   };
 
   const jumpToEnd = () => {
@@ -172,7 +196,11 @@ export const AudioPlayer = () => {
           </div>
           <div className="w-1/5 flex flex-row justify-start">
             <div className="flex flex-row items-center ">
-              <Volume />
+              <ButtonIcon
+                SvgIcon={isMuted ? Mute : Volume} // Alterna el ícono entre volumen normal y silenciado
+                variant="combColBlack"
+                onClick={handleMuteUnmute}
+              />
               <input
                 type="range"
                 min="0"
