@@ -1,6 +1,6 @@
 import React from "react";
 import ContinueIcon from "../../../icons/continue";
-import Button from "../../../components/buttons/button";
+import Button from "../../../components/Buttons/Button";
 
 export default function FooterButtons({ handleSubmit, onSubmit }) {
   const handleUpload = () => {

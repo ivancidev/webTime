@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../buttons/Button";
+import Button from "../Buttons/Button";
 import ButtonIcon from "../buttons/buttonIcon";
 import CloseIcon from "../../icons/close";
 
