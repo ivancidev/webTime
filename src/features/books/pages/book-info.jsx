@@ -16,21 +16,21 @@ export const BookInfo = () => {
   const synopsis = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi, ipsa. Labore eveniet sint quidem reprehenderit, id distinctio laudantium similique dolores ex. Sapiente minima quam aliquid molestias a iusto sequi officiis.";
 
   return (
-    <div className="flex min-h-screen flex-col ">
+    <div className="flex w-full min-h-screen flex-col ">
       <NavbarO />
       <div className="flex items-center ml-8 p-2 ">
         <ButtonIcon SvgIcon={BackIcon} variant="combColTrans" />
       </div>
-      <div className="flex flex-col md:flex-row items-center md:justify-evenly">
-        <div className="relative w-[440px] h-[400px] bg-neutral-neu2 rounded-3xl">
+      <div className="flex flex-col md:flex-row items-center md:justify-evenly px-5">
+        <div className="relative w-full max-w-[80%] aspect-square md:w-[440px] md:h-[400px] bg-neutral-neu2 rounded-3xl">
           <img
             src={frontBook}
-            className=" w-72 h-[520px] rounded-3xl absolute inset-0 m-auto object-cover flex-none"
+            className=" w-72 h-[520px] rounded-3xl absolute inset-0 m-auto object-cover"
           />
         </div>
-        <div>
+        <div className="mx-5">
           <div className="flex flex-col md:flex-row items-center md:justify-between">
-            <h1 className="font-display text-display-lg text-secondary-sec2 mt-4">
+            <h1 className="font-display text-display-md md:text-display-lg text-secondary-sec2 mt-4">
               {titleBook}
             </h1>
             <div className="flex flex-row space-x-8 mt-4">
@@ -63,7 +63,7 @@ export const BookInfo = () => {
               <h2 className="font-body text-body-lg mt-[2px]">{duration}</h2>
             </div>
           </div>
-          <div className="w-full md:w-[600px] my-8 px-4 md:px-0">
+          <div className="w-full my-8 px-4 md:px-0">
             <p className="font-body text-body-md text-neutral-neu2">
               {synopsis}
             </p>
