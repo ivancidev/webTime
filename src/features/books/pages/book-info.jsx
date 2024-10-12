@@ -4,7 +4,7 @@ import BackIcon from "../../../icons/back";
 import { Link } from "react-router-dom";
 import ListenIcon from "../../../icons/listen";
 import ReadIcon from "../../../icons/read";
-import { AudioPlayer } from "./audiobook-player";
+import { AudioPlayer } from "./audio-player";
 
 export const BookInfo = () => {
   const [showAudioPlayer, setShowAudioPlayer] = useState(false);

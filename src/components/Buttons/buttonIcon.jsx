@@ -14,7 +14,7 @@ const ButtonIcon = ({
     combDesactivate: "bg-secondary-sec2 opacity-25", //boton desactivado
     combColTrans: "text-primary-pri3 bg-transparent hover:text-secondary-sec2", // boton sin fondo y con icono blanco
 
-    combColPlay: "text-primary-pri2 bg-neutral-neu2 ", //boton con fondo plomo
+    combColBlack: "text-primary-pri2 ", //boton con fondo plomo
   };
 
   return (
