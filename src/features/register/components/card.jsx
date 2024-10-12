@@ -6,7 +6,7 @@ export const Card = ({ fieldName, title, SVG, onFileChange }) => {
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
-    onFileChange(fieldName, selectedFile); 
+    onFileChange(fieldName, selectedFile);
   };
 
   const renderFilePreview = () => {
@@ -45,7 +45,7 @@ export const Card = ({ fieldName, title, SVG, onFileChange }) => {
 
   return (
     <div className="max-w-[1000px] w-full h-36 p-6 bg-transparent border border-neutral-neu2 rounded-[20px] flex flex-row justify-between px-4 mx-auto">
-      <div className="w-60 flex flex-col justify-center items-center">
+      <div className="w-60 flex flex-col justify-center items-start">
         <div className="flex flex-row mb-4">
           <SVG className="w-6 h-6" />
           <h3 className="font-title text-title-sm text-primary-pri3 ml-4">
@@ -67,7 +67,10 @@ export const Card = ({ fieldName, title, SVG, onFileChange }) => {
           id={`upload-${fieldName}`}
         />
 
-        <label htmlFor={`upload-${fieldName}`} className="cursor-pointer flex justify-center">
+        <label
+          htmlFor={`upload-${fieldName}`}
+          className="cursor-pointer flex justify-center mx-auto"
+        >
           <span className="text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1 font-label rounded-[20px] h-10 w-32 flex items-center justify-center text-label-sm">
             Elegir archivo
           </span>
