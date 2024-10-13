@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { Link, useLocation } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
-import Button from "../../../components/buttons/button";
+import Button from "../../../components/Buttons/Button";
 
 export const Files = () => {
   const location = useLocation();
