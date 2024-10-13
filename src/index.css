@@ -25,3 +25,22 @@
   src: url("/fonts/OpenSans-Regular.ttf") format("truetype");
   font-style: normal;
 }
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0e1217;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0297ff;
+  border-radius: 6px;
+  border: 3px solid #0e1217;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0123fd;
+}

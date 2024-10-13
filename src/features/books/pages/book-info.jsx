@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavbarO } from "../components/navbarO";
 import BackIcon from "../../../icons/back";
 import ListenIcon from "../../../icons/listen";
@@ -8,16 +8,22 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useBookDetails } from "../../../hooks/use-book-details";
 import { useFetchNumPages } from "../../../hooks/use-num-pages";
 import { DetailRow } from "../components/detail-row";
+import { AudioPlayer } from "./audio-player";
 import { useAudioDuration } from "../../../hooks/use-audio-duration";
 import { CircularProgress } from "@mui/material";
 
 export const BookInfo = () => {
+  const [showAudioPlayer, setShowAudioPlayer] = useState(false);
   const location = useLocation();
   const { book } = location.state || {};
   const navigate = useNavigate();
   const { bookDetails, error, loading } = useBookDetails(book);
   const { numPages, loadingPdf } = useFetchNumPages(book);
   const audioDuration = useAudioDuration(book.enlaceAudio);
+  
+  const handleListenClick = () => {
+    setShowAudioPlayer(true);
+  };
 
   if (!book) {
     return (
@@ -63,8 +69,10 @@ export const BookInfo = () => {
               {book.nombreLibro}
             </h1>
             <div className="flex flex-row space-x-8">
-              <ButtonIcon SvgIcon={ListenIcon} variant="combColTrans2" />
-              <ButtonIcon SvgIcon={ReadIcon} variant="combColTrans2" />
+              <button onClick={handleListenClick}>
+                <ListenIcon />
+              </button>
+              <ReadIcon />
             </div>
           </div>
 
@@ -87,6 +95,11 @@ export const BookInfo = () => {
               {book.sinopsis}
             </p>
           </div>
+          {showAudioPlayer && (
+            <div className="mt-8">
+              <AudioPlayer setShowAudioPlayer={() => setShowAudioPlayer(false)} />
+            </div>
+          )}
         </div>
       </div>
     </div>
