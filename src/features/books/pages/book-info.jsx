@@ -1,9 +1,12 @@
 import React from "react";
+import { useState } from "react";
 import { NavbarO } from "../components/navbarO";
 import BackIcon from "../../../icons/back";
 import ListenIcon from "../../../icons/listen";
 import ReadIcon from "../../../icons/read";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
+import { ReadBook } from "../components/readBook";
+import CloseIcon from "../../../icons/close";
 
 export const BookInfo = () => {
   const frontBook = "/src/assets/icons/logo.svg";
@@ -15,10 +18,19 @@ export const BookInfo = () => {
   const duration = "5" + " min";
   const synopsis =
     "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi, ipsa. Labore eveniet sint quidem reprehenderit, id distinctio laudantium similique dolores ex. Sapiente minima quam aliquid molestias a iusto sequi officiis.";
+  const [showReadBook, setShowReadBook] = useState(false);
+  const handleReadClick = () => {
+    setShowReadBook(true);
+  };
 
+  const handleCloseReadBook = () => {
+    setShowReadBook(false);
+  };
+  const pdfBook = "/src/assets/pdfs/CAP1_IA.pdf";
   return (
     <div className="flex min-h-screen flex-col ">
       <NavbarO />
+
       <div className="flex items-center ml-8 p-2 ">
         <ButtonIcon SvgIcon={BackIcon} variant="combColTrans" />
       </div>
@@ -36,7 +48,11 @@ export const BookInfo = () => {
             </h1>
             <div className="flex flex-row space-x-8">
               <ButtonIcon SvgIcon={ListenIcon} variant="combColTrans2" />
-              <ButtonIcon SvgIcon={ReadIcon} variant="combColTrans2" />
+              <ButtonIcon
+                SvgIcon={ReadIcon}
+                variant="combColTrans2"
+                onClick={handleReadClick}
+              />
             </div>
           </div>
 
@@ -71,6 +87,16 @@ export const BookInfo = () => {
           </div>
         </div>
       </div>
+      {showReadBook && (
+        <div>
+          <ReadBook pdfBook={pdfBook} />
+          <ButtonIcon
+            onClick={handleCloseReadBook}
+            SvgIcon={CloseIcon}
+            variant="combColTrans"
+          />
+        </div>
+      )}
     </div>
   );
 };
