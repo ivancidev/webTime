@@ -8,7 +8,7 @@ export const Home = () => {
   const { data: books, isLoading, isError, error } = useGetData();
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center min-h-screen bg-primary-pri3">
         <CircularProgress color="success" size={100} />
       </div>
     );
@@ -16,7 +16,7 @@ export const Home = () => {
   if (isError) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="pb-12">
+    <div className="pb-12 bg-primary-pri3">
       <NavbarO />
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
         Los más vistos
