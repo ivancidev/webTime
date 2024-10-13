@@ -12,7 +12,7 @@ import EndAudio from "../../../icons/endAudio";
 import CloseIcon from "../../../icons/close";
 import Mute from "../../../icons/mute";
 
-export const AudioPlayer = () => {
+export const AudioPlayer = ({ setShowAudioPlayer }) => {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
@@ -216,7 +216,11 @@ export const AudioPlayer = () => {
         </div>
         <div className="flex flex-row pr-2">
           <span className="pr-1">{formatTime(duration)}</span>
-          <ButtonIcon SvgIcon={CloseIcon} variant="combColBlack" />
+          <ButtonIcon
+            SvgIcon={CloseIcon}
+            variant="combColBlack"
+            onClick={setShowAudioPlayer}
+          />
         </div>
       </div>
     </div>

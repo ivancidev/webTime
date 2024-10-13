@@ -80,7 +80,7 @@ export const BookInfo = () => {
           </div>
           {showAudioPlayer && (
             <div className="mt-8">
-              <AudioPlayer />
+              <AudioPlayer setShowAudioPlayer={() => setShowAudioPlayer(false)} />
             </div>
           )}
         </div>
