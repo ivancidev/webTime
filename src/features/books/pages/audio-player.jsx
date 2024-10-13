@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import ButtonIcon from "../../../components/Buttons/buttonIcon";
 import Button from "../../../components/Buttons/Button";
 import Play from "../../../icons/play";
-
 import Pause from "../../../icons/pause";
 import Volume from "../../../icons/volume";
 import StartAudio from "../../../icons/startAudio";
@@ -12,7 +11,7 @@ import EndAudio from "../../../icons/endAudio";
 import CloseIcon from "../../../icons/close";
 import Mute from "../../../icons/mute";
 
-export const AudioPlayer = ({ setShowAudioPlayer }) => {
+export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
@@ -22,9 +21,6 @@ export const AudioPlayer = ({ setShowAudioPlayer }) => {
   const [duration, setDuration] = useState(0);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [showSpeedOptions, setShowSpeedOptions] = useState(false);
-
-  const audioSrc =
-    "/src/assets/audios/WhatsApp-Audio-2024-10-11-at-00.21.46.mp3";
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -124,7 +120,7 @@ export const AudioPlayer = ({ setShowAudioPlayer }) => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-primary-pri3 justify-center items-center  flex flex-col h-20 text-primary-pri1">
-      <audio ref={audioRef} src={audioSrc} preload="metadata" />
+      <audio ref={audioRef} src={urlAudio} preload="metadata" />
       <div className="flex flex-col items-center w-full px-12">
         <input
           type="range"
