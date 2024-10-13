@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "../buttons/Button";
-import ButtonIcon from "../buttons/buttonIcon";
+import Button from "../Buttons/Button";
+import ButtonIcon from "../Buttons/buttonIcon";
 import CloseIcon from "../../icons/close";
 
 export const Modal = ({ onClose }) => {

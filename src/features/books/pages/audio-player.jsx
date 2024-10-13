@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import ButtonIcon from "../../../components/buttons/buttonIcon";
+import ButtonIcon from "../../../components/Buttons/buttonIcon";
+import Button from "../../../components/Buttons/Button";
 import Play from "../../../icons/play";
 
 import Pause from "../../../icons/pause";
 import Volume from "../../../icons/volume";
-import Button from "../../../components/buttons/Button";
 import StartAudio from "../../../icons/startAudio";
 import Back10 from "../../../icons/back10";
 import Forward10 from "../../../icons/forward10";
