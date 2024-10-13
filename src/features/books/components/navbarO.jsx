@@ -10,11 +10,14 @@ export const NavbarO = () => {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-primary-pri1 to-primary-pri2 h-20 flex items-center shadow-md px-6 relative">
+    <nav className="bg-primary-pri3 h-20 flex items-center px-6 relative">
       <img src={Logo} alt="Logo" className="h-16" />
-      
+
       <div className="flex justify-end w-screen lg:hidden px-2">
-        <button onClick={toggleMenu} className="focus:outline-none text-primary-pri3">
+        <button
+          onClick={toggleMenu}
+          className="focus:outline-none text-primary-pri1"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -32,7 +35,7 @@ export const NavbarO = () => {
 
       <ul className="hidden lg:flex items-center justify-end w-screen space-x-16 mr-16">
         <li>
-          <Link className="text-primary-pri3 font-label text-label-md hover:text-secondary-sec3">
+          <Link className="text-primary-pri2 font-label text-label-md hover:text-secondary-sec3">
             Inicio
           </Link>
         </li>
