@@ -20,10 +20,6 @@ export const BookInfo = () => {
   const { bookDetails, error, loading } = useBookDetails(book);
   const { numPages, loadingPdf } = useFetchNumPages(book);
   const audioDuration = useAudioDuration(book.enlaceAudio);
-  
-  const handleListenClick = () => {
-    setShowAudioPlayer(true);
-  };
 
   if (!book) {
     return (
@@ -69,10 +65,12 @@ export const BookInfo = () => {
               {book.nombreLibro}
             </h1>
             <div className="flex flex-row space-x-8">
-              <button onClick={handleListenClick}>
-                <ListenIcon />
-              </button>
-              <ReadIcon />
+              <ButtonIcon
+                SvgIcon={ListenIcon}
+                variant="combColTrans2"
+                onClick={() => setShowAudioPlayer(true)}
+              />
+              <ButtonIcon SvgIcon={ReadIcon} variant="combColTrans2" />
             </div>
           </div>
 
@@ -97,7 +95,9 @@ export const BookInfo = () => {
           </div>
           {showAudioPlayer && (
             <div className="mt-8">
-              <AudioPlayer setShowAudioPlayer={() => setShowAudioPlayer(false)} />
+              <AudioPlayer
+                setShowAudioPlayer={() => setShowAudioPlayer(false)}
+              />
             </div>
           )}
         </div>
