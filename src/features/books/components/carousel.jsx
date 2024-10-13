@@ -3,30 +3,28 @@ import { CardBook } from "./cardBook";
 import BeforeIcon from "../../../icons/before";
 import ButtonIcon from "../../../components/Buttons/buttonIcon";
 import NextIcon from "../../../icons/next";
+import ButtonIcon from "../../../components/Buttons/buttonIcon";
 
 export const Carousel = ({ books }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  //const itemsToShow = 4;
-  const [itemsToShow, setItemsToShow] = useState(4); // Estado para items a mostrar
+  const [itemsToShow, setItemsToShow] = useState(4);
 
-  // Ajustar itemsToShow según el tamaño de la ventana
   const handleResize = () => {
     const width = window.innerWidth;
     if (width < 700) {
-      setItemsToShow(1); // 1 tarjeta en pantallas pequeñas
+      setItemsToShow(1);
     } else if (width < 1050) {
-      setItemsToShow(2); // 2 tarjetas en pantallas medianas
+      setItemsToShow(2);
     } else if (width < 1300) {
-      setItemsToShow(3); // 3 tarjetas en pantallas grandes
+      setItemsToShow(3);
     } else {
-      setItemsToShow(4); // 4 tarjetas en pantallas extra grandes
+      setItemsToShow(4);
     }
   };
 
-  // useEffect para manejar cambios en el tamaño de la ventana
   useEffect(() => {
-    handleResize(); // Llama la función inicialmente
-    window.addEventListener("resize", handleResize); // Escucha cambios en el tamaño de la ventana
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize); // Limpia el evento al desmontar
@@ -74,8 +72,9 @@ export const Carousel = ({ books }) => {
             .map((book, index) => (
               <CardBook
                 key={index}
-                titleBook={book.title}
-                frontBook={book.image}
+                titleBook={book.nombreLibro}
+                frontBook={book.enlacePortada}
+                book={book}
               />
             ))}
         </div>

@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../Buttons/Button";
 import ButtonIcon from "../Buttons/buttonIcon";
 import CloseIcon from "../../icons/close";
+import ButtonIcon from "../Buttons/buttonIcon";
 
 export const Modal = ({ onClose }) => {
   return (
