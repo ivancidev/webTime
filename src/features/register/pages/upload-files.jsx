@@ -21,41 +21,57 @@ export const Files = () => {
   const location = useLocation();
   const { state } = location;
 
-  const [files, setFiles] = useState({
-    coverImage: null,
-    pdfFile: null,
-    audioFile: null,
-  });
-
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [uploadedMessage, setUploadedMessage] = useState("");
 
-  const handleFileChange = (fieldName, file) => {
-    setProgress(0);
-    setIsLoading(true); // Activa la barra de progreso al seleccionar un archivo
-    setFiles((prevFiles) => ({
-      ...prevFiles,
-      [fieldName]: file,
-    }));
-    // Personalización del mensaje según el archivo subido
-    let message = "Archivo subido con éxito";
-    switch (fieldName) {
-      case "coverImage":
-        message = "Imagen de portada subida con éxito";
-        break;
-      case "pdfFile":
-        message = "Archivo PDF subido con éxito";
-        break;
-      case "audioFile":
-        message = "Archivo de audio subido con éxito";
-        break;
-      default:
-        message = "Archivo subido con éxito";
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    clearErrors,
+    trigger,
+  } = useForm({
+    mode: "onChange", 
+    defaultValues: {
+      coverImage: null,
+      pdfFile: null,
+      audioFile: null,
+    },
+  });
+
+  const handleFileChange = async (fieldName, file, onChange) => {
+    if (file) {
+      onChange(file); 
+      const isValid = await trigger(fieldName);
+
+      if (isValid) {
+        setProgress(0);
+        setIsLoading(true); 
+        let message = "Archivo subido con éxito";
+        switch (fieldName) {
+          case "coverImage":
+            message = "Imagen de portada subida con éxito";
+            break;
+          case "pdfFile":
+            message = "Archivo PDF subido con éxito";
+            break;
+          case "audioFile":
+            message = "Archivo de audio subido con éxito";
+            break;
+          default:
+            message = "Archivo subido con éxito";
+        }
+        setUploadedMessage(message);
+      } else {
+      }
+    } else {
+      onChange(null);
+      clearErrors(fieldName);
     }
-    setUploadedMessage(message);
   };
-  
+
   useEffect(() => {
     if (isLoading) {
       const timer = setInterval(() => {
@@ -63,7 +79,7 @@ export const Files = () => {
           prevProgress >= 100 ? 100 : prevProgress + 20
         );
       }, 100);
-  
+
       const minimumTime = setTimeout(() => {
         clearInterval(timer);
         setProgress(100);
@@ -78,31 +94,16 @@ export const Files = () => {
             hideProgressBar: true,
             icon: false,
           });
-        }, 250); // Retardo opcional para que el progreso se vea completo
-  
-      }, 1000); // Mantener la barra visible por al menos 1 segundo
-  
+        }, 250); // Retardo
+
+      }, 1000); // Barra visible 1 segundo
+
       return () => {
         clearTimeout(minimumTime);
         clearInterval(timer);
       };
     }
   }, [isLoading, uploadedMessage]);
-  
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    setError,
-    clearErrors,
-  } = useForm({
-    mode: "onChange", // Cambiado a 'onChange' para validación inmediata
-    defaultValues: {
-      coverImage: null,
-      pdfFile: null,
-      audioFile: null,
-    },
-  });
 
   const uploadFileToSupabase = async (file, folderName) => {
     try {
@@ -133,6 +134,14 @@ export const Files = () => {
 
   const onSubmit = async (data) => {
     try {
+      setProgress(0);
+      setIsLoading(true); 
+      const uploadProgress = setInterval(() => {
+        setProgress((prevProgress) =>
+          prevProgress >= 100 ? 100 : prevProgress + 10
+        );
+      }, 200);
+
       const coverImageUrl = data.coverImage
         ? await uploadFileToSupabase(data.coverImage, "imagenes")
         : null;
@@ -142,6 +151,9 @@ export const Files = () => {
       const audioFileUrl = data.audioFile
         ? await uploadFileToSupabase(data.audioFile, "audios")
         : null;
+
+      clearInterval(uploadProgress);
+      setProgress(100);
 
       const { error } = await supabase.from("libro").insert([
         {
@@ -156,12 +168,30 @@ export const Files = () => {
         },
       ]);
       if (error) throw error;
-      alert("Archivos y datos subidos correctamente.");
+
+      toast.success("Archivos y datos subidos correctamente.", {
+        position: "top-center",
+        className: "bg-[#0E1217] text-primary-pri3",
+        theme: "dark",
+        transition: Zoom,
+        autoClose: 1500,
+        hideProgressBar: true,
+        icon: false,
+      });
     } catch (error) {
-      alert("Error al subir los archivos");
+      toast.error("Error al subir los archivos", {
+        position: "top-center",
+        className: "bg-[#0E1217] text-primary-pri3",
+        theme: "dark",
+        transition: Zoom,
+        autoClose: 1500,
+        hideProgressBar: true,
+        icon: false,
+      });
       console.error(error);
     } finally {
-      setIsLoading(false); // Desactiva el progreso al finalizar la carga
+      setIsLoading(false); 
+      setProgress(0);
     }
   };
 
@@ -169,7 +199,7 @@ export const Files = () => {
     <div className="flex min-h-screen flex-col">
       <ToastContainer />
       <Navbar />
-      <div className="h-5">
+      <div className="h-6">
         {isLoading && <LinearProgressComp progress={progress} />}
       </div>
       <div className="flex items-center p-2">
@@ -186,11 +216,14 @@ export const Files = () => {
               required: "La imagen de portada es requerida.",
               validate: {
                 fileType: (file) => {
-                  if (
-                    file &&
-                    !["image/png", "image/jpeg"].includes(file.type)
-                  ) {
-                    return "Solo se permiten archivos PNG o JPG.";
+                  if (file) {
+                    if (!["image/png", "image/jpeg"].includes(file.type)) {
+                      return "Solo se permiten archivos PNG o JPG.";
+                    }
+                    const extension = file.name.split(".").pop().toLowerCase();
+                    if (file.type === "image/jpeg" && extension !== "jpg") {
+                      return "Solo se permiten archivos PNG o JPG (no JPEG).";
+                    }
                   }
                   return true;
                 },
@@ -207,10 +240,12 @@ export const Files = () => {
                 fieldName="coverImage"
                 title="Imagen de portada"
                 SVG={FrontIcon}
-                onFileChange={onChange}
+                onFileChange={(file) => {
+                  handleFileChange("coverImage", file, onChange);
+                }}
                 value={value}
                 error={errors.coverImage?.message}
-                disablePreview={!!errors.coverImage} // Asegúrate de que sea booleano
+                disablePreview={!!errors.coverImage}
               />
             )}
           />
@@ -240,7 +275,9 @@ export const Files = () => {
                 fieldName="pdfFile"
                 title="Archivo PDF"
                 SVG={TextIcon}
-                onFileChange={onChange}
+                onFileChange={(file) => {
+                  handleFileChange("pdfFile", file, onChange);
+                }}
                 value={value}
                 error={errors.pdfFile?.message}
                 disablePreview={!!errors.pdfFile}
@@ -273,7 +310,9 @@ export const Files = () => {
                 fieldName="audioFile"
                 title="Archivo de audio"
                 SVG={AudioIcon}
-                onFileChange={onChange}
+                onFileChange={(file) => {
+                  handleFileChange("audioFile", file, onChange);
+                }}
                 value={value}
                 error={errors.audioFile?.message}
                 disablePreview={!!errors.audioFile}

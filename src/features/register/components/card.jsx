@@ -31,7 +31,7 @@ export const Card = ({
     if (!value || disablePreview) {
       return (
         <p className="font-body text-body-lg text-primary-pri3 mx-3">
-          No se eligió ningún archivo o el archivo no es válido.
+          No se eligió ningún archivo.
         </p>
       );
     }
@@ -74,8 +74,8 @@ export const Card = ({
   };
 
   return (
-    <div className="max-w-[1000px] w-full h-36 p-6 bg-transparent border border-neutral-neu2 rounded-[20px] flex flex-row justify-between px-4 mx-auto">
-      <div className="w-60 flex flex-col justify-center items-start">
+    <div className="max-w-[1000px] w-full md:h-36 p-6 bg-transparent border border-neutral-neu2 rounded-[20px] flex flex-col-reverse justify-center items-center md:flex-row md:justify-between px-4 mx-auto">
+      <div className="w-full md:w-60 flex flex-col justify-center items-start">
         <div className="flex flex-row mb-4">
           <SVG className="w-6 h-6" />
           <h3 className="font-title text-title-sm text-primary-pri3 ml-4">
@@ -96,7 +96,7 @@ export const Card = ({
           className="hidden"
           id={`upload-${fieldName}`}
         />
-        <div className="flex flex-row space-x-4 ml-20">
+        <div className="w-full flex flex-row items-center justify-center space-x-2 md:space-x-4 md:ml-20">
           <label
             htmlFor={`upload-${fieldName}`}
             className="cursor-pointer flex justify-center"
@@ -116,7 +116,7 @@ export const Card = ({
         {error && <p className="text-error-err2 text-sm mt-2">{error}</p>}
       </div>
 
-      <div className="w-60 flex items-center">{renderFilePreview()}</div>
+      <div className="w-60 flex items-center mb-4 md:mb-0 md:mt-0 ">{renderFilePreview()}</div>
     </div>
   );
 };
