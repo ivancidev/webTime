@@ -109,6 +109,10 @@ export default function FormBook() {
                 value: 2,
                 message: "No se permite menos de 2 caracteres",
               },
+              validate: {
+                noMultipleSpaces: (value) =>
+                  !/\s{2,}/.test(value) || "No se permiten múltiples espacios en blanco consecutivos",
+              }
             })}
           />
           {errors.synopsis && (
