@@ -12,7 +12,7 @@ export const Card = ({ fieldName, title, SVG, onFileChange }) => {
   const renderFilePreview = () => {
     if (!file) {
       return (
-        <p className="font-body text-body-lg text-primary-pri3 mx-3">
+        <p className="font-body text-body-md text-primary-pri2 mx-3">
           No se eligió ningún archivo
         </p>
       );
@@ -44,11 +44,11 @@ export const Card = ({ fieldName, title, SVG, onFileChange }) => {
   };
 
   return (
-    <div className="max-w-[1000px] w-full h-36 p-6 bg-transparent border border-neutral-neu2 rounded-[20px] flex flex-row justify-between px-4 mx-auto">
+    <div className="max-w-[1000px] w-full h-36 p-6 bg-transparent border border-primary-pri1 rounded-[20px] flex flex-row justify-between px-4 mx-auto">
       <div className="w-60 flex flex-col justify-center items-start">
         <div className="flex flex-row mb-4">
           <SVG className="w-6 h-6" />
-          <h3 className="font-title text-title-sm text-primary-pri3 ml-4">
+          <h3 className="font-title text-title-sm text-primary-pri1 ml-4">
             {title}
           </h3>
         </div>

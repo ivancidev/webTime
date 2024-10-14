@@ -44,7 +44,7 @@ export default function FormBook() {
             name="title"
             label="Titulo"
             placeholder="Escribe aquí"
-            className="w-full bg-transparent border-2 rounded border-[#F4EFF4] md:w-[340px] h-[50px] p-2 text-primary-pri3 font-body text-body-lg"
+            className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 text-neutral-neu0 font-body text-body-md"
             register={register}
             errors={errors}
             value={title}
@@ -86,14 +86,14 @@ export default function FormBook() {
         <div className="mt-7 px-10 md:px-3 lg:px-0">
           <label
             htmlFor="synopsis"
-            className="py-1 text-primary-pri3 font-label text-label-lg"
+            className="py-1 text-primary-pri2 font-label text-label-lg"
           >
             Sinopsis <span className="text-error-err2">*</span>
           </label>
           <textarea
             id="synopsis"
             name="synopsis"
-            className="w-full h-[130px] bg-transparent border-2 rounded border-[#F4EFF4] p-2 text-primary-pri3 font-body text-body-lg mt-2 resize-none"
+            className="w-full h-[130px] bg-transparent border-[1px] rounded border-neutral-neu0 p-2 text-neutral-neu0 font-body text-body-md mt-2 resize-none"
             placeholder="Escribe aquí"
             {...register("synopsis", {
               required: "La sinopsis no puede estar vacía",
