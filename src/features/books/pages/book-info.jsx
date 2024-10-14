@@ -3,7 +3,7 @@ import { NavbarO } from "../components/navbarO";
 import BackIcon from "../../../icons/back";
 import ListenIcon from "../../../icons/listen";
 import ReadIcon from "../../../icons/read";
-import ButtonIcon from "../../../components/buttons/buttonIcon";
+import ButtonIcon from "../../../components/Buttons/buttonIcon";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useBookDetails } from "../../../hooks/use-book-details";
 import { useFetchNumPages } from "../../../hooks/use-num-pages";
