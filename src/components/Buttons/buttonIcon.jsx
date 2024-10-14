@@ -13,6 +13,7 @@ const ButtonIcon = ({
     combCol3: "bg-secondary-sec1 hover:bg-secondary-sec2", // boton blue a skyblue
     combDesactivate: "bg-secondary-sec2 opacity-25", //boton desactivado
     combColTrans: "text-primary-pri3 bg-transparent hover:text-secondary-sec2", // boton sin fondo y con icono blanco
+    combColBlack: "text-primary-pri2 hover:text-secondary-sec1 ", //boton negro  que cambia a azul
     combColTrans2: "text-primary-pri3 bg-transparent hover:text-secondary-sec1", // boton sin fondo y con icono azul
 
     combColZ:
