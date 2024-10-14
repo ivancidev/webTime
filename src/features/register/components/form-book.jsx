@@ -43,6 +43,7 @@ export default function FormBook() {
           <InputText
             name="title"
             label="Titulo"
+            // maxLength={255}
             placeholder="Escribe aquí"
             className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 text-neutral-neu0 font-body text-body-md"
             register={register}

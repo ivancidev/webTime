@@ -16,7 +16,11 @@ import { ToastContainer } from "react-toastify";
 import { Link, useLocation } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
 import ButtonIcon from "../../../components/Buttons/buttonIcon";
+import Modal from "../../../components/modal/modal";
+import { useNavigate } from 'react-router-dom';
 
+
+const navigate = useNavigate();
 export const Files = () => {
   const location = useLocation();
   const { state } = location;
@@ -148,7 +152,18 @@ export const Files = () => {
       setIsLoading(false); // Desactiva el progreso al finalizar la carga
     }
   };
+  const [isModalOpen, setIsModalOpen]= useState(false);
 
+  const openmod = () => {
+    setIsModalOpen(true);
+  };
+  const closemod =()=>{
+    setIsModalOpen(false);
+  };
+  // const handleConfirm=()=>{
+  //   console.log("Redirigiendo");
+  //   navigate("/");
+  // };
   return (
     <div className="flex min-h-screen flex-col bg-primary-pri3">
       <ToastContainer />
@@ -182,7 +197,17 @@ export const Files = () => {
         />
       </section>
       <div className="flex flex-col-reverse sm:flex-row w-full justify-end gap-6 mx-auto px-16 py-8 sm:py-10">
-        <Button text="Cancelar" variant="combCol2" SvgIcon={CancelIcon} />
+        <Button 
+          text="Cancelar" 
+          variant="combCol2" 
+          SvgIcon={CancelIcon} 
+          onClick={openmod}
+        />
+        {isModalOpen && <Modal 
+          onClose={closemod} 
+          text="¿Estás seguro de que deseas cancelar?" 
+          onConfirm = { ()=> navigate("/") }
+          />}
         <Button
           text="Subir archivos"
           variant="combCol1"
