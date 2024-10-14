@@ -156,7 +156,7 @@ export const Files = () => {
       <div className="h-5">
         {isLoading && <LinearProgressComp progress={progress} />}
       </div>
-      <div className="pl-8">
+      <div className="sticky top-0 flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-50">
         <ButtonIcon SvgIcon={BackIcon} />
       </div>
       <section className="flex flex-col justify-center items-center gap-4 mx-3">
