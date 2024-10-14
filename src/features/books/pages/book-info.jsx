@@ -11,6 +11,8 @@ import { DetailRow } from "../components/detail-row";
 import { AudioPlayer } from "./audio-player";
 import { useAudioDuration } from "../../../hooks/use-audio-duration";
 import { CircularProgress } from "@mui/material";
+import { ReadBook } from "../components/readBook";
+import CloseIcon from "../../../icons/close";
 
 export const BookInfo = () => {
   const [showAudioPlayer, setShowAudioPlayer] = useState(false);
@@ -20,6 +22,11 @@ export const BookInfo = () => {
   const { bookDetails, error, loading } = useBookDetails(book);
   const { numPages, loadingPdf } = useFetchNumPages(book);
   const audioDuration = useAudioDuration(book.enlaceAudio);
+  const [showReadBook, setShowReadBook] = useState(false);
+  
+  const handleReadClick = () => {
+    setShowReadBook(true);
+  };
 
   if (!book) {
     return (
@@ -42,9 +49,14 @@ export const BookInfo = () => {
     return <div>Error al obtener detalles del libro: {error.message}</div>;
   }
 
+  const handleCloseReadBook = () => {
+    setShowReadBook(false);
+  };
+  const pdfBook = "/src/assets/pdfs/CAP1_IA.pdf";
   return (
     <div className="flex min-h-screen flex-col ">
       <NavbarO />
+
       <div className="flex items-center ml-8 p-2 ">
         <ButtonIcon
           SvgIcon={BackIcon}
@@ -70,7 +82,11 @@ export const BookInfo = () => {
                 variant="combColTrans2"
                 onClick={() => setShowAudioPlayer(true)}
               />
-              <ButtonIcon SvgIcon={ReadIcon} variant="combColTrans2" />
+              <ButtonIcon
+                SvgIcon={ReadIcon}
+                variant="combColTrans2"
+                onClick={handleReadClick}
+              />
             </div>
           </div>
 
@@ -103,6 +119,11 @@ export const BookInfo = () => {
           )}
         </div>
       </div>
+      {showReadBook && (
+        <div>
+          <ReadBook pdfUrl={pdfBook} onClose={handleCloseReadBook} />
+        </div>
+      )}
     </div>
   );
 };
