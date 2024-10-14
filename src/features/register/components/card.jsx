@@ -65,7 +65,9 @@ export const Card = ({
 
   const handleInputChange = (event) => {
     const selectedFile = event.target.files[0];
-    onFileChange(selectedFile);
+    if (selectedFile) {
+      onFileChange(selectedFile);
+    }
   };
 
   const handleRemoveFile = () => {

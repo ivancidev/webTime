@@ -31,6 +31,7 @@ export const Files = () => {
     formState: { errors },
     clearErrors,
     trigger,
+    setValue, // Asegúrate de tener setValue si es necesario
   } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -63,11 +64,14 @@ export const Files = () => {
             message = "Archivo subido con éxito";
         }
         setUploadedMessage(message);
-      } else {
       }
     } else {
+      // Manejar la eliminación del archivo
       onChange(null);
       clearErrors(fieldName);
+      // Opcional: Resetear el progreso y estado de carga si es necesario
+      setProgress(0);
+      setIsLoading(false);
     }
   };
 
