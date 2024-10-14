@@ -1,6 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import ButtonIcon from "../../../components/buttons/buttonIcon";
-import Button from "../../../components/buttons/button";
 import Play from "../../../icons/play";
 import Pause from "../../../icons/pause";
 import Volume from "../../../icons/volume";
@@ -10,6 +8,8 @@ import Forward10 from "../../../icons/forward10";
 import EndAudio from "../../../icons/endAudio";
 import CloseIcon from "../../../icons/close";
 import Mute from "../../../icons/mute";
+import Button from "../../../components/buttons/button";
+import ButtonIcon from "../../../components/buttons/buttonIcon";
 
 export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
   const audioRef = useRef(null);

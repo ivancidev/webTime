@@ -12,9 +12,9 @@ export default function BackIcon() {
       <path
         d="M19 12H5M5 12L12 19M5 12L12 5"
         stroke="white"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
