@@ -55,7 +55,7 @@ export const Card = ({
     }
 
     return (
-      <p className="font-body text-body-md text-primary-pri3">
+      <p className="font-body text-body-md text-primary-pri1">
         Archivo seleccionado: {value.name}
       </p>
     );
@@ -116,7 +116,7 @@ export const Card = ({
         {error && <p className="text-error-err2 text-sm mt-2">{error}</p>}
       </div>
 
-      <div className="w-60 flex items-center mb-4 md:mb-0 md:mt-0 ">{renderFilePreview()}</div>
+      <div className="w-60 flex items-center mb-4 md:mb-0 md:mt-0">{renderFilePreview()}</div>
     </div>
   );
 };

@@ -3,7 +3,6 @@ import { useForm, Controller } from "react-hook-form";
 import { Navbar } from "../components/navbar";
 import { Card } from "../components/card";
 import LinearProgressComp from "../../../components/progress/linear";
-import ImagePre from "../../../icons/imgPreview";
 import CancelIcon from "../../../icons/cancel";
 import UploadIcon from "../../../icons/upload";
 import FrontIcon from "../../../icons/front";
@@ -13,28 +12,27 @@ import BackIcon from "../../../icons/back";
 import { toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
-import ButtonIcon from "../../../components/Buttons/buttonIcon";
+import ButtonIcon from "../../../components/buttons/buttonIcon";
 import Button from "../../../components/buttons/button";
 
 export const Files = () => {
   const location = useLocation();
   const { state } = location;
-
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [uploadedMessage, setUploadedMessage] = useState("");
+  const navigate = useNavigate();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-    setError,
     clearErrors,
     trigger,
   } = useForm({
-    mode: "onChange", 
+    mode: "onChange",
     defaultValues: {
       coverImage: null,
       pdfFile: null,
@@ -44,12 +42,12 @@ export const Files = () => {
 
   const handleFileChange = async (fieldName, file, onChange) => {
     if (file) {
-      onChange(file); 
+      onChange(file);
       const isValid = await trigger(fieldName);
 
       if (isValid) {
         setProgress(0);
-        setIsLoading(true); 
+        setIsLoading(true);
         let message = "Archivo subido con éxito";
         switch (fieldName) {
           case "coverImage":
@@ -80,7 +78,6 @@ export const Files = () => {
           prevProgress >= 100 ? 100 : prevProgress + 20
         );
       }, 100);
-
 
       const minimumTime = setTimeout(() => {
         clearInterval(timer);
@@ -136,7 +133,7 @@ export const Files = () => {
   const onSubmit = async (data) => {
     try {
       setProgress(0);
-      setIsLoading(true); 
+      setIsLoading(true);
       const uploadProgress = setInterval(() => {
         setProgress((prevProgress) =>
           prevProgress >= 100 ? 100 : prevProgress + 10
@@ -191,7 +188,7 @@ export const Files = () => {
       });
       console.error(error);
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
       setProgress(0);
     }
   };
@@ -204,7 +201,7 @@ export const Files = () => {
         {isLoading && <LinearProgressComp progress={progress} />}
       </div>
       <div className="mb-6 pl-5 md:pl-8">
-        <ButtonIcon SvgIcon={BackIcon} />
+        <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/register")} />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="flex flex-col justify-center items-center gap-4 mx-3">
@@ -291,7 +288,10 @@ export const Files = () => {
               required: "El archivo de audio es requerido.",
               validate: {
                 fileType: (file) => {
-                  if (file && !["audio/mpeg", "audio/mp3"].includes(file.type)) {
+                  if (
+                    file &&
+                    !["audio/mpeg", "audio/mp3"].includes(file.type)
+                  ) {
                     return "Solo se permiten archivos MP3.";
                   }
                   return true;
