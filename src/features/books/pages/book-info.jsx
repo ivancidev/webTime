@@ -89,12 +89,7 @@ export const BookInfo = () => {
       </div>
       {showReadBook && (
         <div>
-          <ReadBook pdfBook={pdfBook} />
-          <ButtonIcon
-            onClick={handleCloseReadBook}
-            SvgIcon={CloseIcon}
-            variant="combColTrans"
-          />
+          <ReadBook pdfUrl={pdfBook} onClose={handleCloseReadBook} />
         </div>
       )}
     </div>
