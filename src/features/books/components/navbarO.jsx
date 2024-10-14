@@ -13,21 +13,22 @@ export const NavbarO = () => {
     <nav className="bg-primary-pri3 h-20 flex items-center px-6 relative">
       <img src={Logo} alt="Logo" className="h-16" />
 
-      <div className="flex justify-end w-screen lg:hidden px-2">
+      <div className="flex justify-end w-screen lg:hidden px-2 ">
         <button
           onClick={toggleMenu}
-          className="focus:outline-none text-primary-pri1"
+          className="focus:outline-none"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
-            stroke={isOpen ? "#F4EFF4" : "#AEAAAE"}
+            stroke={isOpen ? "#000000" : "#AEAAAE"}
           >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth={2}
               d="M4 6h16M4 12h16m-7 6h7"
+              fill="currentColor"
             />
           </svg>
         </button>
@@ -52,11 +53,11 @@ export const NavbarO = () => {
       </ul>
 
       {isOpen && (
-        <div className="flex lg:hidden absolute top-20 right-0 w-30 bg-[#0E1217] shadow-lg z-100">
+        <div className="flex lg:hidden absolute top-20 right-0 w-30 bg-primary-pri3 shadow-lg z-100">
           <ul className="flex flex-col items-start p-4 space-y-4 w-full">
             <li>
               <Link
-                className="text-primary-pri3 font-label text-label-md hover:text-secondary-sec3"
+                className="text-primary-pri1 font-label text-label-md hover:text-secondary-sec3"
                 onClick={toggleMenu}
               >
                 Inicio

@@ -3,7 +3,6 @@ import { NavbarO } from "../components/navbarO";
 import BackIcon from "../../../icons/back";
 import ListenIcon from "../../../icons/listen";
 import ReadIcon from "../../../icons/read";
-import ButtonIcon from "../../../components/Buttons/buttonIcon";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useBookDetails } from "../../../hooks/use-book-details";
 import { useFetchNumPages } from "../../../hooks/use-num-pages";
@@ -12,7 +11,7 @@ import { AudioPlayer } from "./audio-player";
 import { useAudioDuration } from "../../../hooks/use-audio-duration";
 import { CircularProgress } from "@mui/material";
 import { ReadBook } from "../components/readBook";
-import CloseIcon from "../../../icons/close";
+import ButtonIcon from "../../../components/buttons/buttonIcon";
 
 export const BookInfo = () => {
   const [showAudioPlayer, setShowAudioPlayer] = useState(false);
@@ -23,10 +22,6 @@ export const BookInfo = () => {
   const { numPages, loadingPdf } = useFetchNumPages(book);
   const audioDuration = useAudioDuration(book.enlaceAudio);
   const [showReadBook, setShowReadBook] = useState(false);
-  
-  const handleReadClick = () => {
-    setShowReadBook(true);
-  };
 
   if (!book) {
     return (
@@ -81,7 +76,7 @@ export const BookInfo = () => {
               <ButtonIcon
                 SvgIcon={ReadIcon}
                 variant="combColBlack"
-                onClick={handleReadClick}
+                onClick={() => setShowReadBook(true)}
               />
             </div>
           </div>

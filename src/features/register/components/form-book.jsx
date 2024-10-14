@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { Dropdown } from "../../../components/dropdown/dropdown";
-import { useFetch } from "../../../hooks/useFetch";
 import { useForm } from "react-hook-form";
 import { InputText } from "../../../components/input/input";
 import FooterButtons from "../components/footer-buttons";
 import { useNavigate } from "react-router-dom";
+import { useGetTable } from "../../../hooks/use-get-table";
 
 export default function FormBook() {
-  const { data: authors } = useFetch("autor");
-  const { data: categories } = useFetch("categoria");
-  const { data: languages } = useFetch("idioma");
+  const { data: authors } = useGetTable("autor");
+  const { data: categories } = useGetTable("categoria");
+  const { data: languages } = useGetTable("idioma");
   const [title, setTitle] = useState("");
   const navigation = useNavigate();
 

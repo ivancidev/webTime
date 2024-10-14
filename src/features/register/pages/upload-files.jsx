@@ -1,63 +1,75 @@
 import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { Navbar } from "../components/navbar";
 import { Card } from "../components/card";
 import LinearProgressComp from "../../../components/progress/linear";
-import ImagePre from "../../../icons/imgPreview";
 import CancelIcon from "../../../icons/cancel";
 import UploadIcon from "../../../icons/upload";
 import FrontIcon from "../../../icons/front";
 import TextIcon from "../../../icons/text";
 import AudioIcon from "../../../icons/audio";
-import Button from "../../../components/Buttons/Button";
 import BackIcon from "../../../icons/back";
+import Button from "../../../components/Buttons/Button";
 import { toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
 import ButtonIcon from "../../../components/Buttons/buttonIcon";
 import Modal from "../../../components/modal/modal";
-import { useNavigate } from 'react-router-dom';
 
-
-const navigate = useNavigate();
 export const Files = () => {
   const location = useLocation();
   const { state } = location;
-
-  const [files, setFiles] = useState({
-    coverImage: null,
-    pdfFile: null,
-    audioFile: null,
-  });
-
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [uploadedMessage, setUploadedMessage] = useState("");
+  const navigate = useNavigate();
 
-  const handleFileChange = (fieldName, file) => {
-    setProgress(0);
-    setIsLoading(true); // Activa la barra de progreso al seleccionar un archivo
-    setFiles((prevFiles) => ({
-      ...prevFiles,
-      [fieldName]: file,
-    }));
-    // Personalización del mensaje según el archivo subido
-    let message = "Archivo subido con éxito";
-    switch (fieldName) {
-      case "coverImage":
-        message = "Imagen de portada subida con éxito";
-        break;
-      case "pdfFile":
-        message = "Archivo PDF subido con éxito";
-        break;
-      case "audioFile":
-        message = "Archivo de audio subido con éxito";
-        break;
-      default:
-        message = "Archivo subido con éxito";
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    clearErrors,
+    trigger,
+  } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      coverImage: null,
+      pdfFile: null,
+      audioFile: null,
+    },
+  });
+
+  const handleFileChange = async (fieldName, file, onChange) => {
+    if (file) {
+      onChange(file);
+      const isValid = await trigger(fieldName);
+
+      if (isValid) {
+        setProgress(0);
+        setIsLoading(true);
+        let message = "Archivo subido con éxito";
+        switch (fieldName) {
+          case "coverImage":
+            message = "Imagen de portada subida con éxito";
+            break;
+          case "pdfFile":
+            message = "Archivo PDF subido con éxito";
+            break;
+          case "audioFile":
+            message = "Archivo de audio subido con éxito";
+            break;
+          default:
+            message = "Archivo subido con éxito";
+        }
+        setUploadedMessage(message);
+      } else {
+      }
+    } else {
+      onChange(null);
+      clearErrors(fieldName);
     }
-    setUploadedMessage(message);
   };
 
   useEffect(() => {
@@ -119,17 +131,28 @@ export const Files = () => {
     }
   };
 
-  const handleUpload = async () => {
+  const onSubmit = async (data) => {
     try {
-      const coverImageUrl = await uploadFileToSupabase(
-        files.coverImage,
-        "imagenes"
-      );
-      const pdfFileUrl = await uploadFileToSupabase(files.pdfFile, "pdfs");
-      const audioFileUrl = await uploadFileToSupabase(
-        files.audioFile,
-        "audios"
-      );
+      setProgress(0);
+      setIsLoading(true);
+      const uploadProgress = setInterval(() => {
+        setProgress((prevProgress) =>
+          prevProgress >= 100 ? 100 : prevProgress + 10
+        );
+      }, 200);
+
+      const coverImageUrl = data.coverImage
+        ? await uploadFileToSupabase(data.coverImage, "imagenes")
+        : null;
+      const pdfFileUrl = data.pdfFile
+        ? await uploadFileToSupabase(data.pdfFile, "pdfs")
+        : null;
+      const audioFileUrl = data.audioFile
+        ? await uploadFileToSupabase(data.audioFile, "audios")
+        : null;
+
+      clearInterval(uploadProgress);
+      setProgress(100);
 
       const { error } = await supabase.from("libro").insert([
         {
@@ -144,12 +167,30 @@ export const Files = () => {
         },
       ]);
       if (error) throw error;
-      alert("Archivos y datos subidos correctamente.");
+
+      toast.success("Archivos y datos subidos correctamente.", {
+        position: "top-center",
+        className: "bg-[#0E1217] text-primary-pri3",
+        theme: "dark",
+        transition: Zoom,
+        autoClose: 1500,
+        hideProgressBar: true,
+        icon: false,
+      });
     } catch (error) {
-      alert("Error al subir los archivos");
+      toast.error("Error al subir los archivos", {
+        position: "top-center",
+        className: "bg-[#0E1217] text-primary-pri3",
+        theme: "dark",
+        transition: Zoom,
+        autoClose: 1500,
+        hideProgressBar: true,
+        icon: false,
+      });
       console.error(error);
     } finally {
-      setIsLoading(false); // Desactiva el progreso al finalizar la carga
+      setIsLoading(false);
+      setProgress(0);
     }
   };
   const [isModalOpen, setIsModalOpen]= useState(false);
@@ -168,53 +209,148 @@ export const Files = () => {
     <div className="flex min-h-screen flex-col bg-primary-pri3">
       <ToastContainer />
       <Navbar />
-      <div className="h-5">
+      <div className="h-6">
         {isLoading && <LinearProgressComp progress={progress} />}
       </div>
-      <div className="pl-8">
-        <ButtonIcon SvgIcon={BackIcon} />
+      <div className="mb-6 pl-5 md:pl-8">
+        <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/register")} />
       </div>
-      <section className="flex flex-col justify-center items-center gap-4 mx-3">
-        <Card
-          fieldName="coverImage"
-          title="Imagen de portada"
-          SVG={FrontIcon}
-          ImageSVG={ImagePre}
-          onFileChange={handleFileChange}
-        />
-        <Card
-          fieldName="pdfFile"
-          title="Archivo PDF"
-          SVG={TextIcon}
-          ImageSVG={ImagePre}
-          onFileChange={handleFileChange}
-        />
-        <Card
-          fieldName="audioFile"
-          title="Archivo de audio"
-          SVG={AudioIcon}
-          onFileChange={handleFileChange}
-        />
-      </section>
-      <div className="flex flex-col-reverse sm:flex-row w-full justify-end gap-6 mx-auto px-16 py-8 sm:py-10">
-        <Button 
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <section className="flex flex-col justify-center items-center gap-4 mx-3">
+          <Controller
+            name="coverImage"
+            control={control}
+            rules={{
+              required: "La imagen de portada es requerida.",
+              validate: {
+                fileType: (file) => {
+                  if (file) {
+                    if (!["image/png", "image/jpeg"].includes(file.type)) {
+                      return "Solo se permiten archivos PNG o JPG.";
+                    }
+                    const extension = file.name.split(".").pop().toLowerCase();
+                    if (file.type === "image/jpeg" && extension !== "jpg") {
+                      return "Solo se permiten archivos PNG o JPG (no JPEG).";
+                    }
+                  }
+                  return true;
+                },
+                fileSize: (file) => {
+                  if (file && file.size > 5 * 1024 * 1024) {
+                    return "El archivo imagen no puede exceder 5MB.";
+                  }
+                  return true;
+                },
+              },
+            }}
+            render={({ field: { onChange, value } }) => (
+              <Card
+                fieldName="coverImage"
+                title="Imagen de portada"
+                SVG={FrontIcon}
+                onFileChange={(file) => {
+                  handleFileChange("coverImage", file, onChange);
+                }}
+                value={value}
+                error={errors.coverImage?.message}
+                disablePreview={!!errors.coverImage}
+              />
+            )}
+          />
+
+          <Controller
+            name="pdfFile"
+            control={control}
+            rules={{
+              required: "El archivo PDF es requerido.",
+              validate: {
+                fileType: (file) => {
+                  if (file && file.type !== "application/pdf") {
+                    return "Solo se permiten archivos PDF.";
+                  }
+                  return true;
+                },
+                fileSize: (file) => {
+                  if (file && file.size > 60 * 1024 * 1024) {
+                    return "El archivo PDF no puede exceder 60MB.";
+                  }
+                  return true;
+                },
+              },
+            }}
+            render={({ field: { onChange, value } }) => (
+              <Card
+                fieldName="pdfFile"
+                title="Archivo PDF"
+                SVG={TextIcon}
+                onFileChange={(file) => {
+                  handleFileChange("pdfFile", file, onChange);
+                }}
+                value={value}
+                error={errors.pdfFile?.message}
+                disablePreview={!!errors.pdfFile}
+              />
+            )}
+          />
+
+          <Controller
+            name="audioFile"
+            control={control}
+            rules={{
+              required: "El archivo de audio es requerido.",
+              validate: {
+                fileType: (file) => {
+                  if (
+                    file &&
+                    !["audio/mpeg", "audio/mp3"].includes(file.type)
+                  ) {
+                    return "Solo se permiten archivos MP3.";
+                  }
+                  return true;
+                },
+                fileSize: (file) => {
+                  if (file && file.size > 600 * 1024 * 1024) {
+                    return "El archivo audio no puede exceder 600MB.";
+                  }
+                  return true;
+                },
+              },
+            }}
+            render={({ field: { onChange, value } }) => (
+              <Card
+                fieldName="audioFile"
+                title="Archivo de audio"
+                SVG={AudioIcon}
+                onFileChange={(file) => {
+                  handleFileChange("audioFile", file, onChange);
+                }}
+                value={value}
+                error={errors.audioFile?.message}
+                disablePreview={!!errors.audioFile}
+              />
+            )}
+          />
+        </section>
+        <div className="flex flex-col-reverse sm:flex-row w-full justify-end gap-6 mx-auto px-16 py-8 sm:py-10">
+          <Button 
           text="Cancelar" 
           variant="combCol2" 
           SvgIcon={CancelIcon} 
           onClick={openmod}
-        />
-        {isModalOpen && <Modal 
-          onClose={closemod} 
-          text="¿Estás seguro de que deseas cancelar?" 
-          onConfirm = { ()=> navigate("/") }
+          />
+          {isModalOpen && <Modal 
+            onClose={closemod} 
+            text="¿Estás seguro de que deseas cancelar?" 
+            onConfirm = { ()=> navigate("/") }
           />}
-        <Button
-          text="Subir archivos"
-          variant="combCol1"
-          SvgIcon={UploadIcon}
-          onClick={handleUpload}
-        />
-      </div>
+          <Button
+            type="submit"
+            text="Subir archivos"
+            variant="combCol1"
+            SvgIcon={UploadIcon}
+          />
+        </div>
+      </form>
     </div>
   );
 };
