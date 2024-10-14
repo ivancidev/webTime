@@ -13,9 +13,9 @@ export default function Mute() {
         <path
           d="M30.6667 12.0003L22.6667 20.0003M22.6667 12.0003L30.6667 20.0003M14.6667 6.66699L8.00008 12.0003H2.66675V20.0003H8.00008L14.6667 25.3337V6.66699Z"
           stroke="currentColor"
-          stroke-width="3"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <defs>

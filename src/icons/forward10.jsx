@@ -9,13 +9,13 @@ export default function Forward10() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_11_1833)">
+      <g clipPath="url(#clip0_11_1833)">
         <path
           d="M28.75 5.00002V12.5M28.75 12.5H21.25M28.75 12.5L22.9625 7.05002C21.2382 5.32469 19 4.2065 16.5849 3.86395C14.1699 3.52139 11.7089 3.97304 9.57291 5.15082C7.43689 6.3286 5.74153 8.16871 4.7423 10.3939C3.74307 12.619 3.49411 15.1086 4.03293 17.4876C4.57175 19.8665 5.86917 22.0059 7.72967 23.5834C9.59016 25.1608 11.9129 26.0908 14.348 26.2333C16.783 26.3757 19.1984 25.7229 21.2302 24.3731C23.2619 23.0234 24.7999 21.0499 25.6125 18.75"
           stroke="currentColor"
-          stroke-width="4"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <path
