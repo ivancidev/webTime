@@ -102,7 +102,7 @@ export const BookInfo = () => {
             <div className="mt-8">
               <AudioPlayer
                 setShowAudioPlayer={() => setShowAudioPlayer(false)}
-                //urlAudio={book.enlaceAudio}
+                urlAudio={book.enlaceAudio}
               />
             </div>
           )}
