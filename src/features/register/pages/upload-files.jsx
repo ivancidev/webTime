@@ -10,11 +10,12 @@ import TextIcon from "../../../icons/text";
 import AudioIcon from "../../../icons/audio";
 import Button from "../../../components/Buttons/Button";
 import BackIcon from "../../../icons/back";
-import { toast, Zoom } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
+import { toast, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 import { Link, useLocation } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
+import ButtonIcon from "../../../components/Buttons/buttonIcon";
 
 export const Files = () => {
   const location = useLocation();
@@ -54,7 +55,7 @@ export const Files = () => {
     }
     setUploadedMessage(message);
   };
-  
+
   useEffect(() => {
     if (isLoading) {
       const timer = setInterval(() => {
@@ -62,7 +63,7 @@ export const Files = () => {
           prevProgress >= 100 ? 100 : prevProgress + 20
         );
       }, 100);
-  
+
       const minimumTime = setTimeout(() => {
         clearInterval(timer);
         setProgress(100);
@@ -78,16 +79,15 @@ export const Files = () => {
             icon: false,
           });
         }, 250); // Retardo opcional para que el progreso se vea completo
-  
       }, 1000); // Mantener la barra visible por al menos 1 segundo
-  
+
       return () => {
         clearTimeout(minimumTime);
         clearInterval(timer);
       };
     }
   }, [isLoading, uploadedMessage]);
-  
+
   const uploadFileToSupabase = async (file, folderName) => {
     try {
       const fileName = `${Date.now()}_${file.name}`;
@@ -150,16 +150,14 @@ export const Files = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-primary-pri3">
       <ToastContainer />
       <Navbar />
       <div className="h-5">
         {isLoading && <LinearProgressComp progress={progress} />}
       </div>
-      <div className="flex items-center p-2">
-        <Link to="/register">
-          <BackIcon className="cursor-pointer" />
-        </Link>
+      <div className="pl-8">
+        <ButtonIcon SvgIcon={BackIcon} />
       </div>
       <section className="flex flex-col justify-center items-center gap-4 mx-3">
         <Card
