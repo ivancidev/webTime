@@ -42,7 +42,7 @@ export default function FormBook() {
         <div className="px-10 md:px-3 lg:px-0 flex flex-col md:flex-row justify-between">
           <InputText
             name="title"
-            label="Titulo"
+            label="Título"
             placeholder="Escribe aquí"
             className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 text-neutral-neu0 font-body text-body-md"
             register={register}
