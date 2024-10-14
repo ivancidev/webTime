@@ -53,11 +53,7 @@ export const NavbarO = () => {
       </ul>
 
       {isOpen && (
-<<<<<<< HEAD
-        <div className="flex lg:hidden absolute top-20 right-0 w-28 bg-[#0E1217] bg-opacity-100 shadow-lg z-50">
-=======
         <div className="flex lg:hidden absolute top-20 right-0 w-30 bg-primary-pri3 shadow-lg z-100">
->>>>>>> 4490eec2fa87f14185391bafe90f9d7ff1d14ba2
           <ul className="flex flex-col items-start p-4 space-y-4 w-full">
             <li>
               <Link

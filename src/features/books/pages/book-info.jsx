@@ -55,10 +55,10 @@ export const BookInfo = () => {
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/")} />
       </div>
       <div className="flex flex-col lg:flex-row items-center md:justify-evenly px-5">
-        <div className="relative w-full max-w-[80%] aspect-square md:w-[440px] md:h-[400px] bg-neutral-neu2 rounded-3xl">
+        <div className="relative w-full max-w-[80%] aspect-square sm:w-[440px] md:h-[400px] bg-neutral-neu2 rounded-3xl">
           <img
             src={book.enlacePortada}
-            className="w-80 h-[470px] rounded-3xl absolute inset-0 m-auto object-cover"
+            className="w-full max-w-[80%] sm:w-80 sm:h-[470px] rounded-3xl absolute inset-0 m-auto object-cover"
           />
         </div>
         <div className="mx-5">
@@ -102,7 +102,7 @@ export const BookInfo = () => {
             <div className="mt-8">
               <AudioPlayer
                 setShowAudioPlayer={() => setShowAudioPlayer(false)}
-                urlAudio={book.enlaceAudio}
+                //urlAudio={book.enlaceAudio}
               />
             </div>
           )}
