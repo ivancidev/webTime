@@ -11,6 +11,8 @@ import { DetailRow } from "../components/detail-row";
 import { AudioPlayer } from "./audio-player";
 import { useAudioDuration } from "../../../hooks/use-audio-duration";
 import { CircularProgress } from "@mui/material";
+import { ReadBook } from "../components/readBook";
+import CloseIcon from "../../../icons/close";
 
 export const BookInfo = () => {
   const [showAudioPlayer, setShowAudioPlayer] = useState(false);
@@ -20,6 +22,11 @@ export const BookInfo = () => {
   const { bookDetails, error, loading } = useBookDetails(book);
   const { numPages, loadingPdf } = useFetchNumPages(book);
   const audioDuration = useAudioDuration(book.enlaceAudio);
+  const [showReadBook, setShowReadBook] = useState(false);
+  
+  const handleReadClick = () => {
+    setShowReadBook(true);
+  };
 
   if (!book) {
     return (
@@ -31,7 +38,7 @@ export const BookInfo = () => {
 
   if (loading || loadingPdf || audioDuration === null) {
     return (
-      <div className="flex flex-col justify-center items-center min-h-screen">
+      <div className="flex flex-col justify-center items-center min-h-screen bg-primary-pri3">
         <CircularProgress color="success" size={80} />
         <h2 className="mt-4 text-white text-xl">Cargando libro...</h2>
       </div>
@@ -42,21 +49,22 @@ export const BookInfo = () => {
     return <div>Error al obtener detalles del libro: {error.message}</div>;
   }
 
+  const handleCloseReadBook = () => {
+    setShowReadBook(false);
+  };
+  const pdfBook = "/src/assets/pdfs/CAP1_IA.pdf";
   return (
-    <div className="flex min-h-screen flex-col ">
+    <div className="flex min-h-screen flex-col bg-primary-pri3">
       <NavbarO />
+
       <div className="flex items-center ml-8 p-2 ">
-        <ButtonIcon
-          SvgIcon={BackIcon}
-          variant="combColTrans"
-          onClick={() => navigate("/")}
-        />
+        <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/")} />
       </div>
       <div className="flex flex-row justify-evenly">
         <div className="relative w-[440px] h-[400px] bg-neutral-neu2 rounded-3xl">
           <img
             src={book.enlacePortada}
-            className="w-80 h-[520px] rounded-3xl absolute inset-0 m-auto"
+            className="w-80 h-[470px] rounded-3xl absolute inset-0 m-auto object-cover"
           />
         </div>
         <div>
@@ -67,10 +75,14 @@ export const BookInfo = () => {
             <div className="flex flex-row space-x-8">
               <ButtonIcon
                 SvgIcon={ListenIcon}
-                variant="combColTrans2"
+                variant="combColBlack"
                 onClick={() => setShowAudioPlayer(true)}
               />
-              <ButtonIcon SvgIcon={ReadIcon} variant="combColTrans2" />
+              <ButtonIcon
+                SvgIcon={ReadIcon}
+                variant="combColBlack"
+                onClick={handleReadClick}
+              />
             </div>
           </div>
 
@@ -89,7 +101,7 @@ export const BookInfo = () => {
             />
           </div>
           <div className="w-[500px] mt-8">
-            <p className="font-body text-body-md text-neutral-neu2">
+            <p className="font-body text-body-md text-neutral-neu0">
               {book.sinopsis}
             </p>
           </div>
@@ -103,6 +115,11 @@ export const BookInfo = () => {
           )}
         </div>
       </div>
+      {showReadBook && (
+        <div>
+          <ReadBook pdfUrl={pdfBook} onClose={handleCloseReadBook} />
+        </div>
+      )}
     </div>
   );
 };

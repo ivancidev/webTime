@@ -119,9 +119,9 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
   const playbackRates = [0.5, 1, 1.25, 1.5, 1.75, 2];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-primary-pri3 justify-center items-center  flex flex-col h-20 text-primary-pri1">
-      <audio ref={audioRef} src={urlAudio} preload="metadata" />
-      <div className="flex flex-col items-center w-full px-12">
+    <div className="fixed bottom-0 left-0 right-0 bg-primary-pri3 justify-center items-center  flex flex-col h-[76px] text-primary-pri1">
+      <audio ref={audioRef} src={audioSrc} preload="metadata" />
+      <div className="flex flex-col items-center w-full px-12 ">
         <input
           type="range"
           min="0"

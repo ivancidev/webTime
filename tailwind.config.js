@@ -20,7 +20,8 @@ export default {
           err3: "#DE3730", // light red
         },
         neutral: {
-          neu1: "#AEAAAE", // dark gray
+          neu0: "#605D62", //dark gray
+          neu1: "#AEAAAE", // semi dark gray
           neu2: "#E6E1E5", // gray
           neu3: "#F4EFF4", // light gray
         },

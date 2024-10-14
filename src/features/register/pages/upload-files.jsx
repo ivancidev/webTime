@@ -10,12 +10,13 @@ import FrontIcon from "../../../icons/front";
 import TextIcon from "../../../icons/text";
 import AudioIcon from "../../../icons/audio";
 import BackIcon from "../../../icons/back";
-import { toast, Zoom } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
+import { toast, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 import { Link, useLocation } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
-import Button from "../../../components/Buttons/Button";
+import ButtonIcon from "../../../components/Buttons/buttonIcon";
+import Button from "../../../components/buttons/button";
 
 export const Files = () => {
   const location = useLocation();
@@ -80,6 +81,7 @@ export const Files = () => {
         );
       }, 100);
 
+
       const minimumTime = setTimeout(() => {
         clearInterval(timer);
         setProgress(100);
@@ -94,9 +96,8 @@ export const Files = () => {
             hideProgressBar: true,
             icon: false,
           });
-        }, 250); // Retardo
-
-      }, 1000); // Barra visible 1 segundo
+        }, 250); // Retardo opcional para que el progreso se vea completo
+      }, 1000); // Mantener la barra visible por al menos 1 segundo
 
       return () => {
         clearTimeout(minimumTime);
@@ -196,16 +197,14 @@ export const Files = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-primary-pri3">
       <ToastContainer />
       <Navbar />
       <div className="h-6">
         {isLoading && <LinearProgressComp progress={progress} />}
       </div>
-      <div className="flex items-center p-2">
-        <Link to="/register">
-          <BackIcon className="cursor-pointer" />
-        </Link>
+      <div className="mb-6 pl-5 md:pl-8">
+        <ButtonIcon SvgIcon={BackIcon} />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="flex flex-col justify-center items-center gap-4 mx-3">

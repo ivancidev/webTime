@@ -30,8 +30,8 @@ export const Card = ({
   const renderFilePreview = () => {
     if (!value || disablePreview) {
       return (
-        <p className="font-body text-body-lg text-primary-pri3 mx-3">
-          No se eligió ningún archivo.
+        <p className="font-body text-body-md text-primary-pri2 mx-3">
+          No se eligió ningún archivo
         </p>
       );
     }
@@ -74,11 +74,11 @@ export const Card = ({
   };
 
   return (
-    <div className="max-w-[1000px] w-full md:h-36 p-6 bg-transparent border border-neutral-neu2 rounded-[20px] flex flex-col-reverse justify-center items-center md:flex-row md:justify-between px-4 mx-auto">
+    <div className="max-w-[1000px] w-full md:h-36 p-6 bg-transparent border border-primary-pri1 rounded-[20px] flex flex-col-reverse justify-center items-center md:flex-row md:justify-between px-4 mx-auto">
       <div className="w-full md:w-60 flex flex-col justify-center items-start">
         <div className="flex flex-row mb-4">
           <SVG className="w-6 h-6" />
-          <h3 className="font-title text-title-sm text-primary-pri3 ml-4">
+          <h3 className="font-title text-title-sm text-primary-pri1 ml-4">
             {title} {validationAsterisk}
           </h3>
         </div>
