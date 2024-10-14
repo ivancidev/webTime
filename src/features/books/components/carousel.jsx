@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { CardBook } from "./cardBook";
 import BeforeIcon from "../../../icons/before";
-import ButtonIcon from "../../../components/Buttons/buttonIcon";
 import NextIcon from "../../../icons/next";
+import ButtonIcon from "../../../components/buttons/buttonIcon";
 
 export const Carousel = ({ books }) => {
   const [currentIndex, setCurrentIndex] = useState(0);

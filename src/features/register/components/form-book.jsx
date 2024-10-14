@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { Dropdown } from "../../../components/dropdown/dropdown";
-import { useFetch } from "../../../hooks/useFetch";
 import { useForm } from "react-hook-form";
 import { InputText } from "../../../components/input/input";
 import FooterButtons from "../components/footer-buttons";
 import { useNavigate } from "react-router-dom";
+import { useGetTable } from "../../../hooks/use-get-table";
 
 export default function FormBook() {
-  const { data: authors } = useFetch("autor");
-  const { data: categories } = useFetch("categoria");
-  const { data: languages } = useFetch("idioma");
+  const { data: authors } = useGetTable("autor");
+  const { data: categories } = useGetTable("categoria");
+  const { data: languages } = useGetTable("idioma");
   const [title, setTitle] = useState("");
   const navigation = useNavigate();
 
@@ -42,7 +42,7 @@ export default function FormBook() {
         <div className="px-10 md:px-3 lg:px-0 flex flex-col md:flex-row justify-between">
           <InputText
             name="title"
-            label="Titulo"
+            label="Título"
             placeholder="Escribe aquí"
             className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 text-neutral-neu0 font-body text-body-md"
             register={register}
@@ -98,7 +98,7 @@ export default function FormBook() {
             {...register("synopsis", {
               required: "La sinopsis no puede estar vacía",
               pattern: {
-                value: /^[a-zA-Z0-9 .,!?;:()]*$/s,
+                value: /^[a-zA-Z0-9ñÑ .,!?;:()'’]+$/s,
                 message: "Solo se permiten caracteres alfanuméricos",
               },
               maxLength: {
@@ -109,6 +109,10 @@ export default function FormBook() {
                 value: 2,
                 message: "No se permite menos de 2 caracteres",
               },
+              validate: {
+                noMultipleSpaces: (value) =>
+                  !/\s{2,}/.test(value) || "No se permiten múltiples espacios en blanco consecutivos",
+              }
             })}
           />
           {errors.synopsis && (
