@@ -19,19 +19,19 @@ export const Home = () => {
     <div className="pb-12 bg-primary-pri3">
       <NavbarO />
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-        Los más vistos
+        Los más visto
       </h1>
       <Carousel books={books} />
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-        Mejor calificados
+        Mejor calificado
       </h1>
       <Carousel books={books} />
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-        Recien agregados
+        Recién agregados
       </h1>
       <Carousel books={books} />
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-        Los más leidos esta semana
+        Lo más leidos esta semana
       </h1>
       <Carousel books={books} />
     </div>

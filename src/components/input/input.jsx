@@ -31,7 +31,7 @@ export const InputText = ({
         {...register(name, {
           required: `${label} es requerido`,
           pattern: {
-            value: /^[a-zA-Z0-9 ]*$/,
+            value: /^[a-zA-Z0-9ñÑ'’ ]*$/,
             message: "Solo se permiten caracteres alfanuméricos",
           },
           maxLength: {
@@ -42,6 +42,10 @@ export const InputText = ({
             value: 2,
             message: "El título debe tener al menos 2 caracteres",
           },
+          validate: {
+            noMultipleSpaces: (value) =>
+              !/\s{2,}/.test(value) || "No se permiten múltiples espacios en blanco consecutivos",
+          }
         })}
         onChange={onChange}
       />
