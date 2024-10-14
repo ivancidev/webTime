@@ -2,11 +2,23 @@ import React, { useState } from "react";
 
 export const Card = ({ fieldName, title, SVG, onFileChange }) => {
   const [file, setFile] = useState(null);
+  const [error, setError] = useState("");
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
-    setFile(selectedFile);
-    onFileChange(fieldName, selectedFile);
+    if (
+      fieldName === "pdfFile" &&
+      selectedFile &&
+      selectedFile.type !== "application/pdf"
+    ) {
+      setError("Solo se permite archivo PDF");
+      setFile(null);
+      onFileChange(fieldName, null); // No enviar el archivo no válido
+    } else {
+      setError(""); // Limpiar el error si el archivo es válido
+      setFile(selectedFile);
+      onFileChange(fieldName, selectedFile);
+    }
   };
 
   const renderFilePreview = () => {
@@ -75,6 +87,11 @@ export const Card = ({ fieldName, title, SVG, onFileChange }) => {
             Elegir archivo
           </span>
         </label>
+        {error && (
+          <p className="text-error-err2 mt-2 ml-4 font-body text-body-md">
+            {error}
+          </p>
+        )}
       </div>
 
       <div className="w-60 flex items-center">{renderFilePreview()}</div>
