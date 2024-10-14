@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import ButtonIcon from "../../../components/Buttons/buttonIcon";
-import Button from "../../../components/Buttons/Button";
+import ButtonIcon from "../../../components/buttons/buttonIcon";
+import Button from "../../../components/buttons/button";
 import Play from "../../../icons/play";
 import Pause from "../../../icons/pause";
 import Volume from "../../../icons/volume";
@@ -120,7 +120,7 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-primary-pri3 justify-center items-center  flex flex-col h-[76px] text-primary-pri1">
-      <audio ref={audioRef} src={audioSrc} preload="metadata" />
+      <audio ref={audioRef} src={urlAudio} preload="metadata" />
       <div className="flex flex-col items-center w-full px-12 ">
         <input
           type="range"

@@ -1,6 +1,6 @@
 import React from "react";
-import ButtonIcon from "../../../components/buttons/buttonIcon";
 import CloseIcon from "../../../icons/close";
+import ButtonIcon from "../../../components/buttons/buttonIcon";
 
 export const ReadBook = ({ pdfUrl, onClose }) => {
   const pdfWithParams = `${pdfUrl}#navpanes=0&scrollbar=0&zoom=100`;
