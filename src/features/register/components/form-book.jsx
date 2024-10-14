@@ -17,6 +17,7 @@ export default function FormBook() {
     register,
     handleSubmit,
     formState: { errors },
+    reset, // Añadir reset de react-hook-form
   } = useForm({
     defaultValues: {
       title: "",
@@ -30,6 +31,12 @@ export default function FormBook() {
   const onSubmit = (data) => {
     navigation("/upload-files", { state: data });
   };
+
+  // Función para reiniciar los campos del formulario
+  const handleCancel = () => {
+    reset(); // Restablecer los campos a los valores por defecto
+  };
+
   return (
     <div>
       <form
@@ -116,7 +123,7 @@ export default function FormBook() {
           )}
         </div>
       </form>
-      <FooterButtons handleSubmit={handleSubmit} onSubmit={onSubmit} />
+      <FooterButtons handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={handleCancel} />
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import React from "react";
 import ContinueIcon from "../../../icons/continue";
-import CancelIcon from "../../../icons/cancel"; // 
+import CancelIcon from "../../../icons/cancel"; 
 import Button from "../../../components/Buttons/Button";
 
-export default function FooterButtons({ handleSubmit, onSubmit }) {
+export default function FooterButtons({ handleSubmit, onSubmit, onCancel }) {
   const handleUpload = () => {
     handleSubmit(onSubmit)();
   };
@@ -13,7 +13,8 @@ export default function FooterButtons({ handleSubmit, onSubmit }) {
       <Button
         text="Cancelar" 
         variant="combCol2" 
-        SvgIcon={CancelIcon} 
+        SvgIcon={CancelIcon}
+        onClick={onCancel} // Añadir la función onCancel aquí
       /> 
       <Button
         text="Continuar"
@@ -24,4 +25,3 @@ export default function FooterButtons({ handleSubmit, onSubmit }) {
     </footer>
   );
 }
-
