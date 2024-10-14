@@ -18,10 +18,8 @@ export const BookInfo = () => {
   return (
     <div className="flex min-h-screen flex-col ">
       <NavbarO />
-      <div className="w-full h-[60px]">
-        <div className="fixed top-70 flex items-center bg-black bg-opacity-75 rounded-3xl ml-2 sm:ml-8 p-2 z-50">
-          <ButtonIcon SvgIcon={BackIcon} variant="combColTrans" />
-        </div>
+      <div className="sticky top-0 flex items-center bg-black bg-opacity-70 rounded-3xl ml-2 sm:ml-8 p-2 z-50">
+        <ButtonIcon SvgIcon={BackIcon} variant="combColTrans" />
       </div>
       <div className="flex flex-col lg:flex-row items-center md:justify-evenly px-5">
         <div className="relative w-full max-w-[80%] aspect-square md:w-[440px] md:h-[400px] bg-neutral-neu2 rounded-3xl">
@@ -40,7 +38,6 @@ export const BookInfo = () => {
               <ButtonIcon SvgIcon={ReadIcon} variant="combColTrans2" />
             </div>
           </div>
-
           <div className="flex flex-col h-40 justify-around sm:justify-between mt-8">
             <div className="text-neutral-neu2 flex space-x-2">
               <h3 className="font-label text-label-md sm:text-label-lg">Autor: </h3>
@@ -65,7 +62,7 @@ export const BookInfo = () => {
               <h2 className="font-body text-body-md sm:text-body-lg mt-[2px]">{duration}</h2>
             </div>
           </div>
-          <div className="max-w-[500px] my-8">
+          <div className="max-w-[500px] mt-4 mb-8 sm:my-10">
             <p className="font-body text-body-md text-neutral-neu2">
               {synopsis}
             </p>
