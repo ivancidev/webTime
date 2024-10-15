@@ -9,13 +9,14 @@ import FrontIcon from "../../../icons/front";
 import TextIcon from "../../../icons/text";
 import AudioIcon from "../../../icons/audio";
 import BackIcon from "../../../icons/back";
+import Button from "../../../components/buttons/button";
 import { toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
-import ButtonIcon from "../../../components/buttons/buttonIcon";
-import Button from "../../../components/buttons/button";
+import ButtonIcon from "../../../components/Buttons/buttonIcon";
+import Modal from "../../../components/modal/modal";
 
 export const Files = () => {
   const location = useLocation();
@@ -207,7 +208,18 @@ export const Files = () => {
       console.error(error);
     }
   };
+  const [isModalOpen, setIsModalOpen]= useState(false);
 
+  const openmod = () => {
+    setIsModalOpen(true);
+  };
+  const closemod =()=>{
+    setIsModalOpen(false);
+  };
+  // const handleConfirm=()=>{
+  //   console.log("Redirigiendo");
+  //   navigate("/");
+  // };
   return (
     <div className="flex min-h-screen flex-col bg-primary-pri3">
       <ToastContainer />
@@ -313,7 +325,7 @@ export const Files = () => {
                   if (
                     file &&
                     !["audio/mpeg", "audio/mp3"].includes(file.type)
-                  ) {
+                  ) { 
                     return "Solo se permiten archivos MP3.";
                   }
                   return true;
@@ -343,7 +355,17 @@ export const Files = () => {
           />
         </section>
         <div className="flex flex-col-reverse sm:flex-row w-full justify-end gap-6 mx-auto px-16 py-8 sm:py-10">
-          <Button text="Cancelar" variant="combCol2" SvgIcon={CancelIcon} />
+          <Button 
+          text="Cancelar" 
+          variant="combCol2" 
+          SvgIcon={CancelIcon} 
+          onClick={openmod}
+          />
+          {isModalOpen && <Modal 
+            onClose={closemod} 
+            text="¿Está seguro de Cancelar la subida de archivos?" 
+            onConfirm = { ()=> navigate("/register") }
+          />}
           <Button
             type="submit"
             text="Subir archivos"
