@@ -98,8 +98,8 @@ export default function FormBook() {
             {...register("synopsis", {
               required: "La sinopsis no puede estar vacía",
               pattern: {
-                value: /^[a-zA-Z0-9ñÑ .,!?;:()'’]+$/s,
-                message: "Solo se permiten caracteres alfanuméricos",
+                value: /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ .,!?;:()'’]+$/s,
+                message: "Solo se permiten caracteres alfanuméricos o signos de puntuación",
               },
               maxLength: {
                 value: 1000,
