@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Navbar } from "../components/navbar";
 import { Card } from "../components/card";
@@ -21,9 +21,11 @@ export const Files = () => {
   const location = useLocation();
   const { state } = location;
   const navigate = useNavigate();
+  
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [uploadedMessage, setUploadedMessage] = useState("");
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitProgress, setSubmitProgress] = useState(0);
 
@@ -43,7 +45,11 @@ export const Files = () => {
     },
   });
 
-  const handleFileChange = async (fieldName, file, onChange) => {
+  const coverImageRef = useRef(null);
+  const pdfFileRef = useRef(null);
+  const audioFileRef = useRef(null);
+
+  const handleFileChange = async (fieldName, file, onChange, ref) => {
     if (file) {
       onChange(file);
       const isValid = await trigger(fieldName);
@@ -66,6 +72,10 @@ export const Files = () => {
             message = "Archivo cargado con éxito";
         }
         setUploadedMessage(message);
+      }
+
+      if (ref && ref.current) {
+        ref.current.value = "";
       }
     } else {
       onChange(null);
@@ -246,12 +256,13 @@ export const Files = () => {
                 fieldName="coverImage"
                 title="Imagen de portada"
                 SVG={FrontIcon}
-                onFileChange={(file) => {
-                  handleFileChange("coverImage", file, onChange);
-                }}
+                onFileChange={(file) =>
+                  handleFileChange("coverImage", file, onChange, coverImageRef)
+                }
                 value={value}
                 error={errors.coverImage?.message}
                 disablePreview={!!errors.coverImage}
+                ref={coverImageRef} 
               />
             )}
           />
@@ -281,12 +292,13 @@ export const Files = () => {
                 fieldName="pdfFile"
                 title="Archivo PDF"
                 SVG={TextIcon}
-                onFileChange={(file) => {
-                  handleFileChange("pdfFile", file, onChange);
-                }}
+                onFileChange={(file) =>
+                  handleFileChange("pdfFile", file, onChange, pdfFileRef)
+                }
                 value={value}
                 error={errors.pdfFile?.message}
                 disablePreview={!!errors.pdfFile}
+                ref={pdfFileRef} 
               />
             )}
           />
@@ -319,12 +331,13 @@ export const Files = () => {
                 fieldName="audioFile"
                 title="Archivo de audio"
                 SVG={AudioIcon}
-                onFileChange={(file) => {
-                  handleFileChange("audioFile", file, onChange);
-                }}
+                onFileChange={(file) =>
+                  handleFileChange("audioFile", file, onChange, audioFileRef)
+                }
                 value={value}
                 error={errors.audioFile?.message}
                 disablePreview={!!errors.audioFile}
+                ref={audioFileRef} 
               />
             )}
           />
