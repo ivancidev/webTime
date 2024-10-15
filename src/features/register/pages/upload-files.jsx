@@ -20,10 +20,12 @@ import Button from "../../../components/buttons/button";
 export const Files = () => {
   const location = useLocation();
   const { state } = location;
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [uploadedMessage, setUploadedMessage] = useState("");
-  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitProgress, setSubmitProgress] = useState(0);
 
   const {
     control,
@@ -31,7 +33,7 @@ export const Files = () => {
     formState: { errors },
     clearErrors,
     trigger,
-    setValue, // Asegúrate de tener setValue si es necesario
+    setValue,
   } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -49,27 +51,25 @@ export const Files = () => {
       if (isValid) {
         setProgress(0);
         setIsLoading(true);
-        let message = "Archivo subido con éxito";
+        let message = "Archivo cargado con éxito";
         switch (fieldName) {
           case "coverImage":
-            message = "Imagen de portada subida con éxito";
+            message = "Imagen de portada se cargó con éxito";
             break;
           case "pdfFile":
-            message = "Archivo PDF subido con éxito";
+            message = "Archivo PDF se cargó con éxito";
             break;
           case "audioFile":
-            message = "Archivo de audio subido con éxito";
+            message = "Archivo de audio se cargó con éxito";
             break;
           default:
-            message = "Archivo subido con éxito";
+            message = "Archivo cargado con éxito";
         }
         setUploadedMessage(message);
       }
     } else {
-      // Manejar la eliminación del archivo
       onChange(null);
       clearErrors(fieldName);
-      // Opcional: Resetear el progreso y estado de carga si es necesario
       setProgress(0);
       setIsLoading(false);
     }
@@ -136,10 +136,11 @@ export const Files = () => {
 
   const onSubmit = async (data) => {
     try {
-      setProgress(0);
-      setIsLoading(true);
+      setSubmitProgress(0);
+      setIsSubmitting(true);
+
       const uploadProgress = setInterval(() => {
-        setProgress((prevProgress) =>
+        setSubmitProgress((prevProgress) =>
           prevProgress >= 100 ? 100 : prevProgress + 10
         );
       }, 200);
@@ -155,7 +156,7 @@ export const Files = () => {
         : null;
 
       clearInterval(uploadProgress);
-      setProgress(100);
+      setSubmitProgress(100);
 
       const { error } = await supabase.from("libro").insert([
         {
@@ -171,6 +172,7 @@ export const Files = () => {
       ]);
       if (error) throw error;
 
+      setIsSubmitting(false);
       toast.success("Archivos y datos subidos correctamente.", {
         position: "top-center",
         className: "bg-[#0E1217] text-primary-pri3",
@@ -181,6 +183,8 @@ export const Files = () => {
         icon: false,
       });
     } catch (error) {
+      setIsSubmitting(false);
+      setSubmitProgress(0);
       toast.error("Error al subir los archivos", {
         position: "top-center",
         className: "bg-[#0E1217] text-primary-pri3",
@@ -191,9 +195,6 @@ export const Files = () => {
         icon: false,
       });
       console.error(error);
-    } finally {
-      setIsLoading(false);
-      setProgress(0);
     }
   };
 
@@ -201,10 +202,15 @@ export const Files = () => {
     <div className="flex min-h-screen flex-col bg-primary-pri3">
       <ToastContainer />
       <Navbar />
-      <div className="h-6">
+
+      <div className="h-0">
         {isLoading && <LinearProgressComp progress={progress} />}
       </div>
-      <div className="mb-6 pl-5 md:pl-8">
+      <div className="h-0">
+        {isSubmitting && <LinearProgressComp progress={submitProgress} />}
+      </div>
+
+      <div className="mb-6 mt-6 pl-5 md:pl-8">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/register")} />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -330,6 +336,7 @@ export const Files = () => {
             text="Subir archivos"
             variant="combCol1"
             SvgIcon={UploadIcon}
+            disabled={isSubmitting}
           />
         </div>
       </form>
