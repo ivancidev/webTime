@@ -98,7 +98,7 @@ export default function FormBook() {
             {...register("synopsis", {
               required: "La sinopsis no puede estar vacía",
               pattern: {
-                value: /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ .,;'"`’Üü]+$/s,
+                value: /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ .,;'"`’Üü\n]+$/s,
                 message: "Solo se permiten caracteres alfanuméricos",
               },
               maxLength: {
@@ -110,8 +110,16 @@ export default function FormBook() {
                 message: "No se permite menos de 2 caracteres",
               },
               validate: {
-                noMultipleSpaces: (value) =>
-                  !/\s{2,}/.test(value) || "No se permiten múltiples espacios en blanco consecutivos",
+                noMultipleSpacesOrNewlines: (value) => {
+                  // Verificar si hay múltiples espacios o saltos de línea consecutivos
+                  if (/ {2,}/.test(value)) {
+                    return "No se permiten múltiples espacios en blanco consecutivos";
+                  }
+                  if (/\n{2,}/.test(value)) {
+                    return "No se permiten múltiples saltos de línea consecutivos";
+                  }
+                  return true;
+                }
               }
             })}
           />
