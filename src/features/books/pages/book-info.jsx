@@ -34,8 +34,8 @@ export const BookInfo = () => {
   if (loading || loadingPdf || audioDuration === null) {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen bg-primary-pri3">
-        <CircularProgress color="success" size={80} />
-        <h2 className="mt-4 text-white text-xl">Cargando libro...</h2>
+        <CircularProgress color="primary" size={80} />
+        <h2 className="mt-4 text-xl">Cargando libro...</h2>
       </div>
     );
   }
@@ -47,7 +47,6 @@ export const BookInfo = () => {
   const handleCloseReadBook = () => {
     setShowReadBook(false);
   };
-  const pdfBook = "/src/assets/pdfs/CAP1_IA.pdf";
   return (
     <div className="flex min-h-screen flex-col bg-primary-pri3">
       <NavbarO />
@@ -110,7 +109,7 @@ export const BookInfo = () => {
       </div>
       {showReadBook && (
         <div>
-          <ReadBook pdfUrl={pdfBook} onClose={handleCloseReadBook} />
+          <ReadBook pdfUrl={book.enlacePdf} onClose={handleCloseReadBook} />
         </div>
       )}
     </div>
