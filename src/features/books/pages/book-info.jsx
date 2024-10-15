@@ -51,23 +51,22 @@ export const BookInfo = () => {
   return (
     <div className="flex min-h-screen flex-col bg-primary-pri3">
       <NavbarO />
-
-      <div className="flex items-center ml-8 p-2 ">
+      <div className="sticky top-0 flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-50">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/")} />
       </div>
-      <div className="flex flex-row justify-evenly">
-        <div className="relative w-[440px] h-[400px] bg-neutral-neu2 rounded-3xl">
+      <div className="flex flex-col lg:flex-row items-center md:justify-evenly px-5">
+        <div className="relative w-full max-w-[80%] aspect-square sm:w-[440px] md:h-[400px] bg-neutral-neu2 rounded-3xl mb-0 md:mb-10">
           <img
             src={book.enlacePortada}
-            className="w-80 h-[470px] rounded-3xl absolute inset-0 m-auto object-cover"
+            className="w-full max-w-[80%] sm:w-80 sm:h-[470px] rounded-3xl absolute inset-0 m-auto object-cover"
           />
         </div>
-        <div>
-          <div className="flex flex-row justify-between">
-            <h1 className="font-display text-display-lg text-secondary-sec2">
+        <div className="mx-5">
+          <div className="flex flex-col md:flex-row items-center md:justify-between">
+            <h1 className="font-display text-display-sm sm:text-display-lg text-secondary-sec2 mt-10 md:mt-5">
               {book.nombreLibro}
             </h1>
-            <div className="flex flex-row space-x-8">
+            <div className="flex flex-row space-x-8 mt-4">
               <ButtonIcon
                 SvgIcon={ListenIcon}
                 variant="combColBlack"
@@ -80,8 +79,7 @@ export const BookInfo = () => {
               />
             </div>
           </div>
-
-          <div className="flex flex-col h-40 justify-between mt-8">
+          <div className="flex flex-col h-40 justify-around sm:justify-between mt-8">
             <DetailRow label="Autor" value={bookDetails.nombreAutor} />
             <DetailRow label="Idioma" value={bookDetails.idioma} />
             <DetailRow label="Categoría" value={bookDetails.nombreCategoria} />
@@ -95,7 +93,7 @@ export const BookInfo = () => {
               } min`}
             />
           </div>
-          <div className="w-[500px] mt-8">
+          <div className="max-w-[500px] mt-4 mb-8 sm:my-10">
             <p className="font-body text-body-md text-neutral-neu0">
               {book.sinopsis}
             </p>

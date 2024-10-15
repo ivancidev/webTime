@@ -303,7 +303,7 @@ export const Files = () => {
                   if (
                     file &&
                     !["audio/mpeg", "audio/mp3"].includes(file.type)
-                  ) {
+                  ) { 
                     return "Solo se permiten archivos MP3.";
                   }
                   return true;
@@ -341,7 +341,7 @@ export const Files = () => {
           {isModalOpen && <Modal 
             onClose={closemod} 
             text="¿Estás seguro de que deseas cancelar?" 
-            onConfirm = { ()=> navigate("/") }
+            onConfirm = { ()=> navigate("/register") }
           />}
           <Button
             type="submit"
