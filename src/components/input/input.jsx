@@ -31,7 +31,7 @@ export const InputText = ({
         {...register(name, {
           required: `${label} es requerido`,
           pattern: {
-            value: /^[\p{L}\p{N}\p{P}\p{Zs}.,';]*$/,
+            value: /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ'’ ]*$/,
             message: "Solo se permiten caracteres alfanuméricos",
           },
           maxLength: {
