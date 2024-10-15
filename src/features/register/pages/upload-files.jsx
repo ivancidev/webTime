@@ -9,7 +9,7 @@ import FrontIcon from "../../../icons/front";
 import TextIcon from "../../../icons/text";
 import AudioIcon from "../../../icons/audio";
 import BackIcon from "../../../icons/back";
-import Button from "../../../components/Buttons/Button";
+import Button from "../../../components/buttons/button";
 import { toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
@@ -340,7 +340,7 @@ export const Files = () => {
           />
           {isModalOpen && <Modal 
             onClose={closemod} 
-            text="¿Estás seguro de que deseas cancelar?" 
+            text="¿Está seguro de Cancelar la subida de archivos?" 
             onConfirm = { ()=> navigate("/register") }
           />}
           <Button
