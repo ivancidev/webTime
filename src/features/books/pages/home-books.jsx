@@ -20,7 +20,7 @@ export const Home = () => {
     <div className="pb-12 bg-primary-pri3">
       <NavbarO />
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-        Los más visto
+        Los más vistos
       </h1>
       <Carousel books={books} />
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
@@ -32,7 +32,7 @@ export const Home = () => {
       </h1>
       <Carousel books={books} />
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-        Lo más leidos esta semana
+        Lo más leído esta semana
       </h1>
       <Carousel books={books} />
     </div>

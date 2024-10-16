@@ -16,11 +16,7 @@ export const ReadBook = ({ pdfUrl, onClose }) => {
         />
       </div>
       <div className="flex justify-start items-start min-h-screen p-6">
-        <ButtonIcon
-          SvgIcon={CloseIcon}
-          variant="combColTrans"
-          onClick={onClose}
-        />
+        <ButtonIcon SvgIcon={CloseIcon} variant="combColZ" onClick={onClose} />
       </div>
     </div>
   );
