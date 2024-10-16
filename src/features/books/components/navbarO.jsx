@@ -14,10 +14,7 @@ export const NavbarO = () => {
       <img src={Logo} alt="Logo" className="h-16" />
 
       <div className="flex justify-end w-screen lg:hidden px-2 ">
-        <button
-          onClick={toggleMenu}
-          className="focus:outline-none"
-        >
+        <button onClick={toggleMenu} className="focus:outline-none">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -41,12 +38,12 @@ export const NavbarO = () => {
           </Link>
         </li>
         <li>
-          <Link className="text-neutral-neu1 font-label text-label-md">
+          <Link className="text-neutral-neu1 font-label text-label-md cursor-default">
             Categorias
           </Link>
         </li>
         <li>
-          <Link className="text-neutral-neu1 font-label text-label-md">
+          <Link className="text-neutral-neu1 font-label text-label-md cursor-default">
             Foros
           </Link>
         </li>
