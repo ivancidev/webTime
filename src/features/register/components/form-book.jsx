@@ -55,6 +55,27 @@ export default function FormBook() {
     localStorage.setItem("synopsis", watchedSynopsis);
   }, [watchedSynopsis]);
 
+
+  useEffect(() => {
+    const handleUnload = () => {
+      localStorage.removeItem("title");
+      localStorage.removeItem("author");
+      localStorage.removeItem("category");
+      localStorage.removeItem("language");
+      localStorage.removeItem("synopsis");
+    };
+
+ 
+    window.addEventListener("beforeunload", handleUnload);
+
+
+    return () => {
+      window.removeEventListener("beforeunload", handleUnload);
+    };
+  }, []);
+
+
+
   const onSubmit = (data) => {
     // Navegar a la siguiente página, y pasar el estado actual
     navigation("/upload-files", { state: data });
