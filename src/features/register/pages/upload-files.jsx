@@ -3,6 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Navbar } from "../components/navbar";
 import { Card } from "../components/card";
 import LinearProgressComp from "../../../components/progress/linear";
+import FooterButtons from "../components/footer-buttons";
 import CancelIcon from "../../../icons/cancel";
 import UploadIcon from "../../../icons/upload";
 import FrontIcon from "../../../icons/front";
@@ -221,10 +222,15 @@ export const Files = () => {
   const closemod =()=>{
     setIsModalOpen(false);
   };
-  // const handleConfirm=()=>{
-  //   console.log("Redirigiendo");
-  //   navigate("/");
-  // };
+  
+  const handleCancel=()=> {
+    localStorage.removeItem("title");
+    localStorage.removeItem("synopsis");
+    localStorage.removeItem("author");
+    localStorage.removeItem("category");
+    localStorage.removeItem("language");
+    navigate("/register")
+  };
   return (
     <div className="flex min-h-screen flex-col bg-primary-pri3">
       <ToastContainer />
@@ -247,126 +253,130 @@ export const Files = () => {
       <div className="mb-6 mt-10 pl-5 md:pl-8">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/register")} />
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <section className="flex flex-col justify-center items-center gap-4 mx-3">
-          <Controller
-            name="coverImage"
-            control={control}
-            rules={{
-              required: "La imagen de portada es requerida.",
-              validate: {
-                fileType: (file) => {
-                  if (file) {
-                    if (!["image/png", "image/jpeg"].includes(file.type)) {
-                      return "Solo se permiten archivos PNG o JPG.";
+      <div className="flex flex-col items-center justify-center flex-grow">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+          <section className="flex flex-col justify-center items-center gap-4">
+            <Controller
+              name="coverImage"
+              control={control}
+              rules={{
+                required: "La imagen de portada es requerida.",
+                validate: {
+                  fileType: (file) => {
+                    if (file) {
+                      if (!["image/png", "image/jpeg"].includes(file.type)) {
+                        return "Solo se permiten archivos PNG o JPG.";
+                      }
+                      const extension = file.name.split(".").pop().toLowerCase();
+                      if (file.type === "image/jpeg" && extension !== "jpg") {
+                        return "Solo se permiten archivos PNG o JPG (no JPEG).";
+                      }
                     }
-                    const extension = file.name.split(".").pop().toLowerCase();
-                    if (file.type === "image/jpeg" && extension !== "jpg") {
-                      return "Solo se permiten archivos PNG o JPG (no JPEG).";
+                    return true;
+                  },
+                  fileSize: (file) => {
+                    if (file && file.size > 5 * 1024 * 1024) {
+                      return "El archivo imagen no puede exceder 5MB.";
                     }
-                  }
-                  return true;
+                    return true;
+                  },
                 },
-                fileSize: (file) => {
-                  if (file && file.size > 5 * 1024 * 1024) {
-                    return "El archivo imagen no puede exceder 5MB.";
+              }}
+              render={({ field: { onChange, value } }) => (
+                <Card
+                  fieldName="coverImage"
+                  title="Imagen de portada"
+                  SVG={FrontIcon}
+                  onFileChange={(file) =>
+                    handleFileChange("coverImage", file, onChange, coverImageRef)
                   }
-                  return true;
-                },
-              },
-            }}
-            render={({ field: { onChange, value } }) => (
-              <Card
-                fieldName="coverImage"
-                title="Imagen de portada"
-                SVG={FrontIcon}
-                onFileChange={(file) =>
-                  handleFileChange("coverImage", file, onChange, coverImageRef)
-                }
-                value={value}
-                error={errors.coverImage?.message}
-                disablePreview={!!errors.coverImage}
-                ref={coverImageRef} 
-              />
-            )}
-          />
+                  value={value}
+                  error={errors.coverImage?.message}
+                  disablePreview={!!errors.coverImage}
+                  ref={coverImageRef} 
+                />
+              )}
+            />
 
-          <Controller
-            name="pdfFile"
-            control={control}
-            rules={{
-              required: "El archivo PDF es requerido.",
-              validate: {
-                fileType: (file) => {
-                  if (file && file.type !== "application/pdf") {
-                    return "Solo se permiten archivos PDF.";
-                  }
-                  return true;
+            <Controller
+              name="pdfFile"
+              control={control}
+              rules={{
+                required: "El archivo PDF es requerido.",
+                validate: {
+                  fileType: (file) => {
+                    if (file && file.type !== "application/pdf") {
+                      return "Solo se permiten archivos PDF.";
+                    }
+                    return true;
+                  },
+                  fileSize: (file) => {
+                    if (file && file.size > 60 * 1024 * 1024) {
+                      return "El archivo PDF no puede exceder 60MB.";
+                    }
+                    return true;
+                  },
                 },
-                fileSize: (file) => {
-                  if (file && file.size > 60 * 1024 * 1024) {
-                    return "El archivo PDF no puede exceder 60MB.";
+              }}
+              render={({ field: { onChange, value } }) => (
+                <Card
+                  fieldName="pdfFile"
+                  title="Archivo PDF"
+                  SVG={TextIcon}
+                  onFileChange={(file) =>
+                    handleFileChange("pdfFile", file, onChange, pdfFileRef)
                   }
-                  return true;
-                },
-              },
-            }}
-            render={({ field: { onChange, value } }) => (
-              <Card
-                fieldName="pdfFile"
-                title="Archivo PDF"
-                SVG={TextIcon}
-                onFileChange={(file) =>
-                  handleFileChange("pdfFile", file, onChange, pdfFileRef)
-                }
-                value={value}
-                error={errors.pdfFile?.message}
-                disablePreview={!!errors.pdfFile}
-                ref={pdfFileRef} 
-              />
-            )}
-          />
+                  value={value}
+                  error={errors.pdfFile?.message}
+                  disablePreview={!!errors.pdfFile}
+                  ref={pdfFileRef} 
+                />
+              )}
+            />
 
-          <Controller
-            name="audioFile"
-            control={control}
-            rules={{
-              required: "El archivo de audio es requerido.",
-              validate: {
-                fileType: (file) => {
-                  if (
-                    file &&
-                    !["audio/mpeg", "audio/mp3"].includes(file.type)
-                  ) { 
-                    return "Solo se permiten archivos MP3.";
-                  }
-                  return true;
+            <Controller
+              name="audioFile"
+              control={control}
+              rules={{
+                required: "El archivo de audio es requerido.",
+                validate: {
+                  fileType: (file) => {
+                    if (
+                      file &&
+                      !["audio/mpeg", "audio/mp3"].includes(file.type)
+                    ) { 
+                      return "Solo se permiten archivos MP3.";
+                    }
+                    return true;
+                  },
+                  fileSize: (file) => {
+                    if (file && file.size > 600 * 1024 * 1024) {
+                      return "El archivo audio no puede exceder 600MB.";
+                    }
+                    return true;
+                  },
                 },
-                fileSize: (file) => {
-                  if (file && file.size > 600 * 1024 * 1024) {
-                    return "El archivo audio no puede exceder 600MB.";
+              }}
+              render={({ field: { onChange, value } }) => (
+                <Card
+                  fieldName="audioFile"
+                  title="Archivo de audio"
+                  SVG={AudioIcon}
+                  onFileChange={(file) =>
+                    handleFileChange("audioFile", file, onChange, audioFileRef)
                   }
-                  return true;
-                },
-              },
-            }}
-            render={({ field: { onChange, value } }) => (
-              <Card
-                fieldName="audioFile"
-                title="Archivo de audio"
-                SVG={AudioIcon}
-                onFileChange={(file) =>
-                  handleFileChange("audioFile", file, onChange, audioFileRef)
-                }
-                value={value}
-                error={errors.audioFile?.message}
-                disablePreview={!!errors.audioFile}
-                ref={audioFileRef} 
-              />
-            )}
-          />
-        </section>
-        <div className="flex flex-col-reverse sm:flex-row w-full justify-end gap-6 mx-auto px-16 py-8 sm:py-10">
+                  value={value}
+                  error={errors.audioFile?.message}
+                  disablePreview={!!errors.audioFile}
+                  ref={audioFileRef} 
+                />
+              )}
+            />
+          </section>
+          
+        </form>
+      </div>
+      <div className="flex flex-col-reverse sm:flex-row w-full justify-end gap-6 mx-auto px-16 py-8 sm:py-10">
           <Button 
           text="Cancelar" 
           variant="combCol2" 
@@ -376,13 +386,7 @@ export const Files = () => {
           {isModalOpen && <Modal 
             onClose={closemod} 
             text="¿Está seguro de Cancelar la subida de archivos?" 
-            onConfirm = { ()=> {
-              localStorage.removeItem("title");
-              localStorage.removeItem("synopsis");
-              localStorage.removeItem("author");
-              localStorage.removeItem("category");
-              localStorage.removeItem("language");
-              navigate("/register")} }
+            onConfirm = { handleCancel }
           />}
           <Button
             type="submit"
@@ -392,7 +396,6 @@ export const Files = () => {
             disabled={isSubmitting}
           />
         </div>
-      </form>
     </div>
   );
 };

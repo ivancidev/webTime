@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Navbar } from "../components/navbar";
 import { Dropdown } from "../../../components/dropdown/dropdown";
 import { useForm } from "react-hook-form";
 import { InputText } from "../../../components/input/input";
@@ -84,100 +85,104 @@ export default function FormBook() {
   const onCancel = ()=>{
     navigation("/");
   };
+
   return (
-    <div>
+    <div className="min-h-screen flex flex-col bg-primary">
+      <Navbar/>
+      <div className="flex flex-col items-center justify-center flex-grow">
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-[795px] mx-auto w-full">
-        <h1 className="text-center text-secondary-sec2 m-[20px] font-title text-title-lg">
-          Formulario de Registro de Libro
-        </h1>
-        <div className="px-10 md:px-3 lg:px-0 flex flex-col md:flex-row justify-between">
-          <InputText
-            name="title"
-            label="Título"
-            placeholder="Escribe aquí"
-            className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
-            register={register}
-            errors={errors}
-          />
-          <Dropdown
-            name="author"
-            label="Autor"
-            options={authors}
-            placeholder="Seleccionar autor"
-            register={register}
-            errors={errors}
-            value={watchedAuthor}
-            onChange={(e) => setValue("author", e.target.value)}
-            displayKey="nombreAutor"
-            valueKey="codAutor"
-          />
-        </div>
-        <div className="px-10 md:px-3 lg:px-0 flex flex-col md:flex-row justify-between">
-          <Dropdown
-            name="category"
-            label="Categoría"
-            options={categories}
-            placeholder="Seleccionar categoría"
-            register={register}
-            errors={errors}
-            value={watchedCategory}
-            onChange={(e) => setValue("category", e.target.value)}
-            displayKey="nombreCategoria"
-            valueKey="codCategoria"
-          />
-          <Dropdown
-            name="language"
-            label="Idioma"
-            options={languages}
-            placeholder="Seleccionar idioma"
-            register={register}
-            errors={errors}
-            value={watchedLanguage}
-            onChange={(e) => setValue("language", e.target.value)}
-            displayKey="idioma"
-            valueKey="codIdioma"
-          />
-        </div>
-        <div className="mt-7 px-10 md:px-3 lg:px-0">
-          <label htmlFor="synopsis" className="py-1 text-primary-pri2 font-label text-label-lg">
-            Sinopsis <span className="text-error-err2">*</span>
-          </label>
-          <textarea
-            id="synopsis"
-            name="synopsis"
-            className="w-full h-[130px] bg-transparent border-[1px] rounded border-neutral-neu0 p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md mt-2 resize-none"
-            placeholder="Escribe aquí"
-            {...register("synopsis", {
-              required: "La sinopsis no puede estar vacía",
-              pattern: {
-                value: /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ .,;'"`’Üü\n]+$/s,
-                message: "Solo se permiten caracteres alfanuméricos",
-              },
-              maxLength: {
-                value: 1000,
-                message: "No se permite más de 1000 caracteres",
-              },
-              minLength: {
-                value: 2,
-                message: "No se permite menos de 2 caracteres",
-              },
-              validate: {
-                noMultipleSpacesOrNewlines: (value) => {
-                  if (/ {2,}/.test(value)) {
-                    return "No se permiten múltiples espacios en blanco consecutivos";
-                  }
-                  if (/\n{2,}/.test(value)) {
-                    return "No se permiten múltiples saltos de línea consecutivos";
-                  }
-                  return true;
+          <h1 className="text-center text-secondary-sec2 m-[20px] font-title text-title-lg">
+            Formulario de Registro de Libro
+          </h1>
+          <div className="px-10 md:px-3 lg:px-0 flex flex-col md:flex-row justify-between">
+            <InputText
+              name="title"
+              label="Título"
+              placeholder="Escribe aquí"
+              className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
+              register={register}
+              errors={errors}
+            />
+            <Dropdown
+              name="author"
+              label="Autor"
+              options={authors}
+              placeholder="Seleccionar autor"
+              register={register}
+              errors={errors}
+              value={watchedAuthor}
+              onChange={(e) => setValue("author", e.target.value)}
+              displayKey="nombreAutor"
+              valueKey="codAutor"
+            />
+          </div>
+          <div className="px-10 md:px-3 lg:px-0 flex flex-col md:flex-row justify-between">
+            <Dropdown
+              name="category"
+              label="Categoría"
+              options={categories}
+              placeholder="Seleccionar categoría"
+              register={register}
+              errors={errors}
+              value={watchedCategory}
+              onChange={(e) => setValue("category", e.target.value)}
+              displayKey="nombreCategoria"
+              valueKey="codCategoria"
+            />
+            <Dropdown
+              name="language"
+              label="Idioma"
+              options={languages}
+              placeholder="Seleccionar idioma"
+              register={register}
+              errors={errors}
+              value={watchedLanguage}
+              onChange={(e) => setValue("language", e.target.value)}
+              displayKey="idioma"
+              valueKey="codIdioma"
+            />
+          </div>
+          <div className="mt-7 px-10 md:px-3 lg:px-0">
+            <label htmlFor="synopsis" className="py-1 text-primary-pri2 font-label text-label-lg">
+              Sinopsis <span className="text-error-err2">*</span>
+            </label>
+            <textarea
+              id="synopsis"
+              name="synopsis"
+              className="w-full h-[130px] bg-transparent border-[1px] rounded border-neutral-neu0 p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md mt-2 resize-none"
+              placeholder="Escribe aquí"
+              {...register("synopsis", {
+                required: "La sinopsis no puede estar vacía",
+                pattern: {
+                  value: /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ .,;'"`’Üü\n]+$/s,
+                  message: "Solo se permiten caracteres alfanuméricos",
                 },
-              },
-            })}
-          />
-          {errors.synopsis && <span className="text-error-err2">{errors.synopsis.message}</span>}
-        </div>
-      </form>
-      <FooterButtons handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={onCancel} />
+                maxLength: {
+                  value: 1000,
+                  message: "No se permite más de 1000 caracteres",
+                },
+                minLength: {
+                  value: 2,
+                  message: "No se permite menos de 2 caracteres",
+                },
+                validate: {
+                  noMultipleSpacesOrNewlines: (value) => {
+                    if (/ {2,}/.test(value)) {
+                      return "No se permiten múltiples espacios en blanco consecutivos";
+                    }
+                    if (/\n{2,}/.test(value)) {
+                      return "No se permiten múltiples saltos de línea consecutivos";
+                    }
+                    return true;
+                  },
+                },
+              })}
+            />
+            {errors.synopsis && <span className="text-error-err2">{errors.synopsis.message}</span>}
+          </div>
+        </form>
+      </div>
+      <FooterButtons handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={onCancel} className="mt-auto"/>
     </div>
   );
 }

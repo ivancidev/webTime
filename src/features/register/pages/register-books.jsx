@@ -3,8 +3,8 @@ import { Navbar } from "../components/navbar";
 
 export const Register = () => {
   return (
-    <div className="flex min-h-screen flex-col bg-primary-pri3">
-      <Navbar />
+    <div className=" min-h-screen flex flex-col bg-primary">      
+      {/* <Navbar /> */}
       <main className="flex-grow">
         <FormBook />
       </main>
