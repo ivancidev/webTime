@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../../../assets/icons/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import User from "../../../icons/user";
 
 export const NavbarO = () => {
@@ -9,9 +9,13 @@ export const NavbarO = () => {
     setIsOpen(!isOpen);
   };
 
+  const location = useLocation();
+
   return (
     <nav className="bg-primary-pri3 h-20 flex items-center px-6 relative">
-      <img src={Logo} alt="Logo" className="h-16" />
+      <Link to="/" className="w-full h-full pt-2">
+        <img src={Logo} alt="Logo" />
+      </Link>
 
       <div className="flex justify-end w-screen lg:hidden px-2 ">
         <button onClick={toggleMenu} className="focus:outline-none">
@@ -33,7 +37,10 @@ export const NavbarO = () => {
 
       <ul className="hidden lg:flex items-center justify-end w-screen space-x-16 mr-16">
         <li>
-          <Link className="text-primary-pri2 font-label text-label-md hover:text-secondary-sec3">
+          <Link
+            to="/"
+            className="font-label text-label-md text-secondary-sec1 hover:text-secondary-sec2 "
+          >
             Inicio
           </Link>
         </li>
