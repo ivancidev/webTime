@@ -81,6 +81,9 @@ export default function FormBook() {
     navigation("/upload-files", { state: data });
   };
 
+  const onCancel = ()=>{
+    navigation("/");
+  };
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-[795px] mx-auto w-full">
@@ -174,7 +177,7 @@ export default function FormBook() {
           {errors.synopsis && <span className="text-error-err2">{errors.synopsis.message}</span>}
         </div>
       </form>
-      <FooterButtons handleSubmit={handleSubmit} onSubmit={onSubmit} />
+      <FooterButtons handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={onCancel} />
     </div>
   );
 }
