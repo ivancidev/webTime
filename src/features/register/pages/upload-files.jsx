@@ -376,7 +376,13 @@ export const Files = () => {
           {isModalOpen && <Modal 
             onClose={closemod} 
             text="¿Está seguro de Cancelar la subida de archivos?" 
-            onConfirm = { ()=> navigate("/register") }
+            onConfirm = { ()=> {
+              localStorage.removeItem("title");
+              localStorage.removeItem("synopsis");
+              localStorage.removeItem("author");
+              localStorage.removeItem("category");
+              localStorage.removeItem("language");
+              navigate("/register")} }
           />}
           <Button
             type="submit"
