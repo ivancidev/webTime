@@ -12,6 +12,7 @@ import { useAudioDuration } from "../../../hooks/use-audio-duration";
 import { CircularProgress } from "@mui/material";
 import { ReadBook } from "../components/readBook";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
+import { TextLarge } from "../../register/components/text-large";
 
 export const BookInfo = () => {
   const [showAudioPlayer, setShowAudioPlayer] = useState(false);
@@ -50,7 +51,7 @@ export const BookInfo = () => {
   return (
     <div className="flex min-h-screen flex-col bg-primary-pri3">
       <NavbarO />
-      <div className="sticky top-0 flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-50">
+      <div className="sticky top-0 flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/")} />
       </div>
       <div className="flex flex-col lg:flex-row items-center md:justify-evenly px-5">
@@ -61,19 +62,19 @@ export const BookInfo = () => {
           />
         </div>
         <div className="mx-5">
-          <div className="flex flex-col md:flex-row items-center md:justify-between">
-            <h1 className="font-display text-display-sm sm:text-display-lg text-secondary-sec2 mt-10 md:mt-5">
+          <div className="flex flex-col md:flex-row md:justify-between ">
+            <h1 className="max-w-[500px] font-display text-display-sm sm:text-display-lg text-secondary-sec2 mt-10 md:mt-5">
               {book.nombreLibro}
             </h1>
             <div className="flex flex-row space-x-8 mt-4">
               <ButtonIcon
                 SvgIcon={ListenIcon}
-                variant="combColBlack"
+                variant={`${showAudioPlayer ? "combColBlue" : "combColBlack"}`}
                 onClick={() => setShowAudioPlayer(true)}
               />
               <ButtonIcon
                 SvgIcon={ReadIcon}
-                variant="combColBlack"
+                variant={`${showReadBook ? "combColBlue" : "combColBlack"}`}
                 onClick={() => setShowReadBook(true)}
               />
             </div>
@@ -93,9 +94,7 @@ export const BookInfo = () => {
             />
           </div>
           <div className="max-w-[500px] mt-4 mb-8 sm:my-10">
-            <p className="font-body text-body-md text-neutral-neu0">
-              {book.sinopsis}
-            </p>
+            <TextLarge sinopsis={book.sinopsis} />
           </div>
           {showAudioPlayer && (
             <div className="mt-8">

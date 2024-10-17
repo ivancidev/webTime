@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../../../assets/icons/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import User from "../../../icons/user";
 
 export const NavbarO = () => {
@@ -9,15 +9,16 @@ export const NavbarO = () => {
     setIsOpen(!isOpen);
   };
 
+  const location = useLocation();
+
   return (
     <nav className="bg-primary-pri3 h-20 flex items-center px-6 relative">
-      <img src={Logo} alt="Logo" className="h-16" />
+      <Link to="/" className="w-full h-full pt-2">
+        <img src={Logo} alt="Logo" />
+      </Link>
 
       <div className="flex justify-end w-screen lg:hidden px-2 ">
-        <button
-          onClick={toggleMenu}
-          className="focus:outline-none"
-        >
+        <button onClick={toggleMenu} className="focus:outline-none">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -36,24 +37,27 @@ export const NavbarO = () => {
 
       <ul className="hidden lg:flex items-center justify-end w-screen space-x-16 mr-16">
         <li>
-          <Link className="text-primary-pri2 font-label text-label-md hover:text-secondary-sec3">
+          <Link
+            to="/"
+            className="font-label text-label-md text-secondary-sec1 hover:text-secondary-sec2 "
+          >
             Inicio
           </Link>
         </li>
         <li>
-          <Link className="text-neutral-neu1 font-label text-label-md">
+          <Link className="text-neutral-neu1 font-label text-label-md cursor-default">
             Categorias
           </Link>
         </li>
         <li>
-          <Link className="text-neutral-neu1 font-label text-label-md">
+          <Link className="text-neutral-neu1 font-label text-label-md cursor-default">
             Foros
           </Link>
         </li>
       </ul>
 
       {isOpen && (
-        <div className="flex lg:hidden absolute top-20 right-0 w-30 bg-primary-pri3 shadow-lg z-100">
+        <div className="flex lg:hidden absolute top-20 right-0 w-30 bg-primary-pri3 shadow-lg z-50">
           <ul className="flex flex-col items-start p-4 space-y-4 w-full">
             <li>
               <Link
