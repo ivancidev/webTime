@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Logo from "../../../assets/icons/logo.svg";
+import Logo from "../../assets/icons/logo.svg";
 import { Link, useLocation } from "react-router-dom";
-import User from "../../../icons/user";
+import User from "../../icons/user";
 
 export const NavbarO = () => {
   const [isOpen, setIsOpen] = useState(false);
