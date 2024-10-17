@@ -255,7 +255,7 @@ export const Files = () => {
       </div>
       <div className="flex flex-col items-center justify-center flex-grow">
         <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-          <section className="flex flex-col justify-center items-center gap-4">
+          <section className="flex flex-col justify-center items-center gap-4 mx-3">
             <Controller
               name="coverImage"
               control={control}
