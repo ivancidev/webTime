@@ -18,7 +18,7 @@ export default function LinearProgressComp({ progress }) {
         />
       </Box>
       <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" sx={{ color: "#AEAAAE" }}>
+        <Typography variant="body2" sx={{ color: "#AEAAAE", fontWeight: "700", fontSize: "17px" }}>
           {`${Math.round(progress)}%`}
         </Typography>
       </Box>

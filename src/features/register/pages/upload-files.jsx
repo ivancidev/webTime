@@ -3,7 +3,6 @@ import { useForm, Controller } from "react-hook-form";
 import { Navbar } from "../components/navbar";
 import { Card } from "../components/card";
 import LinearProgressComp from "../../../components/progress/linear";
-import FooterButtons from "../components/footer-buttons";
 import CancelIcon from "../../../icons/cancel";
 import UploadIcon from "../../../icons/upload";
 import FrontIcon from "../../../icons/front";
@@ -23,16 +22,12 @@ export const Files = () => {
   const location = useLocation();
   const { state } = location;
   const navigate = useNavigate();
-  
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [uploadedMessage, setUploadedMessage] = useState("");
-  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitProgress, setSubmitProgress] = useState(0);
-
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
-
 
   const {
     control,
@@ -40,7 +35,6 @@ export const Files = () => {
     formState: { errors },
     clearErrors,
     trigger,
-    setValue,
   } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -128,21 +122,21 @@ export const Files = () => {
       const { data, error } = await supabase.storage
         .from(folderName)
         .upload(fileName, file);
-  
+
       if (error) {
         console.error(`Error uploading to ${folderName}:`, error);
         throw error;
       }
-  
+
       const { data: publicURL, error: errorURL } = supabase.storage
         .from(folderName)
         .getPublicUrl(fileName);
-  
+
       if (errorURL) {
         console.error(`Error getting public URL for ${fileName}:`, errorURL);
         throw errorURL;
       }
-  
+
       onProgressUpdate(1);
       return publicURL.publicUrl;
     } catch (error) {
@@ -150,7 +144,6 @@ export const Files = () => {
       throw error;
     }
   };
-  
 
   const onSubmit = async (data) => {
     try {
@@ -159,11 +152,15 @@ export const Files = () => {
       setIsOverlayVisible(true);
 
       const updateProgress = (fileNumber) => {
-        setSubmitProgress((prevProgress) => prevProgress + (100 / 3));
+        setSubmitProgress((prevProgress) => prevProgress + 100 / 3);
       };
-  
+
       const coverImageUrl = data.coverImage
-        ? await uploadFileToSupabase(data.coverImage, "imagenes", updateProgress)
+        ? await uploadFileToSupabase(
+            data.coverImage,
+            "imagenes",
+            updateProgress
+          )
         : null;
       const pdfFileUrl = data.pdfFile
         ? await uploadFileToSupabase(data.pdfFile, "pdfs", updateProgress)
@@ -171,20 +168,22 @@ export const Files = () => {
       const audioFileUrl = data.audioFile
         ? await uploadFileToSupabase(data.audioFile, "audios", updateProgress)
         : null;
-  
+
       setSubmitProgress(100);
-  
-      const { error } = await supabase.from("libro").insert([{
-        nombreLibro: state.title,
-        sinopsis: state.synopsis,
-        codAutor: state.author,
-        codCategoria: state.category,
-        codIdioma: state.language,
-        enlacePortada: coverImageUrl,
-        enlacePdf: pdfFileUrl,
-        enlaceAudio: audioFileUrl,
-      }]);
-  
+
+      const { error } = await supabase.from("libro").insert([
+        {
+          nombreLibro: state.title,
+          sinopsis: state.synopsis,
+          codAutor: state.author,
+          codCategoria: state.category,
+          codIdioma: state.language,
+          enlacePortada: coverImageUrl,
+          enlacePdf: pdfFileUrl,
+          enlaceAudio: audioFileUrl,
+        },
+      ]);
+
       if (error) throw error;
       localStorage.removeItem("title");
       localStorage.removeItem("synopsis");
@@ -219,23 +218,23 @@ export const Files = () => {
       console.error(error);
     }
   };
-  
-  const [isModalOpen, setIsModalOpen]= useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openmod = () => {
     setIsModalOpen(true);
   };
-  const closemod =()=>{
+  const closemod = () => {
     setIsModalOpen(false);
   };
-  
-  const handleCancel=()=> {
+
+  const handleCancel = () => {
     localStorage.removeItem("title");
     localStorage.removeItem("synopsis");
     localStorage.removeItem("author");
     localStorage.removeItem("category");
     localStorage.removeItem("language");
-    navigate("/register")
+    navigate("/register");
   };
   return (
     <div className="flex min-h-screen flex-col bg-primary-pri3">
@@ -243,9 +242,9 @@ export const Files = () => {
       <Navbar />
 
       {isOverlayVisible && (
-      <div className="fixed inset-0 z-50 bg-black opacity-50 flex items-center justify-center">
-        <LinearProgressComp progress={submitProgress} />
-      </div>
+        <div className="fixed inset-0 z-50 bg-black opacity-50 flex items-center justify-center">
+          <LinearProgressComp progress={submitProgress} />
+        </div>
       )}
 
       <div className="h-0">
@@ -254,7 +253,9 @@ export const Files = () => {
       <div className="h-0">
         {isSubmitting && (
           <div className="flex flex-col items-center w-full">
-            <p className="text-neutral-neu0 font-body text-body-sm">Subiendo archivos y datos del libro...</p>
+            <p className="text-neutral-neu0 font-body text-body-sm">
+              Subiendo archivos y datos del libro...
+            </p>
             <div className="w-full">
               <LinearProgressComp progress={submitProgress} />
             </div>
@@ -279,7 +280,10 @@ export const Files = () => {
                       if (!["image/png", "image/jpeg"].includes(file.type)) {
                         return "Solo se permiten archivos PNG o JPG.";
                       }
-                      const extension = file.name.split(".").pop().toLowerCase();
+                      const extension = file.name
+                        .split(".")
+                        .pop()
+                        .toLowerCase();
                       if (file.type === "image/jpeg" && extension !== "jpg") {
                         return "Solo se permiten archivos PNG o JPG (no JPEG).";
                       }
@@ -300,12 +304,17 @@ export const Files = () => {
                   title="Imagen de portada"
                   SVG={FrontIcon}
                   onFileChange={(file) =>
-                    handleFileChange("coverImage", file, onChange, coverImageRef)
+                    handleFileChange(
+                      "coverImage",
+                      file,
+                      onChange,
+                      coverImageRef
+                    )
                   }
                   value={value}
                   error={errors.coverImage?.message}
                   disablePreview={!!errors.coverImage}
-                  ref={coverImageRef} 
+                  ref={coverImageRef}
                 />
               )}
             />
@@ -341,7 +350,7 @@ export const Files = () => {
                   value={value}
                   error={errors.pdfFile?.message}
                   disablePreview={!!errors.pdfFile}
-                  ref={pdfFileRef} 
+                  ref={pdfFileRef}
                 />
               )}
             />
@@ -356,7 +365,7 @@ export const Files = () => {
                     if (
                       file &&
                       !["audio/mpeg", "audio/mp3"].includes(file.type)
-                    ) { 
+                    ) {
                       return "Solo se permiten archivos MP3.";
                     }
                     return true;
@@ -380,26 +389,27 @@ export const Files = () => {
                   value={value}
                   error={errors.audioFile?.message}
                   disablePreview={!!errors.audioFile}
-                  ref={audioFileRef} 
+                  ref={audioFileRef}
                 />
               )}
             />
           </section>
-          
         </form>
       </div>
       <div className="flex flex-col-reverse sm:flex-row w-full justify-end gap-6 mx-auto px-16 py-8 sm:py-10">
-        <Button 
-        text="Cancelar" 
-        variant="combCol2" 
-        SvgIcon={CancelIcon} 
-        onClick={openmod}
+        <Button
+          text="Cancelar"
+          variant="combCol2"
+          SvgIcon={CancelIcon}
+          onClick={openmod}
         />
-        {isModalOpen && <Modal 
-          onClose={closemod} 
-          text="¿Está seguro de Cancelar la subida de archivos?" 
-          onConfirm = { handleCancel }
-        />}
+        {isModalOpen && (
+          <Modal
+            onClose={closemod}
+            text="¿Está seguro de Cancelar la subida de archivos?"
+            onConfirm={handleCancel}
+          />
+        )}
         <Button
           type="submit"
           text="Subir archivos"
