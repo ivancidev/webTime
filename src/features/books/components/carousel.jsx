@@ -56,7 +56,7 @@ export const Carousel = ({ books }) => {
   }
 
   return (
-    <div className="w-screen h-auto px-6 sm:px-12">
+    <div className="w-full h-auto px-6 sm:px-12">
       <div className="flex justify-between items-center">
         <ButtonIcon
           onClick={handlePrev}
