@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
-import ButtonIcon from "../../../components/Buttons/buttonIcon";
+import ButtonIcon from "../../../components/buttons/buttonIcon";
 import Modal from "../../../components/modal/modal";
 
 export const Files = () => {
