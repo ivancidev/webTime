@@ -38,7 +38,8 @@ export default function FormBook() {
 
   useEffect(() => {
     localStorage.setItem("title", watchedTitle);
-  }, [watchedTitle]);
+    setValue("title", watchedTitle); 
+  }, [watchedTitle, setValue]); 
 
   useEffect(() => {
     localStorage.setItem("author", watchedAuthor);
@@ -100,6 +101,8 @@ export default function FormBook() {
               label="Título"
               placeholder="Escribe aquí"
               className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
+              value={watchedTitle}  
+              onChange={(e) => setValue("title", e.target.value)} 
               register={register}
               errors={errors}
             />
