@@ -196,8 +196,8 @@ export const Files = () => {
         autoClose: 1500,
         hideProgressBar: true,
         icon: false,
+        onClose: () => navigate("/register"),
       });
-      navigate("/register")
     } catch (error) {
       setIsSubmitting(false);
       setSubmitProgress(0);
@@ -238,7 +238,7 @@ export const Files = () => {
           <div className="flex flex-col items-center w-full">
             <p className="text-neutral-neu0 font-body text-body-sm">Subiendo archivos y datos del libro...</p>
             <div className="w-full">
-              <LinearProgressComp progress={progress} />
+              <LinearProgressComp progress={submitProgress} />
             </div>
           </div>
         )}
@@ -376,13 +376,7 @@ export const Files = () => {
           {isModalOpen && <Modal 
             onClose={closemod} 
             text="¿Está seguro de Cancelar la subida de archivos?" 
-            onConfirm = { ()=> {
-                localStorage.removeItem("title");
-                localStorage.removeItem("synopsis");
-                localStorage.removeItem("author");
-                localStorage.removeItem("category");
-                localStorage.removeItem("language");
-                navigate("/register") }}
+            onConfirm = { ()=> navigate("/register") }
           />}
           <Button
             type="submit"
