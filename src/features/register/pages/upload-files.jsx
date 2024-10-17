@@ -30,6 +30,9 @@ export const Files = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitProgress, setSubmitProgress] = useState(0);
 
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+
+
   const {
     control,
     handleSubmit,
@@ -152,7 +155,8 @@ export const Files = () => {
     try {
       setSubmitProgress(0);
       setIsSubmitting(true);
-  
+      setIsOverlayVisible(true);
+
       const updateProgress = (fileNumber) => {
         setSubmitProgress((prevProgress) => prevProgress + (100 / 3));
       };
@@ -183,6 +187,7 @@ export const Files = () => {
       if (error) throw error;
   
       setIsSubmitting(false);
+      setIsOverlayVisible(false);
       toast.success("Archivos y datos subidos correctamente.", {
         position: "top-center",
         className: "bg-[#0E1217] text-primary-pri3",
@@ -196,6 +201,7 @@ export const Files = () => {
     } catch (error) {
       setIsSubmitting(false);
       setSubmitProgress(0);
+      setIsOverlayVisible(false);
       toast.error("Error al subir los archivos", {
         position: "top-center",
         className: "bg-[#0E1217] text-primary-pri3",
@@ -225,6 +231,12 @@ export const Files = () => {
     <div className="flex min-h-screen flex-col bg-primary-pri3">
       <ToastContainer />
       <Navbar />
+
+      {isOverlayVisible && (
+      <div className="fixed inset-0 z-50 bg-black opacity-50 flex items-center justify-center">
+        <LinearProgressComp progress={submitProgress} />
+      </div>
+      )}
 
       <div className="h-0">
         {isLoading && <LinearProgressComp progress={progress} />}
