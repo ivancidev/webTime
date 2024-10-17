@@ -18,6 +18,7 @@ import { supabase } from "../../../services/supabaseClient";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import Modal from "../../../components/modal/modal";
 
+
 export const Files = () => {
   const location = useLocation();
   const { state } = location;
