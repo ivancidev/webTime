@@ -186,7 +186,11 @@ export const Files = () => {
       }]);
   
       if (error) throw error;
-  
+      localStorage.removeItem("title");
+      localStorage.removeItem("synopsis");
+      localStorage.removeItem("author");
+      localStorage.removeItem("category");
+      localStorage.removeItem("language");
       setIsSubmitting(false);
       setIsOverlayVisible(false);
       toast.success("Archivos y datos subidos correctamente.", {
