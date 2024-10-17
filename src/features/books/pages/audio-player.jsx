@@ -120,9 +120,9 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
   const playbackRates = [0.5, 1, 1.25, 1.5, 1.75, 2];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-primary-pri3 justify-center items-center  flex flex-col h-[76px] text-primary-pri1">
+    <div className="fixed bottom-0 left-0 right-0 bg-primary-pri3 justify-center items-center flex flex-col h-[80px] text-primary-pri1">
       <audio ref={audioRef} src={urlAudio} preload="metadata" />
-      <div className="flex flex-col items-center w-full px-12 ">
+      <div className="flex flex-col items-center w-full px-2 md:px-12 ">
         <input
           type="range"
           min="0"
@@ -133,10 +133,10 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
         />
       </div>
       <div className="w-full flex flex-row justify-between font-body text-body-md pt-2">
-        <span className="pl-12">{formatTime(currentTime)}</span>
+        <span className="pl-2 md:pl-12">{formatTime(currentTime)}</span>
 
-        <div className="w-full flex flex-row justify-between pt-1 z-50">
-          <div className=" md:w-1/5 flex flex-row justify-end relative pt-1">
+        <div className="w-full flex sm:flex-row justify-between pt-1 z-50">
+          <div className=" w-1/6 flex flex-row justify-end relative pt-1">
             <Button
               text={
                 <>
@@ -232,7 +232,7 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row pr-2">
+        <div className="flex flex-col sm:flex-row pr-2">
           <span className="pr-2">{formatTime(duration)}</span>
           <ButtonIcon
             SvgIcon={CloseIcon}
