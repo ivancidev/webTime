@@ -182,7 +182,7 @@ export default function FormBook() {
           </div>
         </form>
       </div>
-      <FooterButtons handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={onCancel} className="mt-auto"/>
+      <FooterButtons handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={onCancel}/>
     </div>
   );
 }

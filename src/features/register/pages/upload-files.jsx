@@ -377,25 +377,26 @@ export const Files = () => {
         </form>
       </div>
       <div className="flex flex-col-reverse sm:flex-row w-full justify-end gap-6 mx-auto px-16 py-8 sm:py-10">
-          <Button 
-          text="Cancelar" 
-          variant="combCol2" 
-          SvgIcon={CancelIcon} 
-          onClick={openmod}
-          />
-          {isModalOpen && <Modal 
-            onClose={closemod} 
-            text="¿Está seguro de Cancelar la subida de archivos?" 
-            onConfirm = { handleCancel }
-          />}
-          <Button
-            type="submit"
-            text="Subir archivos"
-            variant="combCol1"
-            SvgIcon={UploadIcon}
-            disabled={isSubmitting}
-          />
-        </div>
+        <Button 
+        text="Cancelar" 
+        variant="combCol2" 
+        SvgIcon={CancelIcon} 
+        onClick={openmod}
+        />
+        {isModalOpen && <Modal 
+          onClose={closemod} 
+          text="¿Está seguro de Cancelar la subida de archivos?" 
+          onConfirm = { handleCancel }
+        />}
+        <Button
+          type="submit"
+          text="Subir archivos"
+          variant="combCol1"
+          SvgIcon={UploadIcon}
+          disabled={isSubmitting}
+          onClick={() => handleSubmit(onSubmit)()}
+        />
+      </div>
     </div>
   );
 };
