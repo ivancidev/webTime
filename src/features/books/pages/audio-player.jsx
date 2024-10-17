@@ -134,10 +134,14 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
       <div className="w-full flex flex-row justify-between font-body text-body-md pt-2">
         <span className="pl-12">{formatTime(currentTime)}</span>
 
-        <div className="w-full flex flex-row justify-between pt-1">
-          <div className="w-1/5 flex flex-row justify-end relative pt-1">
+        <div className="w-full flex flex-row justify-between pt-1 z-50">
+          <div className=" md:w-1/5 flex flex-row justify-end relative pt-1">
             <Button
-              text={`Velocidad ${playbackRate}x`}
+              text={
+                <>
+                  <span className="hidden lg:inline">Velocidad</span> {`${playbackRate}x`}
+                </>
+              }
               onClick={() => setShowSpeedOptions(!showSpeedOptions)}
               variant="combCol4"
             />
