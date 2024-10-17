@@ -11,14 +11,18 @@ export const TextLarge = ({ sinopsis }) => {
   return (
     <div className="w-[500px] mt-8">
       <p className="font-body text-body-md text-neutral-neu0 text-justify leading-6">
-        {isExpanded ? sinopsis : `${sinopsis.substring(0, maxLength)}...`}
+        {isExpanded || sinopsis.length <= maxLength
+          ? sinopsis
+          : `${sinopsis.substring(0, maxLength)}...`}
       </p>
-      <button
-        onClick={toggleExpansion}
-        className="text-secondary-sec2 font-body text-body-md hover:underline mt-2 text-justify"
-      >
-        {isExpanded ? "Leer menos" : "Leer más"}
-      </button>
+      {sinopsis.length > maxLength && (
+        <button
+          onClick={toggleExpansion}
+          className="text-secondary-sec2 font-body text-body-md hover:underline mt-2 text-justify"
+        >
+          {isExpanded ? "Leer menos" : "Leer más"}
+        </button>
+      )}
     </div>
   );
 };
