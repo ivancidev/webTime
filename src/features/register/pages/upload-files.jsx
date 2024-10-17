@@ -229,10 +229,17 @@ export const Files = () => {
         {isLoading && <LinearProgressComp progress={progress} />}
       </div>
       <div className="h-0">
-        {isSubmitting && <LinearProgressComp progress={submitProgress} />}
+        {isSubmitting && (
+          <div className="flex flex-col items-center w-full">
+            <p className="text-neutral-neu0 font-body text-body-sm">Subiendo archivos y datos del libro...</p>
+            <div className="w-full">
+              <LinearProgressComp progress={progress} />
+            </div>
+          </div>
+        )}
       </div>
 
-      <div className="mb-6 mt-6 pl-5 md:pl-8">
+      <div className="mb-6 mt-10 pl-5 md:pl-8">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/register")} />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
