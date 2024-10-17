@@ -22,17 +22,27 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
   const [playbackRate, setPlaybackRate] = useState(1);
   const [showSpeedOptions, setShowSpeedOptions] = useState(false);
   const [showVerticalSlider, setShowVerticalSlider] = useState(false);
+  const audioKey = `audioProgress_${urlAudio}`;
 
   useEffect(() => {
     const audio = audioRef.current;
 
+    const savedProgress = localStorage.getItem(audioKey);
+    if (savedProgress) {
+      audio.currentTime = parseFloat(savedProgress); 
+      setCurrentTime(parseFloat(savedProgress));
+    }
+
     const updateCurrentTime = () => {
       setCurrentTime(audio.currentTime);
       setDuration(audio.duration);
+
+      localStorage.setItem(audioKey, audio.currentTime);
     };
 
     const handleAudioEnd = () => {
       setIsPlaying(false);
+      localStorage.removeItem(audioKey); 
     };
 
     audio.addEventListener("timeupdate", updateCurrentTime);
@@ -42,7 +52,7 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
       audio.removeEventListener("timeupdate", updateCurrentTime);
       audio.removeEventListener("ended", handleAudioEnd);
     };
-  }, []);
+  }, [audioKey]);
 
   const handlePlayPause = () => {
     const audio = audioRef.current;
@@ -64,20 +74,20 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
       setIsMuted(false);
     }
   };
+
   const handleClick = () => {
-    if (window.innerWidth >= 1024) { 
+    if (window.innerWidth >= 1024) {
       handleMuteUnmute();
     } else {
       setShowVerticalSlider(!showVerticalSlider);
     }
   };
+
   const handleMuteUnmute = () => {
     if (isMuted) {
-      // Si está silenciado, restaura el volumen anterior
       audioRef.current.volume = previousVolume;
       setVolume(previousVolume);
     } else {
-      // Si no está silenciado, almacena el volumen actual y lo silencia
       setPreviousVolume(volume);
       audioRef.current.volume = 0;
       setVolume(0);
@@ -90,6 +100,7 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
     setPlaybackRate(rate);
     setShowSpeedOptions(false);
   };
+
   const skipTime = (seconds) => {
     const audio = audioRef.current;
     audio.currentTime = Math.min(
@@ -123,7 +134,7 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
     audio.currentTime = newTime;
   };
 
-  const playbackRates = [0.5, 1, 1.25, 1.5, 1.75, 2];
+  const playbackRates = [1, 1.25, 1.5, 1.75, 2];
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-primary-pri3 justify-center items-center flex flex-col h-[80px] text-primary-pri1">
@@ -146,7 +157,8 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
             <Button
               text={
                 <>
-                  <span className="hidden lg:inline">Velocidad</span> {`${playbackRate}x`}
+                  <span className="hidden lg:inline">Velocidad</span>{" "}
+                  {`${playbackRate}x`}
                 </>
               }
               onClick={() => setShowSpeedOptions(!showSpeedOptions)}
@@ -234,7 +246,6 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
                   <span className="text-sm">{Math.round(volume * 100)}%</span>
                 </div>
               )}
-
             </div>
           </div>
         </div>
