@@ -64,7 +64,13 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
       setIsMuted(false);
     }
   };
-
+  const handleClick = () => {
+    if (window.innerWidth >= 1024) { 
+      handleMuteUnmute();
+    } else {
+      setShowVerticalSlider(!showVerticalSlider);
+    }
+  };
   const handleMuteUnmute = () => {
     if (isMuted) {
       // Si está silenciado, restaura el volumen anterior
@@ -200,7 +206,7 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
               <ButtonIcon
                 SvgIcon={isMuted ? Mute : Volume}
                 variant="combColBlack"
-                onClick={() => setShowVerticalSlider(!showVerticalSlider)} // Muestra la barra vertical
+                onClick={handleClick} // Muestra la barra vertical
               />
               <div className="hidden lg:flex flex-row items-center">
                 <input
