@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Dropdown } from "../../../components/dropdown/dropdown";
 import { useForm } from "react-hook-form";
 import { InputText } from "../../../components/input/input";
@@ -10,32 +10,83 @@ export default function FormBook() {
   const { data: authors } = useGetTable("autor");
   const { data: categories } = useGetTable("categoria");
   const { data: languages } = useGetTable("idioma");
-  const [title, setTitle] = useState("");
   const navigation = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
+    setValue,
   } = useForm({
     defaultValues: {
-      title: "",
-      author: "",
-      category: "",
-      language: "",
-      synopsis: "",
+      title: localStorage.getItem("title") || "",
+      author: localStorage.getItem("author") || "",
+      category: localStorage.getItem("category") || "",
+      language: localStorage.getItem("language") || "",
+      synopsis: localStorage.getItem("synopsis") || "",
     },
   });
 
+  // Watch values to keep localStorage updated
+  const watchedTitle = watch("title");
+  const watchedAuthor = watch("author");
+  const watchedCategory = watch("category");
+  const watchedLanguage = watch("language");
+  const watchedSynopsis = watch("synopsis");
+
+  useEffect(() => {
+    localStorage.setItem("title", watchedTitle);
+  }, [watchedTitle]);
+
+  useEffect(() => {
+    localStorage.setItem("author", watchedAuthor);
+  }, [watchedAuthor]);
+
+  useEffect(() => {
+    localStorage.setItem("category", watchedCategory);
+  }, [watchedCategory]);
+
+  useEffect(() => {
+    localStorage.setItem("language", watchedLanguage);
+  }, [watchedLanguage]);
+
+  useEffect(() => {
+    localStorage.setItem("synopsis", watchedSynopsis);
+  }, [watchedSynopsis]);
+
+
+  useEffect(() => {
+    const handleUnload = () => {
+      localStorage.removeItem("title");
+      localStorage.removeItem("author");
+      localStorage.removeItem("category");
+      localStorage.removeItem("language");
+      localStorage.removeItem("synopsis");
+    };
+
+ 
+    window.addEventListener("beforeunload", handleUnload);
+
+
+    return () => {
+      window.removeEventListener("beforeunload", handleUnload);
+    };
+  }, []);
+
+
+
   const onSubmit = (data) => {
+    // Navegar a la siguiente página, y pasar el estado actual
     navigation("/upload-files", { state: data });
+  };
+
+  const onCancel = ()=>{
+    navigation("/");
   };
   return (
     <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="max-w-[795px] mx-auto w-full"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-[795px] mx-auto w-full">
         <h1 className="text-center text-secondary-sec2 m-[20px] font-title text-title-lg">
           Formulario de Registro de Libro
         </h1>
@@ -47,8 +98,6 @@ export default function FormBook() {
             className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 text-neutral-neu0 font-body text-body-md"
             register={register}
             errors={errors}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
           />
           <Dropdown
             name="author"
@@ -57,6 +106,8 @@ export default function FormBook() {
             placeholder="Seleccionar autor"
             register={register}
             errors={errors}
+            value={watchedAuthor}
+            onChange={(e) => setValue("author", e.target.value)}
             displayKey="nombreAutor"
             valueKey="codAutor"
           />
@@ -69,6 +120,8 @@ export default function FormBook() {
             placeholder="Seleccionar categoría"
             register={register}
             errors={errors}
+            value={watchedCategory}
+            onChange={(e) => setValue("category", e.target.value)}
             displayKey="nombreCategoria"
             valueKey="codCategoria"
           />
@@ -79,15 +132,14 @@ export default function FormBook() {
             placeholder="Seleccionar idioma"
             register={register}
             errors={errors}
+            value={watchedLanguage}
+            onChange={(e) => setValue("language", e.target.value)}
             displayKey="idioma"
             valueKey="codIdioma"
           />
         </div>
         <div className="mt-7 px-10 md:px-3 lg:px-0">
-          <label
-            htmlFor="synopsis"
-            className="py-1 text-primary-pri2 font-label text-label-lg"
-          >
+          <label htmlFor="synopsis" className="py-1 text-primary-pri2 font-label text-label-lg">
             Sinopsis <span className="text-error-err2">*</span>
           </label>
           <textarea
@@ -111,7 +163,6 @@ export default function FormBook() {
               },
               validate: {
                 noMultipleSpacesOrNewlines: (value) => {
-                  // Verificar si hay múltiples espacios o saltos de línea consecutivos
                   if (/ {2,}/.test(value)) {
                     return "No se permiten múltiples espacios en blanco consecutivos";
                   }
@@ -123,12 +174,10 @@ export default function FormBook() {
               },
             })}
           />
-          {errors.synopsis && (
-            <span className="text-error-err2">{errors.synopsis.message}</span>
-          )}
+          {errors.synopsis && <span className="text-error-err2">{errors.synopsis.message}</span>}
         </div>
       </form>
-      <FooterButtons handleSubmit={handleSubmit} onSubmit={onSubmit} />
+      <FooterButtons handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={onCancel} />
     </div>
   );
 }

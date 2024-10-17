@@ -167,7 +167,11 @@ export const Files = () => {
         },
       ]);
       if (error) throw error;
-
+      localStorage.removeItem("title");
+      localStorage.removeItem("synopsis");
+      localStorage.removeItem("author");
+      localStorage.removeItem("category");
+      localStorage.removeItem("language");
       toast.success("Archivos y datos subidos correctamente.", {
         position: "top-center",
         className: "bg-[#0E1217] text-primary-pri3",
@@ -177,6 +181,7 @@ export const Files = () => {
         hideProgressBar: true,
         icon: false,
       });
+      navigate("/register")
     } catch (error) {
       toast.error("Error al subir los archivos", {
         position: "top-center",
@@ -341,7 +346,13 @@ export const Files = () => {
           {isModalOpen && <Modal 
             onClose={closemod} 
             text="¿Está seguro de Cancelar la subida de archivos?" 
-            onConfirm = { ()=> navigate("/register") }
+            onConfirm = { ()=> {
+                localStorage.removeItem("title");
+                localStorage.removeItem("synopsis");
+                localStorage.removeItem("author");
+                localStorage.removeItem("category");
+                localStorage.removeItem("language");
+                navigate("/register") }}
           />}
           <Button
             type="submit"
