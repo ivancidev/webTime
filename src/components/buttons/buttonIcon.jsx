@@ -17,7 +17,7 @@ const ButtonIcon = ({
     combColTrans2: "text-primary-pri3 bg-transparent hover:text-secondary-sec1", // boton sin fondo y con icono azul
     combColBlue: "text-secondary-sec1 ",
     combColZ:
-      "absolute top-10 right-8 text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1", // boton sin fondo y con icono
+      "absolute top-4 md:top-10 right-8 text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1", // boton sin fondo y con icono
   };
 
   return (
