@@ -7,7 +7,7 @@ export const CardBook = ({ titleBook, frontBook, book }) => {
   };
   return (
     <div
-      className="w-40 h-50 bg-primary-pri3 rounded-2xl flex flex-col justify-start border-[1px] border-primary-pri2 hover:bg-neutral-neu1 sm:w-60 sm:h-80 flex-none cursor-pointer"
+      className="w-40 h-50 bg-primary-pri3 rounded-2xl flex flex-col justify-start border-[1px] border-primary-pri2 hover:bg-secondary-sec2 hover:bg-opacity-75 hover:text-primary-pri3 sm:w-60 sm:h-80 flex-none cursor-pointer"
       onClick={handleClick}
     >
       <img

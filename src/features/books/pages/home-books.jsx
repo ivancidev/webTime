@@ -24,7 +24,7 @@ export const Home = () => {
       </h1>
       <Carousel books={books} />
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-        Mejor calificado
+        Mejor calificados
       </h1>
       <Carousel books={books} />
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
