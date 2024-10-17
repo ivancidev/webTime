@@ -1,12 +1,24 @@
 import React from "react";
 import { NavbarO } from "../components/navbarO";
 import { Carousel } from "../components/carousel";
-import { useGetData } from "../../../hooks/use-get-fooks";
+import { useGetBooks } from "../../../hooks/use-get-books";
 import { CircularProgress } from "@mui/material";
+import { useGetRecentBooks } from "../../../hooks/use-recent-book";
 
 export const Home = () => {
-  const { data: books, isLoading, isError, error } = useGetData();
-  if (isLoading) {
+  const {
+    data: books,
+    isLoading: isLoadingBooks,
+    isError: isErrorBooks,
+    error: errorBooks,
+  } = useGetBooks();
+  const {
+    data: recentBooks,
+    isLoading: isLoadingRecent,
+    isError: isErrorRecent,
+    error: errorRecent,
+  } = useGetRecentBooks();
+  if (isLoadingBooks || isLoadingRecent) {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen bg-primary-pri3">
         <CircularProgress color="primary" size={100} />
@@ -14,7 +26,8 @@ export const Home = () => {
       </div>
     );
   }
-  if (isError) return <div>Error: {error.message}</div>;
+  if (isErrorBooks) return <div>Error: {errorBooks.message}</div>;
+  if (isErrorRecent) return <div>Error: {errorRecent.message}</div>;
 
   return (
     <div className="pb-12 bg-primary-pri3">
@@ -30,7 +43,7 @@ export const Home = () => {
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
         Recién agregados
       </h1>
-      <Carousel books={books} />
+      <Carousel books={recentBooks} />
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
         Lo más leidos esta semana
       </h1>
