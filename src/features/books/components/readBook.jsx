@@ -14,7 +14,7 @@ export const ReadBook = ({ pdfUrl, onClose }) => {
           onClick={onClose}
         />
       </div>
-      <div className="relative rounded-lg shadow-lg overflow-hidden w-full max-w-3xl md:w-[70%] md:max-w-none mx-auto pt-10">
+      <div className="relative rounded-lg shadow-lg overflow-hidden w-full max-w-3xl md:w-[70%] md:max-w-none mx-auto md:mb-5">
         <iframe
           src={pdfWithParams}
           title="PDF"
