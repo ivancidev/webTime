@@ -15,7 +15,9 @@ export const InputText = ({
     <div className="flex flex-col">
       <label
         htmlFor={name}
-        className={`mt-[20px] py-1 text-primary-pri3 font-label text-label-lg ${errors[name] ? 'text-error-err2' : ''}`}
+        className={`mt-[20px] py-1 text-primary-pri2 font-label text-label-lg ${
+          errors[name] ? "text-error-err2" : ""
+        }`}
       >
         {label} <span className="text-error-err2">*</span>
       </label>
@@ -25,11 +27,11 @@ export const InputText = ({
         placeholder={placeholder}
         type={type}
         value={value}
-        className={`${className} ${errors[name] ? '' : ''}`}
+        className={`${className} ${errors[name] ? "" : ""}`}
         {...register(name, {
           required: `${label} es requerido`,
           pattern: {
-            value: /^[a-zA-Z0-9 ]*$/,
+            value: /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ .,;'"`’Üü]*$/,
             message: "Solo se permiten caracteres alfanuméricos",
           },
           maxLength: {
@@ -40,9 +42,16 @@ export const InputText = ({
             value: 2,
             message: "El título debe tener al menos 2 caracteres",
           },
+          validate: {
+            noMultipleSpaces: (value) =>
+              !/\s{2,}/.test(value) || "No se permiten múltiples espacios en blanco consecutivos",
+          }
         })}
-        onChange ={onChange}      />
-      {errors[name] && <span className="text-error-err2">{errors[name].message}</span>}
+        onChange={onChange}
+      />
+      {errors[name] && (
+        <span className="text-error-err2">{errors[name].message}</span>
+      )}
     </div>
   );
 };

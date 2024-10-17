@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { CardBook } from "./cardBook";
 import BeforeIcon from "../../../icons/before";
-import ButtonIcon from "../../../components/buttons/buttonIcon";
 import NextIcon from "../../../icons/next";
+import ButtonIcon from "../../../components/buttons/buttonIcon";
 
 export const Carousel = ({ books }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -56,7 +56,7 @@ export const Carousel = ({ books }) => {
   }
 
   return (
-    <div className="w-screen h-auto px-6 sm:px-12">
+    <div className="w-full h-auto px-6 sm:px-12">
       <div className="flex justify-between items-center">
         <ButtonIcon
           onClick={handlePrev}
@@ -73,6 +73,7 @@ export const Carousel = ({ books }) => {
                 key={index}
                 titleBook={book.nombreLibro}
                 frontBook={book.enlacePortada}
+                book={book}
               />
             ))}
         </div>

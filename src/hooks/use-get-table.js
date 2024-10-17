@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../services/supabaseClient";
 
-export const useFetch = (table, columns = "*") => {
+export const useGetTable = (table, columns = "*") => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
