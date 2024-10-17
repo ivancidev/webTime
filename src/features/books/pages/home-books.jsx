@@ -1,5 +1,4 @@
 import React from "react";
-import { NavbarO } from "../components/navbarO";
 import { Carousel } from "../components/carousel";
 import { useGetBooks } from "../../../hooks/use-get-books";
 import { CircularProgress } from "@mui/material";
@@ -31,7 +30,6 @@ export const Home = () => {
 
   return (
     <div className="pb-12 bg-primary-pri3">
-      <NavbarO />
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
         Los más vistos
       </h1>

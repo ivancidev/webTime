@@ -1,9 +1,14 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useAudio } from "../../../context/audio-context";
 export const CardBook = ({ titleBook, frontBook, book }) => {
   const navigate = useNavigate();
+  const { setShowAudioPlay } = useAudio();
   const handleClick = () => {
-    navigate(`/book-info/${book.codLibro}`, { state: { book } });
+    setShowAudioPlay(false);
+    localStorage.setItem("book", JSON.stringify(book));
+    navigate(`/book-info/${book.codLibro}`, {
+      state: { book },
+    });
   };
   return (
     <div

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { NavbarO } from "../components/navbarO";
 import BackIcon from "../../../icons/back";
 import ListenIcon from "../../../icons/listen";
 import ReadIcon from "../../../icons/read";
@@ -13,9 +12,9 @@ import { CircularProgress } from "@mui/material";
 import { ReadBook } from "../components/readBook";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import { TextLarge } from "../../register/components/text-large";
+import { useAudio } from "../../../context/audio-context";
 
 export const BookInfo = () => {
-  const [showAudioPlayer, setShowAudioPlayer] = useState(false);
   const location = useLocation();
   const { book } = location.state || {};
   const navigate = useNavigate();
@@ -23,6 +22,7 @@ export const BookInfo = () => {
   const { numPages, loadingPdf } = useFetchNumPages(book);
   const audioDuration = useAudioDuration(book.enlaceAudio);
   const [showReadBook, setShowReadBook] = useState(false);
+  const { showAudioPlay, setShowAudioPlay } = useAudio();
 
   if (!book) {
     return (
@@ -44,13 +44,8 @@ export const BookInfo = () => {
   if (error) {
     return <div>Error al obtener detalles del libro: {error.message}</div>;
   }
-
-  const handleCloseReadBook = () => {
-    setShowReadBook(false);
-  };
   return (
     <div className="flex min-h-screen flex-col bg-primary-pri3">
-      <NavbarO />
       <div className="sticky top-0 flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/")} />
       </div>
@@ -69,8 +64,8 @@ export const BookInfo = () => {
             <div className="flex flex-row space-x-8 mt-4">
               <ButtonIcon
                 SvgIcon={ListenIcon}
-                variant={`${showAudioPlayer ? "combColBlue" : "combColBlack"}`}
-                onClick={() => setShowAudioPlayer(true)}
+                variant={`${showAudioPlay ? "combColBlue" : "combColBlack"}`}
+                onClick={() => setShowAudioPlay(true)}
               />
               <ButtonIcon
                 SvgIcon={ReadIcon}
@@ -96,19 +91,14 @@ export const BookInfo = () => {
           <div className="max-w-[500px] mt-4 mb-8 sm:my-10">
             <TextLarge sinopsis={book.sinopsis} />
           </div>
-          {showAudioPlayer && (
-            <div className="mt-8">
-              <AudioPlayer
-                setShowAudioPlayer={() => setShowAudioPlayer(false)}
-                urlAudio={book.enlaceAudio}
-              />
-            </div>
-          )}
         </div>
       </div>
       {showReadBook && (
         <div>
-          <ReadBook pdfUrl={book.enlacePdf} onClose={handleCloseReadBook} />
+          <ReadBook
+            pdfUrl={book.enlacePdf}
+            onClose={() => setShowReadBook(false)}
+          />
         </div>
       )}
     </div>

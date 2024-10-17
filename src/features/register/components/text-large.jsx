@@ -9,7 +9,7 @@ export const TextLarge = ({ sinopsis }) => {
   };
 
   return (
-    <div className="w-[500px] mt-8">
+    <div className="mt-8">
       <p className="font-body text-body-md text-neutral-neu0 text-justify leading-6">
         {isExpanded || sinopsis.length <= maxLength
           ? sinopsis
