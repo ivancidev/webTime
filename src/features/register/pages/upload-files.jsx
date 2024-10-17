@@ -118,75 +118,70 @@ export const Files = () => {
     }
   }, [isLoading, uploadedMessage]);
 
-  const uploadFileToSupabase = async (file, folderName) => {
+  const uploadFileToSupabase = async (file, folderName, onProgressUpdate) => {
     try {
       const fileName = `${Date.now()}_${file.name}`;
       const { data, error } = await supabase.storage
         .from(folderName)
         .upload(fileName, file);
+  
       if (error) {
         console.error(`Error uploading to ${folderName}:`, error);
         throw error;
       }
-
+  
       const { data: publicURL, error: errorURL } = supabase.storage
         .from(folderName)
         .getPublicUrl(fileName);
-
+  
       if (errorURL) {
         console.error(`Error getting public URL for ${fileName}:`, errorURL);
         throw errorURL;
       }
-
+  
+      onProgressUpdate(1);
       return publicURL.publicUrl;
     } catch (error) {
       console.error("Error during file upload:", error);
       throw error;
     }
   };
+  
 
   const onSubmit = async (data) => {
     try {
       setSubmitProgress(0);
       setIsSubmitting(true);
-
-      const uploadProgress = setInterval(() => {
-        setSubmitProgress((prevProgress) =>
-          prevProgress >= 100 ? 100 : prevProgress + 10
-        );
-      }, 200);
-
+  
+      const updateProgress = (fileNumber) => {
+        setSubmitProgress((prevProgress) => prevProgress + (100 / 3));
+      };
+  
       const coverImageUrl = data.coverImage
-        ? await uploadFileToSupabase(data.coverImage, "imagenes")
+        ? await uploadFileToSupabase(data.coverImage, "imagenes", updateProgress)
         : null;
       const pdfFileUrl = data.pdfFile
-        ? await uploadFileToSupabase(data.pdfFile, "pdfs")
+        ? await uploadFileToSupabase(data.pdfFile, "pdfs", updateProgress)
         : null;
       const audioFileUrl = data.audioFile
-        ? await uploadFileToSupabase(data.audioFile, "audios")
+        ? await uploadFileToSupabase(data.audioFile, "audios", updateProgress)
         : null;
-
-      clearInterval(uploadProgress);
+  
       setSubmitProgress(100);
-
-      const { error } = await supabase.from("libro").insert([
-        {
-          nombreLibro: state.title,
-          sinopsis: state.synopsis,
-          codAutor: state.author,
-          codCategoria: state.category,
-          codIdioma: state.language,
-          enlacePortada: coverImageUrl,
-          enlacePdf: pdfFileUrl,
-          enlaceAudio: audioFileUrl,
-        },
-      ]);
+  
+      const { error } = await supabase.from("libro").insert([{
+        nombreLibro: state.title,
+        sinopsis: state.synopsis,
+        codAutor: state.author,
+        codCategoria: state.category,
+        codIdioma: state.language,
+        enlacePortada: coverImageUrl,
+        enlacePdf: pdfFileUrl,
+        enlaceAudio: audioFileUrl,
+      }]);
+  
       if (error) throw error;
-      localStorage.removeItem("title");
-      localStorage.removeItem("synopsis");
-      localStorage.removeItem("author");
-      localStorage.removeItem("category");
-      localStorage.removeItem("language");
+  
       setIsSubmitting(false);
       toast.success("Archivos y datos subidos correctamente.", {
         position: "top-center",
@@ -213,6 +208,7 @@ export const Files = () => {
       console.error(error);
     }
   };
+  
   const [isModalOpen, setIsModalOpen]= useState(false);
 
   const openmod = () => {
