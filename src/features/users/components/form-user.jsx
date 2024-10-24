@@ -3,6 +3,7 @@ import ButtonIcon from "../../../components/buttons/buttonIcon";
 import { InputText } from "../../../components/input/input";
 import Camera from "../../../icons/camera";
 import Delete from "../../../icons/delete";
+import UserReg from "../../../icons/userRegister";
 
 export const FormUser = () => {
   return (
@@ -11,7 +12,10 @@ export const FormUser = () => {
         ¡Bienvenido a Webtime!
       </h1>
       <div className="flex flex-row">
-        <img src="/src/assets/icons/user.svg" alt="" className="ml-10" />
+        <div className="ml-10">
+          <UserReg />
+        </div>
+
         <div className="flex flex-col justify-around ml-2 py-2">
           <ButtonIcon SvgIcon={Camera} />
           <ButtonIcon SvgIcon={Delete} />
