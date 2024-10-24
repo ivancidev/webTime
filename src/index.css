@@ -44,3 +44,13 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #0123fd;
 }
+
+.swiper-pagination-bullet {
+  background-color: #aeaaae;
+  opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #0297ff;
+  opacity: 1;
+}
