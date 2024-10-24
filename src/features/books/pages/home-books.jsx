@@ -3,6 +3,7 @@ import { Carousel } from "../components/carousel";
 import { useGetBooks } from "../../../hooks/use-get-books";
 import { CircularProgress } from "@mui/material";
 import { useGetRecentBooks } from "../../../hooks/use-recent-book";
+import { Footer } from "../../../components/footer/footer";
 
 export const Home = () => {
   const {
@@ -29,7 +30,7 @@ export const Home = () => {
   if (isErrorRecent) return <div>Error: {errorRecent.message}</div>;
 
   return (
-    <div className="pb-12 bg-primary-pri3">
+    <div className="bg-primary-pri3">
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
         Los más vistos
       </h1>
@@ -46,6 +47,7 @@ export const Home = () => {
         Lo más leído esta semana
       </h1>
       <Carousel books={books} />
+      <Footer />
     </div>
   );
 };
