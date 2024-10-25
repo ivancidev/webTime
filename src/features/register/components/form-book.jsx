@@ -105,6 +105,26 @@ export default function FormBook() {
               onChange={(e) => setValue("title", e.target.value)} 
               register={register}
               errors={errors}
+              validationRules={{
+                required: `Título es requerido`,
+                pattern: {
+                  value: /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ .,;'"`’Üü]*$/,
+                  message: "Solo se permiten caracteres alfanuméricos",
+                },
+                maxLength: {
+                  value: 255,
+                  message: "El título no debe ser mayor a 255 caracteres",
+                },
+                minLength: {
+                  value: 2,
+                  message: "El título debe tener al menos 2 caracteres",
+                },
+                validate: {
+                  noMultipleSpaces: (value) =>
+                    !/\s{2,}/.test(value) ||
+                    "No se permiten múltiples espacios en blanco consecutivos",
+                },  
+              }}
             />
             <Dropdown
               name="author"
