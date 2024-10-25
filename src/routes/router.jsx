@@ -4,8 +4,13 @@ import { Files } from "../features/register/pages/upload-files";
 import { Home } from "../features/books/pages/home-books";
 import { BookInfo } from "../features/books/pages/book-info";
 import { Root } from "../layouts/root";
+import { RegisterUser } from "../features/users/pages/register-user";
 
 export const router = createBrowserRouter([
+  {
+    path: "/register-user",
+    element: <RegisterUser />,
+  },
   {
     path: "/",
     element: <Root />,

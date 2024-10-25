@@ -29,21 +29,21 @@ export const CarouselImg = () => {
           <img
             src="/src/assets/images/man.PNG"
             alt="Man"
-            className="w-[500px] h-[640px] object-cover"
+            className="w-[550px] h-[640px] object-cover"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
             src="/src/assets/images/woman.PNG"
             alt="Woman"
-            className="w-[500px] h-[640px] object-cover"
+            className="w-[550px] h-[640px] object-cover"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
             src="/src/assets/images/man2.PNG"
             alt="Man2"
-            className="w-[500px] h-[640px] object-cover"
+            className="w-[550px] h-[640px] object-cover"
           />
         </SwiperSlide>
       </Swiper>
