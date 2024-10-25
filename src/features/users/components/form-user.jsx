@@ -1,9 +1,6 @@
 import Button from "../../../components/buttons/button";
-import ButtonIcon from "../../../components/buttons/buttonIcon";
 import { InputText } from "../../../components/input/input";
-import Camera from "../../../icons/camera";
-import Delete from "../../../icons/delete";
-import UserReg from "../../../icons/userRegister";
+import ImageUploader from "./image-uploader";
 
 export const FormUser = () => {
   return (
@@ -11,16 +8,7 @@ export const FormUser = () => {
       <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent m-[20px] font-display text-display-md">
         ¡Bienvenido a Webtime!
       </h1>
-      <div className="flex flex-row">
-        <div className="ml-10">
-          <UserReg />
-        </div>
-
-        <div className="flex flex-col justify-around ml-2 py-2">
-          <ButtonIcon SvgIcon={Camera} />
-          <ButtonIcon SvgIcon={Delete} />
-        </div>
-      </div>
+      <ImageUploader />
       <div className="pb-6">
         <InputText
           name="name"
