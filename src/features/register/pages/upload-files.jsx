@@ -153,7 +153,7 @@ export const Files = () => {
       setIsOverlayVisible(true);
 
       const updateProgress = (fileNumber) => {
-        setSubmitProgress((prevProgress) => prevProgress + 100 / 3);
+        setSubmitProgress((prevProgress) => prevProgress + 100/3);
       };
 
       const coverImageUrl = data.coverImage
