@@ -85,6 +85,23 @@ export const FormUser = () => {
           className="w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
           register={register}
           errors={errors}
+          validationRules={{
+            required: "Correo electrónico no puede estar vacío",
+            minLength: {
+              value: 6,
+              message: "Correo electrónico debe tener al menos 6 caracteres",
+            },
+            maxLength: {
+              value: 60,
+              message: "Correo electrónico no debe exceder 60 caracteres",
+            },
+            validate: {
+              noSpaces: (value) =>
+                !/\s/.test(value) || "El correo no debe contener espacios",
+              isGmail: (value) =>
+                /^[a-zA-Z0-9._%+-]+@gmail\.[a-zA-Z]{2,}$/.test(value) || "El correo electrónico debe ser un Gmail válido.",
+            },
+          }}
         />
         <InputText
           name="password"
