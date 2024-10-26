@@ -53,15 +53,34 @@ export const FormUser = () => {
         <InputText
           name="nickname"
           label="Nombre de usuario"
-          placeholder="Escribe aquí"
+          placeholder="Ingrese un nombre de usuario"
           className="w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
           register={register}
           errors={errors}
+          validationRules={{
+            required: "Nombre de usuario no puede estar vacío",
+            pattern: {
+              value: /^[a-zA-Z0-9_.áéíóúÁÉÍÓÚñÑ]*$/,
+              message: "Nombre de usuario sólo admite caracteres a-z, A-Z, 0-9, _, .",
+            },
+            minLength: {
+              value: 2,
+              message: "Nombre de usuario debe tener al menos 2 caracteres",
+            },
+            maxLength: {
+              value: 20,
+              message: "Nombre de usuario no debe exceder 20 caracteres",
+            },
+            validate: {
+              noMultipleSpaces: (value) =>
+                !/\s{2,}/.test(value) || "No se permiten espacios múltiples consecutivos",
+            },
+          }}
         />
         <InputText
           name="email"
           label="Correo electrónico"
-          placeholder="Escribe aquí"
+          placeholder="Ingrese su correo electrónico"
           type="email"
           className="w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
           register={register}

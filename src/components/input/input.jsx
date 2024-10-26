@@ -27,10 +27,10 @@ export const InputText = ({
         name={name}
         placeholder={placeholder}
         type={type}
+        onChange={onChange}
         value={value}
         className={`${className} ${errors[name] ? "" : ""}`}
         {...(register ? register(name, validationRules) : {})}
-        onChange={onChange}
       />
       {errors[name] && (
         <span className="text-error-err2">{errors[name].message}</span>
