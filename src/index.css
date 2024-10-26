@@ -54,3 +54,7 @@
   background-color: #0297ff;
   opacity: 1;
 }
+
+input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}
