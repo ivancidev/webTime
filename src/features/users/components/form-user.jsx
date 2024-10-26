@@ -17,20 +17,20 @@ export const FormUser = () => {
           name="name"
           label="Nombre completo"
           placeholder="Escribe aquí"
-          className="w-full sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
+          className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
         />
         <InputText
           name="nickname"
           label="Nombre de usuario"
           placeholder="Escribe aquí"
-          className="w-full sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
+          className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
         />
         <InputText
           name="name"
           label="Correo electrónico"
           placeholder="Escribe aquí"
           type="email"
-          className="w-full sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
+          className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
         />
 
         <InputText
@@ -38,7 +38,7 @@ export const FormUser = () => {
           label="Contraseña"
           placeholder="Escribe aquí"
           type="password"
-          className="w-full sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
+          className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
         />
       </div>
       <Button text="Registrarse" variant="combExp" />
