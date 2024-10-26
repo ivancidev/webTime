@@ -13,6 +13,7 @@ export default {
           sec1: "#0123FD", // blue
           sec2: "#0297FF", // sky blue
           sec3: "#02BBF6", // light blue
+          sec4: "#C5E6FD", // light sky blue
         },
         error: {
           err1: "#AC010C", // dark red

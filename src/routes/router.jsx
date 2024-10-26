@@ -5,11 +5,16 @@ import { Home } from "../features/books/pages/home-books";
 import { BookInfo } from "../features/books/pages/book-info";
 import { Root } from "../layouts/root";
 import { RegisterUser } from "../features/users/pages/register-user";
+import { Profile } from "../features/users/pages/profile";
 
 export const router = createBrowserRouter([
   {
     path: "/register-user",
     element: <RegisterUser />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />
   },
   {
     path: "/",

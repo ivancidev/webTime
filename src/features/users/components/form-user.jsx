@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../../../components/buttons/button";
 import { InputText } from "../../../components/input/input";
@@ -9,25 +9,67 @@ export const FormUser = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm();
+  
+  const [passwordStrength, setPasswordStrength] = useState("");
 
   const onSubmit = (data) => {
     console.log(data); 
   };
 
+  const passwordValue = watch("password");
+
+  const validatePasswordStrength = (value) => {
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasNumber = /\d/.test(value);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+    const isValid = hasUpperCase && hasNumber && hasSpecialChar;
+
+    if (!isValid) {
+      setPasswordStrength("Contraseña no válida");
+      return "Contraseña no válida";
+    }
+
+    if (value.length <= 4) {
+      setPasswordStrength("Contraseña insegura");
+    } else if (value.length < 8) {
+      setPasswordStrength("Contraseña buena");
+    } else {
+      setPasswordStrength("Contraseña muy segura");
+    }
+
+    return true;
+  };
+
+  const getPasswordStrengthColor = () => {
+    switch (passwordStrength) {
+      case "Contraseña insegura":
+        return "text-red-500";
+      case "Contraseña buena":
+        return "text-orange-500";
+      case "Contraseña muy segura":
+        return "text-green-500";
+      default:
+        return "text-gray-500";
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col md:items-center">
       <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent m-[20px] font-display text-display-md">
         ¡Bienvenido a Webtime!
       </h1>
-      <ImageUploader />
-
+      <div className="flex flex-col items-center">
+        <ImageUploader />
+      </div>
+      
       <div className="pb-6">
         <InputText
           name="name"
           label="Nombre completo"
           placeholder="Ingrese su nombre"
-          className="w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
+          className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
           register={register}
           errors={errors}
           validationRules={{
@@ -54,7 +96,7 @@ export const FormUser = () => {
           name="nickname"
           label="Nombre de usuario"
           placeholder="Ingrese un nombre de usuario"
-          className="w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
+          className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
           register={register}
           errors={errors}
           validationRules={{
@@ -82,7 +124,7 @@ export const FormUser = () => {
           label="Correo electrónico"
           placeholder="Ingrese su correo electrónico"
           type="email"
-          className="w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
+          className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
           register={register}
           errors={errors}
           validationRules={{
@@ -108,10 +150,23 @@ export const FormUser = () => {
           label="Contraseña"
           placeholder="Escribe aquí"
           type="password"
-          className="w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
+          className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
           register={register}
           errors={errors}
+          validationRules={{
+            required: "Contraseña no puede estar vacía",
+            maxLength: {
+              value: 20,
+              message: "Contraseña no debe exceder 20 caracteres",
+            },
+            validate: validatePasswordStrength,
+          }}
         />
+        {passwordStrength && !errors.password && (
+          <span className={`mt-2 ${getPasswordStrengthColor()}`}>
+            {passwordStrength}
+          </span>
+        )}
       </div>
 
       <Button text="Registrarse" variant="combExp" type="submit" />

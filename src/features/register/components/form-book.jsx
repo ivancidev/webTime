@@ -70,13 +70,10 @@ export default function FormBook() {
  
     window.addEventListener("beforeunload", handleUnload);
 
-
     return () => {
       window.removeEventListener("beforeunload", handleUnload);
     };
   }, []);
-
-
 
   const onSubmit = (data) => {
     // Navegar a la siguiente página, y pasar el estado actual
