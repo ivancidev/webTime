@@ -18,6 +18,8 @@ const ButtonIcon = ({
     combColTrans2: "text-primary-pri3 bg-transparent hover:text-secondary-sec1", // boton sin fondo y con icono azul
     combColBlue: "text-secondary-sec1",
     combColZ: "text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1", // boton sin fondo y con icono
+    combColNeu:
+      "text-neutral-neu0 bg-neutral-neu2 hover:bg-secondary-sec2 hover:text-primary-pri3", //boton gris
   };
 
   return (

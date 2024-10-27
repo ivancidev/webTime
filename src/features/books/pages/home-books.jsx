@@ -4,6 +4,9 @@ import { useGetBooks } from "../../../hooks/use-get-books";
 import { CircularProgress } from "@mui/material";
 import { useGetRecentBooks } from "../../../hooks/use-recent-book";
 import { Footer } from "../../../components/footer/footer";
+import { SearchBar } from "../../users/components/search-bar";
+import ButtonIcon from "../../../components/buttons/buttonIcon";
+import FilterIcon from "../../../icons/filter";
 
 export const Home = () => {
   const {
@@ -31,6 +34,10 @@ export const Home = () => {
 
   return (
     <div className="bg-primary-pri3">
+      <div className="w-full pr-12 flex flex-row justify-end items-center space-x-3 mt-6">
+        <SearchBar />
+        <ButtonIcon SvgIcon={FilterIcon} variant="combColNeu" />
+      </div>
       <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
         Los más vistos
       </h1>
