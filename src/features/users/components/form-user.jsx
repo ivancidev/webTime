@@ -94,6 +94,7 @@ export const FormUser = () => {
                 !/\s{2,}/.test(value) || "No se permiten espacios múltiples consecutivos",
             },
           }}
+          labelMarginTop="5px"
         />
         <InputText
           name="nickname"
@@ -121,6 +122,7 @@ export const FormUser = () => {
                 !/\s{2,}/.test(value) || "No se permiten espacios múltiples consecutivos",
             },
           }}
+          labelMarginTop="5px"
         />
         <InputText
           name="email"
@@ -147,15 +149,16 @@ export const FormUser = () => {
                 /^[a-zA-Z0-9._%+-]+@gmail\.[a-zA-Z]{2,}$/.test(value) || "El correo electrónico debe ser un Gmail válido.",
             },
           }}
+          labelMarginTop="5px"
         />
 
-        <div className="relative">
+        <div className="w-[95%] sm:w-96">
           <InputText
             name="password"
             label="Contraseña"
             placeholder="Escribe aquí"
-            type={showPassword ? "text" : "password"} // Cambia el tipo según el estado
-            className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 pr-10 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
+            type={showPassword ? "text" : "password"}
+            className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 pr-12 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
             register={register}
             errors={errors}
             validationRules={{
@@ -166,15 +169,16 @@ export const FormUser = () => {
               },
               validate: validatePasswordStrength,
             }}
+            labelMarginTop="5px"
+            icon={
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeOff /> : <EyeOn />}
+              </button>
+            }
           />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-8 md:right-3 transform -translate-y-[50%]"
-            style={{ top: '77px' }}
-          >
-            {showPassword ? <EyeOff /> : <EyeOn />}
-          </button>
         </div>
         {passwordStrength && !errors.password && (
           <span className={`mt-2 ${getPasswordStrengthColor()}`}>
