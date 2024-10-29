@@ -25,7 +25,6 @@ export const Profile = () => {
                     </div>
                 </div>
             </div>
-            <Category/>
         </div>
     )
 }
