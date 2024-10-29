@@ -46,7 +46,7 @@ export const BookInfo = () => {
   }
   return (
     <div className="flex min-h-screen flex-col bg-primary-pri3">
-      <div className="sticky top-0 flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
+      <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/")} />
       </div>
       <div className="flex flex-col lg:flex-row items-center md:justify-evenly px-5">

@@ -12,7 +12,7 @@ export const NavbarO = () => {
   const location = useLocation();
 
   return (
-    <nav className="sticky top-0 bg-primary-pri3 h-20 flex items-center px-6 z-0 sm:z-50">
+    <nav className="relative sm:sticky sm:top-0 bg-primary-pri3 h-20 flex items-center px-6 sm:z-50">
       <Link to="/" className="w-full h-full pt-2">
         <img src={Logo} alt="Logo" />
       </Link>
