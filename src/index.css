@@ -44,3 +44,30 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #0123fd;
 }
+
+.swiper-pagination-bullet {
+  background-color: #aeaaae;
+  opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #0297ff;
+  opacity: 1;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}
+
+input[type="password"]::-ms-reveal, 
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+@layer utilities {
+    .text-gradient {
+      background: linear-gradient(90deg, #02B0F7 0%, #0123FD 51%, #0297FF 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+  }
