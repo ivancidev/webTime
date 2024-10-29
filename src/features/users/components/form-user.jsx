@@ -183,8 +183,13 @@ export const FormUser = () => {
         <label className="flex items-center space-x-2">
         <input type="checkbox"/>
           <span>
-            He leído y acepto los términos y condiciones
-
+            He leído y acepto los{" "}
+            <button
+              type="button"
+              className="text-secondary-sec2 underline"
+            >
+              Términos y Condiciones.
+            </button>
           </span>
         </label>
         {passwordStrength && !errors.password && (
