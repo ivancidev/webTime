@@ -11,7 +11,7 @@ const CardPref = ({ text, SvgIcon = "" }) => {
   return (
     <div
       onClick={handleCardClick}
-      className={`relative  h-[70px] rounded-xl flex flex-col items-center justify-center px-9 cursor-pointer  hover:border-secondary-sec2  ${
+      className={` relative  h-[70px] rounded-xl flex flex-col items-center justify-center px-9 cursor-pointer  hover:border-secondary-sec2  ${
         isSelected
           ? "border-[3px] bg-secondary-sec4 border-secondary-sec2"
           : "border-2 bg-white border-primary-pri1 "

@@ -63,3 +63,11 @@ input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear {
   display: none;
 }
+
+@layer utilities {
+    .text-gradient {
+      background: linear-gradient(90deg, #02B0F7 0%, #0123FD 51%, #0297FF 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+  }
