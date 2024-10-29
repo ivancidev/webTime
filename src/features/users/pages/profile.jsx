@@ -4,11 +4,13 @@ import { NavbarO } from "../../../components/navbar/navbarO"
 import BackIcon from "../../../icons/back"
 import { PerfilUser } from "../components/perfil-user";
 import Fire from "../../../icons/fire";
-import Category from "../components/category";
+
+
 
 export const Profile = () => {
     const navigate = useNavigate();
-    //hardocdeo por el momento no?  
+    //hardocdeo por el momento no? 
+
     return (
         <div>
             <NavbarO/>
@@ -25,6 +27,7 @@ export const Profile = () => {
                     </div>
                 </div>
             </div>
+
         </div>
     )
 }
