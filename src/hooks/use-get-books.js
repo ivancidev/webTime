@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../services/supabaseClient";
 
-export const useGetBooks = () => {
+export const useGetBooks = (isRecent) => {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchOldBooks = async () => {
+    const fetchBooks = async () => {
       try {
         setIsLoading(true);
         const today = new Date();
@@ -17,8 +17,16 @@ export const useGetBooks = () => {
 
         const { data, error } = await supabase
           .from("libro")
-          .select("*")
-          .lt("fecha_creacion", fiveDaysAgo.toISOString());
+          .select(
+            `
+            *,
+            autor!inner(nombreAutor)
+            `
+          )
+          [isRecent ? "gte" : "lt"](
+            "fecha_creacion",
+            fiveDaysAgo.toISOString()
+          );
 
         if (error) throw error;
 
@@ -31,7 +39,7 @@ export const useGetBooks = () => {
       }
     };
 
-    fetchOldBooks();
+    fetchBooks();
   }, []);
 
   return { data: books, isLoading, isError, error };

@@ -1,20 +1,33 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchIcon from "../../../icons/search";
 import Close from "../../../icons/closeS";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
-export const SearchBar = () => {
+export const SearchBar = ({ booksOld, recentBooks, onSearchResults }) => {
   const [searchText, setSearchText] = useState("");
 
-  const handleClear = () => {
-    setSearchText("");
-  };
+  useEffect(() => {
+    const filterBooks = booksOld.filter(
+      (book) =>
+        book.nombreLibro.toLowerCase().includes(searchText.toLowerCase()) ||
+        book.autor.nombreAutor.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    const filterBooksRecent = recentBooks.filter(
+      (book) =>
+        book.nombreLibro.toLowerCase().includes(searchText.toLowerCase()) ||
+        book.autor.nombreAutor.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    onSearchResults({ filterBooks, filterBooksRecent }, searchText);
+  }, [searchText]);
+
   return (
-    <div className="relative">
+    <form className="relative">
       <div className="absolute left-0">
         <SearchIcon />
       </div>
       <input
-        type="search"
+        type="text"
         placeholder="Buscar"
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
@@ -23,12 +36,12 @@ export const SearchBar = () => {
       {searchText && (
         <div className="absolute right-1 top-1">
           <ButtonIcon
-            onClick={handleClear}
+            onClick={() => setSearchText("")}
             SvgIcon={Close}
             variant="combColTrans2"
           />
         </div>
       )}
-    </div>
+    </form>
   );
 };
