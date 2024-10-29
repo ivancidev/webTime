@@ -7,9 +7,6 @@ import Fire from "../../../icons/fire";
 
 
 
-
-
-
 export const Profile = () => {
     const navigate = useNavigate();
     //hardocdeo por el momento no? 
@@ -30,6 +27,7 @@ export const Profile = () => {
                     </div>
                 </div>
             </div>
+
         </div>
     )
 }
