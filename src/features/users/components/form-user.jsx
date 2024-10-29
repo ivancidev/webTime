@@ -180,6 +180,13 @@ export const FormUser = () => {
             }
           />
         </div>
+        <label className="flex items-center space-x-2">
+        <input type="checkbox"/>
+          <span>
+            He leído y acepto los términos y condiciones
+
+          </span>
+        </label>
         {passwordStrength && !errors.password && (
           <span className={`mt-2 ${getPasswordStrengthColor()}`}>
             {passwordStrength}
