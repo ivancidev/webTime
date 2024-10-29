@@ -9,7 +9,7 @@ export const SearchBar = () => {
     setSearchText("");
   };
   return (
-    <div className="relative">
+    <div className="relative w-full sm:w-auto">
       <div className="absolute left-0">
         <SearchIcon />
       </div>
@@ -18,7 +18,7 @@ export const SearchBar = () => {
         placeholder="Buscar"
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
-        className="w-[95%] sm:w-96 h-12 rounded-3xl border-none px-4 pl-12 font-body text-body-md text-primary-pri2 bg-neutral-neu3 border-2 border-primary-pri2 focus:outline-none placeholder-neutral-neu0"
+        className="w-full sm:w-96 h-12 rounded-3xl border-none px-4 pl-12 font-body text-body-md text-primary-pri2 bg-neutral-neu3 border-2 border-primary-pri2 focus:outline-none placeholder-neutral-neu0"
       />
       {searchText && (
         <div className="absolute right-1 top-1">

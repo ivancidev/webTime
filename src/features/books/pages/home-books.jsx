@@ -34,7 +34,7 @@ export const Home = () => {
 
   return (
     <div className="bg-primary-pri3">
-      <div className="w-full pr-12 flex flex-row justify-end items-center space-x-3 mt-6">
+      <div className="w-fulls flex flex-row justify-end items-center space-x-3 mt-6 px-6 sm:pr-12 flex-none">
         <SearchBar />
         <ButtonIcon SvgIcon={FilterIcon} variant="combColNeu" />
       </div>
