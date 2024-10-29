@@ -22,7 +22,7 @@ export const SearchBar = ({ booksOld, recentBooks, onSearchResults }) => {
   }, [searchText]);
 
   return (
-    <form className="relative">
+    <div className="relative">
       <div className="absolute left-0">
         <SearchIcon />
       </div>
@@ -42,6 +42,6 @@ export const SearchBar = ({ booksOld, recentBooks, onSearchResults }) => {
           />
         </div>
       )}
-    </form>
+    </div>
   );
 };
