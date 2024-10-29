@@ -17,7 +17,14 @@ export const useGetBooks = () => {
 
         const { data, error } = await supabase
           .from("libro")
-          .select("*")
+          .select(
+            `
+            *,
+            categoria (
+              nombreCategoria
+            )
+            `
+          )
           .lt("fecha_creacion", fiveDaysAgo.toISOString());
 
         if (error) throw error;

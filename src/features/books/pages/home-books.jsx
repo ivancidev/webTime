@@ -48,7 +48,9 @@ export const Home = () => {
   // Filtrado de libros según las categorías seleccionadas
   const filteredBooks =
     selectedCategories.length > 0
-      ? books.filter((book) => selectedCategories.includes(book.categoria)) // Asegúrate de que "categoria" es el campo correcto
+      ? books.filter((book) =>
+          selectedCategories.includes(book.categoria.nombreCategoria)
+        ) // Asegúrate de que "categoria" es el campo correcto
       : [];
 
   return (
