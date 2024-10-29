@@ -20,7 +20,9 @@ export const useGetBooks = (isRecent) => {
           .select(
             `
             *,
-            autor!inner(nombreAutor)
+            autor(
+              nombreAutor
+            )
             `
           )
           [isRecent ? "gte" : "lt"](

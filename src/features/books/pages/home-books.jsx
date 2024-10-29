@@ -6,6 +6,7 @@ import { Footer } from "../../../components/footer/footer";
 import { SearchBar } from "../components/search-bar";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import FilterIcon from "../../../icons/filter";
+import { CardBook } from "../components/cardBook";
 
 export const Home = () => {
   const {
@@ -59,47 +60,42 @@ export const Home = () => {
           />
           <ButtonIcon SvgIcon={FilterIcon} variant="combColNeu" />
         </div>
-
         {noResults ? (
           <div className="flex justify-center items-center mt-56 text-xl text-secondary-sec2">
             No se encontraron libros con ese nombre
           </div>
+        ) : searchText ? (
+          <div className="grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-6">
+            {[...searchBooksOld, ...searchBooksRecent].map((book) => (
+              <CardBook
+                key={book.codLibro}
+                titleBook={book.nombreLibro}
+                frontBook={book.enlacePortada}
+                book={book}
+              />
+            ))}
+          </div>
         ) : (
           <>
-            {searchBooksOld.length > 0 && (
-              <>
-                <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-                  Los más vistos
-                </h1>
-                <Carousel books={searchBooksOld} />
-              </>
-            )}
-            {searchBooksOld.length > 0 && (
-              <>
-                <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-                  Mejor calificados
-                </h1>
-                <Carousel books={searchBooksOld} />
-              </>
-            )}
+            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
+              Los más vistos
+            </h1>
+            <Carousel books={booksOld} />
 
-            {searchBooksRecent.length > 0 && (
-              <>
-                <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-                  Recién agregados
-                </h1>
-                <Carousel books={searchBooksRecent} />
-              </>
-            )}
+            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
+              Mejor calificados
+            </h1>
+            <Carousel books={booksOld} />
 
-            {searchBooksOld.length > 0 && (
-              <>
-                <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-                  Lo más leído esta semana
-                </h1>
-                <Carousel books={searchBooksOld} />
-              </>
-            )}
+            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
+              Recién agregados
+            </h1>
+            <Carousel books={recentBooks} />
+
+            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
+              Lo más leído esta semana
+            </h1>
+            <Carousel books={booksOld} />
           </>
         )}
       </div>
