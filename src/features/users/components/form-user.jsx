@@ -14,6 +14,7 @@ import {
   DialogTitle,
   CircularProgress,
 } from "@mui/material";
+import TermsModal from "./modal-terms";
 
 export const FormUser = () => {
   const navigate = useNavigate();
@@ -28,6 +29,10 @@ export const FormUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
 
   const onSubmit = async (data) => {
     setIsLoading(true);
@@ -214,6 +219,28 @@ export const FormUser = () => {
             </span>
           )}
         </div>
+        <label className="flex items-center space-x-2 mt-2">
+        <input type="checkbox" className="w-4 h-4" required/>
+          <span className="font-body text-body-sm text-neutral-neu0">
+            He leído y acepto los{" "}
+            <button
+              type="button"
+              onClick={openModal}
+              className="font-body text-body-sm text-secondary-sec2 underline"
+            >
+              Términos y Condiciones.
+            </button>
+          </span>
+        </label>
+        {passwordStrength && !errors.password && (
+          <span className={`mt-2 ${getPasswordStrengthColor()}`}>
+            {passwordStrength}
+          </span>
+        )}
+      </div>
+      {isModalOpen && (
+        <TermsModal onClose={closeModal} onConfirm={closeModal} />
+      )}
 
         <Button
           text="Registrarse"
