@@ -5,6 +5,7 @@ import { InputText } from "../../../components/input/input";
 import ImageUploader from "./image-uploader";
 import EyeOn from "../../../icons/eyeOn";
 import EyeOff from "../../../icons/eyeOff";
+import TermsModal from "./modal-terms";
 
 export const FormUser = () => {
   const {
@@ -14,8 +15,12 @@ export const FormUser = () => {
     watch,
   } = useForm();
   
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const onSubmit = (data) => {
     console.log(data); 
@@ -186,6 +191,7 @@ export const FormUser = () => {
             He leído y acepto los{" "}
             <button
               type="button"
+              onClick={openModal}
               className="text-secondary-sec2 underline"
             >
               Términos y Condiciones.
@@ -198,7 +204,9 @@ export const FormUser = () => {
           </span>
         )}
       </div>
-
+      {isModalOpen && (
+        <TermsModal onClose={closeModal} onConfirm={closeModal} />
+      )}
       <Button text="Registrarse" variant="combExp" type="submit" />
     </form>
   );
