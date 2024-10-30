@@ -6,15 +6,17 @@ import { BookInfo } from "../features/books/pages/book-info";
 import { Root } from "../layouts/root";
 import { RegisterUser } from "../features/users/pages/register-user";
 import { Profile } from "../features/users/pages/profile";
+import { SelectPreferences } from "../features/users/pages/select-preferences";
 
 export const router = createBrowserRouter([
   {
     path: "/register-user",
     element: <RegisterUser />,
   },
+  { path: "/preferences", element: <SelectPreferences /> },
   {
     path: "/profile",
-    element: <Profile />
+    element: <Profile />,
   },
   {
     path: "/",
@@ -27,8 +29,8 @@ export const router = createBrowserRouter([
       {
         path: "/book-info/:bookId",
         element: <BookInfo />,
-      }
-    ]
+      },
+    ],
   },
   {
     path: "/upload-files",
@@ -37,5 +39,5 @@ export const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
-  }
+  },
 ]);
