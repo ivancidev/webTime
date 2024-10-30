@@ -17,11 +17,9 @@ export const FormUser = () => {
     watch,
   } = useForm();
 
-  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -218,6 +216,7 @@ export const FormUser = () => {
       {isModalOpen && (
         <TermsModal onClose={closeModal} onConfirm={closeModal} />
       )}
+
       <Button
         text="Registrarse"
         variant="combExp"
