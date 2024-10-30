@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import Button from "../../../components/buttons/button";
 import { InputText } from "../../../components/input/input";
 import ImageUploader from "./image-uploader";
@@ -7,18 +8,20 @@ import EyeOn from "../../../icons/eyeOn";
 import EyeOff from "../../../icons/eyeOff";
 
 export const FormUser = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
   } = useForm();
-  
+
   const [passwordStrength, setPasswordStrength] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (data) => {
-    console.log(data); 
+    console.log(data);
+    navigate("/preferences");
   };
 
   const passwordValue = watch("password");
@@ -59,14 +62,17 @@ export const FormUser = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col md:items-center">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col md:items-center"
+    >
       <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent m-[20px] font-display text-display-md">
         ¡Bienvenido a Webtime!
       </h1>
       <div className="flex flex-col items-center">
         <ImageUploader />
       </div>
-      
+
       <div className="pb-6">
         <InputText
           name="name"
@@ -91,7 +97,8 @@ export const FormUser = () => {
             },
             validate: {
               noMultipleSpaces: (value) =>
-                !/\s{2,}/.test(value) || "No se permiten espacios múltiples consecutivos",
+                !/\s{2,}/.test(value) ||
+                "No se permiten espacios múltiples consecutivos",
             },
           }}
           labelMarginTop="5px"
@@ -107,7 +114,8 @@ export const FormUser = () => {
             required: "Nombre de usuario no puede estar vacío",
             pattern: {
               value: /^[a-zA-Z0-9_.áéíóúÁÉÍÓÚñÑ]*$/,
-              message: "Nombre de usuario sólo admite caracteres a-z, A-Z, 0-9, _, .",
+              message:
+                "Nombre de usuario sólo admite caracteres a-z, A-Z, 0-9, _, .",
             },
             minLength: {
               value: 2,
@@ -119,7 +127,8 @@ export const FormUser = () => {
             },
             validate: {
               noMultipleSpaces: (value) =>
-                !/\s{2,}/.test(value) || "No se permiten espacios múltiples consecutivos",
+                !/\s{2,}/.test(value) ||
+                "No se permiten espacios múltiples consecutivos",
             },
           }}
           labelMarginTop="5px"
@@ -146,7 +155,8 @@ export const FormUser = () => {
               noSpaces: (value) =>
                 !/\s/.test(value) || "El correo no debe contener espacios",
               isGmail: (value) =>
-                /^[a-zA-Z0-9._%+-]+@gmail\.[a-zA-Z]{2,}$/.test(value) || "El correo electrónico debe ser un Gmail válido.",
+                /^[a-zA-Z0-9._%+-]+@gmail\.[a-zA-Z]{2,}$/.test(value) ||
+                "El correo electrónico debe ser un Gmail válido.",
             },
           }}
           labelMarginTop="5px"
@@ -187,7 +197,12 @@ export const FormUser = () => {
         )}
       </div>
 
-      <Button text="Registrarse" variant="combExp" type="submit" />
+      <Button
+        text="Registrarse"
+        variant="combExp"
+        type="submit"
+        onClick={handleSubmit(onSubmit)}
+      />
     </form>
   );
 };
