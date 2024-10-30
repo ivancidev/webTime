@@ -63,7 +63,7 @@ export const Home = () => {
   return (
     <div className="flex gri flex-col min-h-screen bg-primary-pri3">
       <div className="flex-grow">
-        <div className="sticky top-0 sm:relative w-full pr-12 flex flex-row justify-end items-center space-x-3 mt-6 z-50 sm:z-0">
+        <div className="sticky top-0 sm:relative w-full py-2 px-6 bg-primary-pri3 sm:pr-12 flex flex-row justify-end items-center space-x-3 mt-6  z-40 sm:z-0">
           <SearchBar
             booksOld={booksOld}
             recentBooks={recentBooks}
