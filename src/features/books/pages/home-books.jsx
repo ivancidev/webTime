@@ -7,12 +7,14 @@ import { Footer } from "../../../components/footer/footer";
 import { SearchBar } from "../../users/components/search-bar";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import FilterIcon from "../../../icons/filter";
-import { ModalFilter } from "../../users/components/modal-filter";
+import { ModalFilter } from "../../books/components/modal-filter";
+import { CardBook } from "../components/cardBook";
 
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState([]); // Estado para las categorías seleccionadas
 
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedLanguages, setSelectedLanguages] = useState([]);
   const {
     data: books,
     isLoading: isLoadingBooks,
@@ -41,17 +43,30 @@ export const Home = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const handleApplyFilters = (categories) => {
-    setSelectedCategories(categories); // Actualiza las categorías seleccionadas
+  const handleApplyFilters = ({ categories, languages }) => {
+    setSelectedCategories(categories);
+    setSelectedLanguages(languages);
   };
 
-  // Filtrado de libros según las categorías seleccionadas
-  const filteredBooks =
-    selectedCategories.length > 0
-      ? books.filter((book) =>
-          selectedCategories.includes(book.categoria.nombreCategoria)
-        ) // Asegúrate de que "categoria" es el campo correcto
-      : [];
+  const filteredBooks = books.filter((book) => {
+    const matchesCategory =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(book.categoria.nombreCategoria);
+
+    const matchesLanguage =
+      selectedLanguages.length === 0 ||
+      selectedLanguages.includes(book.idioma.idioma);
+
+    if (selectedCategories.length > 0 && selectedLanguages.length > 0) {
+      return matchesCategory && matchesLanguage;
+    } else if (selectedCategories.length > 0) {
+      return matchesCategory;
+    } else if (selectedLanguages.length > 0) {
+      return matchesLanguage;
+    } else {
+      return false;
+    }
+  });
 
   return (
     <div className="bg-primary-pri3">
@@ -63,31 +78,41 @@ export const Home = () => {
           onClick={handleFilterClick}
         />
       </div>
-      <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-        Los más vistos
-      </h1>
-      <Carousel books={books} />
-      <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-        Mejor calificados
-      </h1>
-      <Carousel books={books} />
-      <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-        Recién agregados
-      </h1>
-      <Carousel books={recentBooks} />
-      <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-        Lo más leído esta semana
-      </h1>
-      <Carousel books={books} />
 
-      {/* Carrusel de libros filtrados */}
-      {filteredBooks.length > 0 && (
+      {filteredBooks.length > 0 ? (
+        <>
+          <div className="grid place-items-center grid-cols-4 gap-4 px-6 mt-8">
+            {filteredBooks.map((filterBook, index) => (
+              <CardBook
+                key={index}
+                titleBook={filterBook.nombreLibro}
+                frontBook={filterBook.enlacePortada}
+                book={filterBook}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
         <>
           <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
-            Filtrados
+            Los más vistos
           </h1>
-          <Carousel books={filteredBooks} />{" "}
-          {/* Este carrusel mostrará los libros filtrados */}
+          <Carousel books={books} />
+
+          <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
+            Mejor calificados
+          </h1>
+          <Carousel books={books} />
+
+          <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
+            Recién agregados
+          </h1>
+          <Carousel books={recentBooks} />
+
+          <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
+            Lo más leído esta semana
+          </h1>
+          <Carousel books={books} />
         </>
       )}
 
@@ -95,6 +120,8 @@ export const Home = () => {
         <ModalFilter
           onClose={handleFilterClick}
           onApplyFilters={handleApplyFilters}
+          selectedCategories={selectedCategories}
+          selectedLanguages={selectedLanguages}
         />
       )}
       <Footer />
