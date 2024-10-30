@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Carousel } from "../components/carousel";
 import { useGetBooks } from "../../../hooks/use-get-books";
 import { CircularProgress } from "@mui/material";
@@ -9,6 +10,8 @@ import FilterIcon from "../../../icons/filter";
 import { CardBook } from "../components/cardBook";
 
 export const Home = () => {
+  const location = useLocation();
+  const selectedPreferences = location.state?.selectedPreferences || [];
   const {
     data: booksOld = [],
     isLoading: isLoadingOld,
@@ -49,6 +52,14 @@ export const Home = () => {
   const noResults =
     searchText && searchBooksOld.length === 0 && searchBooksRecent.length === 0;
 
+  const suggestedBooks = booksOld.filter(
+    (book) =>
+      book.nombreCategoria &&
+      book.nombreCategoria.some((nombreCategoria) =>
+        selectedPreferences.includes(nombreCategoria)
+      )
+  );
+
   return (
     <div className="flex gri flex-col min-h-screen bg-primary-pri3">
       <div className="flex-grow">
@@ -78,20 +89,21 @@ export const Home = () => {
         ) : (
           <>
             <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
+              Sugerencias para ti
+            </h1>
+            <Carousel books={suggestedBooks} />
+            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
               Los más vistos
             </h1>
             <Carousel books={booksOld} />
-
             <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
               Mejor calificados
             </h1>
             <Carousel books={booksOld} />
-
             <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
               Recién agregados
             </h1>
             <Carousel books={recentBooks} />
-
             <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
               Lo más leído esta semana
             </h1>
