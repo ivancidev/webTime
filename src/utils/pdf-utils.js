@@ -10,3 +10,15 @@ export const getPdfPages = async (pdfUrl) => {
     throw error;
   }
 };
+
+export const fetchNumPages = async (pdfUrl) => {
+  try {
+    if (pdfUrl) {
+      const numPages = await getPdfPages(pdfUrl);
+      return numPages;
+    }
+  } catch (error) {
+    console.error("Error al obtener el número de páginas:", error);
+    return null;
+  }
+};
