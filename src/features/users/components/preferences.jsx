@@ -5,11 +5,11 @@ export default function Preferences({ text, icons, variant, onSelect }) {
   return (
     <section className="flex flex-col mt-10">
       <div>
-        <h1 className="ml-28 font-display text-display-sm bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent">
+        <h1 className="ml-28 font-display text-display-sm text-secondary-sec2 text-gradient">
           {text}
         </h1>
       </div>
-      <div className={`flex flex-wrap gap-6 mx-36 mt-10`}>
+      <div className={`flex flex-wrap gap-6 mx-36 mt-10 max-w-[1400px]`}>
         {icons.map((iconText, index) => {
           const contentText =
             variant === "c"
