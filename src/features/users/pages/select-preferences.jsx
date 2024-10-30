@@ -43,7 +43,7 @@ export const SelectPreferences = () => {
           onSelect={handleSelect}
         />
       </div>
-      <div className="flex justify-end pr-20 mt-16">
+      <div className="flex flex-row max-w-full justify-end mx-5 md:mx-16 lg:mx-36 py-8 md:pb-10">
         <Button SvgIcon={CheckS} text="Aplicar" onClick={onSubmit} />
       </div>
     </div>
