@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Navbar } from "../components/navbar";
 import { Card } from "../components/card";
@@ -17,7 +17,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import Modal from "../../../components/modal/modal";
-
+import { fetchNumPages } from "../../../utils/pdf-utils";
+import { fetchAudioDuration } from "../../../utils/audio-utils";
 
 export const Files = () => {
   const location = useLocation();
@@ -153,7 +154,7 @@ export const Files = () => {
       setIsOverlayVisible(true);
 
       const updateProgress = (fileNumber) => {
-        setSubmitProgress((prevProgress) => prevProgress + 100/3);
+        setSubmitProgress((prevProgress) => prevProgress + 100 / 3);
       };
 
       const coverImageUrl = data.coverImage
@@ -170,6 +171,12 @@ export const Files = () => {
         ? await uploadFileToSupabase(data.audioFile, "audios", updateProgress)
         : null;
 
+      // Obtener duración de audio y número de páginas del PDF
+      const numPages = pdfFileUrl ? await fetchNumPages(pdfFileUrl) : null;
+      const audioDuration = audioFileUrl
+        ? await fetchAudioDuration(audioFileUrl)
+        : null;
+
       setSubmitProgress(100);
 
       const { error } = await supabase.from("libro").insert([
@@ -182,10 +189,14 @@ export const Files = () => {
           enlacePortada: coverImageUrl,
           enlacePdf: pdfFileUrl,
           enlaceAudio: audioFileUrl,
+          numero_paginas: numPages,
+          duracion_audio: audioDuration,
         },
       ]);
 
       if (error) throw error;
+
+      // Resetear el estado y limpiar almacenamiento local
       localStorage.removeItem("title");
       localStorage.removeItem("synopsis");
       localStorage.removeItem("author");
