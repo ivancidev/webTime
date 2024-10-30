@@ -3,13 +3,13 @@ import CardPref from "./card-preference";
 
 export default function Preferences({ text, icons, variant, onSelect }) {
   return (
-    <section className="flex flex-col mt-10">
+    <section className="flex flex-col mt-10 w-full">
       <div>
         <h1 className="ml-28 font-display text-display-sm text-secondary-sec2 text-gradient">
           {text}
         </h1>
       </div>
-      <div className={`flex flex-wrap gap-6 mx-36 mt-10 max-w-[1400px]`}>
+      <div className={`flex flex-wrap gap-6 md:mx-36 mt-10 max-w-full`}>
         {icons.map((iconText, index) => {
           const contentText =
             variant === "c"
