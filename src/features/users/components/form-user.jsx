@@ -185,8 +185,8 @@ export const FormUser = () => {
             }
           />
         </div>
-        <label className="flex items-center space-x-2 mt-5">
-        <input type="checkbox" className="w-4 h-4"/>
+        <label className="flex items-center space-x-2 mt-2">
+        <input type="checkbox" className="w-4 h-4" required/>
           <span className="font-body text-body-sm text-neutral-neu0">
             He leído y acepto los{" "}
             <button
