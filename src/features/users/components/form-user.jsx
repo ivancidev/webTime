@@ -6,6 +6,7 @@ import { InputText } from "../../../components/input/input";
 import ImageUploader from "./image-uploader";
 import EyeOn from "../../../icons/eyeOn";
 import EyeOff from "../../../icons/eyeOff";
+import TermsModal from "./modal-terms";
 
 export const FormUser = () => {
   const navigate = useNavigate();
@@ -16,8 +17,11 @@ export const FormUser = () => {
     watch,
   } = useForm();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -190,12 +194,28 @@ export const FormUser = () => {
             }
           />
         </div>
+        <label className="flex items-center space-x-2 mt-2">
+        <input type="checkbox" className="w-4 h-4" required/>
+          <span className="font-body text-body-sm text-neutral-neu0">
+            He leído y acepto los{" "}
+            <button
+              type="button"
+              onClick={openModal}
+              className="font-body text-body-sm text-secondary-sec2 underline"
+            >
+              Términos y Condiciones.
+            </button>
+          </span>
+        </label>
         {passwordStrength && !errors.password && (
           <span className={`mt-2 ${getPasswordStrengthColor()}`}>
             {passwordStrength}
           </span>
         )}
       </div>
+      {isModalOpen && (
+        <TermsModal onClose={closeModal} onConfirm={closeModal} />
+      )}
 
       <Button
         text="Registrarse"
