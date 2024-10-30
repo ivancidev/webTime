@@ -22,6 +22,9 @@ export const useGetBooks = () => {
             *,
             categoria (
               nombreCategoria
+            ),
+            idioma (
+              idioma
             )
             `
           )
