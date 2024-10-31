@@ -30,18 +30,19 @@ export const FormUser = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   const onSubmit = async (data) => {
     setIsLoading(true);
     setOpenDialog(true);
-
+  
     const response = await registerUser({ ...data, imageFile });
     setIsLoading(false);
-
+  
     if (response.success) {
-      navigate("/preferences");
+      setIsSuccess(true); 
     } else {
       setErrorMessage(response.message);
     }
@@ -50,12 +51,12 @@ export const FormUser = () => {
   const validatePasswordStrength = (value) => {
     const hasUpperCase = /[A-Z]/.test(value);
     const hasNumber = /\d/.test(value);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>~+=\-_;/\[\]]/.test(value);
     const isValid = hasUpperCase && hasNumber && hasSpecialChar;
 
     if (!isValid) {
-      setPasswordStrength("Contraseña no válida");
-      return "Contraseña no válida";
+      setPasswordStrength("Se requiere por lo menos una mayúscula, número y símbolo");
+      return "Se requiere por lo menos una mayúscula, número y símbolo";
     }
 
     if (value.length <= 4) {
@@ -65,7 +66,6 @@ export const FormUser = () => {
     } else {
       setPasswordStrength("Contraseña muy segura");
     }
-
     return true;
   };
 
@@ -114,8 +114,8 @@ export const FormUser = () => {
                 message: "Nombre debe tener al menos 2 caracteres",
               },
               maxLength: {
-                value: 20,
-                message: "Nombre no debe exceder 20 caracteres",
+                value: 50,
+                message: "Nombre no debe exceder 50 caracteres",
               },
               validate: {
                 noMultipleSpaces: (value) =>
@@ -135,9 +135,8 @@ export const FormUser = () => {
             validationRules={{
               required: "Nombre de usuario no puede estar vacío",
               pattern: {
-                value: /^[a-zA-Z0-9_.áéíóúÁÉÍÓÚñÑ]*$/,
-                message:
-                  "Nombre de usuario sólo admite caracteres a-z, A-Z, 0-9, _, .",
+                value: /^[a-zA-Z0-9_.áéíóúÁÉÍÓÚñÑ\s]*$/,
+                message: "Nombre de usuario sólo admite caracteres a-z, A-Z, 0-9, _, .",
               },
               minLength: {
                 value: 2,
@@ -165,20 +164,12 @@ export const FormUser = () => {
             errors={errors}
             validationRules={{
               required: "Correo electrónico no puede estar vacío",
-              minLength: {
-                value: 6,
-                message: "Correo electrónico debe tener al menos 6 caracteres",
-              },
-              maxLength: {
-                value: 60,
-                message: "Correo electrónico no debe exceder 60 caracteres",
-              },
               validate: {
                 noSpaces: (value) =>
                   !/\s/.test(value) || "El correo no debe contener espacios",
                 isGmail: (value) =>
-                  /^[a-zA-Z0-9._%+-]+@gmail\.[a-zA-Z]{2,}$/.test(value) ||
-                  "El correo electrónico debe ser un Gmail válido.",
+                  /^[a-zA-Z0-9._%+-]+@gmail/.test(value) ||
+                  "El correo electrónico debe ser un gmail válido.",
               },
             }}
             labelMarginTop="5px"
@@ -188,16 +179,20 @@ export const FormUser = () => {
             <InputText
               name="password"
               label="Contraseña"
-              placeholder="Escribe aquí"
+              placeholder="Ingrese su contraseña"
               type={showPassword ? "text" : "password"}
               className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 pr-12 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
               register={register}
               errors={errors}
               validationRules={{
                 required: "Contraseña no puede estar vacía",
+                minLength: {
+                  value: 4,
+                  message: "Contraseña debe tener al menos 4 caracteres",
+                },
                 maxLength: {
-                  value: 20,
-                  message: "Contraseña no debe exceder 20 caracteres",
+                  value: 40,
+                  message: "Contraseña no debe exceder 40 caracteres",
                 },
                 validate: validatePasswordStrength,
               }}
@@ -217,25 +212,30 @@ export const FormUser = () => {
               {passwordStrength}
             </span>
           )}
-
-          <label className="flex items-center space-x-2 mt-2 mb-2">
-            <input type="checkbox" className="w-4 h-4" required />
-            <span className="font-body text-body-sm text-neutral-neu0">
-              He leído y acepto los{" "}
-              <button
-                type="button"
-                onClick={openModal}
-                className="font-body text-body-sm text-secondary-sec2 underline"
-              >
-                Términos y Condiciones.
-              </button>
-            </span>
-          </label>
-          {passwordStrength && !errors.password && (
-            <span className={`mt-2 ${getPasswordStrengthColor()}`}>
-              {passwordStrength}
-            </span>
-          )}
+          <div className="flex flex-col mt-2 mb-2">
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                className="w-4 h-4"
+                {...register("terms", {
+                  required: "Debe aceptar los Términos y Condiciones",
+                })}
+              />
+              <span className="font-body text-body-sm text-neutral-neu0">
+                He leído y acepto los{" "}
+                <button
+                  type="button"
+                  onClick={openModal}
+                  className="font-body text-body-sm text-secondary-sec2 underline"
+                >
+                  Términos y Condiciones.
+                </button>
+              </span>
+            </label>
+            {errors.terms && (
+              <span className="text-error-err2 text-md mt-1">{errors.terms.message}</span>
+            )}
+          </div>
           {isModalOpen && (
             <TermsModal onClose={closeModal} onConfirm={closeModal} />
           )}
@@ -254,11 +254,36 @@ export const FormUser = () => {
           )}
         </div>
       </form>
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle className="text-center">Cargando...</DialogTitle>
-        <DialogContent className="flex flex-col items-center justify-center">
-          <CircularProgress />
-        </DialogContent>
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        sx={{
+          '& .MuiPaper-root': {
+            borderRadius: '20px',
+          },
+        }}
+      >
+        {isSuccess ? (
+          <>
+            <DialogTitle className="text-center text-primary-pri1">Registro exitoso</DialogTitle>
+            <DialogContent className="flex flex-col items-center justify-center">
+              <Button
+                text="Aceptar"
+                onClick={() => {
+                  setOpenDialog(false);
+                  navigate("/preferences"); 
+                }}
+              />
+            </DialogContent>
+          </>
+        ) : (
+          <>
+            <DialogTitle className="text-center text-primary-pri1">Cargando...</DialogTitle>
+            <DialogContent className="flex flex-col items-center justify-center">
+              <CircularProgress />
+            </DialogContent>
+          </>
+        )}
       </Dialog>
     </>
   );
