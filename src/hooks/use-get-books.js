@@ -20,15 +20,19 @@ export const useGetBooks = (isRecent) => {
           .select(
             `
             *,
-            autor(
-              nombreAutor
+            categoria (
+              nombreCategoria
+            ),
+            idioma (
+              idioma
             )
             `
           )
-          [isRecent ? "gte" : "lt"](
-            "fecha_creacion",
-            fiveDaysAgo.toISOString()
-          );
+          .lt("fecha_creacion", fiveDaysAgo.toISOString());
+        autor(nombreAutor)[isRecent ? "gte" : "lt"](
+          "fecha_creacion",
+          fiveDaysAgo.toISOString()
+        );
 
         if (error) throw error;
 

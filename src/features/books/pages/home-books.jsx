@@ -8,10 +8,15 @@ import { SearchBar } from "../components/search-bar";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import FilterIcon from "../../../icons/filter";
 import { CardBook } from "../components/cardBook";
+import { ModalFilter } from "../../books/components/modal-filter";
 
 export const Home = () => {
   const location = useLocation();
   const selectedPreferences = location.state?.selectedPreferences || [];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedLanguages, setSelectedLanguages] = useState([]);
   const {
     data: booksOld = [],
     isLoading: isLoadingOld,
@@ -59,6 +64,39 @@ export const Home = () => {
         selectedPreferences.includes(nombreCategoria)
       )
   );
+
+  const handleFilterClick = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleApplyFilters = ({ categories, languages }) => {
+    setSelectedCategories(categories);
+    setSelectedLanguages(languages);
+  };
+  const bookAll = [...books, ...recentBooks];
+
+  const filteredBooks = bookAll.filter((book) => {
+    const matchesCategory =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(book.categoria.nombreCategoria);
+
+    const matchesLanguage =
+      selectedLanguages.length === 0 ||
+      selectedLanguages.includes(book.idioma.idioma);
+
+    if (selectedCategories.length > 0 && selectedLanguages.length > 0) {
+      return matchesCategory && matchesLanguage;
+    } else if (selectedCategories.length > 0) {
+      return matchesCategory;
+    } else if (selectedLanguages.length > 0) {
+      return matchesLanguage;
+    } else {
+      return false;
+    }
+  });
+  const noBookFilter =
+    (selectedCategories.length > 0 || selectedLanguages.length > 0) &&
+    filteredBooks.length === 0;
 
   return (
     <div className="flex gri flex-col min-h-screen bg-primary-pri3">
