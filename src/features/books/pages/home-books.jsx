@@ -12,8 +12,9 @@ import { ModalFilter } from "../../books/components/modal-filter";
 import { fetchUserBooks } from "../../../services/fetch-user-category";
 
 export const Home = () => {
-  const location = useLocation();
-  const user = location.state?.user || [];
+  // const location = useLocation();
+  // const user = location.state?.user || [];
+  // localStorage.setItem("user", JSON.stringify(user));
   const [selectedPreferences, setSelectedPreferences] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -37,17 +38,14 @@ export const Home = () => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-      const storedUser = JSON.parse(localStorage.getItem("user"));
-      console.log(storedUser);
-      if (storedUser.id_usuario) {
-        fetchUserBooks(storedUser.id_usuario).then((result) =>
-          setSelectedPreferences(result)
-        );
-      }
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    console.log(storedUser);
+    if (storedUser.id_usuario) {
+      fetchUserBooks(storedUser.id_usuario).then((result) =>
+        setSelectedPreferences(result)
+      );
     }
-  }, [user]);
+  }, []);
 
   const handleSearchResults = (
     { filterBooks = [], filterBooksRecent = [] },

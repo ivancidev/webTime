@@ -124,6 +124,7 @@ export const SelectPreferences = () => {
         message: "Preferencias guardadas con éxito.",
         severity: "success",
       });
+      localStorage.setItem("user", JSON.stringify(user));
       navigate("/app", { state: { user } });
     } catch (error) {
       console.error("Error en la inserción de preferencias:", error);
@@ -133,7 +134,6 @@ export const SelectPreferences = () => {
         severity: "error",
       });
     } finally {
-      // Cierra el modal de carga
       setLoading(false);
     }
   };
