@@ -107,11 +107,19 @@ export const Home = () => {
             recentBooks={recentBooks}
             onSearchResults={handleSearchResults}
           />
-          <ButtonIcon SvgIcon={FilterIcon} variant="combColNeu" />
+          <ButtonIcon
+            SvgIcon={FilterIcon}
+            variant="combColNeu"
+            onClick={handleFilterClick}
+          />
         </div>
         {noResults ? (
           <div className="flex justify-center items-center my-32 sm:mt-56 text-lg sm:text-xl text-secondary-sec2 mx-4">
             No se encontraron libros con ese nombre
+          </div>
+        ) : noBookFilter ? (
+          <div className="flex justify-center items-center my-32 sm:mt-56 text-lg sm:text-xl text-secondary-sec2 mx-4">
+            No se encontraron libros con esa categoria o idioma
           </div>
         ) : searchText ? (
           <div className="grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-6">
@@ -124,6 +132,19 @@ export const Home = () => {
               />
             ))}
           </div>
+        ) : filteredBooks.length > 0 ? (
+          <>
+            <div className="grid place-items-center grid-cols-4 gap-4 px-6 mt-8">
+              {filteredBooks.map((filterBook, index) => (
+                <CardBook
+                  key={index}
+                  titleBook={filterBook.nombreLibro}
+                  frontBook={filterBook.enlacePortada}
+                  book={filterBook}
+                />
+              ))}
+            </div>
+          </>
         ) : (
           <>
             <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-10 sm:ml-20">
@@ -149,6 +170,14 @@ export const Home = () => {
           </>
         )}
       </div>
+      {isModalOpen && (
+        <ModalFilter
+          onClose={handleFilterClick}
+          onApplyFilters={handleApplyFilters}
+          selectedCategories={selectedCategories}
+          selectedLanguages={selectedLanguages}
+        />
+      )}
       <Footer />
     </div>
   );
