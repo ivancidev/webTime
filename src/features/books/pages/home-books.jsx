@@ -63,7 +63,7 @@ export const Home = () => {
   return (
     <div className="flex gri flex-col min-h-screen bg-primary-pri3">
       <div className="flex-grow">
-        <div className="w-full pr-12 flex flex-row justify-end items-center space-x-3 mt-6">
+        <div className="sticky top-0 sm:relative w-full py-2 px-6 bg-primary-pri3 sm:pr-12 flex flex-row justify-end items-center space-x-3 mt-2 sm:mt-6  z-40 sm:z-0">
           <SearchBar
             booksOld={booksOld}
             recentBooks={recentBooks}
@@ -72,7 +72,7 @@ export const Home = () => {
           <ButtonIcon SvgIcon={FilterIcon} variant="combColNeu" />
         </div>
         {noResults ? (
-          <div className="flex justify-center items-center mt-56 text-xl text-secondary-sec2">
+          <div className="flex justify-center items-center my-32 sm:mt-56 text-lg sm:text-xl text-secondary-sec2 mx-4">
             No se encontraron libros con ese nombre
           </div>
         ) : searchText ? (
@@ -88,23 +88,23 @@ export const Home = () => {
           </div>
         ) : (
           <>
-            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
+            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-10 sm:ml-20">
               Sugerencias para ti
             </h1>
             <Carousel books={suggestedBooks} />
-            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
+            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-10 sm:ml-20">
               Los más vistos
             </h1>
             <Carousel books={booksOld} />
-            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
+            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-10 sm:ml-20">
               Mejor calificados
             </h1>
             <Carousel books={booksOld} />
-            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
+            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-10 sm:ml-20">
               Recién agregados
             </h1>
             <Carousel books={recentBooks} />
-            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-20">
+            <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-10 sm:ml-20">
               Lo más leído esta semana
             </h1>
             <Carousel books={booksOld} />

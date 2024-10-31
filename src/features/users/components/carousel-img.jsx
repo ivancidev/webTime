@@ -8,7 +8,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 
 export const CarouselImg = () => {
   return (
-    <div className="w-[500px] h-[640px] border-2">
+    <div className="w-[500px] h-[640px]">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
