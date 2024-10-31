@@ -10,16 +10,17 @@ import { SelectPreferences } from "../features/users/pages/select-preferences";
 
 export const router = createBrowserRouter([
   {
-    path: "/register-user",
+    path: "/",
     element: <RegisterUser />,
   },
-  { path: "/preferences", element: <SelectPreferences /> },
+  { path: "/preferences", 
+    element: <SelectPreferences /> },
   {
     path: "/profile",
     element: <Profile />,
   },
   {
-    path: "/",
+    path: "/app",
     element: <Root />,
     children: [
       {
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/book-info/:bookId",
+        path: "app/book-info/:bookId",
         element: <BookInfo />,
       },
     ],
