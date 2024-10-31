@@ -168,7 +168,7 @@ export const FormUser = () => {
                 noSpaces: (value) =>
                   !/\s/.test(value) || "El correo no debe contener espacios",
                 isGmail: (value) =>
-                  /^[a-zA-Z0-9._%+-]+@gmail\.[a-zA-Z]{2,}$/.test(value) ||
+                  /^[a-zA-Z0-9._%+-]+@gmail/.test(value) ||
                   "El correo electrónico debe ser un gmail válido.",
               },
             }}
