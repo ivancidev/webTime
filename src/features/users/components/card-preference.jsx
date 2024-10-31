@@ -16,7 +16,7 @@ const CardPref = ({ text, icon, cod, onSelect, text2 }) => {
   return (
     <div
       onClick={handleCardClick}
-      className={` relative  h-[70px] rounded-xl flex flex-col items-center justify-center px-10 cursor-pointer hover:border-secondary-sec2 mr-12 ${
+      className={` relative py-3 md:py-2 lg:h-[70px] rounded-xl flex flex-col items-center justify-center px-5 md:px-10 cursor-pointer hover:border-secondary-sec2 md:mr-7 lg:mr-12 ${
         isSelected
           ? "border-[3px] bg-secondary-sec4 border-secondary-sec2"
           : "border-2 bg-white border-primary-pri1"
