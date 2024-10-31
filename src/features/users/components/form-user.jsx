@@ -114,8 +114,8 @@ export const FormUser = () => {
                 message: "Nombre debe tener al menos 2 caracteres",
               },
               maxLength: {
-                value: 20,
-                message: "Nombre no debe exceder 20 caracteres",
+                value: 50,
+                message: "Nombre no debe exceder 50 caracteres",
               },
               validate: {
                 noMultipleSpaces: (value) =>
@@ -135,9 +135,8 @@ export const FormUser = () => {
             validationRules={{
               required: "Nombre de usuario no puede estar vacío",
               pattern: {
-                value: /^[a-zA-Z0-9_.áéíóúÁÉÍÓÚñÑ]*$/,
-                message:
-                  "Nombre de usuario sólo admite caracteres a-z, A-Z, 0-9, _, .",
+                value: /^[a-zA-Z0-9_.áéíóúÁÉÍÓÚñÑ\s]*$/,
+                message: "Nombre de usuario sólo admite caracteres a-z, A-Z, 0-9, _, ., y espacios",
               },
               minLength: {
                 value: 2,
@@ -165,14 +164,6 @@ export const FormUser = () => {
             errors={errors}
             validationRules={{
               required: "Correo electrónico no puede estar vacío",
-              minLength: {
-                value: 6,
-                message: "Correo electrónico debe tener al menos 6 caracteres",
-              },
-              maxLength: {
-                value: 60,
-                message: "Correo electrónico no debe exceder 60 caracteres",
-              },
               validate: {
                 noSpaces: (value) =>
                   !/\s/.test(value) || "El correo no debe contener espacios",
@@ -195,9 +186,13 @@ export const FormUser = () => {
               errors={errors}
               validationRules={{
                 required: "Contraseña no puede estar vacía",
+                minLength: {
+                  value: 4,
+                  message: "Contraseña debe tener al menos 4 caracteres",
+                },
                 maxLength: {
-                  value: 20,
-                  message: "Contraseña no debe exceder 20 caracteres",
+                  value: 40,
+                  message: "Contraseña no debe exceder 40 caracteres",
                 },
                 validate: validatePasswordStrength,
               }}
@@ -217,25 +212,30 @@ export const FormUser = () => {
               {passwordStrength}
             </span>
           )}
-
-          <label className="flex items-center space-x-2 mt-2 mb-2">
-            <input type="checkbox" className="w-4 h-4" required />
-            <span className="font-body text-body-sm text-neutral-neu0">
-              He leído y acepto los{" "}
-              <button
-                type="button"
-                onClick={openModal}
-                className="font-body text-body-sm text-secondary-sec2 underline"
-              >
-                Términos y Condiciones.
-              </button>
-            </span>
-          </label>
-          {passwordStrength && !errors.password && (
-            <span className={`mt-2 ${getPasswordStrengthColor()}`}>
-              {passwordStrength}
-            </span>
-          )}
+          <div className="flex flex-col mt-2 mb-2">
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                className="w-4 h-4"
+                {...register("terms", {
+                  required: "Debe aceptar los Términos y Condiciones",
+                })}
+              />
+              <span className="font-body text-body-sm text-neutral-neu0">
+                He leído y acepto los{" "}
+                <button
+                  type="button"
+                  onClick={openModal}
+                  className="font-body text-body-sm text-secondary-sec2 underline"
+                >
+                  Términos y Condiciones.
+                </button>
+              </span>
+            </label>
+            {errors.terms && (
+              <span className="text-error-err2 text-sm mt-1">{errors.terms.message}</span>
+            )}
+          </div>
           {isModalOpen && (
             <TermsModal onClose={closeModal} onConfirm={closeModal} />
           )}
