@@ -47,8 +47,9 @@ export const Home = () => {
     setSelectedCategories(categories);
     setSelectedLanguages(languages);
   };
+  const bookAll = [...books, ...recentBooks];
 
-  const filteredBooks = books.filter((book) => {
+  const filteredBooks = bookAll.filter((book) => {
     const matchesCategory =
       selectedCategories.length === 0 ||
       selectedCategories.includes(book.categoria.nombreCategoria);
@@ -67,6 +68,9 @@ export const Home = () => {
       return false;
     }
   });
+  const noBookFilter =
+    (selectedCategories.length > 0 || selectedLanguages.length > 0) &&
+    filteredBooks.length === 0;
 
   return (
     <div className="bg-primary-pri3">
@@ -79,7 +83,13 @@ export const Home = () => {
         />
       </div>
 
-      {filteredBooks.length > 0 ? (
+      {noBookFilter ? (
+        <>
+          <div className="flex justify-center items-center font-body text-body-md text-secondary-sec2 h-[480px]">
+            No se encontraron libros con esa categoria o idioma
+          </div>
+        </>
+      ) : filteredBooks.length > 0 ? (
         <>
           <div className="grid place-items-center grid-cols-4 gap-4 px-6 mt-8">
             {filteredBooks.map((filterBook, index) => (

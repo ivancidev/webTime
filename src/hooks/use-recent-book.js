@@ -16,7 +16,17 @@ export const useGetRecentBooks = () => {
         fiveDaysAgo.setDate(today.getDate() - 5);
         const { data, error } = await supabase
           .from("libro")
-          .select("*")
+          .select(
+            `
+            *,
+            categoria (
+              nombreCategoria
+            ),
+            idioma (
+              idioma
+            )
+            `
+          )
           .gte("fecha_creacion", fiveDaysAgo.toISOString());
 
         if (error) throw error;
