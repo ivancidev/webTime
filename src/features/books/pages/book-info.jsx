@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import BackIcon from "../../../icons/back";
 import ListenIcon from "../../../icons/listen";
 import ReadIcon from "../../../icons/read";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useBookDetails } from "../../../hooks/use-book-details";
-import { useFetchNumPages } from "../../../hooks/use-num-pages";
 import { DetailRow } from "../components/detail-row";
-import { AudioPlayer } from "./audio-player";
-import { useAudioDuration } from "../../../hooks/use-audio-duration";
 import { CircularProgress } from "@mui/material";
 import { ReadBook } from "../components/readBook";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
@@ -19,8 +16,6 @@ export const BookInfo = () => {
   const { book } = location.state || {};
   const navigate = useNavigate();
   const { bookDetails, error, loading } = useBookDetails(book);
-  const { numPages, loadingPdf } = useFetchNumPages(book);
-  const audioDuration = useAudioDuration(book.enlaceAudio);
   const [showReadBook, setShowReadBook] = useState(false);
   const { showAudioPlay, setShowAudioPlay } = useAudio();
 
@@ -32,7 +27,7 @@ export const BookInfo = () => {
     );
   }
 
-  if (loading || loadingPdf || audioDuration === null) {
+  if (loading) {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen bg-primary-pri3">
         <CircularProgress color="primary" size={80} />
@@ -46,7 +41,7 @@ export const BookInfo = () => {
   }
   return (
     <div className="flex min-h-screen flex-col bg-primary-pri3">
-      <div className="sticky top-0 flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
+      <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/")} />
       </div>
       <div className="flex flex-col lg:flex-row items-center md:justify-evenly px-5">
@@ -78,14 +73,10 @@ export const BookInfo = () => {
             <DetailRow label="Autor" value={bookDetails.nombreAutor} />
             <DetailRow label="Idioma" value={bookDetails.idioma} />
             <DetailRow label="Categoría" value={bookDetails.nombreCategoria} />
-            <DetailRow label="Número de páginas" value={numPages} />
+            <DetailRow label="Número de páginas" value={book.numero_paginas} />
             <DetailRow
               label="Duración del audio"
-              value={`${
-                audioDuration !== null
-                  ? audioDuration.toFixed(2)
-                  : "Cargando..."
-              } min`}
+              value={`${book.duracion_audio} min`}
             />
           </div>
           <div className="max-w-[500px] mt-4 mb-8 sm:my-10">
