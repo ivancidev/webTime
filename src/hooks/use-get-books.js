@@ -25,14 +25,16 @@ export const useGetBooks = (isRecent) => {
             ),
             idioma (
               idioma
+            ),
+            autor(
+              nombreAutor
             )
             `
           )
-          .lt("fecha_creacion", fiveDaysAgo.toISOString());
-        autor(nombreAutor)[isRecent ? "gte" : "lt"](
-          "fecha_creacion",
-          fiveDaysAgo.toISOString()
-        );
+          [isRecent ? "gte" : "lt"](
+            "fecha_creacion",
+            fiveDaysAgo.toISOString()
+          );
 
         if (error) throw error;
 

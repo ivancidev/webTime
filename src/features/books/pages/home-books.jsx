@@ -73,7 +73,7 @@ export const Home = () => {
     setSelectedCategories(categories);
     setSelectedLanguages(languages);
   };
-  const bookAll = [...books, ...recentBooks];
+  const bookAll = [...booksOld, ...recentBooks];
 
   const filteredBooks = bookAll.filter((book) => {
     const matchesCategory =
