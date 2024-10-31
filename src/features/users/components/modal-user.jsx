@@ -5,7 +5,7 @@ import LogOut from "../../../icons/logOut";
 import UserProf from "../../../icons/userProfile";
 import ViewProfile from "../../../icons/viewProfile";
 
-export const ModalUser = ({ nickname, imgUser, onClose }) => {
+export const ModalUser = ({ codUser, nickname, imgUser, onClose }) => {
   return (
     <div className="w-52 h-[272px] rounded-xl border-[1px] border-primary-pri2 bg-primary-pri3 drop-shadow-lg">
       <div className="w-full flex justify-end">
