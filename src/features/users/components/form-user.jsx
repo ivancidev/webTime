@@ -30,18 +30,19 @@ export const FormUser = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   const onSubmit = async (data) => {
     setIsLoading(true);
     setOpenDialog(true);
-
+  
     const response = await registerUser({ ...data, imageFile });
     setIsLoading(false);
-
+  
     if (response.success) {
-      navigate("/preferences");
+      setIsSuccess(true); 
     } else {
       setErrorMessage(response.message);
     }
@@ -50,7 +51,7 @@ export const FormUser = () => {
   const validatePasswordStrength = (value) => {
     const hasUpperCase = /[A-Z]/.test(value);
     const hasNumber = /\d/.test(value);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>~+=\-_;/\[\]]/.test(value);
     const isValid = hasUpperCase && hasNumber && hasSpecialChar;
 
     if (!isValid) {
@@ -65,7 +66,6 @@ export const FormUser = () => {
     } else {
       setPasswordStrength("Contraseña muy segura");
     }
-
     return true;
   };
 
@@ -233,7 +233,7 @@ export const FormUser = () => {
               </span>
             </label>
             {errors.terms && (
-              <span className="text-error-err2 text-sm mt-1">{errors.terms.message}</span>
+              <span className="text-error-err2 text-md mt-1">{errors.terms.message}</span>
             )}
           </div>
           {isModalOpen && (
@@ -254,11 +254,36 @@ export const FormUser = () => {
           )}
         </div>
       </form>
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle className="text-center">Cargando...</DialogTitle>
-        <DialogContent className="flex flex-col items-center justify-center">
-          <CircularProgress />
-        </DialogContent>
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        sx={{
+          '& .MuiPaper-root': {
+            borderRadius: '20px',
+          },
+        }}
+      >
+        {isSuccess ? (
+          <>
+            <DialogTitle className="text-center text-primary-pri1">Registro exitoso</DialogTitle>
+            <DialogContent className="flex flex-col items-center justify-center">
+              <Button
+                text="Aceptar"
+                onClick={() => {
+                  setOpenDialog(false);
+                  navigate("/preferences"); 
+                }}
+              />
+            </DialogContent>
+          </>
+        ) : (
+          <>
+            <DialogTitle className="text-center text-primary-pri1">Cargando...</DialogTitle>
+            <DialogContent className="flex flex-col items-center justify-center">
+              <CircularProgress />
+            </DialogContent>
+          </>
+        )}
       </Dialog>
     </>
   );
