@@ -55,8 +55,8 @@ export const FormUser = () => {
     const isValid = hasUpperCase && hasNumber && hasSpecialChar;
 
     if (!isValid) {
-      setPasswordStrength("Contraseña no válida");
-      return "Contraseña no válida";
+      setPasswordStrength("Se requiere por lo menos una mayúscula, número y símbolo");
+      return "Se requiere por lo menos una mayúscula, número y símbolo";
     }
 
     if (value.length <= 4) {
@@ -169,7 +169,7 @@ export const FormUser = () => {
                   !/\s/.test(value) || "El correo no debe contener espacios",
                 isGmail: (value) =>
                   /^[a-zA-Z0-9._%+-]+@gmail\.[a-zA-Z]{2,}$/.test(value) ||
-                  "El correo electrónico debe ser un Gmail válido.",
+                  "El correo electrónico debe ser un gmail válido.",
               },
             }}
             labelMarginTop="5px"
@@ -179,7 +179,7 @@ export const FormUser = () => {
             <InputText
               name="password"
               label="Contraseña"
-              placeholder="Escribe aquí"
+              placeholder="Ingrese su contraseña"
               type={showPassword ? "text" : "password"}
               className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 pr-12 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
               register={register}
