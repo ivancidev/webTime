@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Carousel } from "../components/carousel";
 import { useGetBooks } from "../../../hooks/use-get-books";
@@ -9,10 +9,12 @@ import ButtonIcon from "../../../components/buttons/buttonIcon";
 import FilterIcon from "../../../icons/filter";
 import { CardBook } from "../components/cardBook";
 import { ModalFilter } from "../../books/components/modal-filter";
+import { fetchUserBooks } from "../../../services/fetch-user-category";
 
 export const Home = () => {
   const location = useLocation();
-  const selectedPreferences = location.state?.selectedPreferences || [];
+  const user = location.state?.user || [];
+  const [selectedPreferences, setSelectedPreferences] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -33,6 +35,19 @@ export const Home = () => {
   const [searchBooksOld, setSearchBooksOld] = useState([]);
   const [searchBooksRecent, setSearchBooksRecent] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      console.log(storedUser);
+      if (storedUser.id_usuario) {
+        fetchUserBooks(storedUser.id_usuario).then((result) =>
+          setSelectedPreferences(result)
+        );
+      }
+    }
+  }, [user]);
 
   const handleSearchResults = (
     { filterBooks = [], filterBooksRecent = [] },
@@ -57,14 +72,6 @@ export const Home = () => {
   const noResults =
     searchText && searchBooksOld.length === 0 && searchBooksRecent.length === 0;
 
-  const suggestedBooks = booksOld.filter(
-    (book) =>
-      book.nombreCategoria &&
-      book.nombreCategoria.some((nombreCategoria) =>
-        selectedPreferences.includes(nombreCategoria)
-      )
-  );
-
   const handleFilterClick = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -74,6 +81,12 @@ export const Home = () => {
     setSelectedLanguages(languages);
   };
   const bookAll = [...booksOld, ...recentBooks];
+
+  const suggestedBooks = bookAll.filter((book) =>
+    selectedPreferences.some(
+      (preference) => preference.codCategoria === book.codCategoria
+    )
+  );
 
   const filteredBooks = bookAll.filter((book) => {
     const matchesCategory =
@@ -98,6 +111,7 @@ export const Home = () => {
     (selectedCategories.length > 0 || selectedLanguages.length > 0) &&
     filteredBooks.length === 0;
 
+  console.log(selectedPreferences);
   return (
     <div className="flex gri flex-col min-h-screen bg-primary-pri3">
       <div className="flex-grow">
