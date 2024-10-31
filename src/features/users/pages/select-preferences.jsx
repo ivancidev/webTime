@@ -124,7 +124,7 @@ export const SelectPreferences = () => {
         message: "Preferencias guardadas con éxito.",
         severity: "success",
       });
-      navigate("/", { state: { selectedCategories, selectedTime } });
+      navigate("/app", { state: { selectedCategories, selectedTime } });
     } catch (error) {
       console.error("Error en la inserción de preferencias:", error);
       setSnackbar({

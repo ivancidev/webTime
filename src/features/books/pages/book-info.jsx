@@ -42,7 +42,7 @@ export const BookInfo = () => {
   return (
     <div className="flex min-h-screen flex-col bg-primary-pri3">
       <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
-        <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/")} />
+        <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/app")} />
       </div>
       <div className="flex flex-col lg:flex-row items-center md:justify-evenly px-5">
         <div className="relative w-full max-w-[80%] aspect-square sm:w-[440px] md:h-[400px] bg-neutral-neu2 rounded-3xl mb-0 md:mb-10">

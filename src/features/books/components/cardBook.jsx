@@ -6,7 +6,7 @@ export const CardBook = ({ titleBook, frontBook, book }) => {
   const handleClick = () => {
     setShowAudioPlay(false);
     localStorage.setItem("book", JSON.stringify(book));
-    navigate(`/book-info/${book.codLibro}`, {
+    navigate(`app/book-info/${book.codLibro}`, {
       state: { book },
     });
   };

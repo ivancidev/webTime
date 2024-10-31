@@ -16,7 +16,7 @@ export const Profile = () => {
             <NavbarO/>
             <div className="">
                 <div className="ml-14 mt-8">
-                    <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/")} />
+                    <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/app")} />
                 </div>
                 <div className="grid grid-cols-2 ml-[150px] mt-2">
                     <div>
