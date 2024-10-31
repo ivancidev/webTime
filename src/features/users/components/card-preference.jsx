@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import Check from "../../../icons/check";
 
-const CardPref = ({ text, icon, onSelect }) => {
+const CardPref = ({ text, icon, cod, onSelect, text2 }) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const handleCardClick = () => {
     setIsSelected(!isSelected);
-    onSelect(text, !isSelected);
+    if (text2 === "Elige las categorías de tu interés") {
+      onSelect({ codCategoria: cod, nombreCategoria: text }, !isSelected);
+    } else {
+      onSelect({ id_tiempo_lectura: cod, minutos: text }, !isSelected);
+    }
   };
 
   return (

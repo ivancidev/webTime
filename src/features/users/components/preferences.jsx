@@ -11,6 +11,10 @@ export default function Preferences({ text, icons, variant, onSelect }) {
       </div>
       <div className={`flex flex-wrap gap-6 mx-36 mt-10 max-w-[1400px]`}>
         {icons.map((iconText, index) => {
+          const cod =
+            variant === "c"
+              ? iconText.codCategoria
+              : iconText.id_tiempo_lectura;
           const contentText =
             variant === "c"
               ? iconText.nombreCategoria
@@ -25,6 +29,8 @@ export default function Preferences({ text, icons, variant, onSelect }) {
               text={contentText}
               icon={contentIcon}
               onSelect={onSelect}
+              cod={cod}
+              text2={text}
             />
           );
         })}
