@@ -136,7 +136,7 @@ export const FormUser = () => {
               required: "Nombre de usuario no puede estar vacío",
               pattern: {
                 value: /^[a-zA-Z0-9_.áéíóúÁÉÍÓÚñÑ\s]*$/,
-                message: "Nombre de usuario sólo admite caracteres a-z, A-Z, 0-9, _, ., y espacios",
+                message: "Nombre de usuario sólo admite caracteres a-z, A-Z, 0-9, _, .",
               },
               minLength: {
                 value: 2,
