@@ -13,7 +13,7 @@ export const NavbarO = () => {
 
   return (
     <nav className="relative sm:sticky sm:top-0 bg-primary-pri3 h-20 flex items-center px-6 z-50">
-      <Link to="/" className="w-full h-full pt-2">
+      <Link to="/app" className="w-full h-full pt-2">
         <img src={Logo} alt="Logo" />
       </Link>
 
@@ -38,7 +38,7 @@ export const NavbarO = () => {
       <ul className="hidden lg:flex items-center justify-end w-screen space-x-16 mr-16">
         <li>
           <Link
-            to="/"
+            to="/app"
             className="font-label text-label-md text-secondary-sec1 hover:text-secondary-sec2 "
           >
             Inicio
