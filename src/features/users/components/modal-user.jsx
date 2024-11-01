@@ -17,7 +17,7 @@ export const ModalUser = ({ codUser, nickname, imgUser, onClose }) => {
       </div>
       <div className="flex flex-col items-center space-y-2">
         {imgUser ? (
-          <img
+          <img 
             src={imgUser}
             className="w-[92px] h-[92px] object-cover rounded-full"
           />

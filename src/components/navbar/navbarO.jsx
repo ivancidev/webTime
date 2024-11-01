@@ -9,7 +9,7 @@ export const NavbarO = () => {
     setIsOpen(!isOpen);
   };
 
-  const location = useLocation();
+  const location = useLocation(); 
 
   return (
     <nav className="relative sm:sticky sm:top-0 bg-primary-pri3 h-20 flex items-center px-6 z-50">

@@ -86,7 +86,7 @@ export const FormUser = () => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col md:items-center"
+        className="flex flex-col sm:items-center"
       >
         <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent m-[20px] font-display text-display-md">
           ¡Bienvenido a Webtime!
