@@ -11,7 +11,10 @@ export const NavbarO = () => {
     setIsOpen(!isOpen);
   };
   const openUser = () => {
-    setIsOpenUser(!isOpenUser);
+    setIsOpenUser(true);
+  };
+  const closeUser = () => {
+    setIsOpenUser(false);
   };
 
   const location = useLocation(); 
@@ -27,7 +30,7 @@ export const NavbarO = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
-            stroke={isOpen ? "#000000" : "#AEAAAE"}
+            stroke={isOpen ? "#0123FD" : "#AEAAAE"}
           >
             <path
               strokeLinecap="round"
@@ -91,10 +94,10 @@ export const NavbarO = () => {
           </ul>
         </div>
       )}
-      <User onClick={ openUser}/>
+      <User onClick={ openUser} stroke={isOpenUser ? "#0123FD" : "#AEAAAE"}/>
       {isOpenUser && (
-        <div>
-          <ModalUser/>
+        <div className="flex absolute top-20 right-0 z-50">
+          <ModalUser onClose={closeUser}/>
         </div>
       )}
     </nav> 
