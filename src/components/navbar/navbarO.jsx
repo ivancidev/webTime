@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import Logo from "../../assets/icons/logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import User from "../../icons/user";
+import { ModalUser } from "../../features/users/components/modal-user";
 
 export const NavbarO = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenUser, setIsOpenUser] = useState(false);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+  const openUser = () => {
+    setIsOpenUser(!isOpenUser);
   };
 
   const location = useLocation(); 
@@ -86,7 +91,12 @@ export const NavbarO = () => {
           </ul>
         </div>
       )}
-      <User />
-    </nav>
+      <User onClick={ openUser}/>
+      {isOpenUser && (
+        <div>
+          <ModalUser/>
+        </div>
+      )}
+    </nav> 
   );
 };
