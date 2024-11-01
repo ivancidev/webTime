@@ -69,6 +69,7 @@ export const NavbarO = () => {
           <ul className="flex flex-col items-start p-4 space-y-4 w-full">
             <li>
               <Link
+                to="/app"
                 className="text-primary-pri1 font-label text-label-md hover:text-secondary-sec3"
                 onClick={toggleMenu}
               >
