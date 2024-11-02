@@ -23,7 +23,9 @@ export const FormUser = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onChange", 
+  });
   const [imageFile, setImageFile] = useState(null);
   const [passwordStrength, setPasswordStrength] = useState("");
   const [showPassword, setShowPassword] = useState(false);
