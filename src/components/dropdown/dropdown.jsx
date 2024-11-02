@@ -28,9 +28,10 @@ export const Dropdown = ({
         id={name}
         name={name}
         className="w-full md:w-[340px] h-[50px] bg-transparent border-[1px] rounded border-neutral-neu0 font-body placeholder-neutral-neu0 text-primary-pri1  text-body-md p-2"
-        {...register(name, {
-          required: `${label} es requerido`,
-        })}
+        {...(register &&
+          register(name, {
+            required: `${label} es requerido`,
+          }))}
         value={value} // Asegúrate de que el value esté vinculado correctamente
         onChange={onChange} // Agregamos la función onChange
       >
