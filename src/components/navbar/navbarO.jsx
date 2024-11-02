@@ -9,9 +9,11 @@ export const NavbarO = () => {
   const [isOpenUser, setIsOpenUser] = useState(false);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+    if (!isOpen) setIsOpenUser(false);
   };
   const openUser = () => {
     setIsOpenUser(true);
+    setIsOpen(false);
   };
   const closeUser = () => {
     setIsOpenUser(false);
@@ -95,7 +97,7 @@ export const NavbarO = () => {
           </ul>
         </div>
       )}
-      <User onClick={ openUser} stroke={isOpenUser ? "#0123FD" : "#AEAAAE"}/>
+      <User onClick={openUser} stroke={isOpenUser ? "#0123FD" : "#AEAAAE"}/>
       {isOpenUser && (
         <div className="flex absolute top-20 right-0 z-50">
           <ModalUser onClose={closeUser}/>
