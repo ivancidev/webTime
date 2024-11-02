@@ -6,9 +6,10 @@ export default function User() {
       width="28"
       height="28"
       viewBox="0 0 28 28"
-      fill="currentcolor"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
-    > 
+      className="flex-none"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
