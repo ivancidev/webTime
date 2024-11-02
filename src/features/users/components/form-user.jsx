@@ -7,6 +7,7 @@ import ImageUploader from "./image-uploader";
 import EyeOn from "../../../icons/eyeOn";
 import EyeOff from "../../../icons/eyeOff";
 import { registerUser } from "../../../services/auth-service";
+import { supabase } from "../../../services/supabaseClient";
 import {
   Alert,
   Dialog,
@@ -38,6 +39,7 @@ export const FormUser = () => {
     setIsLoading(true);
     setOpenDialog(true);
   
+
     const response = await registerUser({ ...data, imageFile });
     setIsLoading(false);
   
@@ -69,6 +71,32 @@ export const FormUser = () => {
     return true;
   };
 
+  const validateEmail = async (email) => {
+    const { data, error } = await supabase
+      .from('usuario')  
+      .select('correo')  
+      .eq('correo', email); 
+
+    if (error || data.length>0) {
+      setPasswordStrength("Correo electrónico ya registrado");
+      return "Correo electrónico ya registrado";
+    }
+    return true  
+};
+
+const validateNameUser = async (nameUser) => {
+    const { data, error } = await supabase
+      .from('usuario')  
+      .select('nombre_usuario')  
+      .eq('nombre_usuario', nameUser); 
+
+    if (error || data.length>0) {
+      setPasswordStrength("Este nombre de usuario está en uso, ingrese otro.");
+      return "Este nombre de usuario está en uso, ingrese otro.";
+    }
+    return true;
+};
+
   const getPasswordStrengthColor = () => {
     switch (passwordStrength) {
       case "Contraseña insegura":
@@ -86,7 +114,7 @@ export const FormUser = () => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col md:items-center"
+        className="flex flex-col sm:items-center"
       >
         <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent m-[20px] font-display text-display-md">
           ¡Bienvenido a Webtime!
@@ -150,6 +178,7 @@ export const FormUser = () => {
                 noMultipleSpaces: (value) =>
                   !/\s{2,}/.test(value) ||
                   "No se permiten espacios múltiples consecutivos",
+                validate: validateNameUser
               },
             }}
             labelMarginTop="5px"
@@ -170,6 +199,7 @@ export const FormUser = () => {
                 isGmail: (value) =>
                   /^[a-zA-Z0-9._%+-]+@gmail/.test(value) ||
                   "El correo electrónico debe ser un gmail válido.",
+                  validate: validateEmail
               },
             }}
             labelMarginTop="5px"

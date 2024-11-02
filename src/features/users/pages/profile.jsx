@@ -4,7 +4,7 @@ import { NavbarO } from "../../../components/navbar/navbarO"
 import BackIcon from "../../../icons/back"
 import { PerfilUser } from "../components/perfil-user";
 import Fire from "../../../icons/fire";
-
+import CompletedBooksSection from "../components/completed-books";
 
 
 export const Profile = () => {
@@ -25,6 +25,9 @@ export const Profile = () => {
                     <div>
                         {/*<Fire/> ya esta el fueguito*/}
                     </div>
+                </div>
+                <div className="mt-10">
+                    <CompletedBooksSection completedBooksCount="12"/>
                 </div>
             </div>
 

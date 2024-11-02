@@ -2,14 +2,22 @@ import React, { useState } from "react";
 import Logo from "../../assets/icons/logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import User from "../../icons/user";
+import { ModalUser } from "../../features/users/components/modal-user";
 
 export const NavbarO = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenUser, setIsOpenUser] = useState(false);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+  const openUser = () => {
+    setIsOpenUser(true);
+  };
+  const closeUser = () => {
+    setIsOpenUser(false);
+  };
 
-  const location = useLocation();
+  const location = useLocation(); 
 
   return (
     <nav className="relative sm:sticky sm:top-0 bg-primary-pri3 h-20 flex items-center px-6 z-50">
@@ -22,15 +30,15 @@ export const NavbarO = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
-            stroke={isOpen ? "#000000" : "#AEAAAE"}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16m-7 6h7"
-              fill="currentColor"
-            />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16m-7 6h7"
+            stroke={isOpen ? "#0123FD" : "#AEAAAE"}
+            className=" hover:stroke-secondary-sec2"
+          />
           </svg>
         </button>
       </div>
@@ -61,6 +69,7 @@ export const NavbarO = () => {
           <ul className="flex flex-col items-start p-4 space-y-4 w-full">
             <li>
               <Link
+                to="/app"
                 className="text-primary-pri1 font-label text-label-md hover:text-secondary-sec3"
                 onClick={toggleMenu}
               >
@@ -86,7 +95,12 @@ export const NavbarO = () => {
           </ul>
         </div>
       )}
-      <User />
-    </nav>
+      <User onClick={ openUser} stroke={isOpenUser ? "#0123FD" : "#AEAAAE"}/>
+      {isOpenUser && (
+        <div className="flex absolute top-20 right-0 z-50">
+          <ModalUser onClose={closeUser}/>
+        </div>
+      )}
+    </nav> 
   );
 };

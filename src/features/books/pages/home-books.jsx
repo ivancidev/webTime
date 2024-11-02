@@ -146,7 +146,7 @@ export const Home = () => {
           </div>
         ) : filteredBooks.length > 0 ? (
           <>
-            <div className="grid place-items-center grid-cols-4 gap-4 px-6 mt-8">
+            <div className="grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6 mt-8">
               {filteredBooks.map((filterBook, index) => (
                 <CardBook
                   key={index}
