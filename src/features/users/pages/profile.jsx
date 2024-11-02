@@ -23,7 +23,7 @@ export const Profile = () => {
                         <PerfilUser/>
                     </div>
                     <div>
-                        {/*<Fire/> ya esta el fueguito*/}
+                        {/*<Fire/> ya esta el fueguito xd*/}
                     </div>
                 </div>
                 <div className="mt-10">

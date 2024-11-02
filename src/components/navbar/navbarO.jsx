@@ -3,6 +3,7 @@ import Logo from "../../assets/icons/logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import User from "../../icons/user";
 import { ModalUser } from "../../features/users/components/modal-user";
+import ButtonIcon from "../buttons/buttonIcon";
 
 export const NavbarO = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -97,7 +98,8 @@ export const NavbarO = () => {
           </ul>
         </div>
       )}
-      <User onClick={openUser} stroke={isOpenUser ? "#0123FD" : "#0E1217"}/>
+      <ButtonIcon SvgIcon={User} variant="combColBlack2" onClick={openUser}/>
+      {/*<User onClick={openUser} stroke={isOpenUser ? "#0123FD" : "#0E1217"}/>*/}
       {isOpenUser && (
         <div className="flex absolute top-20 right-0 z-50">
           <ModalUser onClose={closeUser}/>
