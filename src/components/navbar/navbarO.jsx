@@ -38,7 +38,7 @@ export const NavbarO = () => {
             strokeLinejoin="round"
             strokeWidth={2}
             d="M4 6h16M4 12h16m-7 6h7"
-            stroke={isOpen ? "#0123FD" : "#AEAAAE"}
+            stroke={isOpen ? "#0123FD" : "#0E1217"}
             className=" hover:stroke-secondary-sec2"
           />
           </svg>
@@ -67,8 +67,8 @@ export const NavbarO = () => {
       </ul>
 
       {isOpen && (
-        <div className="flex lg:hidden absolute top-20 right-0 w-30 bg-primary-pri3 shadow-lg z-50">
-          <ul className="flex flex-col items-start p-4 space-y-4 w-full">
+        <div className="flex lg:hidden absolute top-20 right-12 w-30 bg-primary-pri3 drop-shadow-2xl z-50">
+          <ul className="flex flex-col items-start p-3 space-y-4 w-full">
             <li>
               <Link
                 to="/app"
@@ -97,7 +97,7 @@ export const NavbarO = () => {
           </ul>
         </div>
       )}
-      <User onClick={openUser} stroke={isOpenUser ? "#0123FD" : "#AEAAAE"}/>
+      <User onClick={openUser} stroke={isOpenUser ? "#0123FD" : "#0E1217"}/>
       {isOpenUser && (
         <div className="flex absolute top-20 right-0 z-50">
           <ModalUser onClose={closeUser}/>
