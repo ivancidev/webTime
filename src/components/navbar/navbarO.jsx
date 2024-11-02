@@ -72,7 +72,7 @@ export const NavbarO = () => {
             <li>
               <Link
                 to="/app"
-                className="text-primary-pri1 font-label text-label-md hover:text-secondary-sec3"
+                className="font-label text-label-md text-secondary-sec1 hover:text-secondary-sec2"
                 onClick={toggleMenu}
               >
                 Inicio

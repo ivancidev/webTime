@@ -8,7 +8,7 @@ export default function User( {onClick,stroke}) {
       viewBox="0 0 28 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="flex-none"
+      className="flex-none cursor-pointer"
       onClick={onClick}
     >
       <path
