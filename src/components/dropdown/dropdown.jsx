@@ -32,8 +32,8 @@ export const Dropdown = ({
           register(name, {
             required: `${label} es requerido`,
           }))}
-        value={value} // Asegúrate de que el value esté vinculado correctamente
-        onChange={onChange} // Agregamos la función onChange
+        value={value}
+        onChange={onChange}
       >
         <option value="" disabled className="bg-neutral-neu1 text-primary-pri3">
           {placeholder}
@@ -44,7 +44,9 @@ export const Dropdown = ({
             value={option[valueKey]}
             className="bg-neutral-neu2 text-primary-pri2 text-body-md"
           >
-            {option[displayKey]}
+            {displayKey === "minutos"
+              ? `${option[displayKey]} minutos`
+              : option[displayKey]}
           </option>
         ))}
       </select>
