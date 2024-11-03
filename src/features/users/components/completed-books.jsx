@@ -3,12 +3,16 @@ import ButtonIcon from "../../../components/buttons/buttonIcon";
 import FilterIcon from "../../../icons/filter";
 import Calendar from "../../../icons/calendar";
 
-const CompletedBooksSection = ({ completedBooksCount, onClick }) => {
+const CompletedBooksSection = ({ completedBooksCount, onClick,variant="comb1"}) => {
+    const varCol = {
+        comb1: "text-primary-pri2 hover:text-secondary-sec2",
+        comb2: "text-secondary-sec1 hover:text-secondary-sec2",
+      };
   return (
     <div clasName="flex flex-col w-full">
         <div className="flex flex-col ml-20 md:ml-[150px] items-center w-fit mb-2">
             <button 
-            className="rounded-[20px] w-9 sm:w-10 h-9 sm:h-10 flex flex-col items-center justify-center text-primary-pri2 hover:text-secondary-sec2"
+            className={`${varCol[variant]} rounded-[20px] w-9 sm:w-10 h-9 sm:h-10 flex flex-col items-center justify-center`}
             onClick={onClick}
             >
                 <span className="text-title-md font-title">{completedBooksCount}</span>

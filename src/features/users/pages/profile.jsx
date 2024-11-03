@@ -71,7 +71,7 @@ export const Profile = () => {
                     </div>
                 </div>
                 <div className="mt-5 md:mt-10 ">
-                    <CompletedBooksSection completedBooksCount="12" onClick={bookCompleted}/>
+                    <CompletedBooksSection completedBooksCount="12" onClick={bookCompleted} variant={`${isOpenCompleted ? "comb2" : "comb1"}`}/>
                 </div>
                 {isOpenCompleted && (
                     <>
