@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
@@ -6,8 +6,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import Close from "../../../icons/closeS";
+import "dayjs/locale/es";
+dayjs.locale("es");
 
-export const Calendar = ({ daysStreak, onClose }) => {
+export const Calendar = ({ onClose }) => {
+  const [selectedDate, setSelectedDate] = useState(dayjs());
   const theme = createTheme({
     components: {
       MuiPickersDay: {
@@ -15,8 +18,11 @@ export const Calendar = ({ daysStreak, onClose }) => {
           root: {
             color: "#0E1217",
             "&.Mui-selected": {
-              backgroundColor: "#0297FF",
-              color: "#FFFFFF",
+              backgroundColor: "#0297FF !important",
+              color: "#FFFFFF !important",
+            },
+            "&.Mui-selected:hover": {
+              backgroundColor: "#0123FD !important",
             },
             "&:hover": {
               backgroundColor: "#E6E1E5",
@@ -32,10 +38,12 @@ export const Calendar = ({ daysStreak, onClose }) => {
         <ButtonIcon onClick={onClose} SvgIcon={Close} variant="combColBlack2" />
       </div>
       <ThemeProvider theme={theme}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
           <DateCalendar
             defaultValue={dayjs()}
-            onChange={(newValue) => console.log(newValue)}
+            onChange={(newValue) => {
+              setSelectedDate(newValue);
+            }}
           />
         </LocalizationProvider>
       </ThemeProvider>
