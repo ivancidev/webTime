@@ -124,6 +124,7 @@ export const SelectPreferences = () => {
         message: "Preferencias guardadas con éxito.",
         severity: "success",
       });
+      localStorage.setItem("isRegistered", "true");
       localStorage.setItem("user", JSON.stringify(user));
       navigate("/app", { state: { user } });
     } catch (error) {

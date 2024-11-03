@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/buttons/button";
@@ -38,13 +38,12 @@ export const FormUser = () => {
   const onSubmit = async (data) => {
     setIsLoading(true);
     setOpenDialog(true);
-  
 
     const response = await registerUser({ ...data, imageFile });
     setIsLoading(false);
-  
+
     if (response.success) {
-      setIsSuccess(true); 
+      setIsSuccess(true);
     } else {
       setErrorMessage(response.message);
     }
@@ -57,7 +56,9 @@ export const FormUser = () => {
     const isValid = hasUpperCase && hasNumber && hasSpecialChar;
 
     if (!isValid) {
-      setPasswordStrength("Se requiere por lo menos una mayúscula, número y símbolo");
+      setPasswordStrength(
+        "Se requiere por lo menos una mayúscula, número y símbolo"
+      );
       return "Se requiere por lo menos una mayúscula, número y símbolo";
     }
 
@@ -73,29 +74,29 @@ export const FormUser = () => {
 
   const validateEmail = async (email) => {
     const { data, error } = await supabase
-      .from('usuario')  
-      .select('correo')  
-      .eq('correo', email); 
+      .from("usuario")
+      .select("correo")
+      .eq("correo", email);
 
-    if (error || data.length>0) {
+    if (error || data.length > 0) {
       setPasswordStrength("Correo electrónico ya registrado");
       return "Correo electrónico ya registrado";
     }
-    return true  
-};
+    return true;
+  };
 
-const validateNameUser = async (nameUser) => {
+  const validateNameUser = async (nameUser) => {
     const { data, error } = await supabase
-      .from('usuario')  
-      .select('nombre_usuario')  
-      .eq('nombre_usuario', nameUser); 
+      .from("usuario")
+      .select("nombre_usuario")
+      .eq("nombre_usuario", nameUser);
 
-    if (error || data.length>0) {
+    if (error || data.length > 0) {
       setPasswordStrength("Este nombre de usuario está en uso, ingrese otro.");
       return "Este nombre de usuario está en uso, ingrese otro.";
     }
     return true;
-};
+  };
 
   const getPasswordStrengthColor = () => {
     switch (passwordStrength) {
@@ -164,7 +165,8 @@ const validateNameUser = async (nameUser) => {
               required: "Nombre de usuario no puede estar vacío",
               pattern: {
                 value: /^[a-zA-Z0-9_.áéíóúÁÉÍÓÚñÑ\s]*$/,
-                message: "Nombre de usuario sólo admite caracteres a-z, A-Z, 0-9, _, .",
+                message:
+                  "Nombre de usuario sólo admite caracteres a-z, A-Z, 0-9, _, .",
               },
               minLength: {
                 value: 2,
@@ -178,7 +180,7 @@ const validateNameUser = async (nameUser) => {
                 noMultipleSpaces: (value) =>
                   !/\s{2,}/.test(value) ||
                   "No se permiten espacios múltiples consecutivos",
-                validate: validateNameUser
+                validate: validateNameUser,
               },
             }}
             labelMarginTop="5px"
@@ -199,7 +201,7 @@ const validateNameUser = async (nameUser) => {
                 isGmail: (value) =>
                   /^[a-zA-Z0-9._%+-]+@gmail/.test(value) ||
                   "El correo electrónico debe ser un gmail válido.",
-                  validate: validateEmail
+                validate: validateEmail,
               },
             }}
             labelMarginTop="5px"
@@ -263,7 +265,9 @@ const validateNameUser = async (nameUser) => {
               </span>
             </label>
             {errors.terms && (
-              <span className="text-error-err2 text-md mt-1">{errors.terms.message}</span>
+              <span className="text-error-err2 text-md mt-1">
+                {errors.terms.message}
+              </span>
             )}
           </div>
           {isModalOpen && (
@@ -288,27 +292,31 @@ const validateNameUser = async (nameUser) => {
         open={openDialog}
         onClose={() => setOpenDialog(false)}
         sx={{
-          '& .MuiPaper-root': {
-            borderRadius: '20px',
+          "& .MuiPaper-root": {
+            borderRadius: "20px",
           },
         }}
       >
         {isSuccess ? (
           <>
-            <DialogTitle className="text-center text-primary-pri1">Registro exitoso</DialogTitle>
+            <DialogTitle className="text-center text-primary-pri1">
+              Registro exitoso
+            </DialogTitle>
             <DialogContent className="flex flex-col items-center justify-center">
               <Button
                 text="Aceptar"
                 onClick={() => {
                   setOpenDialog(false);
-                  navigate("/preferences"); 
+                  navigate("/preferences");
                 }}
               />
             </DialogContent>
           </>
         ) : (
           <>
-            <DialogTitle className="text-center text-primary-pri1">Cargando...</DialogTitle>
+            <DialogTitle className="text-center text-primary-pri1">
+              Cargando...
+            </DialogTitle>
             <DialogContent className="flex flex-col items-center justify-center">
               <CircularProgress />
             </DialogContent>
