@@ -29,14 +29,12 @@ export const NavbarO = () => {
       <Link to="/app" className="w-full h-full pt-2">
         <img src={Logo} alt="Logo" />
       </Link>
-
       <div className="flex justify-end w-screen lg:hidden px-2 ">
         <ButtonIcon SvgIcon={Burger} 
           variant={`${isOpen ? "combColBlue" : "combColBlack2"}`}
           onClick={toggleMenu}
         />
       </div>
-
       <ul className="hidden lg:flex items-center justify-end w-screen space-x-16 mr-16">
         <li>
           <Link
@@ -61,6 +59,7 @@ export const NavbarO = () => {
         variant={`${isOpenUser ? "combColBlue" : "combColBlack2"}`}
         onClick={openUser}
       />
+      
       {isOpen && (
         <div className="flex absolute top-20 right-12 z-50">
           <ModalMenu/>
