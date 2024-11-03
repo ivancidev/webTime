@@ -20,7 +20,7 @@ export const TextLarge = ({ sinopsis }) => {
           onClick={toggleExpansion}
           className="text-secondary-sec2 font-body text-body-md hover:underline mt-2 text-justify"
         >
-          {isExpanded ? "Leer menos" : "Leer más"}
+        {isExpanded ? "Leer menos" : "Leer más"}
         </button>
       )}
     </div>

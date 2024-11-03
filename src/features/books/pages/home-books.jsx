@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { Carousel } from "../components/carousel";
 import { useGetBooks } from "../../../hooks/use-get-books";
 import { CircularProgress } from "@mui/material";
@@ -12,9 +11,6 @@ import { ModalFilter } from "../../books/components/modal-filter";
 import { fetchUserBooks } from "../../../services/fetch-user-category";
 
 export const Home = () => {
-  // const location = useLocation();
-  // const user = location.state?.user || [];
-  // localStorage.setItem("user", JSON.stringify(user));
   const [selectedPreferences, setSelectedPreferences] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -48,8 +44,7 @@ export const Home = () => {
   }, []);
 
   const handleSearchResults = (
-    { filterBooks = [], filterBooksRecent = [] },
-    text
+    { filterBooks = [], filterBooksRecent = [] }, text
   ) => {
     setSearchBooksOld(filterBooks);
     setSearchBooksRecent(filterBooksRecent);
