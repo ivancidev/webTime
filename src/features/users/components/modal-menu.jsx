@@ -1,6 +1,9 @@
-import { Link } from 'react-router-dom';
+import { useLocation,Link } from 'react-router-dom';
 
 export const ModalMenu = () => {
+  const location = useLocation();
+  const isAppRoute = location.pathname === "/app";
+
   return (
     <div className="w-30 bg-primary-pri3 drop-shadow-2xl">
       <ul className="flex flex-col items-start p-3 space-y-4 w-full">

@@ -44,8 +44,7 @@ export const Home = () => {
   }, []);
 
   const handleSearchResults = (
-    { filterBooks = [], filterBooksRecent = [] },
-    text
+    { filterBooks = [], filterBooksRecent = [] }, text
   ) => {
     setSearchBooksOld(filterBooks);
     setSearchBooksRecent(filterBooksRecent);
