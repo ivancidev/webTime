@@ -200,7 +200,7 @@ const validateNameUser = async (nameUser) => {
                   !/\s/.test(value) || "El correo no debe contener espacios",
                 isGmail: (value) =>
                   /^[a-zA-Z0-9._%+-]+@gmail/.test(value) ||
-                  "El correo electrónico debe ser un gmail válido.",
+                  "Correo debe ser gmail",
                   validate: validateEmail
               },
             }}
@@ -220,11 +220,11 @@ const validateNameUser = async (nameUser) => {
                 required: "Contraseña no puede estar vacía",
                 minLength: {
                   value: 2,
-                  message: "Contraseña debe tener al menos 2 caracteres",
+                  message: "Usa 2 caracteres o más",
                 },
                 maxLength: {
                   value: 128,
-                  message: "Contraseña no debe exceder 128 caracteres",
+                  message: "Ingresa una contraseña con 128 caracteres o menos",
                 },
                 validate: validatePasswordStrength,
               }}
