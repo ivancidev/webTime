@@ -48,9 +48,10 @@ export const Profile = () => {
                     <div className="mt-5 md:mt-0">
                         <DailyStreak days="11" />
                     </div>
-                    <div className="mt-2 md:mt-10 ">
-                        <CompletedBooksSection completedBooksCount="12" />
-                    </div>
+                    
+                </div>
+                <div className="mt-5 md:mt-10 ">
+                    <CompletedBooksSection completedBooksCount="12" />
                 </div>
                 <div className="grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                     {booksToShow.map((book, index) => (
