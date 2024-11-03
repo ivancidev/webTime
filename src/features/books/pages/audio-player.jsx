@@ -10,6 +10,7 @@ import CloseIcon from "../../../icons/close";
 import Mute from "../../../icons/mute";
 import Button from "../../../components/buttons/button";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
+import { updateDailyStatistics } from '../../../services/streakService';
 
 export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
   const audioRef = useRef(null);
@@ -23,6 +24,11 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
   const [showSpeedOptions, setShowSpeedOptions] = useState(false);
   const [showVerticalSlider, setShowVerticalSlider] = useState(false);
   const audioKey = `audioProgress_${urlAudio}`;
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const [startTime, setStartTime] = useState(null);
+  const [listeningTime, setListeningTime] = useState(0);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -51,8 +57,40 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
     return () => {
       audio.removeEventListener("timeupdate", updateCurrentTime);
       audio.removeEventListener("ended", handleAudioEnd);
+  
+      let totalListeningTime = listeningTime;
+  
+      if (startTime) {
+        const elapsedTime = Date.now() - startTime;
+        totalListeningTime += elapsedTime;
+        setStartTime(null);
+      }
+  
+      const totalListeningTimeInSeconds = totalListeningTime / 1000;
+      console.log(`Tiempo total escuchado al desmontar: ${totalListeningTimeInSeconds} segundos`);
+  
+      // Actualizar el objeto user en localStorage
+      const user = JSON.parse(localStorage.getItem("user")) || {};
+      user.listeningTime = (user.listeningTime || 0) + totalListeningTimeInSeconds;
+      localStorage.setItem("user", JSON.stringify(user));
     };
   }, [audioKey]);
+
+  useEffect(() => {
+    if (isPlaying) {
+      // Si el audio está reproduciéndose, inicia o reanuda el cronómetro
+      if (!startTime) {
+        setStartTime(Date.now());
+      }
+    } else {
+      // Si el audio está pausado, detiene el cronómetro y acumula el tiempo
+      if (startTime) {
+        const elapsedTime = Date.now() - startTime;
+        setListeningTime((prevTime) => prevTime + elapsedTime);
+        setStartTime(null);
+      }
+    }
+  }, [isPlaying]);
 
   const handlePlayPause = () => {
     const audio = audioRef.current;
@@ -108,6 +146,35 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
       duration
     );
   };
+
+  const handleClose = async () => {
+    let totalListeningTime = listeningTime;
+  
+    if (startTime) {
+      const elapsedTime = Date.now() - startTime;
+      totalListeningTime += elapsedTime;
+      setStartTime(null);
+    }
+  
+    const totalListeningTimeInSeconds = totalListeningTime / 1000;
+    const totalListeningTimeInMinutes = totalListeningTimeInSeconds / 60;
+  
+    console.log(`Tiempo total escuchado: ${totalListeningTimeInSeconds} segundos`);
+  
+    const user = JSON.parse(localStorage.getItem("user")) || {};
+    user.listeningTime = (user.listeningTime || 0) + totalListeningTimeInSeconds;
+    localStorage.setItem("user", JSON.stringify(user));
+  
+    try {
+      await updateDailyStatistics(user.id_usuario, totalListeningTimeInMinutes);
+      console.log('Estadísticas diarias actualizadas en la base de datos');
+    } catch (error) {
+      console.error('Error al actualizar las estadísticas diarias en la base de datos:', error);
+    }
+  
+    setShowAudioPlayer(false);
+  };
+  
 
   const rewindToStart = () => {
     const audio = audioRef.current;
@@ -254,7 +321,7 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
           <ButtonIcon
             SvgIcon={CloseIcon}
             variant="combColBlack"
-            onClick={setShowAudioPlayer}
+            onClick={handleClose} 
           />
         </div>
       </div>
