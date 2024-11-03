@@ -43,8 +43,7 @@ export const Home = () => {
   }, []);
 
   const handleSearchResults = (
-    { filterBooks = [], filterBooksRecent = [] },
-    text
+    { filterBooks = [], filterBooksRecent = [] }, text
   ) => {
     setSearchBooksOld(filterBooks);
     setSearchBooksRecent(filterBooksRecent);
@@ -120,11 +119,11 @@ export const Home = () => {
           />
         </div>
         {noResults ? (
-          <div className="flex justify-center items-center my-32 sm:mt-56 text-lg sm:text-xl text-secondary-sec2 mx-4">
+          <div className="flex justify-center items-center my-32 font-body sm:mt-56 text-body-md sm:text-body-lg text-secondary-sec2 mx-4">
             No se encontraron libros con ese nombre
           </div>
         ) : noBookFilter ? (
-          <div className="flex justify-center items-center my-32 sm:mt-56 text-lg sm:text-xl text-secondary-sec2 mx-4">
+          <div className="flex justify-center items-center font-body my-32 sm:mt-56 text-body-md sm:text-body-lg text-secondary-sec2 mx-4">
             No se encontraron libros con esa categoria o idioma
           </div>
         ) : searchText ? (

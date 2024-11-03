@@ -16,10 +16,11 @@ const ButtonIcon = ({
     combColBlack: "text-primary-pri2 hover:text-secondary-sec1", //boton negro  que cambia a azul
     combColBlack2: "text-primary-pri2 hover:text-secondary-sec2", //boton negro  que cambia a celeste
     combColTrans2: "text-primary-pri3 bg-transparent hover:text-secondary-sec1", // boton sin fondo y con icono azul
-    combColBlue: "text-secondary-sec1",
+    combColBlue: "text-secondary-sec1 ",
     combColZ: "text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1", // boton sin fondo y con icono
     combColNeu:
       "text-neutral-neu0 bg-neutral-neu2 hover:bg-secondary-sec2 hover:text-primary-pri3", //boton gris
+    combColNeu2: "text-neutral-neu0 bg-transparent hover:text-secondary-sec2 ", //boton gris que cambia a celeste
   };
 
   return (
