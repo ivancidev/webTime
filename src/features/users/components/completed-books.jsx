@@ -4,19 +4,19 @@ import FilterIcon from "../../../icons/filter";
 import CalendarIcon from "../../../icons/calendar";
 import { Calendar } from "./calendar";
 
-const CompletedBooksSection = ({ completedBooksCount, onClick,variant="comb1"}) => {
+const CompletedBooksSection = ({ completedBooksCount, onClick, variant="comb2"}) => {
     const [isCalendarOpen, setCalendarOpen] = useState(false);
     const toggleCalendar = () => {
         setCalendarOpen(!isCalendarOpen);
     };
     const varCol = {
         comb1: "text-primary-pri2 hover:text-secondary-sec2",
-        comb2: "text-secondary-sec1 hover:text-secondary-sec2",
+        comb2: "text-secondary-sec1 hover:text-secondary-sec2", 
       };
   return (
     <div clasName="flex flex-col w-full">
-        <div className="flex flex-col ml-[150px] items-center w-fit mb-2">
-            <button cclassName={`${varCol[variant]} rounded-[20pxf] w-9 sm:w-10 h-9 sm:h-10 flex flex-col items-center justify-center`} onClick={onClick}>
+        <div className="flex flex-col ml-[90px] md:ml-[150px] items-center w-fit mb-2">
+            <button className={`${varCol[variant]} rounded-[20pxf] w-9 sm:w-10 h-9 sm:h-10 flex flex-col items-center justify-center`} onClick={onClick}>
                 <span className="text-title-md font-title">
                     {completedBooksCount}
                 </span>
@@ -35,7 +35,7 @@ const CompletedBooksSection = ({ completedBooksCount, onClick,variant="comb1"}) 
             />
             <ButtonIcon
                 SvgIcon={CalendarIcon}
-                variant="combColBlack2"
+                variant= {`${isCalendarOpen ? "combColBlue" : "combColBlack2"}`}
                 onClick={toggleCalendar}
             />
         </div>
