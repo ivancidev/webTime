@@ -12,7 +12,6 @@ export const getLastUser = async () => {
       throw error;
     }
 
-    console.log("Último usuario añadido:", data[0]);
     return data[0];
   } catch (error) {
     console.error("Error al obtener el último usuario:", error.message);

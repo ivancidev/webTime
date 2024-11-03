@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Logo from "../../assets/icons/logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import User from "../../icons/user";
@@ -6,10 +6,15 @@ import Burger from "../../icons/burger";
 import { ModalUser } from "../../features/users/components/modal-user";
 import { ModalMenu } from "../../features/users/components/modal-menu";
 import ButtonIcon from "../buttons/buttonIcon";
+import { ModalStreak } from "../../features/users/components/modal-streak";
+import { Streak } from "../../icons/streak";
 
 export const NavbarO = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenUser, setIsOpenUser] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [isModalStreakOpen, setIsModalStreakOpen] = useState(false);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
     if (!isOpen) setIsOpenUser(false);
@@ -21,6 +26,11 @@ export const NavbarO = () => {
   const closeUser = () => {
     setIsOpenUser(false);
   };
+
+  const toggleModalStreak = () => {
+    setIsModalStreakOpen(!isModalStreakOpen);
+  };
+
   const location = useLocation();
   const isAppRoute = location.pathname === "/app";
 
@@ -30,7 +40,8 @@ export const NavbarO = () => {
         <img src={Logo} alt="Logo" />
       </Link>
       <div className="flex justify-end w-screen lg:hidden px-2 ">
-        <ButtonIcon SvgIcon={Burger} 
+        <ButtonIcon
+          SvgIcon={Burger}
           variant={`${isOpen ? "combColBlue" : "combColBlack2"}`}
           onClick={toggleMenu}
         />
@@ -39,8 +50,11 @@ export const NavbarO = () => {
         <li>
           <Link
             to="/app"
-            className={isAppRoute ? "font-label text-label-md text-secondary-sec1 hover:text-secondary-sec2 " 
-                      : "font-label text-label-md text-primary-pri2 hover:text-secondary-sec2 "}
+            className={
+              isAppRoute
+                ? "font-label text-label-md text-secondary-sec1 hover:text-secondary-sec2 "
+                : "font-label text-label-md text-primary-pri2 hover:text-secondary-sec2 "
+            }
           >
             Inicio
           </Link>
@@ -56,21 +70,37 @@ export const NavbarO = () => {
           </Link>
         </li>
       </ul>
-      <ButtonIcon SvgIcon={User} 
-        variant={`${isOpenUser ? "combColBlue" : "combColBlack2"}`}
-        onClick={openUser}
+      <ButtonIcon
+        variant="combColBlack2"
+        onClick={toggleModalStreak}
+        SvgIcon={Streak}
       />
-      
       {isOpen && (
         <div className="flex absolute top-20 right-12 z-50">
-          <ModalMenu/>
+          <ModalMenu />
         </div>
+      )}
+      {user.avatar ? (
+        <img
+          src={user.avatar}
+          alt="Avatar"
+          className="w-10 h-10 rounded-full cursor-pointer ml-6"
+          onClick={openUser}
+        />
+      ) : (
+        <ButtonIcon
+          SvgIcon={User}
+          variant={`${isOpenUser ? "combColBlue" : "combColBlack2"}`}
+          onClick={openUser}
+        />
       )}
       {isOpenUser && (
         <div className="flex absolute top-20 right-0 z-50">
-          <ModalUser onClose={closeUser}/>
+          <ModalUser onClose={closeUser} imgUser={user.avatar} />
         </div>
       )}
-    </nav> 
+
+      {isModalStreakOpen && <ModalStreak onClose={toggleModalStreak} />}
+    </nav>
   );
 };
