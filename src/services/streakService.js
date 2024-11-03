@@ -1,11 +1,7 @@
-// statsService.js
 import { supabase } from './supabaseClient'; 
 export const updateDailyStatistics = async (userId, learning_minutes) => {
   try {
-    // Obtener la fecha actual en formato YYYY-MM-DD
     const today = new Date().toISOString().split('T')[0];
-
-    // Verificar si existe un registro para el usuario y la fecha actual
     const { data: existingRecord, error: fetchError } = await supabase
       .from('estadisticas_diarias')
       .select('*')
@@ -13,13 +9,12 @@ export const updateDailyStatistics = async (userId, learning_minutes) => {
       .eq('fecha', today)
       .single();
 
-    if (fetchError && fetchError.code !== 'PGRST116') { // 'PGRST116' es el código de error cuando no hay registros
+    if (fetchError && fetchError.code !== 'PGRST116') {
       console.error('Error al obtener el registro de estadísticas diarias:', fetchError);
       throw fetchError;
     }
 
     if (existingRecord) {
-      // Si existe, actualizar minutos_aprendido_hoy sumando learning_minutes
       const { data, error } = await supabase
         .from('estadisticas_diarias')
         .update({ 
@@ -34,14 +29,13 @@ export const updateDailyStatistics = async (userId, learning_minutes) => {
 
       return data;
     } else {
-      // Si no existe, crear un nuevo registro
       const { data, error } = await supabase
         .from('estadisticas_diarias')
         .insert({
           id_usuario: userId,
           minutos_aprendido_hoy: learning_minutes,
           fecha: today,
-          se_cumplio: false // Asumiendo que 'se_cumplio' inicialmente es false
+          se_cumplio: false
         });
 
       if (error) {

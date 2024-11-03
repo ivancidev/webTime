@@ -10,22 +10,17 @@ export const ReadBook = ({ pdfUrl, onClose, id_user }) => {
   const pdfWithParams = `${pdfUrl}#navpanes=0&scrollbar=0&zoom=100`;
 
   useEffect(() => {
-    // Iniciar el cronómetro al abrir el PDF
+
     setStartTime(Date.now());
 
     return () => {
-      // Al cerrar el PDF, calcular el tiempo de lectura
       if (startTime) {
         const elapsedTime = Date.now() - startTime;
         const totalReadingTimeInSeconds = (readingTime + elapsedTime) / 1000;
         const totalReadingTimeInMinutes = totalReadingTimeInSeconds / 60;
 
-        console.log(`Tiempo total de lectura: ${totalReadingTimeInSeconds} segundos`);
-
-        // Actualizar estadísticas diarias en la base de datos
         try {
           updateDailyStatistics(id_user, totalReadingTimeInMinutes);
-          console.log('Estadísticas diarias actualizadas en la base de datos');
         } catch (error) {
           console.error('Error al actualizar las estadísticas diarias en la base de datos:', error);
         }
