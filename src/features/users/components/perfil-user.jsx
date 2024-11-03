@@ -6,14 +6,14 @@ export const PerfilUser = () => {
         Perfil de usuario
       </h1>
       <div className="mt-8 ml-8 flex md:flex-row flex-col">
-        <div className="w-[140px] h-[140px] rounded-full overflow-hidden ml-20 md:ml-0">
+        <div className="w-[140px] h-[140px] rounded-full overflow-hidden ml-5 md:ml-0">
           <img
             src={user?.avatar || "/src/assets/images/userDefault.jpg"}
             alt="Imagen de perfil"
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="md:ml-[70px] mt-4 md:mt-0">
+        <div className="md:ml-[40px] mt-4 md:mt-0">
           <h2 className="font-title text-title-md mt-1">{user?.nombre}</h2>
           <h2 className="text-neutral-neu0 text-label-lg mt-3">
             @{user?.nombre_usuario}
