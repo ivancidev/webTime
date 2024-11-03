@@ -28,8 +28,7 @@ export const Profile = () => {
     } = useGetBooks(true);
     
     const bookAll = [...booksOld, ...recentBooks];
-    const booksToShow = bookAll.slice(0, visibleRows * 2); // Muestra 2 libros por cada fila visible
-
+    const booksToShow = bookAll.slice(0, visibleRows*2); // Muestra 2 libros por cada fila visible
     const handleShowMore = () => {
         setVisibleRows(visibleRows + 2); // Incrementa en 2 filas cada vez que se hace clic en "Ver más"
     };
@@ -41,15 +40,17 @@ export const Profile = () => {
                 <div className="ml-6 md:ml-8 lg:ml-14 md:mt-8">
                     <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/app")} />
                 </div>
-                <div className="flex justify-center items-center lg:space-x-64 flex-col md:flex-row space-x-4 mt-5 lg:mt-0">
+                <div className="flex justify-center items-center  
+                    lg:space-x-64 flex-col md:flex-row space-x-4 mt-5 lg:mt-0">
                     <div>
-                        <PerfilUser />
+                        <PerfilUser nombre_completo="nombre_completo"
+                                    nickname="nickname"
+                                    correoelectronico="correoelectronico@gmail.com" />
                     </div>
                     <div className="mt-5 md:mt-0">
                         <DailyStreak days="11" />
                     </div>
-                    
-                </div>
+                    </div>
                 <div className="mt-5 md:mt-10 ">
                     <CompletedBooksSection completedBooksCount="12" />
                 </div>
