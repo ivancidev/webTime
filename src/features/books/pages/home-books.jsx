@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { Carousel } from "../components/carousel";
 import { useGetBooks } from "../../../hooks/use-get-books";
 import { CircularProgress } from "@mui/material";
@@ -12,9 +11,6 @@ import { ModalFilter } from "../../books/components/modal-filter";
 import { fetchUserBooks } from "../../../services/fetch-user-category";
 
 export const Home = () => {
-  // const location = useLocation();
-  // const user = location.state?.user || [];
-  // localStorage.setItem("user", JSON.stringify(user));
   const [selectedPreferences, setSelectedPreferences] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -48,8 +44,7 @@ export const Home = () => {
   }, []);
 
   const handleSearchResults = (
-    { filterBooks = [], filterBooksRecent = [] },
-    text
+    { filterBooks = [], filterBooksRecent = [] }, text
   ) => {
     setSearchBooksOld(filterBooks);
     setSearchBooksRecent(filterBooksRecent);
@@ -109,7 +104,6 @@ export const Home = () => {
     (selectedCategories.length > 0 || selectedLanguages.length > 0) &&
     filteredBooks.length === 0;
 
-  console.log(selectedPreferences);
   return (
     <div className="flex gri flex-col min-h-screen bg-primary-pri3">
       <div className="flex-grow">
@@ -126,11 +120,11 @@ export const Home = () => {
           />
         </div>
         {noResults ? (
-          <div className="flex justify-center items-center my-32 sm:mt-56 text-lg sm:text-xl text-secondary-sec2 mx-4">
+          <div className="flex justify-center items-center my-32 font-body sm:mt-56 text-body-md sm:text-body-lg text-secondary-sec2 mx-4">
             No se encontraron libros con ese nombre
           </div>
         ) : noBookFilter ? (
-          <div className="flex justify-center items-center my-32 sm:mt-56 text-lg sm:text-xl text-secondary-sec2 mx-4">
+          <div className="flex justify-center items-center font-body my-32 sm:mt-56 text-body-md sm:text-body-lg text-secondary-sec2 mx-4">
             No se encontraron libros con esa categoria o idioma
           </div>
         ) : searchText ? (
@@ -146,7 +140,7 @@ export const Home = () => {
           </div>
         ) : filteredBooks.length > 0 ? (
           <>
-            <div className="grid place-items-center grid-cols-4 gap-4 px-6 mt-8">
+            <div className="grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6 mt-8">
               {filteredBooks.map((filterBook, index) => (
                 <CardBook
                   key={index}

@@ -7,6 +7,7 @@ import ImageUploader from "./image-uploader";
 import EyeOn from "../../../icons/eyeOn";
 import EyeOff from "../../../icons/eyeOff";
 import { registerUser } from "../../../services/auth-service";
+import { supabase } from "../../../services/supabaseClient";
 import {
   Alert,
   Dialog,
@@ -22,7 +23,9 @@ export const FormUser = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onChange", 
+  });
   const [imageFile, setImageFile] = useState(null);
   const [passwordStrength, setPasswordStrength] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -37,14 +40,17 @@ export const FormUser = () => {
   const onSubmit = async (data) => {
     setIsLoading(true);
     setOpenDialog(true);
-  
-    const response = await registerUser({ ...data, imageFile });
-    setIsLoading(false);
-  
-    if (response.success) {
-      setIsSuccess(true); 
-    } else {
-      setErrorMessage(response.message);
+    try {
+      const response = await registerUser({ ...data, imageFile });
+      setIsLoading(false);
+      if (response.success) {
+        setIsSuccess(true);
+      } else {
+        setErrorMessage(response.message || "No se pudo completar el registro. Por favor, intenta de nuevo.");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      setErrorMessage("Error de conexión. Por favor, revisa tu conexión a internet e intenta de nuevo.");
     }
   };
 
@@ -69,6 +75,30 @@ export const FormUser = () => {
     return true;
   };
 
+  const validateEmail = async (email) => {
+    const { data, error } = await supabase
+      .from('usuario')  
+      .select('correo')  
+      .eq('correo', email); 
+
+    if (error || data.length>0) {
+      return "Correo electrónico ya registrado";
+    }
+    return true  
+};
+
+const validateNameUser = async (nameUser) => {
+    const { data, error } = await supabase
+      .from('usuario')  
+      .select('nombre_usuario')  
+      .eq('nombre_usuario', nameUser); 
+
+    if (error || data.length>0) {
+      return "Este nombre de usuario está en uso, ingrese otro.";
+    }
+    return true;
+};
+
   const getPasswordStrengthColor = () => {
     switch (passwordStrength) {
       case "Contraseña insegura":
@@ -86,7 +116,7 @@ export const FormUser = () => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col md:items-center"
+        className="flex flex-col sm:items-center"
       >
         <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent m-[20px] font-display text-display-md">
           ¡Bienvenido a Webtime!
@@ -150,6 +180,7 @@ export const FormUser = () => {
                 noMultipleSpaces: (value) =>
                   !/\s{2,}/.test(value) ||
                   "No se permiten espacios múltiples consecutivos",
+                validate: validateNameUser
               },
             }}
             labelMarginTop="5px"
@@ -169,7 +200,8 @@ export const FormUser = () => {
                   !/\s/.test(value) || "El correo no debe contener espacios",
                 isGmail: (value) =>
                   /^[a-zA-Z0-9._%+-]+@gmail/.test(value) ||
-                  "El correo electrónico debe ser un gmail válido.",
+                  "Correo debe ser gmail",
+                  validate: validateEmail
               },
             }}
             labelMarginTop="5px"
@@ -187,12 +219,12 @@ export const FormUser = () => {
               validationRules={{
                 required: "Contraseña no puede estar vacía",
                 minLength: {
-                  value: 4,
-                  message: "Contraseña debe tener al menos 4 caracteres",
+                  value: 2,
+                  message: "Usa 2 caracteres o más",
                 },
                 maxLength: {
-                  value: 40,
-                  message: "Contraseña no debe exceder 40 caracteres",
+                  value: 128,
+                  message: "Ingresa una contraseña con 128 caracteres o menos",
                 },
                 validate: validatePasswordStrength,
               }}
@@ -263,7 +295,14 @@ export const FormUser = () => {
           },
         }}
       >
-        {isSuccess ? (
+        {isLoading ? (
+          <>
+            <DialogTitle className="text-center text-primary-pri1">Cargando...</DialogTitle>
+            <DialogContent className="flex flex-col items-center justify-center">
+              <CircularProgress />
+            </DialogContent>
+          </>
+        ) : isSuccess ? (
           <>
             <DialogTitle className="text-center text-primary-pri1">Registro exitoso</DialogTitle>
             <DialogContent className="flex flex-col items-center justify-center">
@@ -278,9 +317,13 @@ export const FormUser = () => {
           </>
         ) : (
           <>
-            <DialogTitle className="text-center text-primary-pri1">Cargando...</DialogTitle>
+            <DialogTitle className="text-center text-primary-pri1">Error al registrar</DialogTitle>
             <DialogContent className="flex flex-col items-center justify-center">
-              <CircularProgress />
+              <p className="text-error-err2">{errorMessage || "Ocurrió un error. Inténtalo de nuevo."}</p>
+              <Button
+                text="Aceptar"
+                onClick={() => setOpenDialog(false)}
+              />
             </DialogContent>
           </>
         )}
