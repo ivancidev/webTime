@@ -21,8 +21,8 @@ export const NavbarO = () => {
   const closeUser = () => {
     setIsOpenUser(false);
   };
-
-  const location = useLocation(); 
+  const location = useLocation();
+  const isAppRoute = location.pathname === "/app";
 
   return (
     <nav className="relative sm:sticky sm:top-0 bg-primary-pri3 h-20 flex items-center px-6 z-50">
@@ -39,7 +39,8 @@ export const NavbarO = () => {
         <li>
           <Link
             to="/app"
-            className="font-label text-label-md text-secondary-sec1 hover:text-secondary-sec2 "
+            className={isAppRoute ? "font-label text-label-md text-secondary-sec1 hover:text-secondary-sec2 " 
+                      : "font-label text-label-md text-primary-pri2 hover:text-secondary-sec2 "}
           >
             Inicio
           </Link>

@@ -7,7 +7,8 @@ export const ModalMenu = () => {
         <li>
           <Link
             to="/app"
-            className="font-label text-label-md text-secondary-sec1 hover:text-secondary-sec2"
+            className={isAppRoute ? "font-label text-label-md text-secondary-sec1 hover:text-secondary-sec2 " 
+                      : "font-label text-label-md text-primary-pri2 hover:text-secondary-sec2 "}
           >
             Inicio
           </Link>
