@@ -8,7 +8,7 @@ export const ModalStreak = ({ daysStreak, time, onClose }) => {
   const { data: times } = useGetTable("tiempos_lectura");
   const contentTime = time + " minutos";
   return (
-    <div className="w-[530px] h-60 rounded-xl bg-primary-pri3 drop-shadow-lg p-2">
+    <div className="w-[530px] h-60 rounded-xl bg-primary-pri3 drop-shadow-lg p-2 absolute top-20 right-2">
       <div className="w-full flex justify-end">
         <ButtonIcon
           onClick={onClose}

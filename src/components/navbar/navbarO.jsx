@@ -2,11 +2,19 @@ import React, { useState } from "react";
 import Logo from "../../assets/icons/logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import User from "../../icons/user";
+import ButtonIcon from "../buttons/buttonIcon";
+import Fire from "../../icons/fire";
+import { ModalStreak } from "../../features/users/components/modal-streak";
 
 export const NavbarO = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalStreakOpen, setIsModalStreakOpen] = useState(false);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const toggleModalStreak = () => {
+    setIsModalStreakOpen(!isModalStreakOpen);
   };
 
   const location = useLocation();
@@ -86,7 +94,15 @@ export const NavbarO = () => {
           </ul>
         </div>
       )}
+      <ButtonIcon
+        variant="combColBlack2"
+        onClick={toggleModalStreak}
+        SvgIcon={Fire}
+      />
+
       <User />
+
+      {isModalStreakOpen && <ModalStreak onClose={toggleModalStreak} />}
     </nav>
   );
 };
