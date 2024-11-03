@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Logo from "../../assets/icons/logo.svg";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import User from "../../icons/user";
 import { ModalUser } from "../../features/users/components/modal-user";
 
 export const NavbarO = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenUser, setIsOpenUser] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -17,8 +18,6 @@ export const NavbarO = () => {
     setIsOpenUser(false);
   };
 
-  const location = useLocation(); 
-
   return (
     <nav className="relative sm:sticky sm:top-0 bg-primary-pri3 h-20 flex items-center px-6 z-50">
       <Link to="/app" className="w-full h-full pt-2">
@@ -27,18 +26,15 @@ export const NavbarO = () => {
 
       <div className="flex justify-end w-screen lg:hidden px-2 ">
         <button onClick={toggleMenu} className="focus:outline-none">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-          >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 6h16M4 12h16m-7 6h7"
-            stroke={isOpen ? "#0123FD" : "#AEAAAE"}
-            className=" hover:stroke-secondary-sec2"
-          />
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16m-7 6h7"
+              stroke={isOpen ? "#0123FD" : "#AEAAAE"}
+              className=" hover:stroke-secondary-sec2"
+            />
           </svg>
         </button>
       </div>
@@ -95,12 +91,21 @@ export const NavbarO = () => {
           </ul>
         </div>
       )}
-      <User onClick={ openUser} stroke={isOpenUser ? "#0123FD" : "#AEAAAE"}/>
+      {user.avatar ? (
+        <img
+          src={user.avatar}
+          alt="Avatar"
+          className="w-10 h-10 rounded-full cursor-pointer"
+          onClick={openUser}
+        />
+      ) : (
+        <User onClick={openUser} stroke={isOpenUser ? "#0123FD" : "#AEAAAE"} />
+      )}
       {isOpenUser && (
         <div className="flex absolute top-20 right-0 z-50">
-          <ModalUser onClose={closeUser}/>
+          <ModalUser onClose={closeUser} imgUser={user.avatar} />
         </div>
       )}
-    </nav> 
+    </nav>
   );
 };
