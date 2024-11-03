@@ -10,7 +10,7 @@ export const ModalUser = ({ codUser, nickname, imgUser, onClose }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-52 h-[272px] rounded-xl border-[1px] border-primary-pri2 bg-primary-pri3 drop-shadow-lg">
+    <div className="w-52 h-[272px] bg-primary-pri3 drop-shadow-2xl">
       <div className="w-full flex justify-end">
         <ButtonIcon
           onClick={onClose}
