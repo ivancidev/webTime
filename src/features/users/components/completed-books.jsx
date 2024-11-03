@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import FilterIcon from "../../../icons/filter";
-import Button from "../../../components/buttons/button";
 import CalendarIcon from "../../../icons/calendar";
 import { Calendar } from "./calendar";
 
@@ -35,7 +34,7 @@ const CompletedBooksSection = ({ completedBooksCount, onClick,variant="comb1"}) 
                 variant="combColBlack2"
             />
             <ButtonIcon
-                SvgIcon={Calendar}
+                SvgIcon={CalendarIcon}
                 variant="combColBlack2"
                 onClick={toggleCalendar}
             />
