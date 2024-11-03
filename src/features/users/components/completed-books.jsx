@@ -1,12 +1,19 @@
 import React from "react";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import FilterIcon from "../../../icons/filter";
-import Calendar from "../../../icons/calendar";
 import { useEffect, useState } from "react";
 import Button from "../../../components/buttons/button";
 import { ModalFilter } from "../../books/components/modal-filter";
+import CalendarIcon from "../../../icons/calendar";
+import { Calendar } from "./calendar";
+import { supabase } from "../../../services/supabaseClient";
 
 const CompletedBooksSection = ({ completedBooksCount }) => {
+
+    const [isCalendarOpen, setCalendarOpen] = useState(false);
+    const toggleCalendar = () => {
+      setCalendarOpen(!isCalendarOpen);
+    };
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -43,8 +50,9 @@ const CompletedBooksSection = ({ completedBooksCount }) => {
                     onClick={handleFilterClick}
                 />
                 <ButtonIcon
-                    SvgIcon={Calendar}
+                    SvgIcon={CalendarIcon}
                     variant="combColBlack2"
+                    onClick={toggleCalendar}
                 />
             </div>
             {isModalOpen && (
@@ -55,6 +63,7 @@ const CompletedBooksSection = ({ completedBooksCount }) => {
                     selectedLanguages={selectedLanguages}
                 />
             )}
+            {isCalendarOpen && <Calendar onClose={toggleCalendar} />}
         </div>
     );
 };
