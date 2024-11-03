@@ -1,6 +1,6 @@
 // statsService.js
 import { supabase } from './supabaseClient'; 
-export const updateDailyStatistics = async (userId, listeningTimeInMinutes) => {
+export const updateDailyStatistics = async (userId, learning_minutes) => {
   try {
     // Obtener la fecha actual en formato YYYY-MM-DD
     const today = new Date().toISOString().split('T')[0];
@@ -19,11 +19,11 @@ export const updateDailyStatistics = async (userId, listeningTimeInMinutes) => {
     }
 
     if (existingRecord) {
-      // Si existe, actualizar minutos_aprendido_hoy sumando listeningTimeInMinutes
+      // Si existe, actualizar minutos_aprendido_hoy sumando learning_minutes
       const { data, error } = await supabase
         .from('estadisticas_diarias')
         .update({ 
-          minutos_aprendido_hoy: existingRecord.minutos_aprendido_hoy + listeningTimeInMinutes 
+          minutos_aprendido_hoy: existingRecord.minutos_aprendido_hoy + learning_minutes 
         })
         .eq('id_metrica', existingRecord.id_metrica);
 
@@ -39,7 +39,7 @@ export const updateDailyStatistics = async (userId, listeningTimeInMinutes) => {
         .from('estadisticas_diarias')
         .insert({
           id_usuario: userId,
-          minutos_aprendido_hoy: listeningTimeInMinutes,
+          minutos_aprendido_hoy: learning_minutes,
           fecha: today,
           se_cumplio: false // Asumiendo que 'se_cumplio' inicialmente es false
         });

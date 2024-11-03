@@ -157,7 +157,7 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
     }
   
     const totalListeningTimeInSeconds = totalListeningTime / 1000;
-    const totalListeningTimeInMinutes = totalListeningTimeInSeconds / 60;
+    const totallearning_minutes = totalListeningTimeInSeconds / 60;
   
     console.log(`Tiempo total escuchado: ${totalListeningTimeInSeconds} segundos`);
   
@@ -166,7 +166,7 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
     localStorage.setItem("user", JSON.stringify(user));
   
     try {
-      await updateDailyStatistics(user.id_usuario, totalListeningTimeInMinutes);
+      await updateDailyStatistics(user.id_usuario, totallearning_minutes);
       console.log('Estadísticas diarias actualizadas en la base de datos');
     } catch (error) {
       console.error('Error al actualizar las estadísticas diarias en la base de datos:', error);
