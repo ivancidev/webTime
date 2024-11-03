@@ -16,7 +16,7 @@ const CompletedBooksSection = ({ completedBooksCount, onClick,variant="comb1"}) 
   return (
     <div clasName="flex flex-col w-full">
         <div className="flex flex-col ml-[150px] items-center w-fit mb-2">
-            <button cclassName={`${varCol[variant]} rounded-[20px] w-9 sm:w-10 h-9 sm:h-10 flex flex-col items-center justify-center`} onClick={onClick}>
+            <button cclassName={`${varCol[variant]} rounded-[20pxf] w-9 sm:w-10 h-9 sm:h-10 flex flex-col items-center justify-center`} onClick={onClick}>
                 <span className="text-title-md font-title">
                     {completedBooksCount}
                 </span>
