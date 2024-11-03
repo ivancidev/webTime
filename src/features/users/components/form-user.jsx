@@ -40,15 +40,17 @@ export const FormUser = () => {
   const onSubmit = async (data) => {
     setIsLoading(true);
     setOpenDialog(true);
-  
-
-    const response = await registerUser({ ...data, imageFile });
-    setIsLoading(false);
-  
-    if (response.success) {
-      setIsSuccess(true); 
-    } else {
-      setErrorMessage(response.message);
+    try {
+      const response = await registerUser({ ...data, imageFile });
+      setIsLoading(false);
+      if (response.success) {
+        setIsSuccess(true);
+      } else {
+        setErrorMessage(response.message || "No se pudo completar el registro. Por favor, intenta de nuevo.");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      setErrorMessage("Error de conexión. Por favor, revisa tu conexión a internet e intenta de nuevo.");
     }
   };
 
@@ -80,7 +82,6 @@ export const FormUser = () => {
       .eq('correo', email); 
 
     if (error || data.length>0) {
-      setPasswordStrength("Correo electrónico ya registrado");
       return "Correo electrónico ya registrado";
     }
     return true  
@@ -93,7 +94,6 @@ const validateNameUser = async (nameUser) => {
       .eq('nombre_usuario', nameUser); 
 
     if (error || data.length>0) {
-      setPasswordStrength("Este nombre de usuario está en uso, ingrese otro.");
       return "Este nombre de usuario está en uso, ingrese otro.";
     }
     return true;
@@ -219,12 +219,12 @@ const validateNameUser = async (nameUser) => {
               validationRules={{
                 required: "Contraseña no puede estar vacía",
                 minLength: {
-                  value: 4,
-                  message: "Contraseña debe tener al menos 4 caracteres",
+                  value: 2,
+                  message: "Contraseña debe tener al menos 2 caracteres",
                 },
                 maxLength: {
-                  value: 40,
-                  message: "Contraseña no debe exceder 40 caracteres",
+                  value: 128,
+                  message: "Contraseña no debe exceder 128 caracteres",
                 },
                 validate: validatePasswordStrength,
               }}
@@ -295,7 +295,14 @@ const validateNameUser = async (nameUser) => {
           },
         }}
       >
-        {isSuccess ? (
+        {isLoading ? (
+          <>
+            <DialogTitle className="text-center text-primary-pri1">Cargando...</DialogTitle>
+            <DialogContent className="flex flex-col items-center justify-center">
+              <CircularProgress />
+            </DialogContent>
+          </>
+        ) : isSuccess ? (
           <>
             <DialogTitle className="text-center text-primary-pri1">Registro exitoso</DialogTitle>
             <DialogContent className="flex flex-col items-center justify-center">
@@ -310,9 +317,13 @@ const validateNameUser = async (nameUser) => {
           </>
         ) : (
           <>
-            <DialogTitle className="text-center text-primary-pri1">Cargando...</DialogTitle>
+            <DialogTitle className="text-center text-primary-pri1">Error al registrar</DialogTitle>
             <DialogContent className="flex flex-col items-center justify-center">
-              <CircularProgress />
+              <p className="text-error-err2">{errorMessage || "Ocurrió un error. Inténtalo de nuevo."}</p>
+              <Button
+                text="Aceptar"
+                onClick={() => setOpenDialog(false)}
+              />
             </DialogContent>
           </>
         )}
