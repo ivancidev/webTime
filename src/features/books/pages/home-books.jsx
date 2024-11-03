@@ -35,7 +35,6 @@ export const Home = () => {
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
-    console.log(storedUser);
     if (storedUser.id_usuario) {
       fetchUserBooks(storedUser.id_usuario).then((result) =>
         setSelectedPreferences(result)

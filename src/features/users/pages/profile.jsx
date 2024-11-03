@@ -62,12 +62,10 @@ export const Profile = () => {
                 </div>
                 <div className="flex justify-center items-center lg:space-x-64 flex-col md:flex-row space-x-4 mt-5 lg:mt-0">
                     <div>
-                        <PerfilUser nombre_completo="nombre_completo"
-                                    nickname="nickname"
-                                    correoelectronico="correoelectronico@gmail.com" />
+                       <PerfilUser />
                     </div>
                     <div className="mt-5 md:mt-0">
-                        <DailyStreak days="11" />
+                        <DailyStreak days="12" />
                     </div>
                 </div>
                 <div className="mt-5 md:mt-10 ">
