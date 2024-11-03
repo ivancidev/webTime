@@ -1,21 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import FilterIcon from "../../../icons/filter";
-import Calendar from "../../../icons/calendar";
+import Button from "../../../components/buttons/button";
+import CalendarIcon from "../../../icons/calendar";
+import { Calendar } from "./calendar";
 
 const CompletedBooksSection = ({ completedBooksCount, onClick,variant="comb1"}) => {
+    const [isCalendarOpen, setCalendarOpen] = useState(false);
+    const toggleCalendar = () => {
+        setCalendarOpen(!isCalendarOpen);
+    };
     const varCol = {
         comb1: "text-primary-pri2 hover:text-secondary-sec2",
         comb2: "text-secondary-sec1 hover:text-secondary-sec2",
       };
   return (
     <div clasName="flex flex-col w-full">
-        <div className="flex flex-col ml-20 md:ml-[150px] items-center w-fit mb-2">
-            <button 
-            className={`${varCol[variant]} rounded-[20px] w-9 sm:w-10 h-9 sm:h-10 flex flex-col items-center justify-center`}
-            onClick={onClick}
-            >
-                <span className="text-title-md font-title">{completedBooksCount}</span>
+        <div className="flex flex-col ml-[150px] items-center w-fit mb-2">
+            <button cclassName={`${varCol[variant]} rounded-[20px] w-9 sm:w-10 h-9 sm:h-10 flex flex-col items-center justify-center`} onClick={onClick}>
+                <span className="text-title-md font-title">
+                    {completedBooksCount}
+                </span>
                 <span className="text-body-md font-body">Concluidos</span>
             </button>
         </div>
@@ -32,8 +37,10 @@ const CompletedBooksSection = ({ completedBooksCount, onClick,variant="comb1"}) 
             <ButtonIcon
                 SvgIcon={Calendar}
                 variant="combColBlack2"
+                onClick={toggleCalendar}
             />
         </div>
+        {isCalendarOpen && <Calendar onClose={toggleCalendar} />}
     </div>
   );
 };

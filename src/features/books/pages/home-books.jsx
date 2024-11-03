@@ -104,7 +104,6 @@ export const Home = () => {
     (selectedCategories.length > 0 || selectedLanguages.length > 0) &&
     filteredBooks.length === 0;
 
-  console.log(selectedPreferences);
   return (
     <div className="flex gri flex-col min-h-screen bg-primary-pri3">
       <div className="flex-grow">
@@ -121,11 +120,11 @@ export const Home = () => {
           />
         </div>
         {noResults ? (
-          <div className="flex justify-center items-center my-32 sm:mt-56 text-lg sm:text-xl text-secondary-sec2 mx-4">
+          <div className="flex justify-center items-center my-32 font-body sm:mt-56 text-body-md sm:text-body-lg text-secondary-sec2 mx-4">
             No se encontraron libros con ese nombre
           </div>
         ) : noBookFilter ? (
-          <div className="flex justify-center items-center my-32 sm:mt-56 text-lg sm:text-xl text-secondary-sec2 mx-4">
+          <div className="flex justify-center items-center font-body my-32 sm:mt-56 text-body-md sm:text-body-lg text-secondary-sec2 mx-4">
             No se encontraron libros con esa categoria o idioma
           </div>
         ) : searchText ? (

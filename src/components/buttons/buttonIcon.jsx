@@ -20,6 +20,7 @@ const ButtonIcon = ({
     combColZ: "text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1", // boton sin fondo y con icono
     combColNeu:
       "text-neutral-neu0 bg-neutral-neu2 hover:bg-secondary-sec2 hover:text-primary-pri3", //boton gris
+    combColNeu2: "text-neutral-neu0 bg-transparent hover:text-secondary-sec2 ", //boton gris que cambia a celeste
   };
 
   return (
