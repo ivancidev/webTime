@@ -7,6 +7,7 @@ import CompletedBooksSection from "../components/completed-books";
 import { DailyStreak } from "../components/daily-streak";
 
 export const Profile = () => {
+
   const navigate = useNavigate();
 
   return (
@@ -19,7 +20,9 @@ export const Profile = () => {
         <div className="flex justify-center items-center  
         lg:space-x-64 flex-col md:flex-row space-x-4 mt-5 lg:mt-0">
           <div>
-            <PerfilUser />
+            <PerfilUser nombre_completo="nombre_completo"
+                        nickname="nickname"
+                        correoelectronico="correoelectronico@gmail.com" />
           </div>
           <div className="mt-5 md:mt-0">
             <DailyStreak days="11" />

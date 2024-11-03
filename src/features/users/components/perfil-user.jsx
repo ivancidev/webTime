@@ -1,4 +1,4 @@
-export const PerfilUser = () => {
+export const PerfilUser = ({nombre_completo= "nombre_completo" ,nickname ="nickname", correoelectronico ="correoelectronico@gmail.com"}) => {
 
     return (
         <div>
@@ -9,9 +9,9 @@ export const PerfilUser = () => {
                     <img src="/src/assets/images/userDefault.jpg" alt="Imagen de perfil" class="w-full h-full object-cover"/>
                 </div>
                 <div className="md:ml-[70px] mt-4 md:mt-0">
-                    <h2 className="font-title text-title-md mt-1">nombre_completo</h2>
-                    <h2 className="font-label text-label-lg mt-3">nickname</h2>
-                    <h2 className="font-label text-label-lg mt-2">correoelectronico@gmail.com</h2>
+                    <h2 className="font-title text-title-md mt-1">{`${nombre_completo}`}</h2>
+                    <h2 className="font-label text-label-lg mt-3">{`${nickname}`}</h2>
+                    <h2 className="font-label text-label-lg mt-2 min-w-[294px]">{`${correoelectronico}`}</h2>
                 
                 </div>
             </div>
