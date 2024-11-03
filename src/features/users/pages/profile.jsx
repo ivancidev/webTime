@@ -7,6 +7,7 @@ import { PerfilUser } from "../components/perfil-user";
 import { useGetBooks } from "../../../hooks/use-get-books";
 import { CardBook } from "../../books/components/cardBook";
 import CompletedBooksSection from "../components/completed-books";
+import { DailyStreak } from "../components/daily-streak";
 
 export const Profile = () => {
     const navigate = useNavigate();
@@ -37,19 +38,19 @@ export const Profile = () => {
         <div>
             <NavbarO />
             <div className="">
-                <div className="ml-14 mt-8">
+                <div className="ml-6 md:ml-8 lg:ml-14 md:mt-8">
                     <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/app")} />
                 </div>
-                <div className="grid grid-cols-2 ml-[150px] mt-2">
+                <div className="flex justify-center items-center lg:space-x-64 flex-col md:flex-row space-x-4 mt-5 lg:mt-0">
                     <div>
                         <PerfilUser />
                     </div>
-                    <div>
-                        {/* Otra información o ícono adicional */}
+                    <div className="mt-5 md:mt-0">
+                        <DailyStreak days="11" />
                     </div>
-                </div>
-                <div className="mt-10">
-                    <CompletedBooksSection completedBooksCount="12" />
+                    <div className="mt-2 md:mt-10 ">
+                        <CompletedBooksSection completedBooksCount="12" />
+                    </div>
                 </div>
                 <div className="grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                     {booksToShow.map((book, index) => (
@@ -70,7 +71,6 @@ export const Profile = () => {
                             Ver más...
                         </button>  
                     </div>
-                    
                 )}
             </div>
         </div>
