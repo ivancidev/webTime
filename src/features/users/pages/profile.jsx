@@ -12,11 +12,11 @@ export const Profile = () => {
   return (
     <div>
       <NavbarO />
-      <div className="">
+      <div>
         <div className="ml-14 mt-8">
           <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/app")} />
         </div>
-        <div className="flex justify-center items-center  space-x-64">
+        <div className="flex justify-around items-center mt-3">
           <div>
             <PerfilUser />
           </div>
