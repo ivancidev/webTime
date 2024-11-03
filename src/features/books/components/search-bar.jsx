@@ -38,7 +38,7 @@ export const SearchBar = ({ booksOld, recentBooks, onSearchResults }) => {
           <ButtonIcon
             onClick={() => setSearchText("")}
             SvgIcon={Close}
-            variant="combColTrans2"
+            variant="combColNeu2"
           />
         </div>
       )}
