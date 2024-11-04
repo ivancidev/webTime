@@ -91,6 +91,8 @@ export const BookInfo = () => {
             pdfUrl={book.enlacePdf}
             onClose={() => setShowReadBook(false)}
             id_user = {user.id_usuario}
+            limited_page={book.numero_paginas}
+            codBook = {book.codLibro}
           />
         </div>
       )}
