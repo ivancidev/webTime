@@ -16,7 +16,7 @@ export const ModalUser = ({ nickname, imgUser, onClose }) => {
   };
 
   return (
-    <div className="w-52 h-[272px] bg-primary-pri3 drop-shadow-2xl">
+    <div className="w-52 h-72 bg-primary-pri3 drop-shadow-xl rounded-xl">
       <div className="w-full flex justify-end">
         <ButtonIcon
           onClick={onClose}
@@ -33,7 +33,7 @@ export const ModalUser = ({ nickname, imgUser, onClose }) => {
         ) : (
           <UserProf />
         )}
-        <h3 className="font-label text-label-lg">{nickname}</h3>
+        <h3 className="font-label text-label-lg py-1">{nickname}</h3>
         <Button
           text="Ver perfil"
           variant="combSize"
