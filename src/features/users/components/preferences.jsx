@@ -9,7 +9,7 @@ export default function Preferences({ text, icons, variant, onSelect }) {
           {text}
         </h1>
       </div>
-      <div className={`flex flex-wrap gap-x-3 gap-y-5 md:gap-6 mx-5 md:mx-16 lg:mx-36 mt-10 max-w-full`}>
+      <div className={`flex flex-wrap gap-x-3 gap-y-5 md:gap-6 ml-12 mx-5 md:mx-16 lg:mx-36 mt-10 max-w-full`}>
         {icons.map((iconText, index) => {
           const cod =
             variant === "c"
