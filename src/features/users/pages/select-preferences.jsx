@@ -159,7 +159,7 @@ export const SelectPreferences = () => {
         />
       </div>
       
-      <div className="flex flex-row max-w-full justify-end mx-3 md:mx-16 lg:mx-36 py-8 md:pb-10">
+      <div className="flex flex-row max-w-full justify-end mx-3 md:mx-16 lg:mx-10 py-10 md:pb-10">
         <Button SvgIcon={CheckS} text="Aplicar" onClick={onSubmit} />
       </div>
       
