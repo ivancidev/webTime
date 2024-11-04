@@ -76,12 +76,10 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
 
   useEffect(() => {
     if (isPlaying) {
-      // Si el audio está reproduciéndose, inicia o reanuda el cronómetro
       if (!startTime) {
         setStartTime(Date.now());
       }
     } else {
-      // Si el audio está pausado, detiene el cronómetro y acumula el tiempo
       if (startTime) {
         const elapsedTime = Date.now() - startTime;
         setListeningTime((prevTime) => prevTime + elapsedTime);

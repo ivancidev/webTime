@@ -10,7 +10,6 @@ export const ReadBook = ({ pdfUrl, onClose, id_user }) => {
   const pdfWithParams = `${pdfUrl}#navpanes=0&scrollbar=0&zoom=100`;
 
   useEffect(() => {
-
     setStartTime(Date.now());
 
     return () => {
