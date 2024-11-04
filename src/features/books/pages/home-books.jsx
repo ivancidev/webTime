@@ -43,8 +43,13 @@ export const Home = () => {
   }, []);
 
   const handleSearchResults = (
-    { filterBooks = [], filterBooksRecent = [] }, text
+    { filterBooks = [], filterBooksRecent = [] },
+    text
   ) => {
+    if (text) {
+      setSelectedCategories([]);
+      setSelectedLanguages([]);
+    }
     setSearchBooksOld(filterBooks);
     setSearchBooksRecent(filterBooksRecent);
     setSearchText(text);
@@ -66,6 +71,9 @@ export const Home = () => {
 
   const handleFilterClick = () => {
     setIsModalOpen(!isModalOpen);
+    setSearchText("");
+    setSearchBooksOld([]);
+    setSearchBooksRecent([]);
   };
 
   const handleApplyFilters = ({ categories, languages }) => {

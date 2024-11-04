@@ -16,14 +16,22 @@ export const SearchBar = ({ booksOld, recentBooks, onSearchResults }) => {
 
     const filterBooks = booksOld.filter(
       (book) =>
-        book.nombreLibro.toLowerCase().includes(trimmedSearchText.toLowerCase()) ||
-        book.autor.nombreAutor.toLowerCase().includes(trimmedSearchText.toLowerCase())
+        book.nombreLibro
+          .toLowerCase()
+          .includes(trimmedSearchText.toLowerCase()) ||
+        book.autor.nombreAutor
+          .toLowerCase()
+          .includes(trimmedSearchText.toLowerCase())
     );
 
     const filterBooksRecent = recentBooks.filter(
       (book) =>
-        book.nombreLibro.toLowerCase().includes(trimmedSearchText.toLowerCase()) ||
-        book.autor.nombreAutor.toLowerCase().includes(trimmedSearchText.toLowerCase())
+        book.nombreLibro
+          .toLowerCase()
+          .includes(trimmedSearchText.toLowerCase()) ||
+        book.autor.nombreAutor
+          .toLowerCase()
+          .includes(trimmedSearchText.toLowerCase())
     );
 
     onSearchResults({ filterBooks, filterBooksRecent }, searchText);
