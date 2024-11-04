@@ -22,6 +22,7 @@ export const NavbarO = () => {
   const openUser = () => {
     setIsOpenUser(true);
     setIsOpen(false);
+    setIsModalStreakOpen(false);
   };
   const closeUser = () => {
     setIsOpenUser(false);
@@ -29,6 +30,7 @@ export const NavbarO = () => {
 
   const toggleModalStreak = () => {
     setIsModalStreakOpen(!isModalStreakOpen);
+    if (!isModalStreakOpen) setIsOpenUser(false);
   };
 
   const location = useLocation();
@@ -96,7 +98,11 @@ export const NavbarO = () => {
       )}
       {isOpenUser && (
         <div className="flex absolute top-20 right-0 z-50">
-          <ModalUser onClose={closeUser} imgUser={user.avatar} />
+          <ModalUser
+            onClose={closeUser}
+            imgUser={user.avatar}
+            nickname={user.nombre_usuario}
+          />
         </div>
       )}
 
