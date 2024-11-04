@@ -18,6 +18,7 @@ export const BookInfo = () => {
   const { bookDetails, error, loading } = useBookDetails(book);
   const [showReadBook, setShowReadBook] = useState(false);
   const { showAudioPlay, setShowAudioPlay } = useAudio();
+  const user = JSON.parse(localStorage.getItem("user"));
 
   if (!book) {
     return (
@@ -89,6 +90,7 @@ export const BookInfo = () => {
           <ReadBook
             pdfUrl={book.enlacePdf}
             onClose={() => setShowReadBook(false)}
+            id_user = {user.id_usuario}
           />
         </div>
       )}
