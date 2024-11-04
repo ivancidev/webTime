@@ -4,13 +4,19 @@ import CloseIcon from "../../../icons/close";
 import LogOut from "../../../icons/logOut";
 import UserProf from "../../../icons/userProfile";
 import ViewProfile from "../../../icons/viewProfile";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-export const ModalUser = ({ codUser, nickname, imgUser, onClose }) => {
+export const ModalUser = ({ nickname, imgUser, onClose }) => {
   const navigate = useNavigate();
 
+  const logOut = () => {
+    localStorage.removeItem("isRegistered");
+    localStorage.removeItem("user");
+    navigate("/");
+  };
+
   return (
-    <div className="w-52 h-[272px] rounded-xl border-[1px] border-primary-pri2 bg-primary-pri3 drop-shadow-lg">
+    <div className="w-52 h-72 bg-primary-pri3 drop-shadow-xl rounded-xl">
       <div className="w-full flex justify-end">
         <ButtonIcon
           onClick={onClose}
@@ -20,16 +26,26 @@ export const ModalUser = ({ codUser, nickname, imgUser, onClose }) => {
       </div>
       <div className="flex flex-col items-center space-y-2">
         {imgUser ? (
-          <img 
+          <img
             src={imgUser}
             className="w-[92px] h-[92px] object-cover rounded-full"
           />
         ) : (
           <UserProf />
         )}
-        <h3 className="font-label text-label-lg">{nickname}</h3>
-        <Button text="Ver perfil" variant="combSize" SvgIcon={ViewProfile} onClick={() => navigate("/profile")}/>
-        <Button text="Cerrar sesión" variant="combSize" SvgIcon={LogOut} onClick={() => navigate("/")}/>
+        <h3 className="font-label text-label-lg py-1">{nickname}</h3>
+        <Button
+          text="Ver perfil"
+          variant="combSize"
+          SvgIcon={ViewProfile}
+          onClick={() => navigate("/profile")}
+        />
+        <Button
+          text="Cerrar sesión"
+          variant="combSize"
+          SvgIcon={LogOut}
+          onClick={logOut}
+        />
       </div>
     </div>
   );

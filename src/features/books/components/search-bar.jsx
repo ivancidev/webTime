@@ -6,16 +6,24 @@ export const SearchBar = ({ booksOld, recentBooks, onSearchResults }) => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
+    const trimmedSearchText = searchText.trim();
+
+    if (trimmedSearchText === "") {
+      // Opcional: Puedes decidir qué hacer si la búsqueda está vacía
+      onSearchResults({ filterBooks: [], filterBooksRecent: [] }, searchText);
+      return;
+    }
+
     const filterBooks = booksOld.filter(
       (book) =>
-        book.nombreLibro.toLowerCase().includes(searchText.toLowerCase()) ||
-        book.autor.nombreAutor.toLowerCase().includes(searchText.toLowerCase())
+        book.nombreLibro.toLowerCase().includes(trimmedSearchText.toLowerCase()) ||
+        book.autor.nombreAutor.toLowerCase().includes(trimmedSearchText.toLowerCase())
     );
 
     const filterBooksRecent = recentBooks.filter(
       (book) =>
-        book.nombreLibro.toLowerCase().includes(searchText.toLowerCase()) ||
-        book.autor.nombreAutor.toLowerCase().includes(searchText.toLowerCase())
+        book.nombreLibro.toLowerCase().includes(trimmedSearchText.toLowerCase()) ||
+        book.autor.nombreAutor.toLowerCase().includes(trimmedSearchText.toLowerCase())
     );
 
     onSearchResults({ filterBooks, filterBooksRecent }, searchText);
@@ -38,7 +46,7 @@ export const SearchBar = ({ booksOld, recentBooks, onSearchResults }) => {
           <ButtonIcon
             onClick={() => setSearchText("")}
             SvgIcon={Close}
-            variant="combColTrans2"
+            variant="combColNeu2"
           />
         </div>
       )}
