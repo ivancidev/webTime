@@ -10,6 +10,7 @@ import CompletedBooksSection from "../components/completed-books";
 import { DailyStreak } from "../components/daily-streak";
 
 export const Profile = () => {
+    const navigate = useNavigate();
     return (
         <div>
             <NavbarO />
