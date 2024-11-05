@@ -8,12 +8,14 @@ import { ModalMenu } from "../../features/users/components/modal-menu";
 import ButtonIcon from "../buttons/buttonIcon";
 import { ModalStreak } from "../../features/users/components/modal-streak";
 import { Streak } from "../../icons/streak";
+import { useUserDetails } from "../../hooks/use-user-details";
 
 export const NavbarO = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenUser, setIsOpenUser] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const [isModalStreakOpen, setIsModalStreakOpen] = useState(false);
+  const { userDetails } = useUserDetails(user);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -72,11 +74,21 @@ export const NavbarO = () => {
           </Link>
         </li>
       </ul>
-      <ButtonIcon
-        variant="combColBlack2"
-        onClick={toggleModalStreak}
-        SvgIcon={Streak}
-      />
+      <div className="flex flex-row items-center">
+        <ButtonIcon
+          variant="combColBlack2"
+          onClick={toggleModalStreak}
+          SvgIcon={Streak}
+        />
+        {userDetails ? (
+          <h2 className="font-title text-title-sm text-secondary-sec2 pt-1">
+            {userDetails.dias_racha}
+          </h2>
+        ) : (
+          ""
+        )}
+      </div>
+
       {isOpen && (
         <div className="flex absolute top-20 right-12 z-50">
           <ModalMenu />
@@ -106,7 +118,13 @@ export const NavbarO = () => {
         </div>
       )}
 
-      {isModalStreakOpen && <ModalStreak onClose={toggleModalStreak} />}
+      {isModalStreakOpen && (
+        <ModalStreak
+          onClose={toggleModalStreak}
+          daysStreak={userDetails.dias_racha}
+          time={userDetails.minutos}
+        />
+      )}
     </nav>
   );
 };

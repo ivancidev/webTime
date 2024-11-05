@@ -140,9 +140,9 @@ export const SelectPreferences = () => {
   };
 
   return (
-    <div>
+    <div className="flex min-h-screen flex-col bg-primary-pri3">
       <Navbar />
-      <div className="flex flex-col">
+      <div className="flex flex-col items-center justify-center flex-grow">
         <Preferences
           text="Elige las categorías de tu interés"
           icons={categories}
@@ -154,14 +154,15 @@ export const SelectPreferences = () => {
           icons={times}
           variant="t"
           onSelect={(text, isSelected) =>
-            isSelected ? handleSelectTime(text) : setSelectedTime(null)
+          isSelected ? handleSelectTime(text) : setSelectedTime(null)
           }
         />
       </div>
-      <div className="flex flex-row max-w-full justify-end mx-5 md:mx-16 lg:mx-36 py-8 md:pb-10">
+      
+      <div className="flex flex-row max-w-full justify-end mx-3 md:mx-16 lg:mx-10 py-10 md:pb-10">
         <Button SvgIcon={CheckS} text="Aplicar" onClick={onSubmit} />
       </div>
-
+      
       <Modal open={loading}>
         <div
           style={{
@@ -174,7 +175,6 @@ export const SelectPreferences = () => {
           <CircularProgress />
         </div>
       </Modal>
-
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
@@ -189,6 +189,6 @@ export const SelectPreferences = () => {
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </div>
+    </div>  
   );
 };

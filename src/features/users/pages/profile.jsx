@@ -5,9 +5,12 @@ import BackIcon from "../../../icons/back";
 import { PerfilUser } from "../components/perfil-user";
 import CompletedBooksSection from "../components/completed-books";
 import { DailyStreak } from "../components/daily-streak";
+import { useUserDetails } from "../../../hooks/use-user-details";
 
 export const Profile = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
+  const { userDetails } = useUserDetails(user);
   return (
     <div>
       <NavbarO />
@@ -20,7 +23,11 @@ export const Profile = () => {
             <PerfilUser />
           </div>
           <div className="mt-5 md:mt-0">
-            <DailyStreak days="12" />
+            {userDetails ? (
+              <DailyStreak days={userDetails.dias_racha} />
+            ) : (
+              <DailyStreak />
+            )}
           </div>
         </div>
         <div className="mt-5 md:mt-10 ">
