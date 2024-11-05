@@ -74,10 +74,9 @@ export const NavbarO = () => {
           </Link>
         </li>
       </ul>
-      <div className="flex flex-row items-center mr-5">
+      <div className="flex flex-row items-center mr-5 cursor-pointer" onClick={toggleModalStreak}>
         <ButtonIcon
           variant="combColBlack2"
-          onClick={toggleModalStreak}
           SvgIcon={Streak}
         />
         {userDetails ? (
@@ -110,13 +109,11 @@ export const NavbarO = () => {
       )}
       {isOpenUser && (
         <div className="flex absolute top-20 right-0 z-50">
-        
           <ModalUser
             onClose={closeUser}
             imgUser={user.avatar}
             nickname={user.nombre_usuario}
           />
-        
         </div>
       )}
 
