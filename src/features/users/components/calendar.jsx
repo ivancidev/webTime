@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
@@ -9,8 +9,9 @@ import Close from "../../../icons/closeS";
 import "dayjs/locale/es";
 dayjs.locale("es");
 
-export const Calendar = ({ onClose }) => {
+export const Calendar = ({ onClose, onSelectDate }) => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
+
   const theme = createTheme({
     components: {
       MuiPickersDay: {
@@ -32,6 +33,12 @@ export const Calendar = ({ onClose }) => {
       },
     },
   });
+
+  const handleDateChange = (newValue) => {
+    setSelectedDate(newValue);
+    onSelectDate(newValue); 
+  };
+
   return (
     <div className="absolute right-10 md:right-20 rounded-xl bg-primary-pri3 drop-shadow-2xl p-2 w-80">
       <div className="w-full flex justify-end">
@@ -40,10 +47,8 @@ export const Calendar = ({ onClose }) => {
       <ThemeProvider theme={theme}>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
           <DateCalendar
-            defaultValue={dayjs()}
-            onChange={(newValue) => {
-              setSelectedDate(newValue);
-            }}
+            value={selectedDate}
+            onChange={handleDateChange}
           />
         </LocalizationProvider>
       </ThemeProvider>
