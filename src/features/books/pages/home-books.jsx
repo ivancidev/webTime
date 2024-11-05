@@ -95,7 +95,15 @@ export const Home = () => {
       selectedLanguages.length === 0 ||
       selectedLanguages.includes(book.idioma.idioma);
 
-    return matchesCategory && matchesLanguage;
+    if (selectedCategories.length > 0 && selectedLanguages.length > 0) {
+      return matchesCategory && matchesLanguage;
+    } else if (selectedCategories.length > 0) {
+      return matchesCategory;
+    } else if (selectedLanguages.length > 0) {
+      return matchesLanguage;
+    } else {
+      return false;
+    }
   });
 
   const noBookFilter =
