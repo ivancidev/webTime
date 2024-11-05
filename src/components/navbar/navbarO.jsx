@@ -74,7 +74,7 @@ export const NavbarO = () => {
           </Link>
         </li>
       </ul>
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row items-center mr-5">
         <ButtonIcon
           variant="combColBlack2"
           onClick={toggleModalStreak}
@@ -98,7 +98,7 @@ export const NavbarO = () => {
         <img
           src={user.avatar}
           alt="Avatar"
-          className="w-10 h-10 rounded-full cursor-pointer ml-6"
+          className="w-10 h-10 rounded-full cursor-pointer"
           onClick={openUser}
         />
       ) : (
@@ -110,11 +110,13 @@ export const NavbarO = () => {
       )}
       {isOpenUser && (
         <div className="flex absolute top-20 right-0 z-50">
+        
           <ModalUser
             onClose={closeUser}
             imgUser={user.avatar}
             nickname={user.nombre_usuario}
           />
+        
         </div>
       )}
 
