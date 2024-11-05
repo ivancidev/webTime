@@ -114,6 +114,7 @@ const CompletedBooksSection = ({ completedBooksCount }) => {
                 key={book.libro.codLibro}
                 titleBook={book.libro.nombreLibro}
                 frontBook={book.libro.enlacePortada}
+                authorBook={book.autor.nombreAutor}
                 book={book.libro}
               />
             ))}
