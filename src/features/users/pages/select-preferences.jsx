@@ -16,6 +16,13 @@ export const SelectPreferences = () => {
   const { data: times } = useGetTable("tiempos_lectura");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.id_usuario) {
+      navigate("/app");
+    }
+  }, [navigate]);
+
   const [user, setUser] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTime, setSelectedTime] = useState(null);
