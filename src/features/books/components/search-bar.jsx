@@ -1,29 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import SearchIcon from "../../../icons/search";
 import Close from "../../../icons/closeS";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
-export const SearchBar = ({ booksOld, recentBooks, onSearchResults }) => {
-  const [searchText, setSearchText] = useState("");
-
+export const SearchBar = ({
+  booksOld,
+  recentBooks,
+  onSearchResults,
+  searchText,
+  setSearchText,
+}) => {
   useEffect(() => {
     const trimmedSearchText = searchText.trim();
 
     if (trimmedSearchText === "") {
-      // Opcional: Puedes decidir qué hacer si la búsqueda está vacía
       onSearchResults({ filterBooks: [], filterBooksRecent: [] }, searchText);
       return;
     }
 
     const filterBooks = booksOld.filter(
       (book) =>
-        book.nombreLibro.toLowerCase().includes(trimmedSearchText.toLowerCase()) ||
-        book.autor.nombreAutor.toLowerCase().includes(trimmedSearchText.toLowerCase())
+        book.nombreLibro
+          .toLowerCase()
+          .includes(trimmedSearchText.toLowerCase()) ||
+        book.autor.nombreAutor
+          .toLowerCase()
+          .includes(trimmedSearchText.toLowerCase())
     );
 
     const filterBooksRecent = recentBooks.filter(
       (book) =>
-        book.nombreLibro.toLowerCase().includes(trimmedSearchText.toLowerCase()) ||
-        book.autor.nombreAutor.toLowerCase().includes(trimmedSearchText.toLowerCase())
+        book.nombreLibro
+          .toLowerCase()
+          .includes(trimmedSearchText.toLowerCase()) ||
+        book.autor.nombreAutor
+          .toLowerCase()
+          .includes(trimmedSearchText.toLowerCase())
     );
 
     onSearchResults({ filterBooks, filterBooksRecent }, searchText);
