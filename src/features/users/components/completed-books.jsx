@@ -6,8 +6,9 @@ import { Calendar } from "./calendar";
 import { CardBook } from "../../books/components/cardBook";
 import { ModalFilter } from "../../books/components/modal-filter";
 import { useCompletedBooks } from "../../../hooks/use-get-books-completed";
+import dayjs from "dayjs";
 
-const CompletedBooksSection = ({ completedBooksCount }) => {
+const CompletedBooksSection = () => {
   const [isCalendarOpen, setCalendarOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,6 +17,7 @@ const CompletedBooksSection = ({ completedBooksCount }) => {
   const [visibleRows, setVisibleRows] = useState(2);
   const [columns, setColumns] = useState(2);
   const [completedBooks, setCompletedBooks] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     const getCompletedBooks = async () => {
@@ -39,6 +41,11 @@ const CompletedBooksSection = ({ completedBooksCount }) => {
     setSelectedLanguages(languages);
   };
 
+  const handleDateSelect = (date) => {
+    setSelectedDate(dayjs(date).format("YYYY-MM-DD"));
+    setCalendarOpen(false);
+  };
+
   const filteredBooks = completedBooks.filter((book) => {
     const matchesCategory =
       selectedCategories.length === 0 ||
@@ -48,7 +55,11 @@ const CompletedBooksSection = ({ completedBooksCount }) => {
       selectedLanguages.length === 0 ||
       selectedLanguages.includes(book.libro.idioma.idioma);
 
-    return matchesCategory && matchesLanguage;
+    const matchesDate =
+      !selectedDate ||
+      dayjs(book.fecha_conclusion).format("YYYY-MM-DD") === selectedDate;
+
+    return matchesCategory && matchesLanguage && matchesDate;
   });
 
   const booksToShow = filteredBooks.slice(0, visibleRows * columns);
@@ -72,13 +83,15 @@ const CompletedBooksSection = ({ completedBooksCount }) => {
   return (
     <div className="flex flex-col w-full">
       <div className="flex flex-col ml-[90px] md:ml-[150px] items-center w-fit mb-2">
-        <span className="text-title-md font-title">{completedBooksCount}</span>
+        <span className="text-title-lg font-title text-secondary-sec2">
+          {completedBooks?.length}
+        </span>
         <span className="text-body-md font-body">Concluidos</span>
       </div>
       <div className="flex flex-row items-center mx-8 md:mx-14">
-        <div className="w-2 h-2 bg-neutral-neu1 rounded-full"></div>
-        <div className="flex-grow border-t border-neutral-neu1"></div>
-        <div className="w-2 h-2 bg-neutral-neu1 rounded-full"></div>
+        <div className="w-2 h-2 bg-secondary-sec2 rounded-full"></div>
+        <div className="flex-grow border-t border-secondary-sec2"></div>
+        <div className="w-2 h-2 bg-secondary-sec2 rounded-full"></div>
       </div>
       <div className="flex justify-end w-full md:pr-20 pr-10 mt-3">
         <ButtonIcon
@@ -100,13 +113,20 @@ const CompletedBooksSection = ({ completedBooksCount }) => {
           selectedLanguages={selectedLanguages}
         />
       )}
-      {isCalendarOpen && <Calendar onClose={toggleCalendar} />}
+      {isCalendarOpen && (
+        <Calendar onClose={toggleCalendar} onSelectDate={handleDateSelect} />
+      )}
       <div className="flex flex-col p-4">
         {filteredBooks.length === 0 ? (
-          <div className="flex justify-center items-center my-32 font-body text-body-md text-secondary-sec2 mx-4">
-            No se encontraron libros concluidos que coincidan con los criterios
-            seleccionados.
-          </div>
+          selectedDate ? (
+            <div className="flex justify-center items-center my-32 font-body text-body-md text-secondary-sec2 mx-4">
+              No se encontraron libros concluidos para la fecha seleccionada
+            </div>
+          ) : (
+            <div className="flex justify-center items-center my-32 font-body text-body-md text-secondary-sec2 mx-4">
+              ¡Aún no has terminado ningún libro, sigue leyendo!
+            </div>
+          )
         ) : (
           <div className="grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {booksToShow.map((book) => (
