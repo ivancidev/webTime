@@ -5,7 +5,7 @@ export const PerfilUser = () => {
       <h1 className="text-secondary-sec2 font-title text-title-lg">
         Perfil de usuario
       </h1>
-      <div className="mt-8 ml-8 flex md:flex-row flex-col">
+      <div className="mt-8 ml-8 flex md:flex-row md:items-center flex-col">
         <div className="w-[140px] h-[140px] rounded-full overflow-hidden ml-5 md:ml-0">
           <img
             src={user?.avatar || "/src/assets/images/userDefault.jpg"}
@@ -18,7 +18,7 @@ export const PerfilUser = () => {
           <h2 className="text-neutral-neu0 text-label-lg mt-3">
             @{user?.nombre_usuario}
           </h2>
-          <h2 className="font-label text-neutral-neu0 text-label-lg mt-2">
+          <h2 className="text-neutral-neu0 text-label-lg mt-2">
             {user?.correo}
           </h2>
         </div>

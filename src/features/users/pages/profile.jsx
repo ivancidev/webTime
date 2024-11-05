@@ -12,28 +12,25 @@ export const Profile = () => {
   const navigate = useNavigate();
   const { userDetails } = useUserDetails(user);
   return (
-    <div>
-      <NavbarO />
-      <div>
-        <div className="ml-6 md:ml-8 lg:ml-14 md:mt-8">
-          <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/app")} />
+    <section>
+      <div className="ml-6 md:ml-8 lg:ml-14 md:mt-8">
+        <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/app")} />
+      </div>
+      <div className="flex justify-center items-center lg:space-x-64 flex-col md:flex-row space-x-4 mt-5 lg:mt-0">
+        <div>
+          <PerfilUser />
         </div>
-        <div className="flex justify-center items-center lg:space-x-64 flex-col md:flex-row space-x-4 mt-5 lg:mt-0">
-          <div>
-            <PerfilUser />
-          </div>
-          <div className="mt-5 md:mt-0">
-            {userDetails ? (
-              <DailyStreak days={userDetails.dias_racha} />
-            ) : (
-              <DailyStreak />
-            )}
-          </div>
-        </div>
-        <div className="mt-5 md:mt-10 ">
-          <CompletedBooksSection completedBooksCount="12" />
+        <div className="mt-5 md:mt-0">
+          {userDetails ? (
+            <DailyStreak days={userDetails.dias_racha} />
+          ) : (
+            <DailyStreak />
+          )}
         </div>
       </div>
-    </div>
+      <div className="mt-5 md:mt-10 ">
+        <CompletedBooksSection />
+      </div>
+    </section>
   );
 };
