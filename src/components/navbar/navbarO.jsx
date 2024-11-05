@@ -80,9 +80,13 @@ export const NavbarO = () => {
           onClick={toggleModalStreak}
           SvgIcon={Streak}
         />
-        <h2 className="font-title text-title-sm text-secondary-sec2 pt-1">
-          {userDetails.dias_racha}
-        </h2>
+        {userDetails ? (
+          <h2 className="font-title text-title-sm text-secondary-sec2 pt-1">
+            {userDetails.dias_racha}
+          </h2>
+        ) : (
+          ""
+        )}
       </div>
 
       {isOpen && (
