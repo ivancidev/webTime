@@ -1,7 +1,7 @@
 import React from "react";
 import CardPref from "./card-preference";
 
-export default function Preferences({ text, icons, variant, onSelect }) {
+export default function Preferences({ text, icons, variant, onSelect, selectedTime }) {
   return (
     <section className="flex flex-col mt-10 w-full">
       <div>
@@ -11,18 +11,13 @@ export default function Preferences({ text, icons, variant, onSelect }) {
       </div>
       <div className={`flex flex-wrap gap-x-7 gap-y-5 md:gap-6 ml-12 mx-5 md:mx-16 lg:mx-36 mt-10 max-w-full`}>
         {icons.map((iconText, index) => {
-          const cod =
-            variant === "c"
-              ? iconText.codCategoria
-              : iconText.id_tiempo_lectura;
-          const contentText =
-            variant === "c"
-              ? iconText.nombreCategoria
-              : iconText.minutos + " minutos";
-          const contentIcon =
-            variant === "c"
-              ? iconText.enlace_icono_categoria
-              : iconText.enlace_icono_tiempo;
+          const cod = variant === "c" ? iconText.codCategoria : iconText.id_tiempo_lectura;
+          const contentText = variant === "c" ? iconText.nombreCategoria : iconText.minutos + " minutos";
+          const contentIcon = variant === "c" ? iconText.enlace_icono_categoria : iconText.enlace_icono_tiempo;
+
+          // Verificar si el tiempo actual está seleccionado
+          const isSelected = selectedTime && selectedTime.id_tiempo_lectura === cod;
+
           return (
             <CardPref
               key={index}
@@ -31,6 +26,7 @@ export default function Preferences({ text, icons, variant, onSelect }) {
               onSelect={onSelect}
               cod={cod}
               text2={text}
+              isSelected={isSelected} // Pasa el estado de selección
             />
           );
         })}

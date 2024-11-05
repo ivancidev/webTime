@@ -41,17 +41,21 @@ export const SelectPreferences = () => {
   }, []);
 
   const handleSelectCategory = (category, isSelected) => {
-    setSelectedCategories((prevSelected) =>
-      isSelected
-        ? [...prevSelected, category]
-        : prevSelected.filter(
-            (item) => item.codCategoria !== category.codCategoria
-          )
-    );
+    if (isSelected) {
+      setSelectedCategories((prevSelected) => [...prevSelected, category]);
+    } else {
+      setSelectedCategories((prevSelected) =>
+        prevSelected.filter((item) => item.codCategoria !== category.codCategoria)
+      );
+    }
   };
 
   const handleSelectTime = (time) => {
-    setSelectedTime(time);
+    if (selectedTime && selectedTime.id_tiempo_lectura === time.id_tiempo_lectura) {
+      setSelectedTime(null);
+    } else {
+      setSelectedTime(time);
+    }
   };
 
   const handleCloseSnackbar = () => {
@@ -71,8 +75,7 @@ export const SelectPreferences = () => {
     if (!user || !user.id_usuario) {
       setSnackbar({
         open: true,
-        message:
-          "Error: Usuario no definido. Intenta iniciar sesión nuevamente.",
+        message: "Error: Usuario no definido. Intenta iniciar sesión nuevamente.",
         severity: "error",
       });
       return;
@@ -153,9 +156,8 @@ export const SelectPreferences = () => {
           text="Tiempo de lectura preferido"
           icons={times}
           variant="t"
-          onSelect={(text, isSelected) =>
-          isSelected ? handleSelectTime(text) : setSelectedTime(null)
-          }
+          onSelect={handleSelectTime}
+          selectedTime={selectedTime}
         />
       </div>
       
