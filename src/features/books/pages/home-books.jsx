@@ -13,9 +13,11 @@ import { fetchUserBooks } from "../../../services/fetch-user-category";
 export const Home = () => {
   const [selectedPreferences, setSelectedPreferences] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
+  const [searchBooksOld, setSearchBooksOld] = useState([]);
+  const [searchBooksRecent, setSearchBooksRecent] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const {
     data: booksOld = [],
     isLoading: isLoadingOld,
@@ -28,10 +30,6 @@ export const Home = () => {
     isError: isErrorRecent,
     error: errorRecent,
   } = useGetBooks(true);
-
-  const [searchBooksOld, setSearchBooksOld] = useState([]);
-  const [searchBooksRecent, setSearchBooksRecent] = useState([]);
-  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -97,16 +95,9 @@ export const Home = () => {
       selectedLanguages.length === 0 ||
       selectedLanguages.includes(book.idioma.idioma);
 
-    if (selectedCategories.length > 0 && selectedLanguages.length > 0) {
-      return matchesCategory && matchesLanguage;
-    } else if (selectedCategories.length > 0) {
-      return matchesCategory;
-    } else if (selectedLanguages.length > 0) {
-      return matchesLanguage;
-    } else {
-      return false;
-    }
+    return matchesCategory && matchesLanguage;
   });
+
   const noBookFilter =
     (selectedCategories.length > 0 || selectedLanguages.length > 0) &&
     filteredBooks.length === 0;
@@ -119,6 +110,8 @@ export const Home = () => {
             booksOld={booksOld}
             recentBooks={recentBooks}
             onSearchResults={handleSearchResults}
+            searchText={searchText}
+            setSearchText={setSearchText}
           />
           <ButtonIcon
             SvgIcon={FilterIcon}
