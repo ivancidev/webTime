@@ -23,8 +23,6 @@ export default function Preferences({ text, icons, variant, onSelect, selectedOp
             variant === "c"
               ? iconText.enlace_icono_categoria
               : iconText.enlace_icono_tiempo;
-
-          // Determinar si la tarjeta está seleccionada
           let isSelected = false;
           if (variant === "c") {
             isSelected = selectedOption.some(

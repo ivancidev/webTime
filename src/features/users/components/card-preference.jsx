@@ -7,7 +7,7 @@ const CardPref = ({ text, icon, cod, onSelect, text2, isSelected }) => {
       text2 === "Elige las categorías de tu interés"
         ? { codCategoria: cod, nombreCategoria: text }
         : { id_tiempo_lectura: cod, minutos: text },
-      !isSelected // Nuevo estado después del clic
+      !isSelected 
     );
   };
 
