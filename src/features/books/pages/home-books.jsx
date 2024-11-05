@@ -13,9 +13,11 @@ import { fetchUserBooks } from "../../../services/fetch-user-category";
 export const Home = () => {
   const [selectedPreferences, setSelectedPreferences] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
+  const [searchBooksOld, setSearchBooksOld] = useState([]);
+  const [searchBooksRecent, setSearchBooksRecent] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const {
     data: booksOld = [],
     isLoading: isLoadingOld,
@@ -29,10 +31,6 @@ export const Home = () => {
     error: errorRecent,
   } = useGetBooks(true);
 
-  const [searchBooksOld, setSearchBooksOld] = useState([]);
-  const [searchBooksRecent, setSearchBooksRecent] = useState([]);
-  const [searchText, setSearchText] = useState("");
-
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser.id_usuario) {
@@ -43,8 +41,13 @@ export const Home = () => {
   }, []);
 
   const handleSearchResults = (
-    { filterBooks = [], filterBooksRecent = [] }, text
+    { filterBooks = [], filterBooksRecent = [] },
+    text
   ) => {
+    if (text) {
+      setSelectedCategories([]);
+      setSelectedLanguages([]);
+    }
     setSearchBooksOld(filterBooks);
     setSearchBooksRecent(filterBooksRecent);
     setSearchText(text);
@@ -66,6 +69,9 @@ export const Home = () => {
 
   const handleFilterClick = () => {
     setIsModalOpen(!isModalOpen);
+    setSearchText("");
+    setSearchBooksOld([]);
+    setSearchBooksRecent([]);
   };
 
   const handleApplyFilters = ({ categories, languages }) => {
@@ -99,6 +105,7 @@ export const Home = () => {
       return false;
     }
   });
+
   const noBookFilter =
     (selectedCategories.length > 0 || selectedLanguages.length > 0) &&
     filteredBooks.length === 0;
@@ -111,6 +118,8 @@ export const Home = () => {
             booksOld={booksOld}
             recentBooks={recentBooks}
             onSearchResults={handleSearchResults}
+            searchText={searchText}
+            setSearchText={setSearchText}
           />
           <ButtonIcon
             SvgIcon={FilterIcon}
