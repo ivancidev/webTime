@@ -13,7 +13,9 @@ export const DailyStreak = ({ days }) => {
             <h2 className="font-body text-secondary-sec2 text-title-md font-bold">
               {days}
             </h2>
-            <p className="font-semibold">Días</p>
+            <p className="font-label text-label-md">
+              {days <= 1 ? "Día" : "Días"}
+            </p>
           </div>
         </div>
       </div>

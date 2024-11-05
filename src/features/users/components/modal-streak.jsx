@@ -18,9 +18,9 @@ export const ModalStreak = ({ daysStreak, time, onClose }) => {
       </div>
       <div className="flex flex-col space-y-7 px-8">
         <div>
-          <div className="flex flex-row ">
+          <div className="flex flex-row items-center">
             <h3 className="font-title text-title-sm">Días en racha: </h3>
-            <h2 className="font-label text-label-lg pl-2">{daysStreak}</h2>
+            <h2 className="font-body text-body-lg pl-2">{daysStreak}</h2>
           </div>
           <div className="flex flex-row pl-4 mt-3">
             <h4 className="font-label text-label-md">
