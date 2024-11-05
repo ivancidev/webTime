@@ -1,7 +1,7 @@
 import React from "react";
 import CardPref from "./card-preference";
 
-export default function Preferences({ text, icons, variant, onSelect }) {
+export default function Preferences({ text, icons, variant, onSelect, selectedOption }) {
   return (
     <section className="flex flex-col mt-10 w-full">
       <div>
@@ -23,6 +23,17 @@ export default function Preferences({ text, icons, variant, onSelect }) {
             variant === "c"
               ? iconText.enlace_icono_categoria
               : iconText.enlace_icono_tiempo;
+
+          // Determinar si la tarjeta está seleccionada
+          let isSelected = false;
+          if (variant === "c") {
+            isSelected = selectedOption.some(
+              (item) => item.codCategoria === cod
+            );
+          } else {
+            isSelected = selectedOption && selectedOption.id_tiempo_lectura === cod;
+          }
+
           return (
             <CardPref
               key={index}
@@ -31,6 +42,7 @@ export default function Preferences({ text, icons, variant, onSelect }) {
               onSelect={onSelect}
               cod={cod}
               text2={text}
+              isSelected={isSelected}
             />
           );
         })}
