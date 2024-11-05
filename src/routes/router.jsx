@@ -8,6 +8,7 @@ import { RegisterUser } from "../features/users/pages/register-user";
 import { Profile } from "../features/users/pages/profile";
 import { SelectPreferences } from "../features/users/pages/select-preferences";
 import { ProtectedRouter } from "./protected-router";
+import { BookComplete } from "../features/books/pages/book-complete";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
         element: <BookInfo />,
       },
     ],
+  },
+  {
+    path: "profile/app/book-info/:bookId",
+    element: <BookComplete />,
   },
   {
     path: "/upload-files",
