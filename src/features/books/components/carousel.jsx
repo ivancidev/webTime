@@ -73,6 +73,7 @@ export const Carousel = ({ books }) => {
                 key={index}
                 titleBook={book.nombreLibro}
                 frontBook={book.enlacePortada}
+                authorBook={book.autor.nombreAutor}
                 book={book}
               />
             ))}

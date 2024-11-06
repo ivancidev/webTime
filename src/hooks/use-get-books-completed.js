@@ -13,6 +13,9 @@ export const useCompletedBooks = async (id_usuario) => {
         ),
         idioma (
           *
+        ),
+        autor (
+          *
         )
       ) 
     `
