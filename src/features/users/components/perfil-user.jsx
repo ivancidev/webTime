@@ -8,7 +8,10 @@ export const PerfilUser = () => {
       <div className="mt-8 ml-8 flex md:flex-row md:items-center flex-col">
         <div className="w-[140px] h-[140px] rounded-full overflow-hidden ml-5 md:ml-0">
           <img
-            src={user?.avatar || "/src/assets/images/userDefault.jpg"}
+            src={
+              user?.avatar ||
+              "https://uygicxekmfgvxjhuqaor.supabase.co/storage/v1/object/public/imagenes/registroFotos/userDefault.jpg?t=2024-11-06T06%3A05%3A44.482Z"
+            }
             alt="Imagen de perfil"
             className="w-full h-full object-cover"
           />
@@ -26,4 +29,3 @@ export const PerfilUser = () => {
     </div>
   );
 };
-
