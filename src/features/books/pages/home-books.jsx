@@ -207,6 +207,7 @@ export const Home = () => {
                 key={book.codLibro}
                 titleBook={book.nombreLibro}
                 frontBook={book.enlacePortada}
+                authorBook={book.autor.nombreAutor}
                 book={book}
               />
             ))}
@@ -219,6 +220,7 @@ export const Home = () => {
                   key={index}
                   titleBook={filterBook.nombreLibro}
                   frontBook={filterBook.enlacePortada}
+                  authorBook={filterBook.autor.nombreAutor}
                   book={filterBook}
                 />
               ))}

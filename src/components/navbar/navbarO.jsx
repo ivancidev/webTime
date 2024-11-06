@@ -19,7 +19,10 @@ export const NavbarO = () => {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-    if (!isOpen) setIsOpenUser(false);
+    if (!isOpen) {
+      setIsOpenUser(false);
+      setIsModalStreakOpen(false);
+    }
   };
   const openUser = () => {
     setIsOpenUser(true);
@@ -32,7 +35,10 @@ export const NavbarO = () => {
 
   const toggleModalStreak = () => {
     setIsModalStreakOpen(!isModalStreakOpen);
-    if (!isModalStreakOpen) setIsOpenUser(false);
+    if (!isModalStreakOpen){
+      setIsOpen(false);
+      setIsOpenUser(false);
+    } 
   };
 
   const location = useLocation();
@@ -74,14 +80,14 @@ export const NavbarO = () => {
           </Link>
         </li>
       </ul>
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row items-center mr-5 cursor-pointer" onClick={toggleModalStreak}>
         <ButtonIcon
-          variant="combColBlack2"
-          onClick={toggleModalStreak}
+          variant={`${isModalStreakOpen ? "combColBlue" : "combColskyblue"}`}
           SvgIcon={Streak}
         />
         {userDetails ? (
-          <h2 className="font-title text-title-sm text-secondary-sec2 pt-1">
+          <h2 className={`${isModalStreakOpen ? "font-title text-title-sm text-secondary-sec1 pt-1" :
+                        "font-title text-title-sm text-secondary-sec2 pt-1"}`}>
             {userDetails.dias_racha}
           </h2>
         ) : (
@@ -90,7 +96,7 @@ export const NavbarO = () => {
       </div>
 
       {isOpen && (
-        <div className="flex absolute top-20 right-12 z-50">
+        <div className="flex absolute top-20 right-28 z-50">
           <ModalMenu />
         </div>
       )}
@@ -98,7 +104,7 @@ export const NavbarO = () => {
         <img
           src={user.avatar}
           alt="Avatar"
-          className="w-10 h-10 rounded-full cursor-pointer ml-6"
+          className="w-10 h-10 rounded-full cursor-pointer"
           onClick={openUser}
         />
       ) : (
@@ -117,7 +123,6 @@ export const NavbarO = () => {
           />
         </div>
       )}
-
       {isModalStreakOpen && (
         <ModalStreak
           onClose={toggleModalStreak}
