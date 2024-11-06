@@ -9,6 +9,7 @@ import FilterIcon from "../../../icons/filter";
 import { CardBook } from "../components/cardBook";
 import { ModalFilter } from "../../books/components/modal-filter";
 import { fetchUserBooks } from "../../../services/fetch-user-category";
+import { useCompletedBooks } from "../../../hooks/use-get-books-completed";
 
 export const Home = () => {
   const [selectedPreferences, setSelectedPreferences] = useState([]);
@@ -18,6 +19,8 @@ export const Home = () => {
   const [searchBooksOld, setSearchBooksOld] = useState([]);
   const [searchBooksRecent, setSearchBooksRecent] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [completedBooks, setCompletedBooks] = useState([]);
   const {
     data: booksOld = [],
     isLoading: isLoadingOld,
@@ -38,6 +41,14 @@ export const Home = () => {
         setSelectedPreferences(result)
       );
     }
+  }, []);
+
+  useEffect(() => {
+    const getCompletedBooks = async () => {
+      const books = await useCompletedBooks(user.id_usuario);
+      setCompletedBooks(books);
+    };
+    getCompletedBooks();
   }, []);
 
   const handleSearchResults = (
@@ -164,23 +175,23 @@ export const Home = () => {
             <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-10 sm:ml-20">
               Sugerencias para ti
             </h1>
-            <Carousel books={suggestedBooks} />
+            <Carousel books={suggestedBooks} completedBooks={completedBooks} />
             <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-10 sm:ml-20">
               Los más vistos
             </h1>
-            <Carousel books={booksOld} />
+            <Carousel books={booksOld} completedBooks={completedBooks} />
             <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-10 sm:ml-20">
               Mejor calificados
             </h1>
-            <Carousel books={booksOld} />
+            <Carousel books={booksOld} completedBooks={completedBooks} />
             <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-10 sm:ml-20">
               Recién agregados
             </h1>
-            <Carousel books={recentBooks} />
+            <Carousel books={recentBooks} completedBooks={completedBooks} />
             <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-10 sm:ml-20">
               Lo más leído esta semana
             </h1>
-            <Carousel books={booksOld} />
+            <Carousel books={booksOld} completedBooks={completedBooks} />
           </>
         )}
       </div>
