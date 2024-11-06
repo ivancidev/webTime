@@ -116,7 +116,6 @@ export const NavbarO = () => {
           />
         </div>
       )}
-
       {isModalStreakOpen && (
         <ModalStreak
           onClose={toggleModalStreak}
