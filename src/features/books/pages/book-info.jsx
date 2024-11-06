@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BackIcon from "../../../icons/back";
 import ListenIcon from "../../../icons/listen";
 import ReadIcon from "../../../icons/read";
@@ -10,6 +10,9 @@ import { ReadBook } from "../components/readBook";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import { TextLarge } from "../../register/components/text-large";
 import { useAudio } from "../../../context/audio-context";
+import { useUserDetails } from "../../../hooks/use-user-details";
+import { NotificationStreak } from "../../users/components/notification-streak";
+import { updateRacha } from "../../../services/update-streak";
 
 export const BookInfo = () => {
   const location = useLocation();
@@ -19,7 +22,20 @@ export const BookInfo = () => {
   const [showReadBook, setShowReadBook] = useState(false);
   const { showAudioPlay, setShowAudioPlay } = useAudio();
   const user = JSON.parse(localStorage.getItem("user"));
+  const { userDetails } = useUserDetails(user);
+  const [showStreakNotification, setShowStreakNotification] = useState(false);
 
+  useEffect(() => {
+    if (userDetails && userDetails.se_cumplio) {
+      setShowStreakNotification(true);
+      let diasRacha = userDetails.dias_racha;
+      if (userDetails.se_cumplio) {
+        diasRacha += 1;
+      }
+
+      updateRacha(user.id_usuario, diasRacha);
+    }
+  }, [userDetails]);
   if (!book) {
     return (
       <div className="text-neutral-50">
@@ -42,6 +58,14 @@ export const BookInfo = () => {
   }
   return (
     <div className="flex min-h-screen flex-col bg-primary-pri3">
+      {showStreakNotification && (
+        <NotificationStreak
+          day={diasRacha}
+          isAccom={userDetails.se_cumplio}
+          onClose={() => setShowStreakNotification(false)}
+        />
+      )}
+
       <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/app")} />
       </div>
@@ -90,9 +114,9 @@ export const BookInfo = () => {
           <ReadBook
             pdfUrl={book.enlacePdf}
             onClose={() => setShowReadBook(false)}
-            id_user = {user.id_usuario}
+            id_user={user.id_usuario}
             limited_page={book.numero_paginas}
-            codBook = {book.codLibro}
+            codBook={book.codLibro}
           />
         </div>
       )}

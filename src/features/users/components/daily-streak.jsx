@@ -14,7 +14,7 @@ export const DailyStreak = ({ days }) => {
               {days}
             </h2>
             <p className="font-label text-label-md">
-              {days <= 1 ? "Día" : "Días"}
+              {days === 1 ? "Día" : "Días"}
             </p>
           </div>
         </div>
