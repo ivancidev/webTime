@@ -10,6 +10,10 @@ import { CardBook } from "../components/cardBook";
 import { ModalFilter } from "../../books/components/modal-filter";
 import { fetchUserBooks } from "../../../services/fetch-user-category";
 import { useCompletedBooks } from "../../../hooks/use-get-books-completed";
+import { useUserDetails } from "../../../hooks/use-user-details";
+import { updateAccom } from "../../../services/update-accomp";
+import { updateRacha } from "../../../services/update-streak";
+import { NotificationStreak } from "../../users/components/notification-streak";
 
 export const Home = () => {
   const [selectedPreferences, setSelectedPreferences] = useState([]);
@@ -21,6 +25,12 @@ export const Home = () => {
   const [searchText, setSearchText] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
   const [completedBooks, setCompletedBooks] = useState([]);
+  const { userDetails } = useUserDetails(user);
+  const [previousRacha, setPreviousRacha] = useState(
+    userDetails?.dias_racha || 0
+  );
+  const [showStreakNotification, setShowStreakNotification] = useState(false);
+
   const {
     data: booksOld = [],
     isLoading: isLoadingOld,
@@ -63,6 +73,38 @@ export const Home = () => {
     setSearchBooksRecent(filterBooksRecent);
     setSearchText(text);
   };
+
+  useEffect(() => {
+    const lastNotificationDate = localStorage.getItem("lastNotificationDate");
+    const today = new Date().toISOString().split("T")[0];
+
+    if (userDetails) {
+      if (userDetails.minutos_aprendido_hoy >= userDetails.minutos) {
+        updateAccom(user.id_usuario, userDetails.id_metrica, true, 0);
+      }
+      if (userDetails.se_cumplio) {
+        let diasRacha = userDetails.dias_racha;
+        if (userDetails.se_cumplio) {
+          diasRacha += 1;
+        }
+        if (diasRacha !== previousRacha) {
+          setPreviousRacha(diasRacha);
+          if (lastNotificationDate !== today) {
+            setShowStreakNotification(true);
+            localStorage.setItem("lastNotificationDate", today);
+          }
+        }
+        updateRacha(user.id_usuario, userDetails.id_racha, diasRacha);
+        updateAccom(user.id_usuario, userDetails.id_metrica, false, 0);
+      }
+    }
+  }, [
+    userDetails,
+    user.id_usuario,
+    user.id_racha,
+    user.id_metrica,
+    previousRacha,
+  ]);
 
   if (isLoadingOld || isLoadingRecent) {
     return (
@@ -121,8 +163,20 @@ export const Home = () => {
     (selectedCategories.length > 0 || selectedLanguages.length > 0) &&
     filteredBooks.length === 0;
 
+  const resetNotification = () => {
+    setShowStreakNotification(false);
+    updateAccom(user.id_usuario, userDetails.id_metrica, false, 0);
+  };
+
   return (
     <div className="flex gri flex-col min-h-screen bg-primary-pri3">
+      {showStreakNotification && (
+        <NotificationStreak
+          day={userDetails.dias_racha + 1}
+          isAccom={userDetails.se_cumplio}
+          onClose={resetNotification}
+        />
+      )}
       <div className="flex-grow">
         <div className="sticky top-0 sm:relative w-full py-2 px-6 bg-primary-pri3 sm:pr-12 flex flex-row justify-end items-center space-x-3 mt-2 sm:mt-6  z-40 sm:z-0">
           <SearchBar

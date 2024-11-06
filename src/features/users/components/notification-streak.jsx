@@ -3,8 +3,9 @@ import ButtonIcon from "../../../components/buttons/buttonIcon";
 import CloseIcon from "../../../icons/close";
 import FireLargeAct from "../../../icons/fireLargeAct";
 import FireLargeNoAct from "../../../icons/fireLargeNoAct";
+import { useUserDetails } from "../../../hooks/use-user-details";
 
-export const NotificationStreak = ({ day, isAccom, onClose }) => {
+export const NotificationStreak = ({ day, onClose }) => {
   const motivationalMessages = [
     "¡Sigue así! Tu racha está imparable.",
     "¡Racha activa! No te detengas.",
@@ -17,15 +18,11 @@ export const NotificationStreak = ({ day, isAccom, onClose }) => {
   const [textMotivation, setTextMotivation] = useState("");
 
   useEffect(() => {
-    if (isAccom) {
-      const randomMessage =
-        motivationalMessages[
-          Math.floor(Math.random() * motivationalMessages.length)
-        ];
-      setTextMotivation(randomMessage);
-    } else {
-      setTextMotivation("");
-    }
+    const randomMessage =
+      motivationalMessages[
+        Math.floor(Math.random() * motivationalMessages.length)
+      ];
+    setTextMotivation(randomMessage);
   }, []);
 
   return (
@@ -38,27 +35,27 @@ export const NotificationStreak = ({ day, isAccom, onClose }) => {
             variant="combColBlack2"
           />
         </div>
-        {isAccom ? (
-          <>
-            <FireLargeAct />
-            <div className="flex flex-row  items-center mt-4 space-x-1">
-              <h2 className="font-title text-title-sm  text-primary-pri2">
-                ¡Racha de
-              </h2>
-              <h3 className="font-display text-display-sm  text-secondary-sec2">
-                {day}
-              </h3>
-              <h2 className="font-title text-title-sm text-primary-pri2">
-                días!
-              </h2>
-            </div>
 
-            <p className="font-body text-body-md text-neutral-neu0 mt-1 px-2 mb-5">
-              {textMotivation}
-            </p>
-          </>
-        ) : (
-          <>
+        <>
+          <FireLargeAct />
+          <div className="flex flex-row  items-center mt-4 space-x-1">
+            <h2 className="font-title text-title-sm  text-primary-pri2">
+              ¡Racha de
+            </h2>
+            <h3 className="font-display text-display-sm  text-secondary-sec2">
+              {day}
+            </h3>
+            <h2 className="font-title text-title-sm text-primary-pri2">
+              días!
+            </h2>
+          </div>
+
+          <p className="font-body text-body-md text-neutral-neu0 mt-1 px-2 mb-5">
+            {textMotivation}
+          </p>
+        </>
+
+        {/*<>
             <FireLargeNoAct />
             <h2 className="font-title text-title-sm mt-4 text-primary-pri2">
               Oh, no. Perdiste tu racha
@@ -66,8 +63,7 @@ export const NotificationStreak = ({ day, isAccom, onClose }) => {
             <p className="font-body text-body-md text-neutral-neu0 mt-1 px-2 mb-5">
               ¡Ánimo! A veces fallamos, pero cada día es una nueva oportunidad.
             </p>
-          </>
-        )}
+          </>*/}
       </div>
     </div>
   );
