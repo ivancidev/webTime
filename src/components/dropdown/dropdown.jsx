@@ -42,7 +42,7 @@ export const Dropdown = ({
           <option
             key={index}
             value={option[valueKey]}
-            className="bg-neutral-neu2 text-primary-pri2 text-body-md"
+            className="bg-neutral-neu2 text-primary-pri2 sm:text-body-md"
           >
             {displayKey === "minutos"
               ? `${option[displayKey]} minutos`

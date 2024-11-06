@@ -30,10 +30,16 @@ const CompletedBooksSection = () => {
 
   const toggleCalendar = () => {
     setCalendarOpen(!isCalendarOpen);
+    if (!isCalendarOpen) {
+      setIsModalOpen(false);
+    }
   };
 
   const handleFilterClick = () => {
     setIsModalOpen(!isModalOpen);
+    if (!isModalOpen) {
+      setCalendarOpen(false);
+    }
   };
 
   const handleApplyFilters = ({ categories, languages }) => {
@@ -114,7 +120,9 @@ const CompletedBooksSection = () => {
         />
       )}
       {isCalendarOpen && (
-        <Calendar onClose={toggleCalendar} onSelectDate={handleDateSelect} />
+        <div className="relative">
+          <Calendar onClose={toggleCalendar} onSelectDate={handleDateSelect} />
+        </div>
       )}
       <div className="flex flex-col p-4">
         {filteredBooks.length === 0 ? (
@@ -134,6 +142,7 @@ const CompletedBooksSection = () => {
                 key={book.libro.codLibro}
                 titleBook={book.libro.nombreLibro}
                 frontBook={book.libro.enlacePortada}
+                authorBook={book.libro.autor.nombreAutor}
                 book={book.libro}
               />
             ))}

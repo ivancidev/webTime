@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
-import { NavbarO } from "../../../components/navbar/navbarO";
 import BackIcon from "../../../icons/back";
 import { PerfilUser } from "../components/perfil-user";
 import CompletedBooksSection from "../components/completed-books";
@@ -13,7 +12,7 @@ export const Profile = () => {
   const { userDetails } = useUserDetails(user);
   return (
     <section>
-      <div className="ml-6 md:ml-8 lg:ml-14 md:mt-8">
+      <div className="sticky top-2 sm:relative ml-6 md:ml-8 lg:ml-14 md:mt-8">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/app")} />
       </div>
       <div className="flex justify-center items-center lg:space-x-64 flex-col md:flex-row space-x-4 mt-5 lg:mt-0">
@@ -28,7 +27,7 @@ export const Profile = () => {
           )}
         </div>
       </div>
-      <div className="mt-5 md:mt-10 ">
+      <div className="mt-10 md:mt-16 ">
         <CompletedBooksSection />
       </div>
     </section>
