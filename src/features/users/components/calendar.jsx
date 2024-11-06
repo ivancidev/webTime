@@ -46,7 +46,7 @@ export const Calendar = ({ onClose, onSelectDate, selectedDate }) => {
   }, [selectedDate]);
 
   return (
-    <div className="absolute right-10 md:right-20 rounded-xl bg-primary-pri3 drop-shadow-2xl px-2 w-80">
+    <div className="absolute right-10 md:right-20 rounded-xl bg-primary-pri3 drop-shadow-2xl px-2 w-80 z-10">
       <div className="w-full flex justify-end">
         <ButtonIcon onClick={onClose} SvgIcon={Close} variant="combColBlack2" />
       </div>
