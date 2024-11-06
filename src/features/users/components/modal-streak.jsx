@@ -22,7 +22,7 @@ export const ModalStreak = ({ daysStreak, time, onClose }) => {
   };
 
   return (
-    <div className="w-[530px] h-60 rounded-xl bg-primary-pri3 drop-shadow-lg p-2 absolute top-20 right-2">
+    <div className="w-[85%] sm:w-[530px] h-60 rounded-xl bg-primary-pri3 drop-shadow-2xl p-2 absolute top-20 right-14">
       <div className="w-full flex justify-end">
         <ButtonIcon
           onClick={onClose}
@@ -34,13 +34,13 @@ export const ModalStreak = ({ daysStreak, time, onClose }) => {
         <div>
           <div className="flex flex-row items-center">
             <h3 className="font-title text-title-sm">Días en racha: </h3>
-            <h2 className="font-body text-body-lg pl-2">{daysStreak}</h2>
+            <h2 className="font-body text-body-md sm:text-body-lg pl-2">{daysStreak}</h2>
           </div>
           <div className="flex flex-row pl-4 mt-3">
-            <h4 className="font-label text-label-md">
+            <h4 className="font-label text-label-sm sm:text-label-md">
               Tiempo diario establecido:
             </h4>
-            <p className="font-body text-body-md pl-1">{contentTime}</p>
+            <p className="font-body text-body-sm sm:text-body-md pl-1">{contentTime}</p>
           </div>
         </div>
         <div>

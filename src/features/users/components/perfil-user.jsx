@@ -15,10 +15,10 @@ export const PerfilUser = () => {
         </div>
         <div className="md:ml-[40px] mt-4 md:mt-0">
           <h2 className="font-title text-title-md mt-1">{user?.nombre}</h2>
-          <h2 className="text-neutral-neu0 text-label-lg mt-3">
+          <h2 className="text-neutral-neu0 text-label-md sm:text-label-lg mt-3">
             @{user?.nombre_usuario}
           </h2>
-          <h2 className="text-neutral-neu0 text-label-lg mt-2">
+          <h2 className="text-neutral-neu0 text-label-md sm:text-label-lg mt-2">
             {user?.correo}
           </h2>
         </div>
