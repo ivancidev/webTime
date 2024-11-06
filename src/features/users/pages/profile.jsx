@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
-import { NavbarO } from "../../../components/navbar/navbarO";
 import BackIcon from "../../../icons/back";
 import { PerfilUser } from "../components/perfil-user";
 import CompletedBooksSection from "../components/completed-books";
