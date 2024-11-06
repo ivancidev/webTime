@@ -86,7 +86,8 @@ export const NavbarO = () => {
           SvgIcon={Streak}
         />
         {userDetails ? (
-          <h2 className="font-title text-title-sm text-secondary-sec2 pt-1">
+          <h2 className={`${isModalStreakOpen ? "font-title text-title-sm text-secondary-sec1 pt-1" :
+                        "font-title text-title-sm text-secondary-sec2 pt-1"}`}>
             {userDetails.dias_racha}
           </h2>
         ) : (

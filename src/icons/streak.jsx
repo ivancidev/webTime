@@ -1,8 +1,8 @@
 export const Streak = () => {
   return (
     <svg
-      width="27"
-      height="34"
+      width="21"
+      height="28"
       viewBox="0 0 27 34"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
