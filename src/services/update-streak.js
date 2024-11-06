@@ -1,10 +1,13 @@
 import { supabase } from "./supabaseClient";
-export const updateRacha = async (idUsuario, diasRacha) => {
+
+export const updateRacha = async (idUsuario, idRacha, diasRacha) => {
   try {
     const { data, error } = await supabase
       .from("Rachas_usuarios")
-      .upsert({ id_usuario: idUsuario, dias_racha: diasRacha })
-      .eq("id_usuario", idUsuario);
+      .update({ dias_racha: diasRacha })
+      .eq("id_usuario", idUsuario)
+      .eq("id_racha", idRacha);
+
     if (error) {
       throw error;
     }
