@@ -4,7 +4,7 @@ import BeforeIcon from "../../../icons/before";
 import NextIcon from "../../../icons/next";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 
-export const Carousel = ({ books }) => {
+export const Carousel = ({ books, completedBooks }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsToShow, setItemsToShow] = useState(4);
 
@@ -75,6 +75,13 @@ export const Carousel = ({ books }) => {
                 frontBook={book.enlacePortada}
                 authorBook={book.autor.nombreAutor}
                 book={book}
+                isCompleted={
+                  completedBooks &&
+                  completedBooks.some(
+                    (completedBook) =>
+                      completedBook.libro.codLibro === book.codLibro
+                  )
+                }
               />
             ))}
         </div>

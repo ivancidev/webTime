@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BackIcon from "../../../icons/back";
 import ListenIcon from "../../../icons/listen";
 import ReadIcon from "../../../icons/read";
@@ -18,7 +18,6 @@ export const BookInfo = () => {
   const { bookDetails, error, loading } = useBookDetails(book);
   const [showReadBook, setShowReadBook] = useState(false);
   const { showAudioPlay, setShowAudioPlay } = useAudio();
-  const user = JSON.parse(localStorage.getItem("user"));
 
   if (!book) {
     return (
@@ -40,6 +39,7 @@ export const BookInfo = () => {
   if (error) {
     return <div>Error al obtener detalles del libro: {error.message}</div>;
   }
+
   return (
     <div className="flex min-h-screen flex-col bg-primary-pri3">
       <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
@@ -90,9 +90,9 @@ export const BookInfo = () => {
           <ReadBook
             pdfUrl={book.enlacePdf}
             onClose={() => setShowReadBook(false)}
-            id_user = {user.id_usuario}
+            id_user={user.id_usuario}
             limited_page={book.numero_paginas}
-            codBook = {book.codLibro}
+            codBook={book.codLibro}
           />
         </div>
       )}

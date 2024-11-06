@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAudio } from "../../../context/audio-context";
 
-export const CardBook = ({ titleBook, frontBook, authorBook, book }) => {
+export const CardBook = ({ titleBook, frontBook, authorBook, book, isCompleted }) => {
   const navigate = useNavigate();
   const { setShowAudioPlay } = useAudio();
 
@@ -15,9 +15,14 @@ export const CardBook = ({ titleBook, frontBook, authorBook, book }) => {
 
   return (
     <div
-      className="w-40 h-50 bg-primary-pri3 rounded-2xl flex flex-col justify-start cursor-pointer group sm:w-60 sm:h-[340px] flex-none"
+      className="relative w-40 h-50 bg-primary-pri3 rounded-2xl flex flex-col justify-start cursor-pointer group sm:w-60 sm:h-[340px] flex-none"
       onClick={handleClick}
     >
+      {isCompleted && (
+        <div className="absolute top-2 right-2 bg-secondary-sec2 text-primary-pri3 font-label text-label-sm  w-20 h-7 rounded-md z-10 flex items-center justify-center">
+          Concluido
+        </div>
+      )}
       <img
         src={frontBook}
         alt=""
