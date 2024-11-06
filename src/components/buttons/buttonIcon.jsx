@@ -7,7 +7,7 @@ const ButtonIcon = ({
   disabled = false,
 }) => {
   const baseButton =
-    "rounded-[20px] w-8 sm:w-10 h-8 sm:h-10 flex flex-col items-center justify-center";
+    "rounded-[20px] w-9 sm:w-10 h-9 sm:h-10 flex flex-col items-center justify-center";
   const varCol = {
     combCol1: "bg-secondary-sec2 hover:bg-secondary-sec1", //boton skyblue a blue
     combCol3: "bg-secondary-sec1 hover:bg-secondary-sec2", // boton blue a skyblue
@@ -16,10 +16,12 @@ const ButtonIcon = ({
     combColBlack: "text-primary-pri2 hover:text-secondary-sec1", //boton negro  que cambia a azul
     combColBlack2: "text-primary-pri2 hover:text-secondary-sec2", //boton negro  que cambia a celeste
     combColTrans2: "text-primary-pri3 bg-transparent hover:text-secondary-sec1", // boton sin fondo y con icono azul
-    combColBlue: "text-secondary-sec1",
+    combColBlue: "text-secondary-sec1 ",
+    combColskyblue: "text-secondary-sec2 ",
     combColZ: "text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1", // boton sin fondo y con icono
     combColNeu:
       "text-neutral-neu0 bg-neutral-neu2 hover:bg-secondary-sec2 hover:text-primary-pri3", //boton gris
+    combColNeu2: "text-neutral-neu0 bg-transparent hover:text-secondary-sec2 ", //boton gris que cambia a celeste
   };
 
   return (

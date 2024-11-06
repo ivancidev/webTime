@@ -20,6 +20,12 @@ export const useGetBooks = (isRecent) => {
           .select(
             `
             *,
+            categoria (
+              nombreCategoria
+            ),
+            idioma (
+              idioma
+            ),
             autor(
               nombreAutor
             )

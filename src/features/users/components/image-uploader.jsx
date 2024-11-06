@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import Camera from "../../../icons/camera";
 import Delete from "../../../icons/delete";
 import UserReg from "../../../icons/userRegister";
 
-const ImageUploader = () => {
+const ImageUploader = ({ onImageSelect }) => {
   const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
+  const fileInputRef = useRef(null);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -15,8 +16,10 @@ const ImageUploader = () => {
       const fileExtension = file.name.split(".").pop().toLowerCase();
 
       if (
-        !((fileType === "image/png" && fileExtension === "png") ||
-          (fileType === "image/jpeg" && fileExtension === "jpg"))
+        !(
+          (fileType === "image/png" && fileExtension === "png") ||
+          (fileType === "image/jpeg" && fileExtension === "jpg")
+        )
       ) {
         setError("Solo se permiten archivos PNG o JPG (no JPEG).");
         return;
@@ -25,18 +28,17 @@ const ImageUploader = () => {
       setError(null);
       const imageUrl = URL.createObjectURL(file);
       setImage(imageUrl);
+      onImageSelect(file);
     }
   };
 
   const handleImageDelete = () => {
     setImage(null);
-    setError(null); 
+    setError(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
   };
-
-  const fileInputRef = React.useRef(null);
 
   const handleCameraClick = () => {
     if (fileInputRef.current) {
