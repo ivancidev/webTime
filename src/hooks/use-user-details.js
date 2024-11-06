@@ -3,18 +3,24 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useUserDetails = (user) => {
   const fetchUserDetails = async () => {
-    const [streakResponse, timeReadResponse] = await Promise.all([
-      supabase
-        .from("Rachas_usuarios")
-        .select("dias_racha")
-        .eq("id_usuario", user.id_usuario)
-        .single(),
-      supabase
-        .from("preferencias_tiempos")
-        .select("id_tiempo_lectura")
-        .eq("id_usuario", user.id_usuario)
-        .single(),
-    ]);
+    const [streakResponse, timeReadResponse, isAccomplishResponse] =
+      await Promise.all([
+        supabase
+          .from("Rachas_usuarios")
+          .select("dias_racha")
+          .eq("id_usuario", user.id_usuario)
+          .single(),
+        supabase
+          .from("preferencias_tiempos")
+          .select("id_tiempo_lectura")
+          .eq("id_usuario", user.id_usuario)
+          .single(),
+        supabase
+          .from("estadisticas_diarias")
+          .select("se_cumplio")
+          .eq("id_usuario", user.id_usuario)
+          .single(),
+      ]);
 
     if (streakResponse.error || timeReadResponse.error) {
       throw new Error("Error al obtener racha o tiempo de lectura del usuario");
@@ -22,7 +28,6 @@ export const useUserDetails = (user) => {
 
     const timeReadId = timeReadResponse.data.id_tiempo_lectura;
 
-    // Realizar la consulta a tiempos_lectura para obtener los minutos
     const timeMinutesResponse = await supabase
       .from("tiempos_lectura")
       .select("minutos")
@@ -37,6 +42,7 @@ export const useUserDetails = (user) => {
       dias_racha: streakResponse.data.dias_racha,
       id_tiempo_lectura: timeReadId,
       minutos: timeMinutesResponse.data.minutos,
+      se_cumplio: isAccomplishResponse.data.se_cumplio,
     };
   };
 
