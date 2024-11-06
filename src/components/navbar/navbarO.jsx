@@ -19,7 +19,10 @@ export const NavbarO = () => {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-    if (!isOpen) setIsOpenUser(false);
+    if (!isOpen) {
+      setIsOpenUser(false);
+      setIsModalStreakOpen(false);
+    }
   };
   const openUser = () => {
     setIsOpenUser(true);
@@ -32,7 +35,10 @@ export const NavbarO = () => {
 
   const toggleModalStreak = () => {
     setIsModalStreakOpen(!isModalStreakOpen);
-    if (!isModalStreakOpen) setIsOpenUser(false);
+    if (!isModalStreakOpen){
+      setIsOpen(false);
+      setIsOpenUser(false);
+    } 
   };
 
   const location = useLocation();
@@ -76,7 +82,7 @@ export const NavbarO = () => {
       </ul>
       <div className="flex flex-row items-center mr-5 cursor-pointer" onClick={toggleModalStreak}>
         <ButtonIcon
-          variant="combColBlack2"
+          variant={`${isModalStreakOpen ? "combColBlue" : "combColskyblue"}`}
           SvgIcon={Streak}
         />
         {userDetails ? (
