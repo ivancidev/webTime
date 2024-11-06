@@ -5,6 +5,7 @@ import LogOut from "../../../icons/logOut";
 import UserProf from "../../../icons/userProfile";
 import ViewProfile from "../../../icons/viewProfile";
 import { useNavigate } from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 export const ModalUser = ({ nickname, imgUser, onClose }) => {
   const navigate = useNavigate();
@@ -14,9 +15,10 @@ export const ModalUser = ({ nickname, imgUser, onClose }) => {
     localStorage.removeItem("user");
     navigate("/");
   };
-
+  const location = useLocation();
+  
   return (
-    <div className="w-52 h-72 bg-primary-pri3 drop-shadow-xl rounded-xl">
+    <div className="p-4 bg-primary-pri3 drop-shadow-xl rounded-xl">
       <div className="w-full flex justify-end">
         <ButtonIcon
           onClick={onClose}
@@ -34,12 +36,12 @@ export const ModalUser = ({ nickname, imgUser, onClose }) => {
           <UserProf />
         )}
         <h3 className="font-label text-label-lg py-1">{nickname}</h3>
-        <Button
+        {location.pathname !== "/profile" && <Button
           text="Ver perfil"
           variant="combSize"
           SvgIcon={ViewProfile}
           onClick={() => navigate("/profile")}
-        />
+        />}
         <Button
           text="Cerrar sesión"
           variant="combSize"
