@@ -28,7 +28,7 @@ export const Profile = () => {
           )}
         </div>
       </div>
-      <div className="mt-5 md:mt-10 ">
+      <div className="mt-10 md:mt-16 ">
         <CompletedBooksSection />
       </div>
     </section>
