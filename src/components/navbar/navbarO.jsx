@@ -89,7 +89,7 @@ export const NavbarO = () => {
       </div>
 
       {isOpen && (
-        <div className="flex absolute top-20 right-12 z-50">
+        <div className="flex absolute top-20 right-28 z-50">
           <ModalMenu />
         </div>
       )}
