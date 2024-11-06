@@ -13,7 +13,7 @@ export const Profile = () => {
   const { userDetails } = useUserDetails(user);
   return (
     <section>
-      <div className="ml-6 md:ml-8 lg:ml-14 md:mt-8">
+      <div className="sticky top-2 sm:relative ml-6 md:ml-8 lg:ml-14 md:mt-8">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/app")} />
       </div>
       <div className="flex justify-center items-center lg:space-x-64 flex-col md:flex-row space-x-4 mt-5 lg:mt-0">
