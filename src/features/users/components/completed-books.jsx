@@ -121,7 +121,7 @@ const CompletedBooksSection = () => {
       )}
       {isCalendarOpen && (
         <div className="relative">
-          <Calendar onClose={toggleCalendar} onSelectDate={handleDateSelect} />
+          <Calendar onClose={toggleCalendar} onSelectDate={handleDateSelect} selectedDate={selectedDate} />
         </div>
       )}
       <div className="flex flex-col p-4">
