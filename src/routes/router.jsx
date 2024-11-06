@@ -7,17 +7,31 @@ import { Root } from "../layouts/root";
 import { RegisterUser } from "../features/users/pages/register-user";
 import { Profile } from "../features/users/pages/profile";
 import { SelectPreferences } from "../features/users/pages/select-preferences";
+import { ProtectedRouter } from "./protected-router";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <RegisterUser />,
+    element: (
+      <ProtectedRouter>
+        <RegisterUser />
+      </ProtectedRouter>
+    ),
   },
-  { path: "/preferences", 
-    element: <SelectPreferences /> },
+  { path: "/preferences", element: <SelectPreferences /> },
   {
     path: "/profile",
-    element: <Profile />,
+    element: <Root />,
+    children: [
+      {
+        index: true,
+        element: <Profile />,
+      },
+      {
+        path: "book-info/:bookId",
+        element: <BookInfo />,
+      },
+    ],
   },
   {
     path: "/app",
@@ -28,7 +42,7 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "app/book-info/:bookId",
+        path: "book-info/:bookId",
         element: <BookInfo />,
       },
     ],

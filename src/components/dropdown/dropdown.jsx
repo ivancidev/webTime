@@ -28,11 +28,12 @@ export const Dropdown = ({
         id={name}
         name={name}
         className="w-full md:w-[340px] h-[50px] bg-transparent border-[1px] rounded border-neutral-neu0 font-body placeholder-neutral-neu0 text-primary-pri1  text-body-md p-2"
-        {...register(name, {
-          required: `${label} es requerido`,
-        })}
-        value={value} // Asegúrate de que el value esté vinculado correctamente
-        onChange={onChange} // Agregamos la función onChange
+        {...(register &&
+          register(name, {
+            required: `${label} es requerido`,
+          }))}
+        value={value}
+        onChange={onChange}
       >
         <option value="" disabled className="bg-neutral-neu1 text-primary-pri3">
           {placeholder}
@@ -41,9 +42,11 @@ export const Dropdown = ({
           <option
             key={index}
             value={option[valueKey]}
-            className="bg-neutral-neu2 text-primary-pri2 text-body-md"
+            className="bg-neutral-neu2 text-primary-pri2 sm:text-body-md"
           >
-            {option[displayKey]}
+            {displayKey === "minutos"
+              ? `${option[displayKey]} minutos`
+              : option[displayKey]}
           </option>
         ))}
       </select>

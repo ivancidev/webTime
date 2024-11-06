@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import Play from "../../../icons/play";
 import Pause from "../../../icons/pause";
 import Volume from "../../../icons/volume";
@@ -10,6 +10,8 @@ import CloseIcon from "../../../icons/close";
 import Mute from "../../../icons/mute";
 import Button from "../../../components/buttons/button";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
+import { updateDailyStatistics } from "../../../services/streakService";
+import { supabase } from "../../../services/supabaseClient";
 
 export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
   const audioRef = useRef(null);
@@ -23,26 +25,48 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
   const [showSpeedOptions, setShowSpeedOptions] = useState(false);
   const [showVerticalSlider, setShowVerticalSlider] = useState(false);
   const audioKey = `audioProgress_${urlAudio}`;
+  const [startTime, setStartTime] = useState(null);
+  const [listeningTime, setListeningTime] = useState(0);
+  const book = JSON.parse(localStorage.getItem("book"));
+  const user = JSON.parse(localStorage.getItem("user")) || {};
 
+  const saveListeningProgress = async (time) => {
+    const timeInMinutes = (time / 60).toFixed(2);
+    try {
+      const { error } = await supabase.from("registro_leido").upsert(
+        {
+          id_usuario: user.id_usuario,
+          codLibro: book.codLibro,
+          tiempo_escuchado: timeInMinutes,
+        },
+        { onConflict: ["id_usuario", "codLibro"] }
+      );
+      if (error) {
+        console.error("Error saving progress in Supabase:", error);
+      }
+    } catch (error) {
+      console.error("Supabase interaction error:", error);
+    }
+  };
   useEffect(() => {
     const audio = audioRef.current;
 
-    const savedProgress = localStorage.getItem(audioKey);
+    const savedProgress = parseFloat(localStorage.getItem(audioKey)) || 0;
     if (savedProgress) {
-      audio.currentTime = parseFloat(savedProgress); 
-      setCurrentTime(parseFloat(savedProgress));
+      audio.currentTime = savedProgress;
+      setCurrentTime(savedProgress);
     }
 
     const updateCurrentTime = () => {
       setCurrentTime(audio.currentTime);
       setDuration(audio.duration);
-
       localStorage.setItem(audioKey, audio.currentTime);
     };
 
     const handleAudioEnd = () => {
       setIsPlaying(false);
-      localStorage.removeItem(audioKey); 
+      localStorage.removeItem(audioKey);
+      saveListeningProgress(listeningTime / 1000);
     };
 
     audio.addEventListener("timeupdate", updateCurrentTime);
@@ -51,8 +75,24 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
     return () => {
       audio.removeEventListener("timeupdate", updateCurrentTime);
       audio.removeEventListener("ended", handleAudioEnd);
+
+      if (audio.currentTime > 0) saveListeningProgress(audio.currentTime);
     };
-  }, [audioKey]);
+  }, [listeningTime]);
+
+  useEffect(() => {
+    if (isPlaying) {
+      if (!startTime) {
+        setStartTime(Date.now());
+      }
+    } else {
+      if (startTime) {
+        const elapsedTime = Date.now() - startTime;
+        setListeningTime((prevTime) => prevTime + elapsedTime);
+        setStartTime(null);
+      }
+    }
+  }, [isPlaying]);
 
   const handlePlayPause = () => {
     const audio = audioRef.current;
@@ -107,8 +147,40 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
       Math.max(audio.currentTime + seconds, 0),
       duration
     );
+    setCurrentTime(audio.currentTime); 
+    saveListeningProgress(audio.currentTime);
   };
 
+  const handleClose = async () => {
+    let totalListeningTime = listeningTime;
+
+    if (startTime) {
+      const elapsedTime = Date.now() - startTime;
+      totalListeningTime += elapsedTime;
+      setStartTime(null);
+    }
+
+    saveListeningProgress(currentTime);
+
+    const totalListeningTimeInSeconds = totalListeningTime / 1000;
+    const totallearning_minutes = totalListeningTimeInSeconds / 60;
+
+    const user = JSON.parse(localStorage.getItem("user")) || {};
+    user.listeningTime =
+      (user.listeningTime || 0) + totalListeningTimeInSeconds;
+    localStorage.setItem("user", JSON.stringify(user));
+
+    try {
+      await updateDailyStatistics(user.id_usuario, totallearning_minutes);
+    } catch (error) {
+      console.error(
+        "Error al actualizar las estadísticas diarias en la base de datos:",
+        error
+      );
+    }
+
+    setShowAudioPlayer(false);
+  };
   const rewindToStart = () => {
     const audio = audioRef.current;
     audio.currentTime = 0;
@@ -132,6 +204,8 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
     const audio = audioRef.current;
     const newTime = (e.target.value * duration) / 100;
     audio.currentTime = newTime;
+    setCurrentTime(newTime);
+    saveListeningProgress(newTime); // Guarda el tiempo actual
   };
 
   const playbackRates = [1, 1.25, 1.5, 1.75, 2];
@@ -254,7 +328,7 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
           <ButtonIcon
             SvgIcon={CloseIcon}
             variant="combColBlack"
-            onClick={setShowAudioPlayer}
+            onClick={handleClose}
           />
         </div>
       </div>

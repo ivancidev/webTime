@@ -9,7 +9,7 @@ export default function Mute() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_53455_1516)">
+      <g clipPath="url(#clip0_53455_1516)">
         <path
           d="M30.6667 12.0003L22.6667 20.0003M22.6667 12.0003L30.6667 20.0003M14.6667 6.66699L8.00008 12.0003H2.66675V20.0003H8.00008L14.6667 25.3337V6.66699Z"
           stroke="currentColor"
