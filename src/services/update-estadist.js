@@ -1,6 +1,6 @@
 import { supabase } from "./supabaseClient";
 
-export const updateAccom = async (idUsuario, idMetrica, isAccom, min) => {
+export const updateEst = async (idUsuario, idMetrica, isAccom, min) => {
   try {
     const { data, error } = await supabase
       .from("estadisticas_diarias")
@@ -12,8 +12,8 @@ export const updateAccom = async (idUsuario, idMetrica, isAccom, min) => {
       throw error;
     }
 
-    console.log("Se cumplió actualizado con éxito", data);
+    console.log("Estadisticas actualizado con éxito", data);
   } catch (error) {
-    console.error("Error al actualizar se cumplió:", error.message);
+    console.error("Error al actualizar estadisticas:", error.message);
   }
 };
