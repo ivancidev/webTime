@@ -84,7 +84,6 @@ export const FormUser = () => {
       .eq("correo", email);
 
     if (error || data.length > 0) {
-      setPasswordStrength("Correo electrónico ya registrado");
       return "Correo electrónico ya registrado";
     }
     return true;
@@ -97,7 +96,6 @@ export const FormUser = () => {
       .eq("nombre_usuario", nameUser);
 
     if (error || data.length > 0) {
-      setPasswordStrength("Este nombre de usuario está en uso, ingrese otro.");
       return "Este nombre de usuario está en uso, ingrese otro.";
     }
     return true;
