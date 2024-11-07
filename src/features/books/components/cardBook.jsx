@@ -1,7 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useAudio } from "../../../context/audio-context";
 
-export const CardBook = ({ titleBook, frontBook, authorBook, book, isCompleted }) => {
+export const CardBook = ({
+  titleBook,
+  frontBook,
+  authorBook,
+  book,
+  isCompleted,
+}) => {
   const navigate = useNavigate();
   const { setShowAudioPlay } = useAudio();
 

@@ -46,7 +46,7 @@ export const NotificationStreak = ({ day, onClose }) => {
               {day}
             </h3>
             <h2 className="font-title text-title-sm text-primary-pri2">
-              días!
+              {day === 1 ? "día!" : "días!"}
             </h2>
           </div>
 
