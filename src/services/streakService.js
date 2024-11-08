@@ -1,3 +1,4 @@
+import { getDate } from "../utils/get-date";
 import { supabase } from "./supabaseClient";
 let isUpdating = false;
 
@@ -6,12 +7,15 @@ export const updateDailyStatistics = async (userId, listeningTimeInMinutes) => {
   isUpdating = true;
 
   try {
-    const today = new Date().toISOString().split("T")[0];
+    // const today = "2024-11-13";
+    const today = getDate();
+    console.log("sd", today)
+    const lastNotificationDate = localStorage.getItem("lastNotificationDate") || "";
+
     const { data: existingRecord, error: fetchError } = await supabase
       .from("estadisticas_diarias")
       .select("*")
       .eq("id_usuario", userId)
-      .eq("fecha", today)
       .single();
 
     if (fetchError && fetchError.code !== "PGRST116") {
@@ -28,8 +32,12 @@ export const updateDailyStatistics = async (userId, listeningTimeInMinutes) => {
       ({ data, error } = await supabase
         .from("estadisticas_diarias")
         .update({
+          fecha: today,
           minutos_aprendido_hoy:
-            existingRecord.minutos_aprendido_hoy + listeningTimeInMinutes,
+            existingRecord.fecha !== lastNotificationDate
+              ? existingRecord.minutos_aprendido_hoy + listeningTimeInMinutes
+              : 0,
+          se_cumplio: false,
         })
         .eq("id_metrica", existingRecord.id_metrica));
     } else {
