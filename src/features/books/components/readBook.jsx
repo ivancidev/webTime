@@ -6,6 +6,7 @@ import BackIcon from "../../../icons/back";
 import ContinueIcon from "../../../icons/continue";
 import { supabase } from "../../../services/supabaseClient";
 import Button from "../../../components/buttons/button";
+import { getDate } from "../../../utils/get-date";
 
 export const ReadBook = ({
   pdfUrl,
@@ -18,8 +19,11 @@ export const ReadBook = ({
     parseInt(localStorage.getItem(`pdfProgress_${pdfUrl}`)) || 1
   );
   const [iframeKey, setIframeKey] = useState(Date.now());
-
+  const lastNotificationDate = localStorage.getItem("lastNotificationDate") || "";  
   const pdfWithParams = `${pdfUrl}#page=${currentPage}&navpanes=0&scrollbar=0&zoom=100`;
+  // const today = "2024-11-13";
+  const today = getDate();
+  console.log("fecha", today);
 
   useEffect(() => {
     const initialStartTime = Date.now();
@@ -29,7 +33,7 @@ export const ReadBook = ({
       const totalReadingTimeInSeconds = elapsedTime / 1000;
       const totalReadingTimeInMinutes = totalReadingTimeInSeconds / 60;
 
-      if (totalReadingTimeInMinutes > 0) {
+      if (lastNotificationDate !== today) {
         try {
           updateDailyStatistics(id_user, totalReadingTimeInMinutes);
         } catch (error) {
@@ -38,6 +42,8 @@ export const ReadBook = ({
             error
           );
         }
+      } else {
+        updateDailyStatistics(id_user, 0);
       }
     };
   }, [id_user]);
@@ -133,9 +139,9 @@ export const ReadBook = ({
         </div>
         <div className="flex items-center bg-transparent rounded-3xl p-2">
           <Button
-            text="Reiniciar" 
+            text="Reiniciar"
             onClick={handleResetProgress}
-            variant="combCol2" 
+            variant="combCol2"
           />
         </div>
         <div className="flex items-center bg-transparent rounded-3xl p-2">

@@ -3,18 +3,18 @@ import React from "react";
 export default function ContinueIcon() {
   return (
     <svg
-      width="20"
-      height="16"
-      viewBox="0 0 12 12"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M6 0L4.9425 1.0575L9.1275 5.25H0V6.75H9.1275L4.9425 10.9425L6 12L12 6L6 0Z"
+        d="M5 12H19M19 12L12 5M19 12L12 19"
         stroke="white"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
       />
     </svg>
   );

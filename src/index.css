@@ -59,15 +59,29 @@ input[type="search"]::-webkit-search-cancel-button {
   display: none;
 }
 
-input[type="password"]::-ms-reveal, 
+input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear {
   display: none;
 }
 
 @layer utilities {
-    .text-gradient {
-      background: linear-gradient(90deg, #02B0F7 0%, #0123FD 51%, #0297FF 100%);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
+  .text-gradient {
+    background: linear-gradient(90deg, #02b0f7 0%, #0123fd 51%, #0297ff 100%);
+    -webkit-background-clip: text;
+    color: transparent;
   }
+}
+
+@keyframes bounce-up-down {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-bounce-up-down {
+  animation: bounce-up-down 2s infinite;
+}
