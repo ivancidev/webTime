@@ -24,7 +24,7 @@ export const ModalUser = ({ nickname, imgUser, onClose }) => {
   };
 
   return (
-    <div className="p-4 bg-primary-pri3 drop-shadow-xl rounded-xl">
+    <div className="p-4 bg-primary-pri3 drop-shadow-xl rounded-xl w-[180px]">
       <div className="w-full flex justify-end">
         <ButtonIcon
           onClick={onClose}
@@ -41,7 +41,7 @@ export const ModalUser = ({ nickname, imgUser, onClose }) => {
         ) : (
           <UserProf />
         )}
-        <h3 className="font-label text-label-lg py-1">{nickname}</h3>
+        <h3 className="font-label text-label-lg">{nickname}</h3>
         {location.pathname !== "/profile" && (
           <Button
             text="Ver perfil"
