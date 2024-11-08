@@ -150,7 +150,6 @@ export const SelectPreferences = () => {
     <div className="flex min-h-screen flex-col bg-primary-pri3">
       <Navbar />
       <div className="flex flex-col items-center justify-center flex-grow">
-        {/* Preferencias de Categorías */}
         <Preferences
           text="Elige las categorías de tu interés"
           icons={categories}
@@ -158,9 +157,9 @@ export const SelectPreferences = () => {
           onSelect={handleSelectCategory}
           selectedOption={selectedCategories}
         />
-        {/* Preferencias de Tiempo de Lectura */}
+
         <Preferences
-          text="Tiempo de lectura preferido"
+          text="Tiempo preferido para leer o escuchar"
           icons={times}
           variant="t"
           onSelect={(option, isSelected) =>
