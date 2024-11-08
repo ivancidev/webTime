@@ -14,7 +14,7 @@ const CompletedBooksSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
-  const [visibleRows, setVisibleRows] = useState(2);
+  const [visibleRows, setVisibleRows] = useState(3);
   const [columns, setColumns] = useState(2);
   const [completedBooks, setCompletedBooks] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -71,7 +71,7 @@ const CompletedBooksSection = () => {
   const booksToShow = filteredBooks.slice(0, visibleRows * columns);
 
   const handleShowMore = () => {
-    setVisibleRows(visibleRows + 2);
+    setVisibleRows(visibleRows + 3);
   };
 
   useEffect(() => {
