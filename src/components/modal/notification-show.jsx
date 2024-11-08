@@ -23,8 +23,8 @@ export const ShowStreak = () => {
   const [activate, setActivate] = useState(false);
 
   useEffect(() => {
-    const lastNotificationDate = localStorage.getItem("lastNotificationDate");
-    const today = new Date().toISOString().split("T")[0];
+    const lastNotificationDate =
+      localStorage.getItem("lastNotificationDate") || "";
 
     const resetDailyProgress = () => {
       if (useEstadistics.minutos_aprendido_hoy < userDetails.minutos) {
@@ -50,8 +50,24 @@ export const ShowStreak = () => {
     if (userDetails && useEstadistics) {
       const cumpleTiempoLectura =
         useEstadistics.minutos_aprendido_hoy >= userDetails.minutos;
+      const lastDate = new Date(lastNotificationDate);
+      const estadisticsDate = new Date(useEstadistics.fecha);
+      const differenceInDays = Math.floor(
+        (estadisticsDate - lastDate) / (1000 * 60 * 60 * 24)
+      );
 
-      if (cumpleTiempoLectura && lastNotificationDate !== today) {
+      if (differenceInDays >= 2) {
+        updateRacha(user.id_usuario, userDetails.id_racha, 0);
+        localStorage.setItem("diasRacha", 0);
+        localStorage.setItem("lastNotificationDate", useEstadistics.fecha);
+        setShowStreakNotification(true);
+        return;
+      }
+
+      if (
+        cumpleTiempoLectura &&
+        lastNotificationDate !== useEstadistics.fecha
+      ) {
         const diasRacha = userDetails.dias_racha + 1;
         localStorage.setItem("diasRacha", diasRacha);
         setPreviousRacha(diasRacha);
@@ -63,7 +79,7 @@ export const ShowStreak = () => {
           useEstadistics.minutos_aprendido_hoy
         );
         setShowStreakNotification(true);
-        localStorage.setItem("lastNotificationDate", today);
+        localStorage.setItem("lastNotificationDate", useEstadistics.fecha);
       }
 
       setActivate(cumpleTiempoLectura);
@@ -77,8 +93,6 @@ export const ShowStreak = () => {
   const resetNotification = () => {
     setShowStreakNotification(false);
   };
-  console.log(userDetails);
-  console.log(useEstadistics);
 
   return (
     <>
