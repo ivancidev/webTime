@@ -12,7 +12,9 @@ export const InputText = ({
   value,
   validationRules = {},
   labelMarginTop = "20px",
-  icon, 
+  labelFontSize,
+  errorFontSize,
+  icon,
 }) => {
   return (
     <div className="flex flex-col">
@@ -21,7 +23,7 @@ export const InputText = ({
         className={`py-1 text-primary-pri2 font-label text-label-lg ${
           errors[name] ? "text-error-err2" : ""
         }`}
-        style={{ marginTop: labelMarginTop }}
+        style={{ marginTop: labelMarginTop, fontSize: labelFontSize }}
       >
         {label} <span className="text-error-err2">*</span>
       </label>
@@ -37,14 +39,20 @@ export const InputText = ({
           {...(register ? register(name, validationRules) : {})}
         />
         {icon && (
-          <div className="absolute right-4 top-7 transform -translate-y-1/2">
+          <div className="absolute right-4 top-6 transform -translate-y-1/2">
             {icon}
           </div>
         )}
       </div>
-      {errors[name] && (
-        <span className="text-error-err2">{errors[name].message}</span>
-      )}
+      <div
+        className={`${!errors[name] && name === "password" ? "h-0" : "h-3"}`}
+      >
+        {errors[name] && (
+          <span className="text-error-err2" style={{ fontSize: errorFontSize }}>
+            {errors[name].message}
+          </span>
+        )}
+      </div>
     </div>
   );
 };

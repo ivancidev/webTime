@@ -12,6 +12,7 @@ import Button from "../../../components/buttons/button";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import { updateDailyStatistics } from "../../../services/streakService";
 import { supabase } from "../../../services/supabaseClient";
+import { getDate } from "../../../utils/get-date";
 
 export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
   const audioRef = useRef(null);
@@ -29,6 +30,8 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
   const [listeningTime, setListeningTime] = useState(0);
   const book = JSON.parse(localStorage.getItem("book"));
   const user = JSON.parse(localStorage.getItem("user")) || {};
+  const lastNotificationDate =
+    localStorage.getItem("lastNotificationDate") || "";
 
   const saveListeningProgress = async (time) => {
     const timeInMinutes = (time / 60).toFixed(2);
@@ -147,7 +150,7 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
       Math.max(audio.currentTime + seconds, 0),
       duration
     );
-    setCurrentTime(audio.currentTime); 
+    setCurrentTime(audio.currentTime);
     saveListeningProgress(audio.currentTime);
   };
 
@@ -169,9 +172,15 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
     user.listeningTime =
       (user.listeningTime || 0) + totalListeningTimeInSeconds;
     localStorage.setItem("user", JSON.stringify(user));
+    // const today = "2024-11-13";
+    const today = getDate();
 
     try {
-      await updateDailyStatistics(user.id_usuario, totallearning_minutes);
+      if (lastNotificationDate !== today) {
+        await updateDailyStatistics(user.id_usuario, totallearning_minutes);
+      } else {
+        await updateDailyStatistics(user.id_usuario, 0);
+      }
     } catch (error) {
       console.error(
         "Error al actualizar las estadísticas diarias en la base de datos:",

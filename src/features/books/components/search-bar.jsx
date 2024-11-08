@@ -47,7 +47,7 @@ export const SearchBar = ({
       </div>
       <input
         type="text"
-        placeholder="Buscar"
+        placeholder="Buscar por título o autor"
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
         className="w-full sm:w-96 h-12 rounded-3xl border-none px-4 pl-12 font-body text-body-md text-primary-pri2 bg-neutral-neu3 border-2 border-primary-pri2 focus:outline-none placeholder-neutral-neu0"

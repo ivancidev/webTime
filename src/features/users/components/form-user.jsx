@@ -16,6 +16,8 @@ import {
   CircularProgress,
 } from "@mui/material";
 import TermsModal from "./modal-terms";
+import Check from "../../../icons/check";
+import CheckRegister from "../../../icons/checkRegister";
 
 export const FormUser = () => {
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ export const FormUser = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: "onChange", 
+    mode: "onChange",
   });
   const [imageFile, setImageFile] = useState(null);
   const [passwordStrength, setPasswordStrength] = useState("");
@@ -46,11 +48,16 @@ export const FormUser = () => {
       if (response.success) {
         setIsSuccess(true);
       } else {
-        setErrorMessage(response.message || "No se pudo completar el registro. Por favor, intenta de nuevo.");
+        setErrorMessage(
+          response.message ||
+            "No se pudo completar el registro. Por favor, intenta de nuevo."
+        );
       }
     } catch (error) {
       setIsLoading(false);
-      setErrorMessage("Error de conexión. Por favor, revisa tu conexión a internet e intenta de nuevo.");
+      setErrorMessage(
+        "Error de conexión. Por favor, revisa tu conexión a internet e intenta de nuevo."
+      );
     }
   };
 
@@ -120,19 +127,21 @@ export const FormUser = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col sm:items-center"
       >
-        <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent m-[20px] font-display text-display-md">
+        <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent m-[20px] pt-3 font-display text-display-md">
           ¡Bienvenido a Webtime!
         </h1>
         <div className="flex flex-col items-center">
           <ImageUploader onImageSelect={(file) => setImageFile(file)} />
         </div>
 
-        <div className="pb-6">
+        <div className="mt-2 pb-6">
           <InputText
             name="name"
             label="Nombre completo"
+            labelFontSize="16px"
+            errorFontSize="14px"
             placeholder="Ingrese su nombre"
-            className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
+            className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
             register={register}
             errors={errors}
             validationRules={{
@@ -160,8 +169,10 @@ export const FormUser = () => {
           <InputText
             name="nickname"
             label="Nombre de usuario"
+            labelFontSize="16px"
+            errorFontSize="14px"
             placeholder="Ingrese un nombre de usuario"
-            className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
+            className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
             register={register}
             errors={errors}
             validationRules={{
@@ -191,9 +202,11 @@ export const FormUser = () => {
           <InputText
             name="email"
             label="Correo electrónico"
+            labelFontSize="16px"
+            errorFontSize="14px"
             placeholder="Ingrese su correo electrónico"
             type="email"
-            className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
+            className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
             register={register}
             errors={errors}
             validationRules={{
@@ -214,9 +227,11 @@ export const FormUser = () => {
             <InputText
               name="password"
               label="Contraseña"
+              labelFontSize="16px"
+              errorFontSize="14px"
               placeholder="Ingrese su contraseña"
               type={showPassword ? "text" : "password"}
-              className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 h-[50px] p-2 pr-12 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
+              className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 pr-12 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
               register={register}
               errors={errors}
               validationRules={{
@@ -242,12 +257,16 @@ export const FormUser = () => {
               }
             />
           </div>
-          {passwordStrength && !errors.password && (
-            <span className={`mt-2 ${getPasswordStrengthColor()}`}>
-              {passwordStrength}
-            </span>
-          )}
-          <div className="flex flex-col mt-2 mb-2">
+          <div className="h-3">
+            {passwordStrength && !errors.password && (
+              <span className={`text-sm ${getPasswordStrengthColor()}`}>
+                {passwordStrength}
+              </span>
+            )}
+          </div>
+
+          <br />
+          <div className="flex flex-col mb-2">
             <label className="flex items-center space-x-2">
               <input
                 type="checkbox"
@@ -267,11 +286,13 @@ export const FormUser = () => {
                 </button>
               </span>
             </label>
-            {errors.terms && (
-              <span className="text-error-err2 text-md mt-1">
-                {errors.terms.message}
-              </span>
-            )}
+            <div className="h-3 mb-2">
+              {errors.terms && (
+                <span className="text-error-err2 text-sm mt-1">
+                  {errors.terms.message}
+                </span>
+              )}
+            </div>
           </div>
           {isModalOpen && (
             <TermsModal onClose={closeModal} onConfirm={closeModal} />
@@ -293,26 +314,34 @@ export const FormUser = () => {
       </form>
       <Dialog
         open={openDialog}
-        onClose={() => setOpenDialog(false)}
+        onClose={null}
         sx={{
           "& .MuiPaper-root": {
-            borderRadius: "20px",
+            borderRadius: "16px",
           },
         }}
       >
         {isLoading ? (
           <>
-            <DialogTitle className="text-center text-primary-pri1">Cargando...</DialogTitle>
+            <DialogTitle className="text-center text-primary-pri1">
+              Cargando...
+            </DialogTitle>
             <DialogContent className="flex flex-col items-center justify-center">
               <CircularProgress />
             </DialogContent>
           </>
         ) : isSuccess ? (
           <>
-            <DialogTitle className="text-center text-primary-pri1">
-              Registro exitoso
+            <DialogTitle className="text-center flex flex-col items-center text-primary-pri1">
+              <div className="mt-1">
+                <CheckRegister />
+              </div>
+              <h3 className="font-body text-body-lg mt-1 mx-3">
+                Registro exitoso
+              </h3>
             </DialogTitle>
-            <DialogContent className="flex flex-col items-center justify-center">
+
+            <DialogContent className="flex flex-col items-center justify-center space-y-2">
               <Button
                 text="Aceptar"
                 onClick={() => {
@@ -328,11 +357,10 @@ export const FormUser = () => {
               Cargando...
             </DialogTitle>
             <DialogContent className="flex flex-col items-center justify-center">
-              <p className="text-error-err2">{errorMessage || "Ocurrió un error. Inténtalo de nuevo."}</p>
-              <Button
-                text="Aceptar"
-                onClick={() => setOpenDialog(false)}
-              />
+              <p className="text-error-err2">
+                {errorMessage || "Ocurrió un error. Inténtalo de nuevo."}
+              </p>
+              <Button text="Aceptar" onClick={() => setOpenDialog(false)} />
             </DialogContent>
           </>
         )}

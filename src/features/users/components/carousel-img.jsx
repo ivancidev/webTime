@@ -27,22 +27,22 @@ export const CarouselImg = () => {
       >
         <SwiperSlide>
           <img
-            src="https://uygicxekmfgvxjhuqaor.supabase.co/storage/v1/object/public/imagenes/registroFotos/man.PNG?t=2024-10-31T05%3A24%3A16.377Z"
-            alt="Man"
+            src="https://uygicxekmfgvxjhuqaor.supabase.co/storage/v1/object/public/imagenes/registroFotos/register_1.jpg"
+            alt="register_1"
             className="w-[550px] h-[640px] object-cover"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="https://uygicxekmfgvxjhuqaor.supabase.co/storage/v1/object/public/imagenes/registroFotos/woman.PNG?t=2024-10-31T05%3A24%3A43.725Z"
-            alt="Woman"
+            src="https://uygicxekmfgvxjhuqaor.supabase.co/storage/v1/object/public/imagenes/registroFotos/register_2.jpg"
+            alt="register_2"
             className="w-[550px] h-[640px] object-cover"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="https://uygicxekmfgvxjhuqaor.supabase.co/storage/v1/object/public/imagenes/registroFotos/man2.PNG?t=2024-10-31T05%3A24%3A03.523Z"
-            alt="Man2"
+            src="https://uygicxekmfgvxjhuqaor.supabase.co/storage/v1/object/public/imagenes/registroFotos/register_3.jpg?t=2024-11-08T11%3A13%3A49.385Z"
+            alt="register_3"
             className="w-[550px] h-[640px] object-cover"
           />
         </SwiperSlide>

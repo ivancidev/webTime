@@ -24,7 +24,7 @@ export const ModalStreak = ({ daysStreak, time, onClose }) => {
   };
 
   return (
-    <div className="w-[85%] sm:w-[530px] h-60 rounded-xl bg-primary-pri3 drop-shadow-2xl p-2 absolute top-20 right-14">
+    <div className="w-[85%] sm:w-[530px] h-60 rounded-xl bg-primary-pri3 drop-shadow-xl p-2 absolute top-20 right-14">
       <div className="w-full flex justify-end">
         <ButtonIcon
           onClick={onClose}
