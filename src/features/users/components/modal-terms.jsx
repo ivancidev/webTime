@@ -57,7 +57,7 @@ Al utilizar WebTime, reconoces que has leído, comprendido y aceptado estos Tér
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50">
-      <div className="relative w-3/4 md:w-3/5 max-h-[80vh] bg-primary-pri3 rounded-xl shadow-lg">
+      <div className="relative w-full sm:w-3/4 md:w-3/5 h-screen sm:max-h-[80vh] bg-primary-pri3 rounded-xl shadow-lg">
         <div className="sticky top-0 w-full flex justify-end p-2 z-10">
           <button
             onClick={onClose}
@@ -67,8 +67,8 @@ Al utilizar WebTime, reconoces que has leído, comprendido y aceptado estos Tér
           </button>
         </div>
 
-        <div className="p-6 overflow-y-auto max-h-[70vh]">
-          <h2 className="font-body text-body-md font-bold text-primary-pri1 p-2">Términos y Condiciones</h2>
+        <div className="p-6 overflow-y-auto h-[87%] sm:max-h-[70vh]">
+          <h2 className="font-body text-body-md font-bold text-primary-pri1 px-2">Términos y Condiciones</h2>
           <p className="font-body text-body-sm text-primary-pri1 p-2 whitespace-pre-line">
             {termsText}
           </p>

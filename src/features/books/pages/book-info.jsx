@@ -52,7 +52,7 @@ export const BookInfo = () => {
         <div className="relative w-full max-w-[80%] aspect-square sm:w-[440px] md:h-[400px] bg-neutral-neu2 rounded-3xl mb-0 md:mb-10">
           <img
             src={book.enlacePortada}
-            className="w-full max-w-[80%] sm:w-80 sm:h-[470px] rounded-3xl absolute inset-0 m-auto object-cover"
+            className="w-full max-w-[85%] sm:w-80 sm:h-[470px] rounded-3xl absolute inset-0 m-auto object-cover"
           />
         </div>
         <div className="mx-5">

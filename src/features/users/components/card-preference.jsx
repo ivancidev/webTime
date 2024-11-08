@@ -25,7 +25,7 @@ const CardPref = ({ text, icon, cod, onSelect, text2, isSelected }) => {
         </div>
       )}
       <img src={icon} alt="" className="w-7 h-7" />
-      <h3 className="font-body text-body-md pt-1">{text}</h3>
+      <h3 className="font-body text-body-sm sm:text-body-md pt-1">{text}</h3>
     </div>
   );
 };
