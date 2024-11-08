@@ -15,7 +15,7 @@ export const Dropdown = ({
   const validationAsterisk = <span className="text-error-err2">*</span>;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mx-2">
       {label && (
         <label
           htmlFor={name}
