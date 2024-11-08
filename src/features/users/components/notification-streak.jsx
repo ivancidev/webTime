@@ -44,7 +44,6 @@ export const NotificationStreak = ({ day, onClose, activate }) => {
               </div>
               <FireLargeAct />
             </div>
-
             <div className="flex flex-row items-center mt-4 space-x-1">
               <h2 className="font-title text-title-sm text-primary-pri2">
                 ¡Racha de
@@ -56,7 +55,6 @@ export const NotificationStreak = ({ day, onClose, activate }) => {
                 {day === 1 ? "día!" : "días!"}
               </h2>
             </div>
-
             <p className="font-body text-body-md text-neutral-neu0 mt-1 px-2 mb-5">
               {textMotivation}
             </p>

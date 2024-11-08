@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BackIcon from "../../../icons/back";
 import ListenIcon from "../../../icons/listen";
 import ReadIcon from "../../../icons/read";
@@ -10,6 +10,8 @@ import { ReadBook } from "../components/readBook";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import { TextLarge } from "../../register/components/text-large";
 import { useAudio } from "../../../context/audio-context";
+import { IconOclock } from "../icons/oclock";
+import { IconDocument } from "../icons/document";
 
 export const BookInfo = () => {
   const location = useLocation();
@@ -42,9 +44,9 @@ export const BookInfo = () => {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-primary-pri3">
+    <div className="flex max-h-screen flex-col bg-primary-pri3">
       <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
-        <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/app")} />
+        <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate(-1)} />
       </div>
       <div className="flex flex-col lg:flex-row items-center md:justify-evenly px-5">
         <div className="relative w-full max-w-[80%] aspect-square sm:w-[440px] md:h-[400px] bg-neutral-neu2 rounded-3xl mb-0 md:mb-10">
@@ -75,11 +77,20 @@ export const BookInfo = () => {
             <DetailRow label="Autor" value={bookDetails.nombreAutor} />
             <DetailRow label="Idioma" value={bookDetails.idioma} />
             <DetailRow label="Categoría" value={bookDetails.nombreCategoria} />
-            <DetailRow label="Número de páginas" value={book.numero_paginas} />
-            <DetailRow
-              label="Duración del audio"
-              value={`${book.duracion_audio} min`}
-            />
+            <div className="flex gap-4">
+              <div className="flex items-center bg-gray-200 px-4 py-2 rounded-lg gap-2">
+                <IconDocument className="w-5 h-5 mr-2" />
+                <p className="text-body-sm font-body">
+                  {book.numero_paginas} páginas
+                </p>
+              </div>
+              <div className="flex items-center bg-gray-200 px-4 py-2 rounded-lg gap-2">
+                <IconOclock className="w-5 h-5 mr-2" />
+                <p className="text-body-sm font-body">
+                  {book.duracion_audio} min
+                </p>
+              </div>
+            </div>
           </div>
           <div className="max-w-[500px] mt-4 mb-8 sm:my-10">
             <TextLarge sinopsis={book.sinopsis} />
