@@ -19,11 +19,11 @@ export const ReadBook = ({
     parseInt(localStorage.getItem(`pdfProgress_${pdfUrl}`)) || 1
   );
   const [iframeKey, setIframeKey] = useState(Date.now());
-  const lastNotificationDate = localStorage.getItem("lastNotificationDate") || "";  
+  const lastNotificationDate =
+    localStorage.getItem("lastNotificationDate") || "";
   const pdfWithParams = `${pdfUrl}#page=${currentPage}&navpanes=0&scrollbar=0&zoom=100`;
-  // const today = "2024-11-13";
+  // const today = "2024-11-28";
   const today = getDate();
-  console.log("fecha", today);
 
   useEffect(() => {
     const initialStartTime = Date.now();

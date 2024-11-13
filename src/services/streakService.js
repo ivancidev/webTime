@@ -7,10 +7,10 @@ export const updateDailyStatistics = async (userId, listeningTimeInMinutes) => {
   isUpdating = true;
 
   try {
-    // const today = "2024-11-13";
+    // const today = "2024-11-28";
     const today = getDate();
-    console.log("sd", today)
-    const lastNotificationDate = localStorage.getItem("lastNotificationDate") || "";
+    const lastNotificationDate =
+      localStorage.getItem("lastNotificationDate") || "";
 
     const { data: existingRecord, error: fetchError } = await supabase
       .from("estadisticas_diarias")

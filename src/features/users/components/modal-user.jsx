@@ -13,6 +13,8 @@ export const ModalUser = ({ nickname, imgUser, onClose }) => {
   const logOut = () => {
     localStorage.removeItem("isRegistered");
     localStorage.removeItem("user");
+    localStorage.removeItem("diasRacha")
+    localStorage.removeItem("lastNotificationDate");
     navigate("/");
   };
 

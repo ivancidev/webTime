@@ -76,7 +76,8 @@ export const ShowStreak = () => {
           user.id_usuario,
           useEstadistics.id_metrica,
           true,
-          useEstadistics.minutos_aprendido_hoy
+          0
+
         );
         setShowStreakNotification(true);
         localStorage.setItem("lastNotificationDate", useEstadistics.fecha);

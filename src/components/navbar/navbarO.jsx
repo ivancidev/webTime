@@ -16,6 +16,7 @@ export const NavbarO = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const [isModalStreakOpen, setIsModalStreakOpen] = useState(false);
   const { userDetails } = useUserDetails(user);
+  const daysStreak = localStorage.getItem("diasRacha") || 0;
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -35,10 +36,10 @@ export const NavbarO = () => {
 
   const toggleModalStreak = () => {
     setIsModalStreakOpen(!isModalStreakOpen);
-    if (!isModalStreakOpen){
+    if (!isModalStreakOpen) {
       setIsOpen(false);
       setIsOpenUser(false);
-    } 
+    }
   };
 
   const location = useLocation();
@@ -80,19 +81,24 @@ export const NavbarO = () => {
           </Link>
         </li>
       </ul>
-      <div className="flex flex-row items-center mr-5 cursor-pointer" onClick={toggleModalStreak}>
+      <div
+        className="flex flex-row items-center mr-5 cursor-pointer"
+        onClick={toggleModalStreak}
+      >
         <ButtonIcon
           variant={`${isModalStreakOpen ? "combColBlue" : "combColskyblue"}`}
           SvgIcon={Streak}
         />
-        {userDetails ? (
-          <h2 className={`${isModalStreakOpen ? "font-title text-title-sm text-secondary-sec1 pt-1" :
-                        "font-title text-title-sm text-secondary-sec2 pt-1"}`}>
-            {userDetails.dias_racha}
-          </h2>
-        ) : (
-          ""
-        )}
+
+        <h2
+          className={`${
+            isModalStreakOpen
+              ? "font-title text-title-sm text-secondary-sec1 pt-1"
+              : "font-title text-title-sm text-secondary-sec2 pt-1"
+          }`}
+        >
+          {daysStreak}
+        </h2>
       </div>
 
       {isOpen && (
