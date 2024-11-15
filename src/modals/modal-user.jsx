@@ -1,9 +1,9 @@
-import Button from "../../../components/buttons/button";
-import ButtonIcon from "../../../components/buttons/buttonIcon";
-import CloseIcon from "../../../icons/close";
-import LogOut from "../../../icons/logOut";
-import UserProf from "../../../icons/userProfile";
-import ViewProfile from "../../../icons/viewProfile";
+import Button from "../components/buttons/button";
+import ButtonIcon from "../components/buttons/buttonIcon";
+import CloseIcon from "../icons/close";
+import LogOut from "../icons/logOut";
+import UserProf from "../icons/userProfile";
+import ViewProfile from "../icons/viewProfile";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
@@ -13,7 +13,7 @@ export const ModalUser = ({ nickname, imgUser, onClose }) => {
   const logOut = () => {
     localStorage.removeItem("isRegistered");
     localStorage.removeItem("user");
-    localStorage.removeItem("diasRacha")
+    localStorage.removeItem("diasRacha");
     localStorage.removeItem("lastNotificationDate");
     navigate("/");
   };
