@@ -3,12 +3,12 @@ import Logo from "../../assets/icons/logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import User from "../../icons/user";
 import Burger from "../../icons/burger";
-import { ModalUser } from "../../features/users/components/modal-user";
-import { ModalMenu } from "../../features/users/components/modal-menu";
+import { ModalUser } from "../../modals/modal-user";
 import ButtonIcon from "../buttons/buttonIcon";
-import { ModalStreak } from "../../features/users/components/modal-streak";
 import { Streak } from "../../icons/streak";
 import { useUserDetails } from "../../hooks/use-user-details";
+import { ModalMenu } from "../../modals/modal-menu";
+import { ModalStreak } from "../../features/users/modals/modal-streak";
 
 export const NavbarO = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -115,7 +115,7 @@ export const NavbarO = () => {
 
       {isOpen && (
         <div className="flex absolute top-20 right-28 z-50">
-          <ModalMenu />
+          <ModalMenu setIsOpen={setIsOpen} />
         </div>
       )}
       {user.avatar ? (

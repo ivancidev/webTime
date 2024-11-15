@@ -16,9 +16,9 @@ import { ToastContainer } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
-import Modal from "../../../components/modal/modal";
 import { fetchNumPages } from "../../../utils/pdf-utils";
 import { fetchAudioDuration } from "../../../utils/audio-utils";
+import Modal from "../../../modals/modal";
 
 export const Files = () => {
   const location = useLocation();
