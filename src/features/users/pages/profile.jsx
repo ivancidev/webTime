@@ -14,6 +14,7 @@ export const Profile = () => {
   const navigate = useNavigate();
   const { userDetails } = useUserDetails(user);
   const [completedBooks, setCompletedBooks] = useState([]);
+  const [collectionBooks, setCollectionBooks] = useState([]);
   const [selectedSection, setSelectedSection] = useState("Concluidos");
 
   useEffect(() => {
@@ -62,7 +63,7 @@ export const Profile = () => {
             }`}
           >
             <span className="text-title-lg font-title ">
-              {completedBooks?.length}
+              {collectionBooks?.length}
             </span>
             <span className="text-body-md font-body">Colecciones</span>
           </div>
