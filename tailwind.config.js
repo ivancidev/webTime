@@ -25,6 +25,7 @@ export default {
           neu1: "#AEAAAE", // semi dark gray
           neu2: "#E6E1E5", // gray
           neu3: "#F4EFF4", // light gray
+          neu4: "#D9D9D9"
         },
       },
 
