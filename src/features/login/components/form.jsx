@@ -18,7 +18,7 @@ export const Form = ({label1, label2, placeholder1, placeholder2, textButton, sh
                         labelFontSize="16px"
                         errorFontSize="14px"
                         labelMarginTop="10px"
-                        type={showEyeIconFirstInput && showPasswordFirst ? "text" : "password"}
+                        type={!showEyeIconFirstInput || showPasswordFirst ? "text" : "password"}
                         className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
                         icon={
                             showEyeIconFirstInput && (
@@ -51,7 +51,7 @@ export const Form = ({label1, label2, placeholder1, placeholder2, textButton, sh
                     {showButtonForgetPassword && (
                         <button
                             type="button"
-                            className="font-body text-body-sm text-secondary-sec2 underline"
+                            className="font-body text-body-sm text-secondary-sec2 underline hover:text-secondary-sec1"
                             >
                             ¿Olvidaste tu contraseña?
                         </button>

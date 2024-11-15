@@ -29,7 +29,7 @@ export const FormLogin = () => {
                             ¿Aún no tienes una cuenta?{" "}
                             <button
                             type="button"
-                            className="font-body text-body-sm text-secondary-sec2 underline"
+                            className="font-body text-body-sm text-secondary-sec2 underline hover:text-secondary-sec1"
                             >
                             Regístrate aquí.
                             </button>
