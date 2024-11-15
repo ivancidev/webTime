@@ -11,6 +11,7 @@ export const ModalBooks = ({ onClose }) => {
   const [searchBooksOld, setSearchBooksOld] = useState([]);
   const [searchBooksRecent, setSearchBooksRecent] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [booksSelected, setBooksSelected] = useState([]);
   const {
     data: booksOld = [],
     isLoading: isLoadingOld,
@@ -33,6 +34,28 @@ export const ModalBooks = ({ onClose }) => {
     setSearchText(text);
   };
 
+  const toggleBookSelect = (book) => {
+    setBooksSelected((prevSelected) => {
+      if (
+        prevSelected.some(
+          (selectedBook) => selectedBook.codLibro === book.codLibro
+        )
+      ) {
+        return prevSelected.filter(
+          (selectedBook) => selectedBook.codLibro !== book.codLibro
+        );
+      } else {
+        return [...prevSelected, book];
+      }
+    });
+  };
+
+  console.log(booksSelected);
+
+  const handleAddBooks = () => {
+    onClose(booksSelected);
+  };
+
   if (isLoadingOld || isLoadingRecent) {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen bg-primary-pri3">
@@ -48,6 +71,8 @@ export const ModalBooks = ({ onClose }) => {
     searchText && searchBooksOld.length === 0 && searchBooksRecent.length === 0;
 
   const bookAll = [...booksOld, ...recentBooks];
+
+  const isCardSelects = booksSelected.length > 0;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50">
@@ -91,6 +116,10 @@ export const ModalBooks = ({ onClose }) => {
                     key={book.codLibro}
                     titleBook={book.nombreLibro}
                     frontBook={book.enlacePortada}
+                    isSelect={booksSelected.some(
+                      (selectedBook) => selectedBook.codLibro === book.codLibro
+                    )}
+                    toggleSelect={() => toggleBookSelect(book)}
                   />
                 </div>
               ))}
@@ -106,6 +135,10 @@ export const ModalBooks = ({ onClose }) => {
                     key={index}
                     frontBook={book.enlacePortada}
                     titleBook={book.nombreLibro}
+                    isSelect={booksSelected.some(
+                      (selectedBook) => selectedBook.codLibro === book.codLibro
+                    )}
+                    toggleSelect={() => toggleBookSelect(book)}
                   />
                 </div>
               ))}
@@ -114,7 +147,13 @@ export const ModalBooks = ({ onClose }) => {
         </div>
 
         <div className="flex flex-row justify-end space-x-4 my-2 mr-3">
-          <Button text="Añadir" SvgIcon={AddIcon} />
+          <Button
+            text="Añadir"
+            SvgIcon={AddIcon}
+            onClick={handleAddBooks}
+            variant={isCardSelects ? "combCol1" : "combDesactivate"}
+            disabled={!isCardSelects}
+          />
         </div>
       </div>
     </div>

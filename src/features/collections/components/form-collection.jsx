@@ -1,7 +1,5 @@
 import { useState } from "react";
-
 import { InputText } from "../../../components/input/input";
-import { CardBook } from "../../books/components/cardBook";
 import AddLarge from "../icons/addLarge";
 import { CardBookCol } from "./card-book-col";
 import FooterButtonsCol from "./footer-buttons-collection";
@@ -9,6 +7,7 @@ import { ModalBooks } from "./modal-books";
 
 export const FormCollection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [addBooks, setAddBooks] = useState([]);
   const onCancel = () => {
     navigation("/profile");
   };
@@ -16,16 +15,32 @@ export const FormCollection = () => {
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
-  const handleCloseModal = () => {
+  const handleCloseModal = (selectedBooks) => {
     setIsModalOpen(false);
+    if (selectedBooks) {
+      setAddBooks((prevBooks) => {
+        const uniqueBooks = selectedBooks.filter(
+          (book) =>
+            !prevBooks.some((prevBook) => prevBook.codLibro === book.codLibro)
+        );
+        return [...prevBooks, ...uniqueBooks];
+      });
+    }
   };
+
+  const handleDeleteBook = (codLibro) => {
+    setAddBooks((prevBooks) =>
+      prevBooks.filter((book) => book.codLibro !== codLibro)
+    );
+  };
+
   return (
     <div>
       <form className="flex flex-col items-center ">
-        <h1 className="text-secondary-sec2 font-title text-title-lg mt-6">
+        <h1 className="text-secondary-sec2 font-title text-title-lg mt-2">
           Nueva Colección de Libros
         </h1>
-        <div className="w-full px-40 mt-4">
+        <div className="w-full px-40 mt-2">
           <InputText
             name="nameCollection"
             label="Nombre de la colección"
@@ -51,11 +66,20 @@ export const FormCollection = () => {
           >
             Seleccionar libros:
           </label>
-          <div className="flex flex-wrap mt-4">
-            <CardBookCol deleteBook="true" />
+          <div className="flex flex-wrap mt-2">
+            {addBooks.map((book) => (
+              <div className="mr-8 mt-2">
+                <CardBookCol
+                  key={book.codLibro}
+                  titleBook={book.nombreLibro}
+                  frontBook={book.enlacePortada}
+                  deleteBook={() => handleDeleteBook(book.codLibro)}
+                />
+              </div>
+            ))}
             <div
               onClick={handleOpenModal}
-              className=" w-[140px] h-40 bg-neutral-neu2 rounded-2xl flex items-center justify-center hover:text-secondary-sec2 cursor-pointer hover:border hover:border-secondary-sec2 "
+              className=" w-[140px] h-40 mt-2 bg-neutral-neu2 rounded-2xl flex items-center justify-center hover:text-secondary-sec2 cursor-pointer hover:border hover:border-secondary-sec2 "
             >
               <AddLarge />
             </div>
