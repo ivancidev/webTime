@@ -11,7 +11,7 @@ export const Form = ({label1, label2, placeholder1, placeholder2, textButton, sh
     return (
         <form className="flex flex-col sm:items-center">
             <div>
-                <div className="mb-5">
+                <div className="mb-3">
                     <InputText
                         label={label1}
                         placeholder={placeholder1}
