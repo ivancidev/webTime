@@ -4,10 +4,10 @@ export default function Like() {
   return (
     <svg 
         xmlns="http://www.w3.org/2000/svg" 
-        width="1em" 
-        height="1em" 
+        width="32" 
+        height="32" 
         viewBox="0 0 1024 1024"
-    >
+        >
         <path 
             fill="currentColor" 
             d="M885.9 533.7c16.8-22.2 26.1-49.4 26.1-77.7c0-44.9-25.1-87.4-65.5-111.1a67.67 67.67 0 0 0-34.3-9.3H572.
