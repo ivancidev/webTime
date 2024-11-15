@@ -1,11 +1,8 @@
-import Button from "../../../components/buttons/button";
-import ButtonIcon from "../../../components/buttons/buttonIcon";
-import CloseIcon from "../../../icons/close";
-import LogOut from "../../../icons/logOut";
-import ViewProfile from "../../../icons/viewProfile";
-import Like from "../../../icons/like";
-import Dislike from "../../../icons/dislike";
 import { TextLarge } from "../../register/components/text-large";
+import ButtonIcon from "../../../components/buttons/buttonIcon";
+import Button from "../../../components/buttons/button";
+import Dislike from "../../../icons/dislike";
+import Like from "../../../icons/like";
 
 export const Comment = () => {
 
