@@ -9,6 +9,7 @@ import { Profile } from "../features/users/pages/profile";
 import { SelectPreferences } from "../features/users/pages/select-preferences";
 import { ProtectedRouter } from "./protected-router";
 import { CreateCollection } from "../features/collections/pages/create-collection";
+import { Foro } from "../features/foros/pages/foro";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ export const router = createBrowserRouter([
       {
         path: "book-info/:bookId",
         element: <BookInfo />,
+      },
+      {
+        path: "foros",
+        element: <Foro />,
       },
     ],
   },

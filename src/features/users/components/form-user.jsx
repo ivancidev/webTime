@@ -15,8 +15,7 @@ import {
   DialogTitle,
   CircularProgress,
 } from "@mui/material";
-import TermsModal from "./modal-terms";
-import Check from "../../../icons/check";
+import TermsModal from "../modals/modal-terms";
 import CheckRegister from "../../../icons/checkRegister";
 
 export const FormUser = () => {
