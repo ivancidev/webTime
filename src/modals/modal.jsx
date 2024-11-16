@@ -1,7 +1,7 @@
 import React from "react";
-import Button from "../buttons/button";
-import ButtonIcon from "../buttons/buttonIcon";
-import CloseIcon from "../../icons/close";
+import Button from "../components/buttons/button";
+import ButtonIcon from "../components/buttons/buttonIcon";
+import CloseIcon from "../icons/close";
 
 const Modal = ({ onClose, text, onConfirm }) => {
   return (

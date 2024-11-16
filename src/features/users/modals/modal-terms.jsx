@@ -1,9 +1,6 @@
-import React from "react";
-import Button from "../../../components/buttons/button";
-import ButtonIcon from "../../../components/buttons/buttonIcon";
 import CloseIcon from "../../../icons/close";
 
-const TermsModal = ({ onClose, onConfirm }) => {
+const TermsModal = ({ onClose }) => {
   const termsText = `
   
 Última actualización: 29/10/2024
@@ -68,7 +65,9 @@ Al utilizar WebTime, reconoces que has leído, comprendido y aceptado estos Tér
         </div>
 
         <div className="p-6 overflow-y-auto h-[87%] sm:max-h-[70vh]">
-          <h2 className="font-body text-body-md font-bold text-primary-pri1 px-2">Términos y Condiciones</h2>
+          <h2 className="font-body text-body-md font-bold text-primary-pri1 px-2">
+            Términos y Condiciones
+          </h2>
           <p className="font-body text-body-sm text-primary-pri1 p-2 whitespace-pre-line">
             {termsText}
           </p>

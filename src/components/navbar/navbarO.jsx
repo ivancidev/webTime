@@ -3,12 +3,12 @@ import Logo from "../../assets/icons/logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import User from "../../icons/user";
 import Burger from "../../icons/burger";
-import { ModalUser } from "../../features/users/components/modal-user";
-import { ModalMenu } from "../../features/users/components/modal-menu";
+import { ModalUser } from "../../modals/modal-user";
 import ButtonIcon from "../buttons/buttonIcon";
-import { ModalStreak } from "../../features/users/components/modal-streak";
 import { Streak } from "../../icons/streak";
 import { useUserDetails } from "../../hooks/use-user-details";
+import { ModalMenu } from "../../modals/modal-menu";
+import { ModalStreak } from "../../features/users/modals/modal-streak";
 
 export const NavbarO = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +17,12 @@ export const NavbarO = () => {
   const [isModalStreakOpen, setIsModalStreakOpen] = useState(false);
   const { userDetails } = useUserDetails(user);
   const daysStreak = localStorage.getItem("diasRacha") || 0;
+  const location = useLocation();
+  const [path, setPath] = useState(location.pathname);
+
+  const handleChangePath = (path) => {
+    setPath(path);
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -42,9 +48,6 @@ export const NavbarO = () => {
     }
   };
 
-  const location = useLocation();
-  const isAppRoute = location.pathname === "/app";
-
   return (
     <nav className="relative sm:sticky sm:top-0 bg-primary-pri3 h-20 flex items-center px-6 z-50">
       <Link to="/app" className="w-full h-full pt-2">
@@ -61,8 +64,9 @@ export const NavbarO = () => {
         <li>
           <Link
             to="/app"
+            onClick={() => handleChangePath("/app")}
             className={
-              isAppRoute
+              path === "/app"
                 ? "font-label text-label-md text-secondary-sec1 hover:text-secondary-sec2 "
                 : "font-label text-label-md text-primary-pri2 hover:text-secondary-sec2 "
             }
@@ -76,7 +80,15 @@ export const NavbarO = () => {
           </Link>
         </li>
         <li>
-          <Link className="text-neutral-neu1 font-label text-label-md cursor-default">
+          <Link
+            to="foros"
+            onClick={() => handleChangePath("/app/foros")}
+            className={
+              path === "/app/foros"
+                ? "font-label text-label-md text-secondary-sec1 hover:text-secondary-sec2 "
+                : "font-label text-label-md text-primary-pri2 hover:text-secondary-sec2 "
+            }
+          >
             Foros
           </Link>
         </li>
@@ -103,7 +115,7 @@ export const NavbarO = () => {
 
       {isOpen && (
         <div className="flex absolute top-20 right-28 z-50">
-          <ModalMenu />
+          <ModalMenu setIsOpen={setIsOpen} />
         </div>
       )}
       {user.avatar ? (
