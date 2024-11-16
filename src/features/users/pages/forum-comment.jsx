@@ -5,9 +5,9 @@ import BackIcon from "../../../icons/back";
 import { NavbarO } from "../../../components/navbar/navbarO";
 
 
-export const ForumComment = (id, img) => {
+export const ForumComment = ({id, img ="https://i1.sndcdn.com/avatars-000329607942-t9hnvm-t240x240.jpg"}) => {
     //img solo prueba, despues borrar 
-    img = "https://i1.sndcdn.com/avatars-000329607942-t9hnvm-t240x240.jpg"
+   
     return (
       <div className="flex max-h-screen flex-col bg-primary-pri3">
         <NavbarO/>
@@ -16,7 +16,7 @@ export const ForumComment = (id, img) => {
             <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate(-1)} />
         </div>
 
-        <div className="flex w-full h-full">
+        <div className=" flex flex-col lg:flex-row w-full h-full">
 
             <div className="flex-1">
                 <h1 className="text-secondary-sec2 font-title text-title-lg text-center">
@@ -32,8 +32,8 @@ export const ForumComment = (id, img) => {
 
             </div>
 
-            <div className=" flex-1">
-                <div className=" flex-col h-[690px] overflow-y-scroll space-y-9 pr-[75px]">
+            <div className=" flex-1 lg:mt-0 mt-10 ">
+                <div className=" mx-5 flex-col max-h-[80vh] lg:overflow-y-scroll space-y-9 lg:pr-[75px]">
                     <Comment/>
                     <Comment/>
                     <Comment/>
