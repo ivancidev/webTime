@@ -1,32 +1,30 @@
-import { useNavigate } from "react-router-dom";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
+import { Comment } from "../components/comment";
+import Logo from "../../../assets/icons/logo.svg";
 import BackIcon from "../../../icons/back";
-import { PerfilUser } from "../components/perfil-user";
-import CompletedBooksSection from "../components/completed-books";
-import { DailyStreak } from "../components/daily-streak";
-import { useUserDetails } from "../../../hooks/use-user-details";
 
 export const ForumComment = () => {
   return (
-    <section className="max-h-screen">
-      <div className="sticky top-2 sm:relative ml-6 md:ml-8 lg:ml-14 md:mt-2">
-        <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate(-1)} />
-      </div>
-      <div className="flex justify-center items-center lg:space-x-64 flex-col md:flex-row space-x-4 mt-5 lg:mt-0">
-        <div>
-          <PerfilUser />
+    <div className="flex max-h-screen flex-col bg-primary-pri3">
+        <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
+            <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate(-1)} />
         </div>
-        <div className="mt-5 md:mt-0">
-          {userDetails ? (
-            <DailyStreak days={userDetails.dias_racha} />
-          ) : (
-            <DailyStreak />
-          )}
+        <div className="flex flex-row items-center px-14">
+            <div className="flex justify-center items-center flex-col w-1/3">
+                <h1 className="text-secondary-sec2 font-title text-title-lg">
+                    Comentarios del foro
+                </h1>
+                <div className="relative w-full max-w-[90%] bg-neutral-neu2 rounded-3xl mb-0 md:mb-10">
+                    <img
+                        src={Logo}
+                        className="w-full rounded-3xl absolute inset-0 m-auto object-cover"
+                    />
+                </div>
+            </div>
+            <div className="flex w-2/3 flex-row m-14">
+                <Comment/>
+            </div>
         </div>
-      </div>
-      <div className="mt-10 md:mt-16 ">
-        <CompletedBooksSection />
-      </div>
-    </section>
+    </div>
   );
 };
