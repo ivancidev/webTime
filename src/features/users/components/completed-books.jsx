@@ -88,17 +88,6 @@ const CompletedBooksSection = () => {
 
   return (
     <div className="flex flex-col w-full">
-      <div className="flex flex-col ml-[90px] md:ml-[150px] items-center w-fit mb-2">
-        <span className="text-title-lg font-title text-secondary-sec2">
-          {completedBooks?.length}
-        </span>
-        <span className="text-body-md font-body">Concluidos</span>
-      </div>
-      <div className="flex flex-row items-center mx-8 md:mx-14">
-        <div className="w-2 h-2 bg-secondary-sec2 rounded-full"></div>
-        <div className="flex-grow border-t border-secondary-sec2"></div>
-        <div className="w-2 h-2 bg-secondary-sec2 rounded-full"></div>
-      </div>
       <div className="flex justify-end w-full md:pr-20 pr-10 mt-3">
         <ButtonIcon
           SvgIcon={FilterIcon}
@@ -121,7 +110,11 @@ const CompletedBooksSection = () => {
       )}
       {isCalendarOpen && (
         <div className="relative">
-          <Calendar onClose={toggleCalendar} onSelectDate={handleDateSelect} selectedDate={selectedDate} />
+          <Calendar
+            onClose={toggleCalendar}
+            onSelectDate={handleDateSelect}
+            selectedDate={selectedDate}
+          />
         </div>
       )}
       <div className="flex flex-col p-4">

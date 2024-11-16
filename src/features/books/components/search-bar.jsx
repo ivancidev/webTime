@@ -8,6 +8,9 @@ export const SearchBar = ({
   onSearchResults,
   searchText,
   setSearchText,
+  placeholder,
+  smWidth = "sm:w-96",
+  existsA,
 }) => {
   useEffect(() => {
     const trimmedSearchText = searchText.trim();
@@ -17,40 +20,48 @@ export const SearchBar = ({
       return;
     }
 
-    const filterBooks = booksOld.filter(
-      (book) =>
-        book.nombreLibro
-          .toLowerCase()
-          .includes(trimmedSearchText.toLowerCase()) ||
-        book.autor.nombreAutor
-          .toLowerCase()
-          .includes(trimmedSearchText.toLowerCase())
-    );
+    const filterBooks = booksOld.filter((book) => {
+      const matchTitle = book.nombreLibro
+        .toLowerCase()
+        .includes(trimmedSearchText.toLowerCase());
 
-    const filterBooksRecent = recentBooks.filter(
-      (book) =>
-        book.nombreLibro
-          .toLowerCase()
-          .includes(trimmedSearchText.toLowerCase()) ||
-        book.autor.nombreAutor
-          .toLowerCase()
-          .includes(trimmedSearchText.toLowerCase())
-    );
+      const matchAuthor = existsA
+        ? book.autor.nombreAutor
+            .toLowerCase()
+            .includes(trimmedSearchText.toLowerCase())
+        : false;
+
+      return matchTitle || matchAuthor;
+    });
+
+    const filterBooksRecent = recentBooks.filter((book) => {
+      const matchTitle = book.nombreLibro
+        .toLowerCase()
+        .includes(trimmedSearchText.toLowerCase());
+
+      const matchAuthor = existsA
+        ? book.autor.nombreAutor
+            .toLowerCase()
+            .includes(trimmedSearchText.toLowerCase())
+        : false;
+
+      return matchTitle || matchAuthor;
+    });
 
     onSearchResults({ filterBooks, filterBooksRecent }, searchText);
-  }, [searchText]);
+  }, [searchText, existsA, booksOld, recentBooks, onSearchResults]);
 
   return (
-    <div className="relative w-full sm:w-auto">
+    <div className={`relative w-full ${smWidth}`}>
       <div className="absolute left-0">
         <SearchIcon />
       </div>
       <input
         type="text"
-        placeholder="Buscar por título o autor"
+        placeholder={placeholder}
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
-        className="w-full sm:w-96 h-12 rounded-3xl border-none px-4 pl-12 font-body text-body-md text-primary-pri2 bg-neutral-neu3 border-2 border-primary-pri2 focus:outline-none placeholder-neutral-neu0"
+        className={`w-full h-12 rounded-3xl border-none px-4 pl-12 font-body text-body-md text-primary-pri2 bg-neutral-neu3 border-2 border-primary-pri2 focus:outline-none placeholder-neutral-neu0 ${smWidth}`}
       />
       {searchText && (
         <div className="absolute right-1 top-1 items-center">
