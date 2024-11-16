@@ -2,25 +2,35 @@ import React from "react";
 import Button from "../../../components/buttons/button";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import CloseIcon from "../../../icons/close";
+import { InputText } from "../../../components/input/input";
 
 const ResetPasswordModal = ({ onClose, onConfirm }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50">
-      <div className="relative w-full sm:w-3/4 md:w-3/5 h-screen sm:max-h-[80vh] bg-primary-pri3 rounded-xl shadow-lg">
-        <div className="sticky top-0 w-full flex justify-end p-2 z-10">
-          <button
+    <div className="fixed inset-0 flex flex-col items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50">
+      <div className="w-[550px] h-[300px] bg-primary-pri3 rounded-xl shadow-lg">
+        <div className="w-full flex justify-end p-1">
+          <ButtonIcon
             onClick={onClose}
-            className="w-8 h-8 bg-combColBlack2 rounded-full flex items-center justify-center hover:bg-opacity-80"
-          >
-            <CloseIcon className="w-4 h-4 text-white" />
-          </button>
+            SvgIcon={CloseIcon}
+            variant="combColBlack2"
+          />
         </div>
-
-        <div className="p-6 overflow-y-auto h-[87%] sm:max-h-[70vh]">
-          <h2 className="font-body text-body-md font-bold text-primary-pri1 px-2">Términos y Condiciones</h2>
-          <p className="font-body text-body-sm text-primary-pri1 p-2 whitespace-pre-line">
-            hola
-          </p>
+        <div className="flex flex-col items-center justify-center">
+          <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent w-auto font-title text-title-md">
+            Restablece tu contraseña
+          </h1>
+          <div className="mb-3">
+            <InputText 
+              labelFontSize="16px"
+              label="¿Cuál es tu correo electrónico?"
+              placeholder="Ingrese su correo electrónico"
+              className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
+            />
+          </div>
+          <Button
+            text="Enviar correo de restablecimiento de contraseña"
+            variant="combExp"
+          />
         </div>
       </div>
     </div>
