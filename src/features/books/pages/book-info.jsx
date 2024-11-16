@@ -92,7 +92,7 @@ export const BookInfo = () => {
               </div>
             </div>
           </div>
-          <div className="max-w-[500px] mt-4 mb-8 sm:my-10">
+          <div className="max-w-[500px] mt-8 mb-8 sm:my-10">
             <TextLarge text={book.sinopsis} max={250} message="Leer"/>
           </div>
         </div>

@@ -9,7 +9,7 @@ export const TextLarge = ({text, max, message }) => {
   };
 
   return (
-    <div className="mt-8">
+    <div className="mt-4">
       <p className="font-body text-body-md text-neutral-neu0 text-justify leading-6">
         {isExpanded || text.length <= max
           ? text

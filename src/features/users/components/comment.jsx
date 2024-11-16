@@ -15,7 +15,7 @@ export const Comment = () => {
                 <ButtonIcon SvgIcon={User} variant="combColBlack2" />
                 <div className="flex flex-col">
                     <h2 className="font-label text-label-md mt-1">Jhon Smith</h2>
-                    <h2 className="text-neutral-neu0 text-body-md mt-1">2 hrs</h2>
+                    <h2 className="text-neutral-neu0 text-body-md">2 hrs</h2>
                 </div>
             </div>
             <div>
