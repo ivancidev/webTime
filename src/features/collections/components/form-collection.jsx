@@ -9,68 +9,46 @@ import { supabase } from "../../../services/supabaseClient";
 import { useForm } from "react-hook-form";
 
 export const FormCollection = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [addBooks, setAddBooks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [addBooks, setAddBooks] = useState([]); // Libros seleccionados
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
+    console.log("Datos del formulario:", data);
+    const { nameCollection, description } = data;
+    
     if (addBooks.length === 0) {
-      setSnackbar({
-        open: true,
-        message: "Selecciona al menos un libro para la colección.",
-        severity: "warning",
-      });
+      alert("Selecciona al menos un libro para la colección.");
       return;
     }
-  
-    const name = document.querySelector("input[name='nameCollection']").value.trim();
-    const description = document.querySelector("textarea[name='description']").value.trim();
-  
-    if (!name || !description) {
-      setSnackbar({
-        open: true,
-        message: "El nombre y la descripción de la colección son obligatorios.",
-        severity: "warning",
-      });
+
+    if (!user || !user.id_usuario) {
+      alert("Error: Usuario no definido. Intenta iniciar sesión nuevamente.");
       return;
     }
-  
-    if (!user || !user.idUsuario) {
-      setSnackbar({
-        open: true,
-        message: "Error: Usuario no definido. Intenta iniciar sesión nuevamente.",
-        severity: "error",
-      });
-      return;
-    }
-  
-    setLoading(true);
-  
+
     try {
       // Insertar en la tabla "Coleccion"
       const { data: collectionData, error: collectionError } = await supabase
         .from("Coleccion")
         .insert({
           idUsuario: user.id_usuario,
-          nombre: nameCollection,
           descripcion: description,
+          nombre: nameCollection,
         })
         .select("idColeccion")
         .single();
-  
+
       if (collectionError) {
         console.error("Error al insertar colección:", collectionError);
-        setSnackbar({
-          open: true,
-          message: "Hubo un error al guardar la colección.",
-          severity: "error",
-        });
+        alert("Hubo un error al guardar la colección.");
         return;
       }
-  
+
       const idColeccion = collectionData.idColeccion;
-  
+
       // Insertar en la tabla "RegistroColeccion" los libros seleccionados
       const bookInsertions = addBooks.map(async (book) => {
         const { error: bookError } = await supabase
@@ -79,46 +57,22 @@ export const FormCollection = () => {
             idColeccion,
             codLibro: book.codLibro,
           });
-  
+
         if (bookError) {
           console.error("Error al insertar libro:", bookError);
           return { error: bookError };
         }
-  
+
         return { success: true };
       });
-  
-      // Verificar si hubo errores en las inserciones
-      const bookResponses = await Promise.all(bookInsertions);
-      const hasErrors = bookResponses.some((response) => response?.error);
-  
-      if (hasErrors) {
-        setSnackbar({
-          open: true,
-          message: "Error al guardar algunos libros en la colección.",
-          severity: "error",
-        });
-        return;
-      }
-  
-      setSnackbar({
-        open: true,
-        message: "Colección y libros guardados con éxito.",
-        severity: "success",
-      });
-  
-      // Limpiar formulario y redirigir
-      setAddBooks([]);
+
+      await Promise.all(bookInsertions);
+
+      alert("Colección y libros guardados con éxito.");
       navigate("/profile");
     } catch (error) {
       console.error("Error inesperado al guardar la colección:", error);
-      setSnackbar({
-        open: true,
-        message: "Hubo un error inesperado. Intenta nuevamente.",
-        severity: "error",
-      });
-    } finally {
-      setLoading(false);
+      alert("Hubo un error inesperado. Intenta nuevamente.");
     }
   };
 
@@ -152,13 +106,13 @@ export const FormCollection = () => {
 
   return (
     <div>
-      <form className="flex flex-col items-center ">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center ">
         <h1 className="text-secondary-sec2 font-title text-title-lg mt-2">
           Nueva Colección de Libros
         </h1>
         <div className="w-full px-40 mt-2">
           <InputText
-            name="nameCollection"
+            {...register("nameCollection", { required: "Este campo es obligatorio" })}
             label="Nombre de la colección"
             placeholder="Escribe aquí"
             className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
@@ -171,7 +125,7 @@ export const FormCollection = () => {
             Descripción <span className="text-error-err2">*</span>
           </label>
           <textarea
-            name="Descripción"
+            {...register("description", { required: "Este campo es obligatorio" })}
             placeholder="Escribe aquí"
             className="w-full h-24 bg-transparent border-[1px] rounded border-neutral-neu0 p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md my-2 resize-none"
           />
@@ -199,7 +153,7 @@ export const FormCollection = () => {
             </div>
           </div>
         </div>
-        <FooterButtonsCol onCancel={onCancel} onSubmit = {onSubmit}/>
+        <FooterButtonsCol onCancel={onCancel} onSubmit={handleSubmit(onSubmit)}/>
       </form>
       
       {isModalOpen && <ModalBooks onClose={handleCloseModal} />}
