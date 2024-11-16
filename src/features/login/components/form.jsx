@@ -3,11 +3,14 @@ import { InputText } from "../../../components/input/input";
 import EyeOff from "../../../icons/eyeOff";
 import EyeOn from "../../../icons/eyeOn";
 import { useState } from "react";
+import ResetPasswordModal from "./modal-reset-password";
 
 export const Form = ({label1, label2, placeholder1, placeholder2, textButton, showEyeIconFirstInput, showButtonForgetPassword}) => {
     const [showPasswordFirst, setShowPasswordFirst] = useState(false);
     const [showPasswordSecond, setShowPasswordSecond] = useState(false);
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
     return (
         <form className="flex flex-col sm:items-center">
             <div>
@@ -51,10 +54,14 @@ export const Form = ({label1, label2, placeholder1, placeholder2, textButton, sh
                     {showButtonForgetPassword && (
                         <button
                             type="button"
+                            onClick={openModal}
                             className="font-body text-body-sm text-secondary-sec2 underline hover:text-secondary-sec1"
                             >
                             ¿Olvidaste tu contraseña?
                         </button>
+                    )}
+                    {isModalOpen && (
+                        <ResetPasswordModal onClose={closeModal} onConfirm={closeModal} />
                     )}
                 </div>
                 <Button
