@@ -7,7 +7,7 @@ import { InputText } from "../../../components/input/input";
 const ResetPasswordModal = ({ onClose, onConfirm }) => {
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50">
-      <div className="w-[550px] h-[300px] bg-primary-pri3 rounded-xl shadow-lg">
+      <div className="w-[550px] h-[320px] bg-primary-pri3 rounded-xl shadow-lg">
         <div className="w-full flex justify-end p-1">
           <ButtonIcon
             onClick={onClose}
@@ -19,8 +19,12 @@ const ResetPasswordModal = ({ onClose, onConfirm }) => {
           <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent w-auto font-title text-title-md">
             Restablece tu contraseña
           </h1>
+          <h1 className="text-center font-body text-body-sm text-neutral-neu0 w-auto mt-3 mx-10">
+            Introduce el correo electrónico asociado a tu cuenta de WebTime y te enviaremos un correo con un enlace para restaurar tu contraseña
+          </h1>
           <div className="mb-3">
             <InputText 
+              labelMarginTop="10px"
               labelFontSize="16px"
               label="¿Cuál es tu correo electrónico?"
               placeholder="Ingrese su correo electrónico"
