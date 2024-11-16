@@ -5,7 +5,9 @@ import BackIcon from "../../../icons/back";
 import { NavbarO } from "../../../components/navbar/navbarO";
 
 
-export const ForumComment = () => {
+export const ForumComment = (id, img) => {
+    //img solo prueba, despues borrar 
+    img = "https://i1.sndcdn.com/avatars-000329607942-t9hnvm-t240x240.jpg"
     return (
       <div className="flex max-h-screen flex-col bg-primary-pri3">
         <NavbarO/>
@@ -17,23 +19,21 @@ export const ForumComment = () => {
         <div className="flex w-full h-full">
 
             <div className="flex-1">
-                <h1 className="text-secondary-sec2 font-title text-title-lg ml-36">
+                <h1 className="text-secondary-sec2 font-title text-title-lg text-center">
                     Comentarios del foro
                 </h1>
-
                 
-                    <div className="flex justify-end relative w-1/2  max-w-[90%] bg-neutral-neu2 rounded-xl">
-                        <img
-                            src={Logo}
-                            className="w-full rounded-3xl object-cover"
-                        />
-                    </div>
+                <img
+                    src={img}
+                    className="mx-auto mt-10 rounded-3xl object-cover w-2/3"
+                />
+                   
             
 
             </div>
 
-            <div className=" flex-1 mr-28 ">
-                <div className=" flex-col h-[690px] overflow-y-scroll scrollbar-hide space-y-9">
+            <div className=" flex-1">
+                <div className=" flex-col h-[690px] overflow-y-scroll space-y-9 pr-[75px]">
                     <Comment/>
                     <Comment/>
                     <Comment/>

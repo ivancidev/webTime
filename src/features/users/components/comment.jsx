@@ -5,8 +5,8 @@ import Dislike from "../../../icons/dislike";
 import Like from "../../../icons/like";
 import User from "../../../icons/user";
 
-export const Comment = () => {
-    const text =
+export const Comment = (text) => {
+    text =
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.";
 
     return (
