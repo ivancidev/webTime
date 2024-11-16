@@ -148,6 +148,8 @@ export const FormCollection = () => {
     );
   };
 
+  console.log(addBooks);
+
   return (
     <div>
       <form className="flex flex-col items-center ">
@@ -180,16 +182,14 @@ export const FormCollection = () => {
           >
             Seleccionar libros:
           </label>
-          <div className="flex flex-wrap mt-2">
+          <div className="flex flex-wrap mt-2 space-x-8">
             {addBooks.map((book) => (
-              <div className="mr-8 mt-2">
-                <CardBookCol
-                  key={book.codLibro}
-                  titleBook={book.nombreLibro}
-                  frontBook={book.enlacePortada}
-                  deleteBook={() => handleDeleteBook(book.codLibro)}
-                />
-              </div>
+              <CardBookCol
+                key={book.codLibro}
+                titleBook={book.nombreLibro}
+                frontBook={book.enlacePortada}
+                deleteBook={() => handleDeleteBook(book.codLibro)}
+              />
             ))}
             <div
               onClick={handleOpenModal}

@@ -49,7 +49,7 @@ export const SearchBar = ({
     });
 
     onSearchResults({ filterBooks, filterBooksRecent }, searchText);
-  }, [searchText, existsA, booksOld, recentBooks, onSearchResults]);
+  }, [searchText, existsA, booksOld, recentBooks]);
 
   return (
     <div className={`relative w-full ${smWidth}`}>
