@@ -4,12 +4,126 @@ import AddLarge from "../icons/addLarge";
 import { CardBookCol } from "./card-book-col";
 import FooterButtonsCol from "./footer-buttons-collection";
 import { ModalBooks } from "./modal-books";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../../../services/supabaseClient";
+import { useForm } from "react-hook-form";
 
 export const FormCollection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [addBooks, setAddBooks] = useState([]);
+  const [addBooks, setAddBooks] = useState([]); // Libros seleccionados
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const onSubmit = async () => {
+    if (addBooks.length === 0) {
+      setSnackbar({
+        open: true,
+        message: "Selecciona al menos un libro para la colección.",
+        severity: "warning",
+      });
+      return;
+    }
+  
+    const name = document.querySelector("input[name='nameCollection']").value.trim();
+    const description = document.querySelector("textarea[name='description']").value.trim();
+  
+    if (!name || !description) {
+      setSnackbar({
+        open: true,
+        message: "El nombre y la descripción de la colección son obligatorios.",
+        severity: "warning",
+      });
+      return;
+    }
+  
+    if (!user || !user.idUsuario) {
+      setSnackbar({
+        open: true,
+        message: "Error: Usuario no definido. Intenta iniciar sesión nuevamente.",
+        severity: "error",
+      });
+      return;
+    }
+  
+    setLoading(true);
+  
+    try {
+      // Insertar en la tabla "Coleccion"
+      const { data: collectionData, error: collectionError } = await supabase
+        .from("Coleccion")
+        .insert({
+          idUsuario: user.id_usuario,
+          nombre: nameCollection,
+          descripcion: description,
+        })
+        .select("idColeccion")
+        .single();
+  
+      if (collectionError) {
+        console.error("Error al insertar colección:", collectionError);
+        setSnackbar({
+          open: true,
+          message: "Hubo un error al guardar la colección.",
+          severity: "error",
+        });
+        return;
+      }
+  
+      const idColeccion = collectionData.idColeccion;
+  
+      // Insertar en la tabla "RegistroColeccion" los libros seleccionados
+      const bookInsertions = addBooks.map(async (book) => {
+        const { error: bookError } = await supabase
+          .from("RegistroColeccion")
+          .insert({
+            idColeccion,
+            codLibro: book.codLibro,
+          });
+  
+        if (bookError) {
+          console.error("Error al insertar libro:", bookError);
+          return { error: bookError };
+        }
+  
+        return { success: true };
+      });
+  
+      // Verificar si hubo errores en las inserciones
+      const bookResponses = await Promise.all(bookInsertions);
+      const hasErrors = bookResponses.some((response) => response?.error);
+  
+      if (hasErrors) {
+        setSnackbar({
+          open: true,
+          message: "Error al guardar algunos libros en la colección.",
+          severity: "error",
+        });
+        return;
+      }
+  
+      setSnackbar({
+        open: true,
+        message: "Colección y libros guardados con éxito.",
+        severity: "success",
+      });
+  
+      // Limpiar formulario y redirigir
+      setAddBooks([]);
+      navigate("/profile");
+    } catch (error) {
+      console.error("Error inesperado al guardar la colección:", error);
+      setSnackbar({
+        open: true,
+        message: "Hubo un error inesperado. Intenta nuevamente.",
+        severity: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const onCancel = () => {
-    navigation("/profile");
+    navigate("/profile");
   };
 
   const handleOpenModal = () => {
@@ -85,8 +199,9 @@ export const FormCollection = () => {
             </div>
           </div>
         </div>
+        <FooterButtonsCol onCancel={onCancel} onSubmit = {onSubmit}/>
       </form>
-      <FooterButtonsCol onCancel={onCancel} />
+      
       {isModalOpen && <ModalBooks onClose={handleCloseModal} />}
     </div>
   );
