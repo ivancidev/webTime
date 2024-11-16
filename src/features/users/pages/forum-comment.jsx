@@ -10,29 +10,30 @@ export const ForumComment = () => {
       <div className="flex max-h-screen flex-col bg-primary-pri3">
         <NavbarO/>
 
-        <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
+        <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-10 p-2 z-40">
             <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate(-1)} />
         </div>
 
-        <div className="flex w-full">
-            <div>
-                <h1 className="text-secondary-sec2 font-title text-title-lg ">
+        <div className="flex w-full h-full">
+
+            <div className="flex-1">
+                <h1 className="text-secondary-sec2 font-title text-title-lg ml-36">
                     Comentarios del foro
                 </h1>
 
-                <div className="flex flex-row mx-14 my-10">
-                    <div className="flex justify-end relative w-2/5 max-w-[90%] bg-neutral-neu2 rounded-xl">
+                
+                    <div className="flex justify-end relative w-1/2  max-w-[90%] bg-neutral-neu2 rounded-xl">
                         <img
                             src={Logo}
                             className="w-full rounded-3xl object-cover"
                         />
-                </div>
+                    </div>
             
-                </div>
+
             </div>
 
-            <div>
-                <div className="flex flex-col h-[690px] overflow-y-scroll scrollbar-hide ml-10">
+            <div className=" flex-1 mr-28 ">
+                <div className=" flex-col h-[690px] overflow-y-scroll scrollbar-hide space-y-9">
                     <Comment/>
                     <Comment/>
                     <Comment/>
