@@ -10,20 +10,28 @@ export const Comment = () => {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.";
 
     return (
-        <div className="p-4 bg-primary-pri3 border border-[#AEAAAE] rounded-xl">
+        <div className="py-5 px-8 bg-primary-pri3 border border-neutral-neu1 rounded-xl">
             <div className="flex flex-row items-center space-x-3">
                 <ButtonIcon SvgIcon={User} variant="combColBlack2" />
                 <div className="flex flex-col">
                     <h2 className="font-label text-label-md mt-1">Jhon Smith</h2>
-                    <h2 className="text-neutral-neu0 text-body-md mt-1">2 horas</h2>
+                    <h2 className="text-neutral-neu0 text-body-md mt-1">2 hrs</h2>
                 </div>
             </div>
             <div className="mt-4">
                 <TextLarge sinopsis={text} />
             </div>
-            <div className="flex flex-row items-center space-x-2 mt-4">
-                <ButtonIcon SvgIcon={Like} variant="combColBlack2" />
-                <ButtonIcon SvgIcon={Dislike} variant="combColBlack2" />
+            <div className="flex flex-row items-center mt-4">
+                <div className="group flex items-center hover:text-secondary-sec2">
+                    <ButtonIcon SvgIcon={Like} variant="group-hover:combColBlackBlue combColBlue" />
+                    <h2 className="text-body-md mr-5 group-hover:text-secondary-sec2">
+                        1111
+                    </h2>
+                </div>
+                <div className="group flex items-center hover:text-secondary-sec2">
+                    <ButtonIcon SvgIcon={Dislike} variant="group-hover:combColBlackBlue combColBlue" />
+                    <h2 className="text-body-md mr-5 group-hover:text-secondary-sec2">1111</h2>
+                </div>
                 <Button text="Responder" variant="combColBlackBlue" />
             </div>
         </div>
