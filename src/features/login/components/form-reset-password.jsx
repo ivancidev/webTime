@@ -1,6 +1,60 @@
 import { Form } from "../components/form";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 export const FormResetPassword = () => {
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm();
+
+    const [passwordStrength, setPasswordStrength] = useState("");
+    const password = watch("password");
+
+    const onSubmit = (data) => {
+        console.log("Datos enviados:", data);
+        // Lógica para actualizar la contraseña en el servidor
+    };
+
+    const validatePasswordStrength = (value) => {
+        const hasUpperCase = /[A-Z]/.test(value);
+        const hasNumber = /\d/.test(value);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>~+=\-_;/\[\]]/.test(value);
+        const isValid = hasUpperCase && hasNumber && hasSpecialChar;
+    
+        if (!isValid) {
+          setPasswordStrength(
+            "Se requiere por lo menos una mayúscula, número y símbolo"
+          );
+          return "Se requiere por lo menos una mayúscula, número y símbolo";
+        }
+    
+        if (value.length <= 4) {
+          setPasswordStrength("Contraseña insegura");
+        } else if (value.length < 8) {
+          setPasswordStrength("Contraseña buena");
+        } else {
+          setPasswordStrength("Contraseña muy segura");
+        }
+        return true;
+    };
+
+    const getPasswordStrengthColor = () => {
+        switch (passwordStrength) {
+          case "Contraseña insegura":
+            return "text-red-500";
+          case "Contraseña buena":
+            return "text-orange-500";
+          case "Contraseña muy segura":
+            return "text-green-500";
+          default:
+            return "text-gray-500";
+        }
+    };
+
     return (
         <div className="w-full h-screen flex justify-center items-center bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2">
         <img
@@ -20,6 +74,26 @@ export const FormResetPassword = () => {
                     placeholder2="Ingrese su contraseña"
                     textButton="Cambiar contraseña"
                     showEyeIconFirstInput="true"
+                    validationRules1={{
+                        required: "Este campo es obligatorio",
+                        minLength: {
+                            value: 2,
+                            message: "Usa 2 caracteres o más",
+                          },
+                          maxLength: {
+                            value: 128,
+                            message: "Ingresa una contraseña con 128 caracteres o menos",
+                          },
+                          validate: validatePasswordStrength,
+                      }}
+                      validationRules2={{
+                        required: "Este campo es obligatorio",
+                        validate: (value) =>
+                          value === password || "Las contraseñas no coinciden",
+                      }}
+                      onSubmit={handleSubmit(onSubmit)} 
+                      register={register} 
+                      errors={errors} 
                 />
             </div>
         </div>
