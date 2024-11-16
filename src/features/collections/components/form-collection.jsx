@@ -16,9 +16,10 @@ export const FormCollection = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const onSubmit = async (data) => {
-    console.log("Datos del formulario:", data);
-    const { nameCollection, description } = data;
     
+    const { nameCollection, description } = data;
+    console.log(nameCollection);
+    console.log(description);
     if (addBooks.length === 0) {
       alert("Selecciona al menos un libro para la colección.");
       return;
@@ -31,12 +32,13 @@ export const FormCollection = () => {
 
     try {
       // Insertar en la tabla "Coleccion"
+      
       const { data: collectionData, error: collectionError } = await supabase
         .from("Coleccion")
         .insert({
           idUsuario: user.id_usuario,
-          descripcion: description,
           nombre: nameCollection,
+          descripcion: description,
         })
         .select("idColeccion")
         .single();
@@ -106,18 +108,18 @@ export const FormCollection = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center ">
+      <form onSubmit={handleSubmit(onSubmit)}   className="flex flex-col items-center ">
         <h1 className="text-secondary-sec2 font-title text-title-lg mt-2">
           Nueva Colección de Libros
         </h1>
         <div className="w-full px-40 mt-2">
           <InputText
-            {...register("nameCollection", { required: "Este campo es obligatorio" })}
+            name='nameCollection'
+            register = {register}
             label="Nombre de la colección"
             placeholder="Escribe aquí"
             className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
           />
-
           <label
             htmlFor="description"
             className=" text-primary-pri2 font-label text-label-lg"
@@ -125,7 +127,7 @@ export const FormCollection = () => {
             Descripción <span className="text-error-err2">*</span>
           </label>
           <textarea
-            {...register("description", { required: "Este campo es obligatorio" })}
+            {...register('description')}
             placeholder="Escribe aquí"
             className="w-full h-24 bg-transparent border-[1px] rounded border-neutral-neu0 p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md my-2 resize-none"
           />
