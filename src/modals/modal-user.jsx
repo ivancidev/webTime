@@ -41,7 +41,7 @@ export const ModalUser = ({ nickname, imgUser, onClose }) => {
             className="w-[92px] h-[92px] object-cover rounded-full"
           />
         ) : (
-          <UserProf />
+          <UserProf size={92}/>
         )}
         <h3 className="font-label text-label-lg">{nickname}</h3>
         {location.pathname !== "/profile" && (
