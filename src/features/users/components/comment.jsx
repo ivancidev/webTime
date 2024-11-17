@@ -4,18 +4,17 @@ import Button from "../../../components/buttons/button";
 import Dislike from "../../../icons/dislike";
 import Like from "../../../icons/like";
 import User from "../../../icons/user";
+import { supabase } from "../../../services/supabaseClient";
 
-export const Comment = (text) => {
-    text =
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.";
-
+export const Comment = ({nickname,text, time}) => {
+    console.log(time)
     return (
         <div className="py-5 px-8 bg-primary-pri3 border border-neutral-neu1 rounded-xl w-full">
             <div className="flex flex-row items-center space-x-3">
                 <ButtonIcon SvgIcon={User} variant="combColBlack2" />
                 <div className="flex flex-col">
-                    <h2 className="font-label text-label-md mt-1">Jhon Smith</h2>
-                    <h2 className="text-neutral-neu0 text-body-md">2 hrs</h2>
+                    <h2 className="font-label text-label-md mt-1">{nickname}</h2>
+                    <h2 className="text-neutral-neu0 text-body-md">{time}</h2>
                 </div>
             </div>
             <div>
