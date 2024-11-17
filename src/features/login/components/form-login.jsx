@@ -1,6 +1,18 @@
 import { Form } from "../components/form";
+import { useForm } from "react-hook-form";
 
 export const FormLogin = () => {
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+    const onSubmit = (data) => {
+        console.log("Datos enviados:", data);
+    };
+
     return (
         <div className="w-full h-screen flex justify-center items-center bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2">
             <img
@@ -23,6 +35,15 @@ export const FormLogin = () => {
                         placeholder2="Ingrese su contraseña"
                         textButton="Iniciar Sesión"
                         showButtonForgetPassword="true"
+                        validationRules1={{
+                            required: "Este campo es obligatorio",
+                          }}
+                          validationRules2={{
+                            required: "Este campo es obliigatorio",
+                          }}
+                          onSubmit={handleSubmit(onSubmit)} 
+                          register={register} 
+                          errors={errors} 
                     />
                     <label className="flex items-center space-x-2">
                         <span className="font-body text-body-sm text-neutral-neu0">

@@ -5,85 +5,112 @@ import { InputText } from "../../../components/input/input";
 import EyeOff from "../../../icons/eyeOff";
 import EyeOn from "../../../icons/eyeOn";
 import { useLogin } from '../../../hooks/use-login';
+import ResetPasswordModal from "./modal-reset-password";
 
-export const Form = ({label1, label2, placeholder1, placeholder2, textButton, showEyeIconFirstInput, showButtonForgetPassword}) => {
-    const [showPasswordFirst, setShowPasswordFirst] = useState(false);
-    const [showPasswordSecond, setShowPasswordSecond] = useState(false);
+export const Form = ({
+  label1,
+  label2,
+  placeholder1,
+  placeholder2,
+  textButton,
+  showEyeIconFirstInput,
+  showButtonForgetPassword,
+  validationRules1 = {},
+  validationRules2 = {},
+  onSubmit, 
+  register, 
+  errors,
+  passwordStrength,
+}) => {
+  const [showPasswordFirst, setShowPasswordFirst] = useState(false);
+  const [showPasswordSecond, setShowPasswordSecond] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [usernameOrEmail, setUsernameOrEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
-    const navigate = useNavigate(); 
-    const { login, error } = useLogin(); 
-
-
-    const handleSubmit = async (e) => {
-        e.preventDefault(); 
-    
-        const success = await login(usernameOrEmail, password);
-    
-        if (success) {
-          navigate('/app'); 
-        } else {
-          console.error('Error de autenticación:', error);
-        }
-      };
-
-      return (
-        <form className="flex flex-col sm:items-center" onSubmit={handleSubmit}>
-          <div>
-            <div className="mb-5">
-              <InputText
-                label={label1}
-                placeholder={placeholder1}
-                labelFontSize="16px"
-                errorFontSize="14px"
-                labelMarginTop="10px"
-                type={!showEyeIconFirstInput || showPasswordFirst ? 'text' : 'password'}
-                value={usernameOrEmail}
-                onChange={(e) => setUsernameOrEmail(e.target.value)}
-                className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
-                icon={
-                  showEyeIconFirstInput && (
-                    <button
-                      type="button"
-                      onClick={() => setShowPasswordFirst(!showPasswordFirst)}
-                    >
-                      {showPasswordFirst ? <EyeOff /> : <EyeOn />}
-                    </button>
-                  )
-                }
-              />
-              <InputText
-                label={label2}
-                placeholder={placeholder2}
-                labelFontSize="16px"
-                errorFontSize="14px"
-                labelMarginTop="5px"
-                type={showPasswordSecond ? 'text' : 'password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
-                icon={
-                  <button
-                    type="button"
-                    onClick={() => setShowPasswordSecond(!showPasswordSecond)}
-                  >
-                    {showPasswordSecond ? <EyeOff /> : <EyeOn />}
-                  </button>
-                }
-              />
-              {showButtonForgetPassword && (
+  return (
+    <form className="flex flex-col sm:items-center" onSubmit={onSubmit}>
+      <div>
+        <div className="mb-4">
+          <InputText
+            label={label1}
+            placeholder={placeholder1}
+            labelFontSize="16px"
+            errorFontSize="14px"
+            labelMarginTop="10px"
+            register={register} 
+            name="usernameOrEmail"
+            validationRules={validationRules1} 
+            errors={errors}
+            type={!showEyeIconFirstInput || showPasswordFirst ? "text" : "password"}
+            className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
+            icon={
+              showEyeIconFirstInput && (
                 <button
                   type="button"
-                  className="font-body text-body-sm text-secondary-sec2 underline hover:text-secondary-sec1"
+                  onClick={() => setShowPasswordFirst(!showPasswordFirst)}
                 >
-                  ¿Olvidaste tu contraseña?
+                  {showPasswordFirst ? <EyeOff /> : <EyeOn />}
                 </button>
-              )}
-            </div>
-            <Button text={textButton} variant="combExp" type="submit" />
+              )
+            }
+          />
+          
+          <div className="mb-0">
+            {!errors.usernameOrEmail && passwordStrength && (
+              <span
+                className={`text-sm ${
+                  passwordStrength === "Contraseña insegura"
+                    ? "text-red-500"
+                    : passwordStrength === "Contraseña buena"
+                    ? "text-orange-500"
+                    : "text-green-500"
+                }`}
+              >
+                {passwordStrength}
+              </span>
+            )}
           </div>
-        </form>
-      );
-    };
+
+          <InputText
+            label={label2}
+            placeholder={placeholder2}
+            labelFontSize="16px"
+            errorFontSize="14px"
+            labelMarginTop="6px"
+            register={register}
+            name="password"
+            validationRules={validationRules2} 
+            errors={errors}
+            type={showPasswordSecond ? "text" : "password"}
+            className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 pr-12 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
+            icon={
+              <button
+                type="button"
+                onClick={() => setShowPasswordSecond(!showPasswordSecond)}
+              >
+                {showPasswordSecond ? <EyeOff /> : <EyeOn />}
+              </button>
+            }
+          />
+
+          {showButtonForgetPassword && (
+            <button
+              type="button"
+              onClick={openModal}
+              className="font-body text-body-sm text-secondary-sec2 underline hover:text-secondary-sec1 mt-4"
+            >
+              ¿Olvidaste tu contraseña?
+            </button>
+          )}
+          {isModalOpen && (
+            <ResetPasswordModal onClose={closeModal} onConfirm={closeModal} />
+          )}
+        </div>
+
+        <Button text={textButton} variant="combExp" type="submit" />
+      </div>
+    </form>
+  );
+};
