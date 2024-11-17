@@ -18,7 +18,10 @@ export const ForumComment = ({id=14, img ="https://i1.sndcdn.com/avatars-0003296
                     comentario,
                     fecha,
                     usuario (
-                        nombre_usuario
+                        nombre
+                    ),
+                    interaccion_comentario_usuario (
+                        tipo_interaccioncomentario
                     )
                 `)
                 .eq("id_foro", id)
@@ -27,7 +30,22 @@ export const ForumComment = ({id=14, img ="https://i1.sndcdn.com/avatars-0003296
             if (error) {
                 console.error("Error al obtener comentarios:", error);
             } else {
-                setComentario(data);
+                const comentariosConInteracciones = data.map((comentario) => {
+                    const likes = comentario.interaccion_comentario_usuario?.filter(
+                        (interaccion) => interaccion.tipo_interaccioncomentario === 1
+                    ).length || 0;
+    
+                    const dislikes = comentario.interaccion_comentario_usuario?.filter(
+                        (interaccion) => interaccion.tipo_interaccioncomentario === -1
+                    ).length || 0;
+    
+                    return {
+                        ...comentario,
+                        likes,
+                        dislikes,
+                    };
+                });
+                setComentario(comentariosConInteracciones);
             }
         };
     
@@ -88,9 +106,11 @@ export const ForumComment = ({id=14, img ="https://i1.sndcdn.com/avatars-0003296
                         comentarios.map((reg) => (
                             <Comment
                             key={reg.cod_comentario} 
-                            nickname={reg.usuario.nombre_usuario || "Anónimo"}
+                            nickname={reg.usuario?.nombre || "Anónimo"}
                             text={reg.comentario}
                             time={formatTime(reg.fecha)}
+                            numLikes={reg.likes}
+                            numDislikes={reg.dislikes}
                             />
                         ))
                     )}
