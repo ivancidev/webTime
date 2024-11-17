@@ -1,5 +1,3 @@
-// src/hooks/use-login.js
-
 import { useState } from 'react';
 import { supabase } from '../services/supabaseClient';
 
@@ -8,9 +6,8 @@ export const useLogin = () => {
 
   const login = async (usernameOrEmail, password) => {
     try {
-      // Realiza la consulta a la tabla 'usuario'
       const { data, error } = await supabase
-        .from('usuario') // Nombre de la tabla en tu base de datos
+        .from('usuario') 
         .select('*')
         .or(`nombre_usuario.eq.${usernameOrEmail},correo.eq.${usernameOrEmail}`)
         .eq('password', password);
@@ -23,11 +20,7 @@ export const useLogin = () => {
       if (data.length > 0) {
         const user = data[0];
 
-        // Almacena el usuario en localStorage (puedes ajustar esto según tus necesidades)
         localStorage.setItem('user', JSON.stringify(user));
-
-        // Si tienes un token JWT devuelto por el backend, podrías almacenarlo aquí
-        // localStorage.setItem('token', token);
 
         return true;
       } else {

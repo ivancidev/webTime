@@ -13,22 +13,18 @@ export const Form = ({label1, label2, placeholder1, placeholder2, textButton, sh
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const navigate = useNavigate(); // Hook para navegar entre rutas
-    const { login, error } = useLogin(); // Usa el hook useLogin
+    const navigate = useNavigate(); 
+    const { login, error } = useLogin(); 
 
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Previene el comportamiento por defecto del formulario
+        e.preventDefault(); 
     
-        // Llama a la función login del hook useLogin
         const success = await login(usernameOrEmail, password);
     
         if (success) {
-          // Si la autenticación es exitosa, redirige al usuario
-          navigate('/app'); // Cambia '/dashboard' por la ruta que desees
+          navigate('/app'); 
         } else {
-          // Si la autenticación falla, actualiza el estado de error
-          // Deja que el frontend se encargue de mostrar el mensaje apropiado
           console.error('Error de autenticación:', error);
         }
       };
