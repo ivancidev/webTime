@@ -1,18 +1,29 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Button from "../../../components/buttons/button";
 import AddIcon from "../../../icons/add";
 import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/effect-cards";
-import { EffectCards } from "swiper/modules";
+import { useCollectionBooks } from "../../../hooks/use-get-collections";
+import { CardCollection } from "./card-collection";
 
 export const CollectionBooks = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
-  const collections = [];
+  const [collectionBooks, setCollectionBooks] = useState([]);
   const handleCreateClick = () => {
     navigate("/profile/create-collection");
   };
+
+  useEffect(() => {
+    const getCollectionBooks = async () => {
+      const collections = await useCollectionBooks(user.id_usuario);
+      setCollectionBooks(collections);
+    };
+
+    getCollectionBooks();
+  }, []);
+
+  console.log(collectionBooks);
 
   return (
     <div>
@@ -20,30 +31,19 @@ export const CollectionBooks = () => {
         <Button text="Crear" SvgIcon={AddIcon} onClick={handleCreateClick} />
       </div>
 
-      {collections.length === 0 ? (
+      {collectionBooks.length === 0 ? (
         <div className="flex justify-center items-center my-32 font-body text-body-md text-secondary-sec2 mx-4">
           Aún no tienes ninguna colección de libros. ¡Crea una para comenzar!
         </div>
       ) : (
-        <div className="w-64 flex flex-col items-center">
-          <Swiper
-            effect={"cards"}
-            grabCursor={true}
-            modules={[EffectCards]}
-            className="w-60 h-[285px]"
-          >
-            {collections.map((collection, index) => (
-              <SwiperSlide
-                key={index}
-                className="flex items-center justify-center rounded-2xl bg-white border"
-              >
-                {collection.title}
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <h3 className="mx-2 font-label text-center text-label-md mt-2 truncate px-1 hover:text-secondary-sec2">
-            collection
-          </h3>
+        <div className="grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {collectionBooks.map((collection) => (
+            <CardCollection
+              key={collection.idColeccion}
+              collectionName={collection.nombre}
+              books={collection.libros}
+            />
+          ))}
         </div>
       )}
     </div>
