@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const TextLarge = ({text, max, message }) => {
+export const TextLarge = ({text, max, message, letter="text-neutral-neu0"}) => {
   const [isExpanded, setIsExpanded] = useState(false);
   //const max = 250; 
 
@@ -10,7 +10,7 @@ export const TextLarge = ({text, max, message }) => {
 
   return (
     <div className="mt-4">
-      <p className="font-body text-body-md text-neutral-neu0 text-justify leading-6">
+      <p className={`${letter} font-body text-body-md text-justify leading-6`}>
         {isExpanded || text.length <= max
           ? text
           : `${text.substring(0, max)}...`}

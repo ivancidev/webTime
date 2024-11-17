@@ -73,19 +73,18 @@ export const ForumComment = ({ id = 14, img = "https://i1.sndcdn.com/avatars-000
     };
 
     return (
-        <div className="flex max-h-screen flex-col bg-primary-pri3">
+        <div className="flex max-h-screen flex-col bg-primary-pri3 overflow-auto">
             <NavbarO />
 
-            <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-10 p-2 z-40">
-                <ButtonIcon SvgIcon={BackIcon} onClick={() => window.history.back()} />
+            <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
+                <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate(-1)} />
             </div>
-
+            
             <div className="flex flex-col lg:flex-row w-full h-full">
                 <div className="flex-1">
                     <h1 className="text-secondary-sec2 font-title text-title-lg text-center">
                         Comentarios del foro
                     </h1>
-
                     <img
                         src={img}
                         className="mx-auto mt-10 rounded-3xl object-cover w-2/3"

@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function UserProf() {
+export default function UserProf({size}) {
   return (
     <svg
-      width="92"
-      height="92"
+      width={size}
+      height={size}
       viewBox="0 0 92 92"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
