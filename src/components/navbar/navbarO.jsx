@@ -81,10 +81,10 @@ export const NavbarO = () => {
         </li>
         <li>
           <Link
-            to="foros"
-            onClick={() => handleChangePath("/app/foros")}
+            to="forums"
+            onClick={() => handleChangePath("/app/forums")}
             className={
-              path === "/app/foros"
+              path === "/app/forums"
                 ? "font-label text-label-md text-secondary-sec1 hover:text-secondary-sec2 "
                 : "font-label text-label-md text-primary-pri2 hover:text-secondary-sec2 "
             }

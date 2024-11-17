@@ -34,10 +34,10 @@ export const ModalMenu = ({ setIsOpen }) => {
         </li>
         <li>
           <Link
-            to="foros"
-            onClick={() => handlenChangePath("/app/foros")}
+            to="forums"
+            onClick={() => handlenChangePath("/app/forums")}
             className={
-              path === "/app/foros"
+              path === "/app/forums"
                 ? "font-label text-label-md text-secondary-sec1 hover:text-secondary-sec2 "
                 : "font-label text-label-md text-primary-pri2 hover:text-secondary-sec2 "
             }
