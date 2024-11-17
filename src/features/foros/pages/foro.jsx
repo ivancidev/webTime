@@ -8,7 +8,8 @@ const foroData = {
 export const Foro = () => {
   return (
     <>
-      <CardForo {...foroData} />
+        <CardForo {...foroData} />
+      
     </>
   )
 }

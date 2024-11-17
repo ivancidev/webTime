@@ -6,9 +6,7 @@ import UserProf from "../../../icons/userProfile";
 import Like from "../../../icons/like";
 import User from "../../../icons/user";
 
-export const Comment = ({picture, nameUser, time, text="", likes, dislikes}) => {
-    //const text ="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.";
-
+export const Comment = (text) => {
     return (
         <div className="py-5 px-8 bg-primary-pri3 border-neutral-neu1 border rounded-xl w-full">
             <div className="flex flex-row items-center space-x-3">
