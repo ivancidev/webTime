@@ -34,7 +34,27 @@ export const ForumComment = ({id=14, img ="https://i1.sndcdn.com/avatars-0003296
         getComentarios();
     }, [id]);
     
-    
+
+    const formatTime = (fecha) => {
+        const now = new Date();
+        const fechaComentario = new Date(fecha);
+        const diffMs = now - fechaComentario; 
+        const diffSec = Math.floor(diffMs / 1000); 
+        const diffMin = Math.floor(diffSec / 60); 
+        const diffHours = Math.floor(diffMin / 60);
+        const diffDays = Math.floor(diffHours / 24); 
+      
+        if (diffDays >= 1) {
+          return fechaComentario.toLocaleDateString(); 
+        } else if (diffHours >= 1) {
+          return `Hace ${diffHours} hrs`;
+        } else if (diffMin >= 1) {
+          return `Hace ${diffMin} minutos`;
+        } else {
+          return `Hace unos segundos`;
+        }
+      };
+      
 
     console.log(comentarios)
     return (
@@ -63,14 +83,14 @@ export const ForumComment = ({id=14, img ="https://i1.sndcdn.com/avatars-0003296
             <div className=" flex-1 lg:mt-0 mt-10 ">
                 <div className=" mx-5 flex-col max-h-[80vh] lg:overflow-y-scroll space-y-9 lg:pr-[75px]">
                     {comentarios.length === 0 ? (
-                            <p className="text-center">No hay comentarios disponibles.</p>
+                            <p className="text-center">No hay comentarios aún. ¡Sé el primero en comentar!</p>
                     ) : (
                         comentarios.map((reg) => (
                             <Comment
                             key={reg.cod_comentario} 
                             nickname={reg.usuario.nombre_usuario || "Anónimo"}
                             text={reg.comentario}
-                            time={new Date(reg.fecha).toLocaleDateString()}
+                            time={formatTime(reg.fecha)}
                             />
                         ))
                     )}
