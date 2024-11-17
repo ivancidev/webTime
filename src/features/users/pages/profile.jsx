@@ -8,6 +8,7 @@ import { DailyStreak } from "../components/daily-streak";
 import { useUserDetails } from "../../../hooks/use-user-details";
 import { useCompletedBooks } from "../../../hooks/use-get-books-completed";
 import { CollectionBooks } from "../../collections/components/collection-books";
+import { useCollectionBooks } from "../../../hooks/use-get-collections";
 
 export const Profile = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -23,8 +24,15 @@ export const Profile = () => {
       setCompletedBooks(books);
     };
 
+    const getCollectionBooks = async () => {
+      const collections = await useCollectionBooks(user.id_usuario);
+      setCollectionBooks(collections);
+    };
+
     getCompletedBooks();
+    getCollectionBooks();
   }, []);
+  console.log(collectionBooks);
 
   return (
     <section className="max-h-screen">
