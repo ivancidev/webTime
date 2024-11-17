@@ -2,7 +2,6 @@ import { TextLarge } from "../../register/components/text-large";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import Button from "../../../components/buttons/button";
 import Dislike from "../../../icons/dislike";
-import UserProf from "../../../icons/userProfile";
 import Like from "../../../icons/like";
 import User from "../../../icons/user";
 import LikePressed from "../../../icons/like-pressed";
@@ -110,24 +109,16 @@ export const Comment = ({ nickname, text, time, numLikes, numDislikes, codComent
     
 
     return (
-        <div className="py-5 px-8 bg-primary-pri3 border-neutral-neu1 border rounded-xl w-full">
+        <div className="py-5 px-8 bg-primary-pri3 border border-neutral-neu1 rounded-xl w-full">
             <div className="flex flex-row items-center space-x-3">
-                {picture ? (
-                    <img
-                        src={picture}
-                        className="w-[10px] h-[10px] object-cover rounded-full"
-                    />
-                    ) : (
-                    <UserProf size={40}/>
-                    )}
-                
+                <ButtonIcon SvgIcon={User} variant="combColBlack2" />
                 <div className="flex flex-col">
                     <h2 className="font-label text-label-md mt-1">{nickname}</h2>
                     <h2 className="text-neutral-neu0 text-body-md">{time}</h2>
                 </div>
             </div>
             <div>
-                <TextLarge text={text} max={100} message="Mostrar" />
+                <TextLarge text={text} max={100} message="Mostrar"/>
             </div>
             <div className="flex flex-row items-center mt-4">
                 <div className="group flex items-center hover:text-secondary-sec2">
