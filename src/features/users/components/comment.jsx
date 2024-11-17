@@ -31,7 +31,8 @@ export const Comment = ({ nickname, text, time, numLikes, numDislikes, codComent
 
             if (error) {
                 if (error.details !== "The result contains no rows") {
-                    console.error("Error al obtener la interacción del usuario:", error);
+                    //console.error("Error al obtener la interacción del usuario:", error);
+                    console.log("usuario no tiene reaccion")
                 }
             } else if (data) {
                 setUserInteraccion(data.tipo_interaccioncomentario.toString());
