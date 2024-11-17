@@ -50,8 +50,6 @@ export const ModalBooks = ({ onClose }) => {
     });
   };
 
-  console.log(booksSelected);
-
   const handleAddBooks = () => {
     onClose(booksSelected);
   };
@@ -79,7 +77,7 @@ export const ModalBooks = ({ onClose }) => {
       <div className="w-[660px] h-[530px] bg-primary-pri3 rounded-2xl p-6">
         <div className="w-full flex justify-end">
           <ButtonIcon
-            onClick={onClose}
+            onClick={() => onClose([])}
             SvgIcon={CloseIcon}
             variant="combColBlack2"
           />
@@ -111,9 +109,11 @@ export const ModalBooks = ({ onClose }) => {
               style={{ height: "300px" }}
             >
               {[...searchBooksOld, ...searchBooksRecent].map((book) => (
-                <div className="w-1/3 flex justify-center p-2">
+                <div
+                  className="w-1/3 flex justify-center p-2"
+                  key={book.codLibro}
+                >
                   <CardBookCol
-                    key={book.codLibro}
                     titleBook={book.nombreLibro}
                     frontBook={book.enlacePortada}
                     isSelect={booksSelected.some(
@@ -129,10 +129,12 @@ export const ModalBooks = ({ onClose }) => {
               className="flex flex-wrap mt-4 overflow-y-auto"
               style={{ height: "300px" }}
             >
-              {bookAll.map((book, index) => (
-                <div className="w-1/3 flex justify-center p-2">
+              {bookAll.map((book) => (
+                <div
+                  className="w-1/3 flex justify-center p-2"
+                  key={book.codLibro}
+                >
                   <CardBookCol
-                    key={index}
                     frontBook={book.enlacePortada}
                     titleBook={book.nombreLibro}
                     isSelect={booksSelected.some(
