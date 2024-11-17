@@ -20,7 +20,7 @@ export default function FooterButtonsCol({ handleSubmit, onSubmit, onCancel }) {
         text="Crear"
         variant="combCol1"
         SvgIcon={CheckS}
-        onClick={handleUpload}
+        onClick={onSubmit}
       />
     </footer>
   );
