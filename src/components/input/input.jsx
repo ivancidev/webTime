@@ -44,9 +44,7 @@ export const InputText = ({
           </div>
         )}
       </div>
-      <div
-        className={`${!errors[name] && name === "password" ? "h-0" : "h-3"}`}
-      >
+      <div className={`${errors[name] ? "h-3 mb-2" : "h-0"}`}>
         {errors[name] && (
           <span className="text-error-err2" style={{ fontSize: errorFontSize }}>
             {errors[name].message}

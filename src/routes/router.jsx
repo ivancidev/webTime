@@ -9,6 +9,7 @@ import { Profile } from "../features/users/pages/profile";
 import { SelectPreferences } from "../features/users/pages/select-preferences";
 import { ProtectedRouter } from "./protected-router";
 import { Login } from "../features/login/pages/login";
+import { ResetPassword } from "../features/login/pages/reset-password";
 
 export const router = createBrowserRouter([
   {
@@ -59,5 +60,9 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
   },
 ]);
