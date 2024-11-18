@@ -19,7 +19,15 @@ export const Forum = () => {
       </div>
     );
   }
-  if (isErrorForo) return <p>Ha ocurrido un error al cargar los foros</p>;
+  if (isErrorForo) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-primary-pri3">
+        <p className="text-red-500 text-lg md:text-xl">
+          Ha ocurrido un error al cargar los foros
+        </p>
+      </div>
+    );
+  }
 
 
   const sectionForums = transformData(forums);
