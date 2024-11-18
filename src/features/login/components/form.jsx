@@ -44,7 +44,7 @@ export const Form = ({
             validationRules={validationRules1} 
             errors={errors}
             type={!showEyeIconFirstInput || showPasswordFirst ? "text" : "password"}
-            className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
+            className="w-[100%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
             icon={
               showEyeIconFirstInput && (
                 <button
@@ -84,7 +84,7 @@ export const Form = ({
             validationRules={validationRules2} 
             errors={errors}
             type={showPasswordSecond ? "text" : "password"}
-            className="w-[95%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 pr-12 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
+            className="w-[100%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 pr-12 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
             icon={
               <button
                 type="button"
