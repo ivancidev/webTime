@@ -68,7 +68,9 @@ export const ModalBooks = ({ onClose }) => {
   const noResults =
     searchText && searchBooksOld.length === 0 && searchBooksRecent.length === 0;
 
-  const bookAll = [...booksOld, ...recentBooks];
+  const bookAll = [...booksOld, ...recentBooks].sort((a, b) =>
+    a.nombreLibro.localeCompare(b.nombreLibro)
+  );
 
   const isCardSelects = booksSelected.length > 0;
 
@@ -90,7 +92,7 @@ export const ModalBooks = ({ onClose }) => {
               onSearchResults={handleSearchResults}
               searchText={searchText}
               setSearchText={setSearchText}
-              placeholder="Buscar por título"
+              placeholder="Buscar libro"
               smWidth="sm:w-80"
               existsA={false}
             />
@@ -98,10 +100,10 @@ export const ModalBooks = ({ onClose }) => {
 
           {noResults ? (
             <div
-              className="flex justify-center mt-4 items-center font-body text-body-sm  text-secondary-sec2 mx-4"
+              className="flex justify-center mt-4 items-center font-body text-body-md  text-secondary-sec2 mx-4"
               style={{ height: "300px" }}
             >
-              No se encontraron libros con ese título
+              No hay resultados para la búsqueda
             </div>
           ) : searchText ? (
             <div
