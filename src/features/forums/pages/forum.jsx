@@ -34,15 +34,13 @@ export const Forum = () => {
 
   return (
     <>
-      {sectionForums.map((secion, index) => {
-        return (
-          <SectionWithCards
-            key={index}
-            category={secion.title}
-            cards={secion.cards}
-          />
-        );
-      })}
+      {sectionForums.map((secion, index) => (
+        <SectionWithCards
+          key={index}
+          category={secion.title}
+          cards={secion.cards}
+        />
+      ))}
     </>
   );
 };
