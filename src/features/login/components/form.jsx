@@ -108,8 +108,9 @@ export const Form = ({
             <ResetPasswordModal onClose={closeModal} onConfirm={closeModal} />
           )}
         </div>
-
-        <Button text={textButton} variant="combExp" type="submit" />
+        <div className="w-full pl-[5%] sm:pl-0 sm:w-auto mb-3">
+          <Button text={textButton} variant="combExp" type="submit" />
+        </div>
       </div>
     </form>
   );

@@ -27,7 +27,7 @@ export const FormLogin = () => {
                 <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent w-auto font-title text-title-sm mb-5">
                     Inicia sesión en tu cuenta
                 </h1>
-                <div className="sm:w-fit">
+                <div className="w-[80%] sm:w-fit">
                     <Form 
                         label1="Nombre de usuario o correo"
                         label2="Contraseña"
