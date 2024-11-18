@@ -18,26 +18,33 @@ export const Comment = ({ nickname, text, time, numLikes, numDislikes, codComent
         const fetchUserInteraccion = async () => {
             const user = JSON.parse(localStorage.getItem("user"));
             if (!user) {
-                //console.warn("No se encontró un usuario autenticado.");
+                console.warn("Usuario no autenticado.");
                 return;
             }
-
-            const { data, error } = await supabase
-                .from("interaccion_comentario_usuario")
-                .select("tipo_interaccioncomentario")
-                .eq("cod_comentario", codComentario)
-                .eq("id_usuario", user.id_usuario)
-                .single();
-
-            if (error) {
-                if (error.details !== "The result contains no rows") {
-                    //console.error("Error al obtener la interacción del usuario:", error);
-                    //onsole.log("usuario no tiene reaccion")
+        
+            try {
+                const { data, error } = await supabase
+                    .from("interaccion_comentario_usuario")
+                    .select("tipo_interaccioncomentario")
+                    .eq("cod_comentario", codComentario)
+                    .eq("id_usuario", user.id_usuario);
+        
+                if (error) {
+                    console.error("Error al obtener la interacción del usuario:", error);
+                    return;
                 }
-            } else if (data) {
-                setUserInteraccion(data.tipo_interaccioncomentario.toString());
+        
+                if (data.length > 0) {
+                    setUserInteraccion(data[0].tipo_interaccioncomentario.toString());
+                } else {
+                    //console.log(`No se encontró interacción para el comentario ${codComentario}`);
+                    setUserInteraccion("0");
+                }
+            } catch (err) {
+                console.error("Error inesperado al obtener interacciones:", err);
             }
         };
+        
 
         fetchUserInteraccion();
     }, [codComentario]);

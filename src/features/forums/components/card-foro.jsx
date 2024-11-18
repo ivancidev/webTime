@@ -4,10 +4,9 @@ export const CardForo = ({ imgUrl, title, description, id_foro}) => {
     const navigate = useNavigate()
     const toComment = () => {
 
-        console.log("iddddddddddddddddddddd ",id_foro)
-        console.log("fotoooo ",imgUrl)
-        
-        navigate(`/comment/${id_foro}?imgUrl=${encodeURIComponent(imgUrl)}`);
+        navigate(`/comment/${id_foro}`, {
+            state: { imgUrl },
+        });
     };
     return (
     <div 

@@ -14,8 +14,11 @@ import {
 export const ForumComment = () => {
     const { id } = useParams(); 
    
-    
-    const imageUrl =  "https://i1.sndcdn.com/avatars-000329607942-t9hnvm-t240x240.jpg";
+    const location = useLocation(); 
+
+    const imageUrl = location.state?.imgUrl || "https://i1.sndcdn.com/avatars-000329607942-t9hnvm-t240x240.jpg";
+
+
 
     const [isLoading, setIsLoading] = useState(false);
 
