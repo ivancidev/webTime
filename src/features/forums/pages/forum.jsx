@@ -15,7 +15,7 @@ export const Forum = () => {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen bg-primary-pri3">
         <CircularProgress color="primary" size={100} />
-        <h2 className="mt-4 text-xl">Cargando foros...</h2>
+        <h2 className="mt-4 text-lg md:text-xl">Cargando foros...</h2>
       </div>
     );
   }
