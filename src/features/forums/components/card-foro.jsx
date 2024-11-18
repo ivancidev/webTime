@@ -19,9 +19,13 @@ export const CardForo = ({ imgUrl, title, description, id_foro }) => {
           alt={title}
         />
       </div>
-      <div className="flex flex-col flex-grow p-5">
-        <h3 className="text-body-lg font-title font-semibold mb-4 ">{title}</h3>
-        <p className="font-body text-body-md leading-5">{description}</p>
+      <div className="flex flex-col flex-grow p-4">
+        <h3 className="text-body-lg font-title font-semibold mb-4 text-center sm:text-left">
+          {title}
+        </h3>
+        <p className="font-body text-body-md leading-5 text-center sm:text-left">
+          {description}
+        </p>
       </div>
     </div>
   );
