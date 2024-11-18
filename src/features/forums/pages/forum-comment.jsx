@@ -5,11 +5,29 @@ import { NavbarO } from "../../../components/navbar/navbarO";
 import { supabase } from "../../../services/supabaseClient";
 import { useEffect, useState } from "react";
 
-export const ForumComment = ({ id = 14, img = "https://i1.sndcdn.com/avatars-000329607942-t9hnvm-t240x240.jpg" }) => {
+import { useParams, useLocation, useNavigate, } from "react-router-dom";
+
+import {
+    CircularProgress,
+  } from "@mui/material";
+
+export const ForumComment = () => {
+    const { id } = useParams(); 
+   
+    const location = useLocation(); 
+
+    const imageUrl = location.state?.imgUrl || "https://i1.sndcdn.com/avatars-000329607942-t9hnvm-t240x240.jpg";
+
+
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const navigate = useNavigate();
     const [comentarios, setComentarios] = useState([]);
 
     useEffect(() => {
         const getComentarios = async () => {
+            setIsLoading(true);
             const { data, error } = await supabase
                 .from("comentarios")
                 .select(`
@@ -17,7 +35,8 @@ export const ForumComment = ({ id = 14, img = "https://i1.sndcdn.com/avatars-000
                     comentario,
                     fecha,
                     usuario (
-                        nombre
+                        nombre,
+                        avatar
                     ),
                     interaccion_comentario_usuario (
                         tipo_interaccioncomentario
@@ -29,7 +48,7 @@ export const ForumComment = ({ id = 14, img = "https://i1.sndcdn.com/avatars-000
             if (error) {
                 console.error("Error al obtener comentarios:", error);
             } else {
-                // Calcular likes y dislikes para cada comentario
+                
                 const comentariosConInteracciones = data.map((comentario) => {
                     const likes = comentario.interaccion_comentario_usuario?.filter(
                         (interaccion) => interaccion.tipo_interaccioncomentario === 1
@@ -47,6 +66,7 @@ export const ForumComment = ({ id = 14, img = "https://i1.sndcdn.com/avatars-000
                 });
                 setComentarios(comentariosConInteracciones);
             }
+            setIsLoading(false);
         };
 
         getComentarios();
@@ -86,14 +106,17 @@ export const ForumComment = ({ id = 14, img = "https://i1.sndcdn.com/avatars-000
                         Comentarios del foro
                     </h1>
                     <img
-                        src={img}
+                        src={imageUrl}
                         className="mx-auto mt-10 rounded-3xl object-cover w-2/3"
                     />
                 </div>
-
                 <div className="flex-1 lg:mt-0 mt-10">
                     <div className="mx-5 flex-col max-h-[80vh] lg:overflow-y-scroll space-y-9 lg:pr-[75px]">
-                        {comentarios.length === 0 ? (
+                    {isLoading ? ( // Mostrar spinner mientras carga
+                            <div className="flex justify-center items-center h-40">
+                                <CircularProgress color="secondary" />
+                            </div>
+                        ) : comentarios.length === 0 ? ( // Mostrar mensaje si no hay comentarios
                             <p className="text-center">No hay comentarios aún. ¡Sé el primero en comentar!</p>
                         ) : (
                             comentarios.map((reg) => (
@@ -105,6 +128,7 @@ export const ForumComment = ({ id = 14, img = "https://i1.sndcdn.com/avatars-000
                                     time={formatTime(reg.fecha)}
                                     numLikes={reg.likes}
                                     numDislikes={reg.dislikes}
+                                    avatar={reg.usuario?.avatar}
                                 />
                             ))
                         )}

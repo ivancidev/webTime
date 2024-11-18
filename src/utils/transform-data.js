@@ -13,10 +13,11 @@ export const transformData = (forums) => {
   };
 
   forums.forEach((forum) => {
-    const { codCategoria, titulo_foro, descripcion, imagen_foro } = forum;
+    const { id_foro,codCategoria, titulo_foro, descripcion, imagen_foro } = forum;
 
     if (categories[codCategoria]) {
       categories[codCategoria].cards.push({
+        id_foro,
         title: titulo_foro,
         description: descripcion,
         imgUrl: imagen_foro,

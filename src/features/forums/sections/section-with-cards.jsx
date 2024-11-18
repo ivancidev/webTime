@@ -8,6 +8,7 @@ export const SectionWithCards = ({ category, cards }) => {
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {cards.map((card, index) => {
+
           return <CardForo key={index} {...card} />;
         })}
       </div>
