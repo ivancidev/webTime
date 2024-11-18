@@ -4,6 +4,8 @@ export const CardForo = ({ imgUrl, title, description, id_foro}) => {
     const navigate = useNavigate()
     const toComment = () => {
 
+    
+        
         navigate(`/comment/${id_foro}`, {
             state: { imgUrl },
         });

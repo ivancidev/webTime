@@ -7,7 +7,7 @@ import { Root } from "../layouts/root";
 import { RegisterUser } from "../features/users/pages/register-user";
 import { Profile } from "../features/users/pages/profile";
 import { SelectPreferences } from "../features/users/pages/select-preferences";
-import { ForumComment } from "../features/users/pages/forum-comment";
+import { ForumComment } from "../features/forums/pages/forum-comment";
 import { ProtectedRouter } from "./protected-router";
 import { CreateCollection } from "../features/collections/pages/create-collection";
 import { Forum } from "../features/forums/pages/forum";
