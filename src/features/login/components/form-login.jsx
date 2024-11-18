@@ -17,14 +17,12 @@ export const FormLogin = () => {
   const onSubmit = async (data) => {
     const { usernameOrEmail, password } = data;
 
-    // Llamar a la función de login con los datos del formulario
     const success = await login(usernameOrEmail, password);
 
     if (success) {
-      navigate("/app"); // Cambia '/app' por la ruta que corresponda
+      navigate("/app"); 
     } else {
       console.error("Error de autenticación:", loginError);
-      // Aquí puedes manejar el error o mostrar un mensaje al usuario
     }
   };
 
