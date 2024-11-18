@@ -5,11 +5,21 @@ import { NavbarO } from "../../../components/navbar/navbarO";
 import { supabase } from "../../../services/supabaseClient";
 import { useEffect, useState } from "react";
 
-export const ForumComment = ({ id = 14, img = "https://i1.sndcdn.com/avatars-000329607942-t9hnvm-t240x240.jpg" }) => {
+import { useParams, useLocation, useNavigate, } from "react-router-dom";
+
+export const ForumComment = () => {
+    const { id } = useParams(); 
+   
+    
+    const imageUrl =  "https://i1.sndcdn.com/avatars-000329607942-t9hnvm-t240x240.jpg";
+
+
+    const navigate = useNavigate();
     const [comentarios, setComentarios] = useState([]);
 
     useEffect(() => {
         const getComentarios = async () => {
+        
             const { data, error } = await supabase
                 .from("comentarios")
                 .select(`
@@ -30,7 +40,7 @@ export const ForumComment = ({ id = 14, img = "https://i1.sndcdn.com/avatars-000
             if (error) {
                 console.error("Error al obtener comentarios:", error);
             } else {
-                // Calcular likes y dislikes para cada comentario
+                
                 const comentariosConInteracciones = data.map((comentario) => {
                     const likes = comentario.interaccion_comentario_usuario?.filter(
                         (interaccion) => interaccion.tipo_interaccioncomentario === 1
@@ -48,6 +58,7 @@ export const ForumComment = ({ id = 14, img = "https://i1.sndcdn.com/avatars-000
                 });
                 setComentarios(comentariosConInteracciones);
             }
+          
         };
 
         getComentarios();
@@ -87,7 +98,7 @@ export const ForumComment = ({ id = 14, img = "https://i1.sndcdn.com/avatars-000
                         Comentarios del foro
                     </h1>
                     <img
-                        src={img}
+                        src={imageUrl}
                         className="mx-auto mt-10 rounded-3xl object-cover w-2/3"
                     />
                 </div>

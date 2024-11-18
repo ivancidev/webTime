@@ -3,7 +3,6 @@ import ButtonIcon from "../../../components/buttons/buttonIcon";
 import Button from "../../../components/buttons/button";
 import Dislike from "../../../icons/dislike";
 import Like from "../../../icons/like";
-import User from "../../../icons/user";
 import LikePressed from "../../../icons/like-pressed";
 import { useState, useEffect } from "react";
 import DislikePressed from "../../../icons/dislike-pressed";
@@ -19,7 +18,7 @@ export const Comment = ({ nickname, text, time, numLikes, numDislikes, codComent
         const fetchUserInteraccion = async () => {
             const user = JSON.parse(localStorage.getItem("user"));
             if (!user) {
-                console.warn("No se encontró un usuario autenticado.");
+                //console.warn("No se encontró un usuario autenticado.");
                 return;
             }
 
@@ -33,7 +32,7 @@ export const Comment = ({ nickname, text, time, numLikes, numDislikes, codComent
             if (error) {
                 if (error.details !== "The result contains no rows") {
                     //console.error("Error al obtener la interacción del usuario:", error);
-                    console.log("usuario no tiene reaccion")
+                    //onsole.log("usuario no tiene reaccion")
                 }
             } else if (data) {
                 setUserInteraccion(data.tipo_interaccioncomentario.toString());
@@ -108,18 +107,16 @@ export const Comment = ({ nickname, text, time, numLikes, numDislikes, codComent
         }
     };
     
-    console.log(avatar)
     return (
         <div className="py-5 px-8 bg-primary-pri3 border border-neutral-neu1 rounded-xl w-full">
             <div className="flex flex-row items-center space-x-3">
-                {avatar !== null ? (
+                {avatar && avatar.startsWith("http") ? (
                     <img
                         src={avatar}
                         alt="avatar"
                         className="w-10 h-10 rounded-full object-cover"
                     />
                 ):(
-                    //<ButtonIcon SvgIcon={User} variant="combColBlack2" />
                     <UserProf size={40}/>
                 )}
 

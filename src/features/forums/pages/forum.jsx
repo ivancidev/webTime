@@ -21,6 +21,7 @@ export const Forum = () => {
   }
   if (isErrorForo) return <p>Ha ocurrido un error al cargar los foros</p>;
 
+
   const sectionForums = transformData(forums);
 
   return (

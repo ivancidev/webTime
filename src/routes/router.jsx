@@ -67,7 +67,7 @@ export const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "/comment",
+    path: "/comment/:id",
     element: <ForumComment />,
   },
 ]);
