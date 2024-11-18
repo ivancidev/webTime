@@ -17,7 +17,8 @@ export const ForumComment = ({ id = 14, img = "https://i1.sndcdn.com/avatars-000
                     comentario,
                     fecha,
                     usuario (
-                        nombre
+                        nombre,
+                        avatar
                     ),
                     interaccion_comentario_usuario (
                         tipo_interaccioncomentario
@@ -90,7 +91,6 @@ export const ForumComment = ({ id = 14, img = "https://i1.sndcdn.com/avatars-000
                         className="mx-auto mt-10 rounded-3xl object-cover w-2/3"
                     />
                 </div>
-
                 <div className="flex-1 lg:mt-0 mt-10">
                     <div className="mx-5 flex-col max-h-[80vh] lg:overflow-y-scroll space-y-9 lg:pr-[75px]">
                         {comentarios.length === 0 ? (
@@ -105,6 +105,7 @@ export const ForumComment = ({ id = 14, img = "https://i1.sndcdn.com/avatars-000
                                     time={formatTime(reg.fecha)}
                                     numLikes={reg.likes}
                                     numDislikes={reg.dislikes}
+                                    avatar={reg.usuario?.avatar}
                                 />
                             ))
                         )}

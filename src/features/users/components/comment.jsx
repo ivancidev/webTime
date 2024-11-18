@@ -8,8 +8,9 @@ import LikePressed from "../../../icons/like-pressed";
 import { useState, useEffect } from "react";
 import DislikePressed from "../../../icons/dislike-pressed";
 import { supabase } from "../../../services/supabaseClient";
+import UserProf from "../../../icons/userProfile";
 
-export const Comment = ({ nickname, text, time, numLikes, numDislikes, codComentario }) => {
+export const Comment = ({ nickname, text, time, numLikes, numDislikes, codComentario, avatar}) => {
     const [userInteraccion, setUserInteraccion] = useState("0");
     const [likes, setLikes] = useState(numLikes);
     const [dislikes, setDislikes] = useState(numDislikes);
@@ -107,11 +108,21 @@ export const Comment = ({ nickname, text, time, numLikes, numDislikes, codComent
         }
     };
     
-
+    console.log(avatar)
     return (
         <div className="py-5 px-8 bg-primary-pri3 border border-neutral-neu1 rounded-xl w-full">
             <div className="flex flex-row items-center space-x-3">
-                <ButtonIcon SvgIcon={User} variant="combColBlack2" />
+                {avatar !== null ? (
+                    <img
+                        src={avatar}
+                        alt="avatar"
+                        className="w-10 h-10 rounded-full object-cover"
+                    />
+                ):(
+                    //<ButtonIcon SvgIcon={User} variant="combColBlack2" />
+                    <UserProf size={40}/>
+                )}
+
                 <div className="flex flex-col">
                     <h2 className="font-label text-label-md mt-1">{nickname}</h2>
                     <h2 className="text-neutral-neu0 text-body-md">{time}</h2>
