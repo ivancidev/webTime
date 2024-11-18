@@ -7,32 +7,57 @@ import { ModalBooks } from "./modal-books";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
 import { useForm } from "react-hook-form";
+import {
+  CircularProgress,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
+import CheckRegister from "../../../icons/checkRegister";
+import Button from "../../../components/buttons/button";
 
 export const FormCollection = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
+  });
   const [addBooks, setAddBooks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [charCount, setCharCount] = useState(0);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
   const onSubmit = async (data) => {
-    
+    setIsLoading(true);
+    setOpenDialog(true);
+
     const { nameCollection, description } = data;
-    console.log(nameCollection);
-    console.log(description);
+    //console.log(nameCollection);
+    //console.log(description);
+
     if (addBooks.length === 0) {
-      alert("Selecciona al menos un libro para la colección.");
+      setIsLoading(false);
+      setErrorMessage("Selecciona al menos un libro para la colección.");
       return;
     }
 
     if (!user || !user.id_usuario) {
-      alert("Error: Usuario no definido. Intenta iniciar sesión nuevamente.");
+      setIsLoading(false);
+      setErrorMessage(
+        "Usuario no definido. Intenta iniciar sesión nuevamente."
+      );
       return;
     }
 
     try {
       // Insertar en la tabla "Coleccion"
-      
       const { data: collectionData, error: collectionError } = await supabase
         .from("Coleccion")
         .insert({
@@ -44,8 +69,9 @@ export const FormCollection = () => {
         .single();
 
       if (collectionError) {
-        console.error("Error al insertar colección:", collectionError);
-        alert("Hubo un error al guardar la colección.");
+        //console.error("Error al insertar colección:", collectionError);
+        setIsLoading(false);
+        setErrorMessage("Hubo un error al guardar la colección.");
         return;
       }
 
@@ -61,20 +87,19 @@ export const FormCollection = () => {
           });
 
         if (bookError) {
-          console.error("Error al insertar libro:", bookError);
+          //console.error("Error al insertar libro:", bookError);
           return { error: bookError };
         }
-
         return { success: true };
       });
 
+      setIsLoading(false);
       await Promise.all(bookInsertions);
-
-      alert("Colección y libros guardados con éxito.");
-      navigate("/profile");
+      setIsSuccess(true);
     } catch (error) {
-      console.error("Error inesperado al guardar la colección:", error);
-      alert("Hubo un error inesperado. Intenta nuevamente.");
+      //console.error("Error inesperado al guardar la colección:", error);
+      setIsLoading(false);
+      setErrorMessage("Hubo un error inesperado. Intenta nuevamente.");
     }
   };
 
@@ -104,33 +129,88 @@ export const FormCollection = () => {
     );
   };
 
-  console.log(addBooks);
-
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}   className="flex flex-col items-center ">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col items-center "
+      >
         <h1 className="text-secondary-sec2 font-title text-title-lg mt-2">
           Nueva Colección de Libros
         </h1>
         <div className="w-full px-40 mt-2">
-          <InputText
-            name='nameCollection'
-            register = {register}
-            label="Nombre de la colección"
-            placeholder="Escribe aquí"
-            className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
-          />
+          <div className="flex">
+            <div>
+              <h3 className="py-1 text-primary-pri2 font-label text-label-lg">
+                Nombre de la colección{" "}
+                <span className="text-error-err2">*</span>
+              </h3>
+              <input
+                id="nameCol"
+                name="nameCol"
+                type="text"
+                label="Nombre de la colección"
+                placeholder="Escribe aquí"
+                {...register("nameCol", {
+                  required: "Nombre de la colección no puede estar vacío",
+                  pattern: {
+                    value: /^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ_\-\(\)\[\]\s]*$/,
+                    message:
+                      "Sólo se permiten  “A-z, a-z, 0-9, á, é, í, ó, ú, ü, ñ, _, -,(), []",
+                  },
+                  maxLength: {
+                    value: 60,
+                    message: "Elige un nombre de colección más corto",
+                  },
+                  onChange: (e) => {
+                    setCharCount(e.target.value.length); // Actualiza el contador de caracteres
+                  },
+                })}
+                className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
+                errors={errors}
+              />
+            </div>
+            <div className="flex items-end">
+              {charCount > 60 && (
+                <span className="text-error-err2 ml-2">{charCount}/60</span>
+              )}
+            </div>
+          </div>
+          <div className="h-7">
+            {errors.nameCol && (
+              <p className="text-error-err2">{errors.nameCol.message}</p>
+            )}
+          </div>
           <label
             htmlFor="description"
             className=" text-primary-pri2 font-label text-label-lg"
           >
-            Descripción <span className="text-error-err2">*</span>
+            Descripción
           </label>
           <textarea
-            {...register('description')}
+            id="description"
+            name="description"
+            {...register("description", {
+              pattern: {
+                value: /^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ_\-\(\)\[\]\!\?\.\,\:\;\s]*$/,
+                message:
+                  "Sólo se permiten  “A-z, a-z, 0-9, á, é, í, ó, ú, ü, ñ, _, -,(), [], !. ?,.,,,:,;",
+              },
+              maxLength: {
+                value: 500,
+                message: "Ingresa una descripción más corta",
+              },
+            })}
             placeholder="Escribe aquí"
-            className="w-full h-24 bg-transparent border-[1px] rounded border-neutral-neu0 p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md my-2 resize-none"
+            className="w-full h-24 bg-transparent border-[1px] rounded border-neutral-neu0 p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md mt-2 resize-none"
           />
+          <div className="h-7">
+            {errors.description && (
+              <span className="text-error-err2">
+                {errors.description.message}
+              </span>
+            )}
+          </div>
 
           <label
             htmlFor="selectBooks"
@@ -155,9 +235,67 @@ export const FormCollection = () => {
             </div>
           </div>
         </div>
-        <FooterButtonsCol onCancel={onCancel} onSubmit={handleSubmit(onSubmit)}/>
+        <FooterButtonsCol
+          onCancel={onCancel}
+          onSubmit={handleSubmit(onSubmit)}
+        />
       </form>
-      
+      <Dialog
+        open={openDialog}
+        onClose={null}
+        sx={{
+          "& .MuiPaper-root": {
+            borderRadius: "16px",
+          },
+        }}
+      >
+        {isLoading ? (
+          <>
+            <DialogTitle className="text-center text-primary-pri1">
+              Cargando...
+            </DialogTitle>
+            <DialogContent className="flex flex-col items-center justify-center">
+              <CircularProgress />
+            </DialogContent>
+          </>
+        ) : isSuccess ? (
+          <>
+            <DialogTitle className=" text-center flex flex-col items-center text-primary-pri1">
+              <div className="mt-1">
+                <CheckRegister />
+              </div>
+              <h3 className="font-body text-body-lg mt-1 ">
+                Colección creada exitosamente
+              </h3>
+            </DialogTitle>
+
+            <DialogContent className="flex flex-col items-center justify-center space-y-2">
+              <Button
+                text="Aceptar"
+                onClick={() => {
+                  setOpenDialog(false);
+                  navigate("/profile");
+                }}
+              />
+            </DialogContent>
+          </>
+        ) : errorMessage ? (
+          <>
+            <DialogTitle className="text-center text-primary-pri1">
+              Error
+            </DialogTitle>
+            <DialogContent className="flex flex-col items-center justify-center">
+              <p className="text-error-err2">
+                {errorMessage || "Ocurrió un error. Inténtalo de nuevo."}
+              </p>
+              <Button text="Aceptar" onClick={() => setOpenDialog(false)} />
+            </DialogContent>
+          </>
+        ) : (
+          ""
+        )}
+      </Dialog>
+
       {isModalOpen && <ModalBooks onClose={handleCloseModal} />}
     </div>
   );
