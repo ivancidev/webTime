@@ -7,19 +7,24 @@ import { useEffect, useState } from "react";
 
 import { useParams, useLocation, useNavigate, } from "react-router-dom";
 
+import {
+    CircularProgress,
+  } from "@mui/material";
+
 export const ForumComment = () => {
     const { id } = useParams(); 
    
     
     const imageUrl =  "https://i1.sndcdn.com/avatars-000329607942-t9hnvm-t240x240.jpg";
 
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
     const [comentarios, setComentarios] = useState([]);
 
     useEffect(() => {
         const getComentarios = async () => {
-        
+            setIsLoading(true);
             const { data, error } = await supabase
                 .from("comentarios")
                 .select(`
@@ -58,7 +63,7 @@ export const ForumComment = () => {
                 });
                 setComentarios(comentariosConInteracciones);
             }
-          
+            setIsLoading(false);
         };
 
         getComentarios();
@@ -104,7 +109,11 @@ export const ForumComment = () => {
                 </div>
                 <div className="flex-1 lg:mt-0 mt-10">
                     <div className="mx-5 flex-col max-h-[80vh] lg:overflow-y-scroll space-y-9 lg:pr-[75px]">
-                        {comentarios.length === 0 ? (
+                    {isLoading ? ( // Mostrar spinner mientras carga
+                            <div className="flex justify-center items-center h-40">
+                                <CircularProgress color="secondary" />
+                            </div>
+                        ) : comentarios.length === 0 ? ( // Mostrar mensaje si no hay comentarios
                             <p className="text-center">No hay comentarios aún. ¡Sé el primero en comentar!</p>
                         ) : (
                             comentarios.map((reg) => (
