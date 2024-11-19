@@ -5,12 +5,20 @@ import AddIcon from "../../../icons/add";
 import React from "react";
 import { useCollectionBooks } from "../../../hooks/use-get-collections";
 import { CardCollection } from "./card-collection";
+import {
+  CircularProgress,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 
 export const CollectionBooks = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
   const [collectionBooks, setCollectionBooks] = useState([]);
   const [showMore, setShowMore] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
 
   const handleCreateClick = () => {
     navigate("/profile/register-collection");
@@ -18,8 +26,10 @@ export const CollectionBooks = () => {
 
   useEffect(() => {
     const getCollectionBooks = async () => {
+      setIsFetching(true);
       const collections = await useCollectionBooks(user.id_usuario);
       setCollectionBooks(collections);
+      setIsFetching(false);
     };
 
     getCollectionBooks();
@@ -31,13 +41,26 @@ export const CollectionBooks = () => {
   const displayedCollections = showMore
     ? collectionBooks
     : collectionBooks.slice(0, MAX_ITEMS);
+
+  const handleToggleShowMore = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setShowMore(!showMore);
+    }, 500);
+  };
   return (
     <div>
       <div className="flex flex-row justify-end pr-14 mt-4">
         <Button text="Crear" SvgIcon={AddIcon} onClick={handleCreateClick} />
       </div>
 
-      {collectionBooks.length === 0 ? (
+      {isFetching ? (
+        <div className="flex flex-col justify-center items-center my-32">
+          <CircularProgress size={80} />
+          <p className="font-body text-body-md mt-3">Cargando colecciones...</p>
+        </div>
+      ) : collectionBooks.length === 0 ? (
         <div className="flex justify-center items-center my-32 font-body text-body-md text-secondary-sec2 mx-4">
           Aún no tienes ninguna colección de libros. ¡Crea una para comenzar!
         </div>
@@ -55,13 +78,28 @@ export const CollectionBooks = () => {
       {collectionBooks.length > MAX_ITEMS && (
         <div className="flex justify-center">
           <button
-            onClick={() => setShowMore(!showMore)}
+            onClick={handleToggleShowMore}
             className="text-secondary-sec2 font-body text-body-md hover:underline m-5 text-justify"
           >
-            {showMore ? "" : "Ver más..."}
+            {showMore ? "" : "Ver más"}
           </button>
         </div>
       )}
+      <Dialog
+        open={isLoading}
+        sx={{
+          "& .MuiPaper-root": {
+            borderRadius: "16px",
+          },
+        }}
+      >
+        <DialogTitle className="text-center text-primary-pri1">
+          Cargando...
+        </DialogTitle>
+        <DialogContent className="flex flex-col items-center justify-center">
+          <CircularProgress />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
