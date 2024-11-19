@@ -31,7 +31,7 @@ const Button = ({
       className={`${baseButton} ${varCol[variant]} flex items-center justify-center`}
     >
       {SvgIcon && <SvgIcon />}
-      <p className="pl-2 text-center">{text}</p>
+      <p className="pl-2 text-center text-wrap">{text}</p>
     </button>
   );
 };

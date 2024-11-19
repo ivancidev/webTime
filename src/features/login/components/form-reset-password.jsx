@@ -47,11 +47,11 @@ export const FormResetPassword = () => {
               alt="fondo"
               className="absolute inset-0 w-full h-full object-cover opacity-70"
           />
-          <div className="relative w-[600px] h-[400px] flex flex-col justify-center items-center bg-primary-pri3 rounded-2xl shadow-2xl z-10 border border-gray-200">
-              <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent w-auto font-display text-display-sm">
+          <div className="relative w-[100%] h-full sm:w-[600px] sm:h-[400px] flex flex-col justify-center items-center bg-primary-pri3 sm:rounded-2xl shadow-2xl z-10 border border-gray-200">
+              <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent w-auto font-display text-display-sm text-center">
                   Elige una nueva contraseña
               </h1>
-              <div className="w-fit">
+              <div className="w-[80%] sm:w-fit">
                   <Form
                       label1="Nueva contraseña"
                       label2="Confirmar contraseña"
