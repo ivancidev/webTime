@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
         element: <BookInfo />,
       },
       {
-        path: "create-collection",
+        path: "register-collection",
         element: <CreateCollection />,
       },
     ],
