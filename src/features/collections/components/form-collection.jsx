@@ -93,8 +93,8 @@ export const FormCollection = () => {
         return { success: true };
       });
 
-      setIsLoading(false);
       await Promise.all(bookInsertions);
+      setIsLoading(false);
       setIsSuccess(true);
     } catch (error) {
       //console.error("Error inesperado al guardar la colección:", error);
@@ -142,16 +142,16 @@ export const FormCollection = () => {
           <div className="flex">
             <div>
               <h3 className="py-1 text-primary-pri2 font-label text-label-lg">
-                Nombre de la colección{" "}
+                Nombre de la colección
                 <span className="text-error-err2">*</span>
               </h3>
               <input
-                id="nameCol"
-                name="nameCol"
+                id="nameCollection"
+                name="nameCollection"
                 type="text"
                 label="Nombre de la colección"
                 placeholder="Escribe aquí"
-                {...register("nameCol", {
+                {...register("nameCollection", {
                   required: "Nombre de la colección no puede estar vacío",
                   pattern: {
                     value: /^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ_\-\(\)\[\]\s]*$/,
@@ -163,7 +163,7 @@ export const FormCollection = () => {
                     message: "Elige un nombre de colección más corto",
                   },
                   onChange: (e) => {
-                    setCharCount(e.target.value.length); // Actualiza el contador de caracteres
+                    setCharCount(e.target.value.length);
                   },
                 })}
                 className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
@@ -177,8 +177,8 @@ export const FormCollection = () => {
             </div>
           </div>
           <div className="h-7">
-            {errors.nameCol && (
-              <p className="text-error-err2">{errors.nameCol.message}</p>
+            {errors.nameCollection && (
+              <p className="text-error-err2">{errors.nameCollection.message}</p>
             )}
           </div>
           <label
