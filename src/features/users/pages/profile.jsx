@@ -37,7 +37,13 @@ export const Profile = () => {
   return (
     <section className="max-h-screen">
       <div className="sticky top-2 sm:relative ml-6 md:ml-8 lg:ml-14 md:mt-8">
-        <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate("/app")} />
+        <ButtonIcon SvgIcon={BackIcon} onClick={() => {
+          if (selectedSection === "Concluidos") {
+            navigate("/app"); 
+          } else {
+            setSelectedSection("Concluidos");
+          }
+        }}/>
       </div>
       <div className="flex justify-center items-center lg:space-x-64 flex-col md:flex-row space-x-4 mt-5 lg:mt-0">
         <div>
