@@ -33,8 +33,8 @@ export const FormLogin = () => {
                 alt="fondo"
                 className="absolute inset-0 w-full h-full object-cover opacity-70"
             />
-            <div className="relative w-[650px] h-[550px] flex flex-col justify-center items-center bg-primary-pri3 rounded-2xl shadow-2xl z-10 border border-gray-200">
-                <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent w-auto font-display text-display-md">
+            <div className="relative w-full h-screen sm:w-[650px] sm:h-[550px] flex flex-col justify-center items-center bg-primary-pri3 sm:rounded-2xl shadow-2xl z-10 border border-gray-200">
+                <h1 className="text-center bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent w-auto font-display text-display-md">
                     ¡Bienvenido a Webtime!
                 </h1>
                 <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent w-auto font-title text-title-sm mb-5">
@@ -52,7 +52,7 @@ export const FormLogin = () => {
                             required: "Este campo es obligatorio",
                           }}
                           validationRules2={{
-                            required: "Este campo es obliigatorio",
+                            required: "Este campo es obligatorio",
                           }}
                           onSubmit={handleSubmit(onSubmit)} 
                           register={register} 
