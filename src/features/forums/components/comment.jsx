@@ -133,7 +133,7 @@ export const Comment = ({ nickname, text, time, numLikes, numDislikes, codComent
                 </div>
             </div>
             <div>
-                <TextLarge text={text} max={100} message="Mostrar"/>
+                <TextLarge text={text} max={200} message="Mostrar"/>
             </div>
             <div className="flex flex-row items-center mt-4">
                 <div className="group flex items-center hover:text-secondary-sec2">
