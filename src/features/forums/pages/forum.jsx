@@ -20,14 +20,20 @@ export const Forum = () => {
     );
   }
   if (isErrorForo) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-primary-pri3">
-        <p className="text-red-500 text-lg md:text-xl">
-          Ha ocurrido un error al cargar los foros
-        </p>
-      </div>
-    );
-  }
+    const errorMessage ="La sección de foros no está disponible en este momento";
+
+        return (
+          <div className="flex flex-col justify-center items-center min-h-screen bg-primary-pri3">
+            <p className="text-red-500 text-lg md:text-xl text-center">{errorMessage}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-4 px-6 py-2 bg-secondary-sec3 text-neutral-neu1 rounded-lg hover:bg-secondary-sec2"
+            >
+              Recargar
+            </button>
+          </div>
+        );
+      }
 
 
   const sectionForums = transformData(forums);
