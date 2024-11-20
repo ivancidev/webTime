@@ -7,7 +7,7 @@ import { InputText } from "../../../components/input/input";
 import { useNavigate } from "react-router-dom";
 import { sendVerificationCode } from "../../../services/reset-password";
 import { verifyResetCode } from "../../../services/verify-reset-code";
-import EmailSentModal from "./modal-email-sent"; // Importa el componente
+import EmailSentModal from "./modal-email-sent"; 
 
 const ResetPasswordModal = ({ onClose }) => {
   const [step, setStep] = useState(1);
@@ -22,7 +22,6 @@ const ResetPasswordModal = ({ onClose }) => {
 
     try {
       await sendVerificationCode(email);
-      // En lugar de avanzar al paso 2 directamente, mostramos el modal
       setShowEmailSentModal(true);
     } catch (error) {
       console.error("Error al enviar el código:", error);
@@ -34,7 +33,7 @@ const ResetPasswordModal = ({ onClose }) => {
 
   const handleEmailSentModalClose = () => {
     setShowEmailSentModal(false);
-    setStep(2); // Avanzamos al paso 2
+    setStep(2); 
   };
 
   const handleVerifyCode = async () => {
@@ -56,7 +55,7 @@ const ResetPasswordModal = ({ onClose }) => {
       {showEmailSentModal && (
         <EmailSentModal
           email={email}
-          onClose={handleEmailSentModalClose} // Pasamos la función para cerrar el modal
+          onClose={handleEmailSentModalClose} 
         />
       )}
       <div className="w-[95%] h-[350px] sm:w-[550px] sm:h-[320px] bg-primary-pri3 rounded-xl shadow-lg">
