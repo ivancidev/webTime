@@ -144,123 +144,126 @@ export const FormCollection = () => {
   };
 
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center "
-      >
-        <h1 className="text-secondary-sec2 font-title text-title-lg mt-2">
-          Crear Colección de Libro
-        </h1>
-        <div className="w-full px-40 mt-2">
-          <div className="flex">
-            <div>
-              <h3 className="py-1 text-primary-pri2 font-label text-label-lg">
-                Nombre de la colección
-                <span className="text-error-err2">*</span>
-              </h3>
-              <input
-                id="nameCollection"
-                name="nameCollection"
-                type="text"
-                label="Nombre de la colección"
-                placeholder="Escribe aquí"
-                {...register("nameCollection", {
-                  required: "Debes introducir un nombre de colección",
-                  pattern: {
-                    value: /^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ_\-\(\)\[\]\s]*$/,
-                    message:
-                      "Sólo se permiten  A-z, a-z, 0-9, á, é, í, ó, ú, ü, ñ, _, -,(), []",
-                  },
-                  maxLength: {
-                    value: 60,
-                    message: "Elige un nombre de colección más corto",
-                  },
-                  onChange: (e) => {
-                    setCharCount(e.target.value.length);
-                  },
-                })}
-                className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
-                errors={errors}
-              />
+    <div className="min-h-screen flex flex-col">
+      <div className="flex flex-col items-center justify-center flex-grow">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col items-center w-full"
+        >
+          <h1 className="text-secondary-sec2 font-title text-title-lg mt-2 px-10">
+            Crear Colección de Libro
+          </h1>
+          <div className="w-full p-10 mt-2">
+            <div className="flex">
+              <div>
+                <h3 className="py-1 text-primary-pri2 font-label text-label-lg">
+                  Nombre de la colección
+                  <span className="text-error-err2">*</span>
+                </h3>
+                <input
+                  id="nameCollection"
+                  name="nameCollection"
+                  type="text"
+                  label="Nombre de la colección"
+                  placeholder="Escribe aquí"
+                  {...register("nameCollection", {
+                    required: "Debes introducir un nombre de colección",
+                    pattern: {
+                      value: /^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ_\-\(\)\[\]\s]*$/,
+                      message:
+                        "Sólo se permiten  A-z, a-z, 0-9, á, é, í, ó, ú, ü, ñ, _, -,(), []",
+                    },
+                    maxLength: {
+                      value: 60,
+                      message: "Elige un nombre de colección más corto",
+                    },
+                    onChange: (e) => {
+                      setCharCount(e.target.value.length);
+                    },
+                  })}
+                  className="w-full bg-transparent border-[1px] rounded border-neutral-neu0 md:w-[340px] h-[50px] p-2 placeholder-neutral-neu0 text-primary-pri1  font-body text-body-md"
+                  errors={errors}
+                />
+              </div>
+              <div className="flex items-end">
+                {charCount > 60 && (
+                  <span className="text-error-err2 ml-2">{charCount}/60</span>
+                )}
+              </div>
             </div>
-            <div className="flex items-end">
-              {charCount > 60 && (
-                <span className="text-error-err2 ml-2">{charCount}/60</span>
+            <div className="h-7">
+              {errors.nameCollection && (
+                <span className="text-error-err2">
+                  {errors.nameCollection.message}
+                </span>
+              )}
+            </div>
+            <label
+              htmlFor="description"
+              className=" text-primary-pri2 font-label text-label-lg"
+            >
+              Descripción
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              {...register("description", {
+                pattern: {
+                  value: /^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ_\-\(\)\[\]\!\?\.\,\:\;\s]*$/,
+                  message:
+                    "Sólo se permiten  A-z, a-z, 0-9, á, é, í, ó, ú, ü, ñ, _, -,(), [], !. ?,.,,,:,;",
+                },
+                maxLength: {
+                  value: 500,
+                  message: "Ingresa una descripción más corta",
+                },
+              })}
+              placeholder="Escribe aquí"
+              className="w-full h-24 bg-transparent border-[1px] rounded border-neutral-neu0 p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md mt-2 resize-none"
+            />
+            <div className="h-7 mb-1">
+              {errors.description && (
+                <span className="text-error-err2">
+                  {errors.description.message}
+                </span>
+              )}
+            </div>
+
+            <label
+              htmlFor="selectBooks"
+              className="text-primary-pri2 font-label text-label-lg pt-3"
+            >
+              Seleccionar libros:
+            </label>
+            <div className="flex flex-wrap mt-2 ml-0 space-x-8">
+              {addBooks.map((book) => (
+                <CardBookCol
+                  key={book.codLibro}
+                  titleBook={book.nombreLibro}
+                  frontBook={book.enlacePortada}
+                  deleteBook={() => handleDeleteBook(book.codLibro)}
+                />
+              ))}
+              <div
+                onClick={handleOpenModal}
+                className=" w-[140px] h-40 mt-2 bg-neutral-neu2 rounded-2xl flex items-center justify-center hover:text-secondary-sec2 cursor-pointer hover:border hover:border-secondary-sec2 "
+              >
+                <AddLarge />
+              </div>
+            </div>
+            <div className="h-7 mt-1">
+              {errorMessageBook && (
+                <span className="text-error-err2">{errorMessageBook}</span>
               )}
             </div>
           </div>
-          <div className="h-7">
-            {errors.nameCollection && (
-              <span className="text-error-err2">
-                {errors.nameCollection.message}
-              </span>
-            )}
-          </div>
-          <label
-            htmlFor="description"
-            className=" text-primary-pri2 font-label text-label-lg"
-          >
-            Descripción
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            {...register("description", {
-              pattern: {
-                value: /^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ_\-\(\)\[\]\!\?\.\,\:\;\s]*$/,
-                message:
-                  "Sólo se permiten  A-z, a-z, 0-9, á, é, í, ó, ú, ü, ñ, _, -,(), [], !. ?,.,,,:,;",
-              },
-              maxLength: {
-                value: 500,
-                message: "Ingresa una descripción más corta",
-              },
-            })}
-            placeholder="Escribe aquí"
-            className="w-full h-24 bg-transparent border-[1px] rounded border-neutral-neu0 p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md mt-2 resize-none"
+          
+        </form>
+      </div>
+      <FooterButtonsCol
+            onCancel={openmod}
+            onSubmit={handleSubmit(onSubmit)}
           />
-          <div className="h-7 mb-1">
-            {errors.description && (
-              <span className="text-error-err2">
-                {errors.description.message}
-              </span>
-            )}
-          </div>
-
-          <label
-            htmlFor="selectBooks"
-            className="text-primary-pri2 font-label text-label-lg pt-3"
-          >
-            Seleccionar libros:
-          </label>
-          <div className="flex flex-wrap mt-2 space-x-8">
-            {addBooks.map((book) => (
-              <CardBookCol
-                key={book.codLibro}
-                titleBook={book.nombreLibro}
-                frontBook={book.enlacePortada}
-                deleteBook={() => handleDeleteBook(book.codLibro)}
-              />
-            ))}
-            <div
-              onClick={handleOpenModal}
-              className=" w-[140px] h-40 mt-2 bg-neutral-neu2 rounded-2xl flex items-center justify-center hover:text-secondary-sec2 cursor-pointer hover:border hover:border-secondary-sec2 "
-            >
-              <AddLarge />
-            </div>
-          </div>
-          <div className="h-7 mt-1">
-            {errorMessageBook && (
-              <span className="text-error-err2">{errorMessageBook}</span>
-            )}
-          </div>
-        </div>
-        <FooterButtonsCol
-          onCancel={openmod}
-          onSubmit={handleSubmit(onSubmit)}
-        />
-      </form>
       {isModalOpenC && (
         <Modal
           onClose={closemod}
