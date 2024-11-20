@@ -38,6 +38,10 @@ export const router = createBrowserRouter([
         path: "register-collection",
         element: <CreateCollection />,
       },
+      {
+        path: "forums",
+        element: <Forum />,
+      },
     ],
   },
   {
