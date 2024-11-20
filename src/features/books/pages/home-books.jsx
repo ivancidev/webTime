@@ -132,6 +132,8 @@ export const Home = () => {
             onSearchResults={handleSearchResults}
             searchText={searchText}
             setSearchText={setSearchText}
+            placeholder="Buscar por título o autor"
+            existsA={true}
           />
           <ButtonIcon
             SvgIcon={FilterIcon}

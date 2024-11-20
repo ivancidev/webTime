@@ -8,9 +8,12 @@ import { Root } from "../layouts/root";
 import { RegisterUser } from "../features/users/pages/register-user";
 import { Profile } from "../features/users/pages/profile";
 import { SelectPreferences } from "../features/users/pages/select-preferences";
+import { ForumComment } from "../features/forums/pages/forum-comment";
 import { ProtectedRouter } from "./protected-router";
 import { Login } from "../features/login/pages/login";
 import { ResetPassword } from "../features/login/pages/reset-password";
+import { CreateCollection } from "../features/collections/pages/create-collection";
+import { Forum } from "../features/forums/pages/forum";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +52,14 @@ export const router = createBrowserRouter([
         path: "book-info/:bookId",
         element: <BookInfo />,
       },
+      {
+        path: "register-collection",
+        element: <CreateCollection />,
+      },
+      {
+        path: "forums",
+        element: <Forum />,
+      },
     ],
   },
   {
@@ -66,6 +77,10 @@ export const router = createBrowserRouter([
       {
         path: "book-info/:bookId",
         element: <BookInfo />,
+      },
+      {
+        path: "forums",
+        element: <Forum />,
       },
     ],
   },
@@ -88,5 +103,9 @@ export const router = createBrowserRouter([
   {
     path: "/reset-password",
     element: <ResetPassword />,
+  },
+  {
+    path: "/comment/:id",
+    element: <ForumComment />,
   },
 ]);
