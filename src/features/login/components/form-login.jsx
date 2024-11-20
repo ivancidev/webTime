@@ -2,6 +2,7 @@ import { Form } from "../components/form";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../../../hooks/use-login";
+import { supabase } from "../../../services/supabaseClient";
 
 export const FormLogin = () => {
   const {
@@ -30,6 +31,48 @@ export const FormLogin = () => {
     navigate("/register-user"); // Ajusta la ruta según tu configuración
   };
 
+  const validateUsernameOrEmail = async (usernameOrEmail) => {
+    try {
+      const { data, error } = await supabase
+        .from("usuario")
+        .select("correo, nombre_usuario")
+        .or(`correo.eq.${usernameOrEmail},nombre_usuario.eq.${usernameOrEmail}`);
+  
+      if (error || data.length === 0) {
+        return "¡Nombre de usuario o correo incorrecto!";
+      }
+      return true; // Validación exitosa
+    } catch (err) {
+      console.error("Error al validar el correo o nombre de usuario:", err);
+      return "Ocurrió un error al validar. Inténtalo nuevamente.";
+    }
+  };
+
+  const validatePassword = async (password, allValues) => {
+    const { usernameOrEmail } = allValues;
+
+    try {
+      const { data, error } = await supabase
+        .from("usuario")
+        .select("password")
+        .or(`correo.eq.${usernameOrEmail},nombre_usuario.eq.${usernameOrEmail}`)
+        .single();
+
+      if (error || !data) {
+        return "Error al validar los datos de usuario.";
+      }
+
+      if (data.password !== password) {
+        return "¡Contraseña incorrecta!";
+      }
+
+      return true; // Validación exitosa
+    } catch (err) {
+      console.error("Error al validar la contraseña:", err);
+      return "Ocurrió un error al validar. Inténtalo nuevamente.";
+    }
+  };
+
     return (
         <div className="w-full h-screen flex justify-center items-center bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2">
             <img
@@ -54,9 +97,12 @@ export const FormLogin = () => {
                         showButtonForgetPassword="true"
                         validationRules1={{
                             required: "Este campo es obligatorio",
+                            validate: async (value) => await validateUsernameOrEmail(value),
                           }}
                           validationRules2={{
                             required: "Este campo es obligatorio",
+                            validate: async (value, allValues) =>
+                              await validatePassword(value, allValues),
                           }}
                           onSubmit={handleSubmit(onSubmit)} 
                           register={register} 

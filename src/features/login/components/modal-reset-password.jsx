@@ -26,7 +26,7 @@ const ResetPasswordModal = ({ onClose }) => {
         .eq("correo", email);
 
       if (error || data.length === 0) {
-        return "El correo electrónico no está registrado \no no se ha escrito correctamente.";
+        return "El correo electrónico no está registrado o no se ha escrito correctamente.";
       }
       return true;
     } catch (err) {
