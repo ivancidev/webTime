@@ -1,3 +1,4 @@
+// router.js
 import { createBrowserRouter } from "react-router-dom";
 import { Register } from "../features/register/pages/register-books";
 import { Files } from "../features/register/pages/upload-files";
@@ -14,16 +15,31 @@ import { ResetPassword } from "../features/login/pages/reset-password";
 export const router = createBrowserRouter([
   {
     path: "/",
+    element: <Login />,
+  },
+  {
+    path: "/register-user",
     element: (
       <ProtectedRouter>
         <RegisterUser />
       </ProtectedRouter>
     ),
   },
-  { path: "/preferences", element: <SelectPreferences /> },
+  {
+    path: "/preferences",
+    element: (
+      <ProtectedRouter>
+        <SelectPreferences />
+      </ProtectedRouter>
+    ),
+  },
   {
     path: "/profile",
-    element: <Root />,
+    element: (
+      <ProtectedRouter>
+        <Root />
+      </ProtectedRouter>
+    ),
     children: [
       {
         index: true,
@@ -37,7 +53,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/app",
-    element: <Root />,
+    element: (
+      <ProtectedRouter>
+        <Root />
+      </ProtectedRouter>
+    ),
     children: [
       {
         index: true,
@@ -51,7 +71,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/upload-files",
-    element: <Files />,
+    element: (
+      <ProtectedRouter>
+        <Files />
+      </ProtectedRouter>
+    ),
   },
   {
     path: "/register",

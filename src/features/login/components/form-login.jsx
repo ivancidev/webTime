@@ -1,4 +1,3 @@
-
 import { Form } from "../components/form";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +23,11 @@ export const FormLogin = () => {
     } else {
       console.error("Error de autenticación:", loginError);
     }
+  };
+
+  // Nueva función para manejar el clic en "Regístrate aquí."
+  const handleRegisterClick = () => {
+    navigate("/register-user"); // Ajusta la ruta según tu configuración
   };
 
     return (

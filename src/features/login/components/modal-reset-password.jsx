@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Button from "../../../components/buttons/button";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
@@ -6,12 +7,14 @@ import { InputText } from "../../../components/input/input";
 import { useNavigate } from "react-router-dom";
 import { sendVerificationCode } from "../../../services/reset-password";
 import { verifyResetCode } from "../../../services/verify-reset-code";
+import EmailSentModal from "./modal-email-sent"; 
 
 const ResetPasswordModal = ({ onClose }) => {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showEmailSentModal, setShowEmailSentModal] = useState(false);
   const navigate = useNavigate();
 
   const handleSendCode = async () => {
@@ -19,13 +22,18 @@ const ResetPasswordModal = ({ onClose }) => {
 
     try {
       await sendVerificationCode(email);
-      setStep(2);
+      setShowEmailSentModal(true);
     } catch (error) {
       console.error("Error al enviar el código:", error);
       alert(error.message);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleEmailSentModalClose = () => {
+    setShowEmailSentModal(false);
+    setStep(2); 
   };
 
   const handleVerifyCode = async () => {
@@ -44,6 +52,12 @@ const ResetPasswordModal = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50">
+      {showEmailSentModal && (
+        <EmailSentModal
+          email={email}
+          onClose={handleEmailSentModalClose} 
+        />
+      )}
       <div className="w-[95%] h-[350px] sm:w-[550px] sm:h-[320px] bg-primary-pri3 rounded-xl shadow-lg">
         <div className="w-full flex justify-end p-1">
           <ButtonIcon
@@ -55,6 +69,7 @@ const ResetPasswordModal = ({ onClose }) => {
         <div className="flex flex-col items-center justify-center">
           {step === 1 && (
             <>
+              {/* Contenido del paso 1 */}
               <h1 className="text-center bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent w-auto font-title text-title-md">
                 Restablece tu contraseña
               </h1>
@@ -86,6 +101,7 @@ const ResetPasswordModal = ({ onClose }) => {
           )}
           {step === 2 && (
             <>
+              {/* Contenido del paso 2 */}
               <h1 className="text-center bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent w-auto font-title text-title-md">
                 Ingresa el código
               </h1>
@@ -105,7 +121,7 @@ const ResetPasswordModal = ({ onClose }) => {
               </div>
               <div className="w-full pl-[5%] sm:pl-0 sm:w-auto mb-3">
                 <Button
-                  text="Verificar código"
+                  text={isLoading ? "Verificando..." : "Verificar código"}
                   onClick={handleVerifyCode}
                   disabled={!code}
                   variant="combExp"
