@@ -10,7 +10,7 @@ export const CardBookCol = ({
   toggleSelect,
 }) => {
   return (
-    <div className="relative w-[140px] bg-primary-pri3 rounded-2xl flex flex-col justify-start  cursor-pointer hover:text-secondary-sec2 mt-2">
+    <div className="relative w-[140px] mr-8 bg-primary-pri3 rounded-2xl flex flex-col justify-start  cursor-pointer hover:text-secondary-sec2 mt-2">
       {deleteBook && (
         <div className="absolute top-2 right-2 ">
           <button

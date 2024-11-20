@@ -235,7 +235,7 @@ export const FormCollection = () => {
             >
               Seleccionar libros:
             </label>
-            <div className="flex flex-wrap mt-2 ml-0 space-x-8">
+            <div className="flex flex-wrap mt-2 mr-5 ml-0">
               {addBooks.map((book) => (
                 <CardBookCol
                   key={book.codLibro}
@@ -246,7 +246,7 @@ export const FormCollection = () => {
               ))}
               <div
                 onClick={handleOpenModal}
-                className=" w-[140px] h-40 mt-2 bg-neutral-neu2 rounded-2xl flex items-center justify-center hover:text-secondary-sec2 cursor-pointer hover:border hover:border-secondary-sec2 "
+                className="w-[140px] h-40 mt-2 bg-neutral-neu2 rounded-2xl flex items-center justify-center hover:text-secondary-sec2 cursor-pointer hover:border hover:border-secondary-sec2 mr-5"
               >
                 <AddLarge />
               </div>
