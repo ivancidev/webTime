@@ -37,10 +37,12 @@ export const FormLogin = () => {
         .from("usuario")
         .select("correo, nombre_usuario")
         .or(`correo.eq.${usernameOrEmail},nombre_usuario.eq.${usernameOrEmail}`);
-  
+      
       if (error || data.length === 0) {
         return "¡Nombre de usuario o correo incorrecto!";
       }
+  
+      // Guardamos el valor en un estado para usarlo luego en validatePassword
       return true; // Validación exitosa
     } catch (err) {
       console.error("Error al validar el correo o nombre de usuario:", err);
@@ -50,22 +52,23 @@ export const FormLogin = () => {
 
   const validatePassword = async (password, allValues) => {
     const { usernameOrEmail } = allValues;
-
+  
     try {
-      const { data, error } = await supabase
+      // Validar primero que usernameOrEmail sea correcto
+      const { data: userData, error: userError } = await supabase
         .from("usuario")
         .select("password")
         .or(`correo.eq.${usernameOrEmail},nombre_usuario.eq.${usernameOrEmail}`)
         .single();
-
-      if (error || !data) {
-        return "Error al validar los datos de usuario.";
+  
+      if (userError || !userData) {
+        return "¡Nombre de usuario o correo incorrecto!"; // Asegúrate de manejar esto en validateUsernameOrEmail
       }
-
-      if (data.password !== password) {
+  
+      if (userData.password !== password) {
         return "¡Contraseña incorrecta!";
       }
-
+  
       return true; // Validación exitosa
     } catch (err) {
       console.error("Error al validar la contraseña:", err);
@@ -96,14 +99,23 @@ export const FormLogin = () => {
                         textButton="Iniciar Sesión"
                         showButtonForgetPassword="true"
                         validationRules1={{
-                            required: "Este campo es obligatorio",
-                            validate: async (value) => await validateUsernameOrEmail(value),
-                          }}
-                          validationRules2={{
-                            required: "Este campo es obligatorio",
-                            validate: async (value, allValues) =>
-                              await validatePassword(value, allValues),
-                          }}
+                          required: "Este campo es obligatorio",
+                          validate: async (value) => {
+                            if (/\s/.test(value)) {
+                              return "El correo o nombre de usuario no debe contener espacios.";
+                            }
+                            return await validateUsernameOrEmail(value);
+                          },
+                        }}
+                        validationRules2={{
+                          required: "Este campo es obligatorio",
+                          validate: async (value, allValues) => {
+                            if (/\s/.test(value)) {
+                              return "La contraseña no debe contener espacios.";
+                            }
+                            return await validatePassword(value, allValues);
+                          },
+                        }}
                           onSubmit={handleSubmit(onSubmit)} 
                           register={register} 
                           errors={errors} 
