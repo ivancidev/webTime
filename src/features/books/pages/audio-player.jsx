@@ -236,7 +236,7 @@ export const AudioPlayer = ({ setShowAudioPlayer, urlAudio }) => {
         <span className="pl-2 md:pl-12">{formatTime(currentTime)}</span>
 
         <div className="w-full flex sm:flex-row justify-between pt-1 z-50">
-          <div className=" w-1/6 flex flex-row justify-end relative pt-1">
+          <div className="w-1/6 flex flex-row justify-end relative pt-1">
             <Button
               text={
                 <>

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useUserDetails } from "../../hooks/use-user-details";
-import { updateEst } from "../../services/update-estadist";
-import { updateRacha } from "../../services/update-streak";
-import { NotificationStreak } from "../../features/users/components/notification-streak";
-import { useGetEstadistics } from "../../hooks/use-get-estadistics";
+import { useUserDetails } from "../hooks/use-user-details";
+import { updateEst } from "../services/update-estadist";
+import { updateRacha } from "../services/update-streak";
+import { NotificationStreak } from "../features/users/components/notification-streak";
+import { useGetEstadistics } from "../hooks/use-get-estadistics";
 
 export const ShowStreak = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -76,7 +76,8 @@ export const ShowStreak = () => {
           user.id_usuario,
           useEstadistics.id_metrica,
           true,
-          useEstadistics.minutos_aprendido_hoy
+          0
+
         );
         setShowStreakNotification(true);
         localStorage.setItem("lastNotificationDate", useEstadistics.fecha);

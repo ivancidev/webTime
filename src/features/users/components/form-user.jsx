@@ -15,8 +15,7 @@ import {
   DialogTitle,
   CircularProgress,
 } from "@mui/material";
-import TermsModal from "./modal-terms";
-import Check from "../../../icons/check";
+import TermsModal from "../modals/modal-terms";
 import CheckRegister from "../../../icons/checkRegister";
 
 export const FormUser = () => {
@@ -127,13 +126,12 @@ export const FormUser = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col sm:items-center"
       >
-        <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent m-[20px] pt-3 font-display text-display-md">
+        <h1 className="bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent m-[20px] w-auto pt-3 font-display text-display-md">
           ¡Bienvenido a Webtime!
         </h1>
         <div className="flex flex-col items-center">
           <ImageUploader onImageSelect={(file) => setImageFile(file)} />
         </div>
-
         <div className="mt-2 pb-6">
           <InputText
             name="name"

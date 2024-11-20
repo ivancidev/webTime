@@ -1,9 +1,9 @@
-import Button from "../../../components/buttons/button";
-import ButtonIcon from "../../../components/buttons/buttonIcon";
-import CloseIcon from "../../../icons/close";
-import LogOut from "../../../icons/logOut";
-import UserProf from "../../../icons/userProfile";
-import ViewProfile from "../../../icons/viewProfile";
+import Button from "../components/buttons/button";
+import ButtonIcon from "../components/buttons/buttonIcon";
+import CloseIcon from "../icons/close";
+import LogOut from "../icons/logOut";
+import UserProf from "../icons/userProfile";
+import ViewProfile from "../icons/viewProfile";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
@@ -13,6 +13,8 @@ export const ModalUser = ({ nickname, imgUser, onClose }) => {
   const logOut = () => {
     localStorage.removeItem("isRegistered");
     localStorage.removeItem("user");
+    localStorage.removeItem("diasRacha");
+    localStorage.removeItem("lastNotificationDate");
     navigate("/");
   };
 
@@ -39,7 +41,7 @@ export const ModalUser = ({ nickname, imgUser, onClose }) => {
             className="w-[92px] h-[92px] object-cover rounded-full"
           />
         ) : (
-          <UserProf />
+          <UserProf size={92}/>
         )}
         <h3 className="font-label text-label-lg">{nickname}</h3>
         {location.pathname !== "/profile" && (

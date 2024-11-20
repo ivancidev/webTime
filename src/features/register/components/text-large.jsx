@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 
-export const TextLarge = ({ sinopsis }) => {
+export const TextLarge = ({text, max, message, letter="text-neutral-neu0"}) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const maxLength = 250;
+  //const max = 250; 
 
   const toggleExpansion = () => {
     setIsExpanded(!isExpanded);
   };
 
   return (
-    <div className="mt-8">
-      <p className="font-body text-body-md text-neutral-neu0 text-justify leading-6">
-        {isExpanded || sinopsis.length <= maxLength
-          ? sinopsis
-          : `${sinopsis.substring(0, maxLength)}...`}
+    <div className="mt-4">
+      <p className={`${letter} font-body text-body-md text-justify leading-6`}>
+        {isExpanded || text.length <= max
+          ? text
+          : `${text.substring(0, max)}...`}
       </p>
-      {sinopsis.length > maxLength && (
+      {text.length > max && (
         <button
           onClick={toggleExpansion}
           className="text-secondary-sec2 font-body text-body-md hover:underline mt-2 text-justify"
         >
-        {isExpanded ? "Leer menos" : "Leer más"}
+        {isExpanded ? `${message} menos` : `${message} más`}
         </button>
       )}
     </div>

@@ -24,7 +24,7 @@ export const ModalStreak = ({ daysStreak, time, onClose }) => {
   };
 
   return (
-    <div className="w-[85%] sm:w-[530px] h-60 rounded-xl bg-primary-pri3 drop-shadow-xl p-2 absolute top-20 right-14">
+    <div className="w-[85%] sm:w-[530px] h-52 sm:h-60 rounded-xl bg-primary-pri3 drop-shadow-xl py-2 absolute top-20 right-14">
       <div className="w-full flex justify-end">
         <ButtonIcon
           onClick={onClose}
@@ -32,7 +32,7 @@ export const ModalStreak = ({ daysStreak, time, onClose }) => {
           variant="combColBlack2"
         />
       </div>
-      <div className="flex flex-col space-y-7 px-8">
+      <div className="flex flex-col space-y-3 sm:space-y-7 px-4 sm:px-8">
         <div>
           <div className="flex flex-row items-center">
             <h3 className="font-title text-title-sm">Días en racha: </h3>
@@ -40,7 +40,7 @@ export const ModalStreak = ({ daysStreak, time, onClose }) => {
               {daysStreak}
             </h2>
           </div>
-          <div className="flex flex-row pl-4 mt-3">
+          <div className="flex flex-row pl-2 mt-2 sm:mt-3">
             <h4 className="font-label text-label-sm sm:text-label-md">
               Tiempo diario establecido:
             </h4>
@@ -49,9 +49,9 @@ export const ModalStreak = ({ daysStreak, time, onClose }) => {
             </p>
           </div>
         </div>
-        <div>
+        <div className="w-full">
           <h3 className="font-title text-title-sm">Cambiar tiempo diario: </h3>
-          <div className="flex flex-row mt-4 items-center justify-between">
+          <div className="flex flex-row mt-2 sm:mt-4 items-center justify-between pl-2">
             <Dropdown
               name="time"
               options={times}
