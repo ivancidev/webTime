@@ -19,14 +19,21 @@ const ResetPasswordModal = ({ onClose }) => {
   const navigate = useNavigate();
 
   const validateEmailForPasswordReset = async (email) => {
+    if (!email.trim()) {
+      return "El campo no puede estar vacío.";
+    }
+    if (/\s/.test(email)) {
+      return "El correo no puede contener espacios.";
+    }
+  
     try {
       const { data, error } = await supabase
         .from("usuario")
         .select("correo")
         .eq("correo", email);
-
+  
       if (error || data.length === 0) {
-        return "El correo electrónico no está registrado \no no se ha escrito correctamente.";
+        return "El correo electrónico no está registrado o no se ha escrito correctamente.";
       }
       return true;
     } catch (err) {
@@ -38,16 +45,25 @@ const ResetPasswordModal = ({ onClose }) => {
   const handleSendCode = async () => {
     setIsLoading(true);
     setEmailError(""); 
-
+  
+    if (!email.trim()) {
+      setEmailError("El campo no puede estar vacío.");
+      setIsLoading(false);
+      return;
+    } else if (/\s/.test(email)) {
+      setEmailError("El correo no puede contener espacios.");
+      setIsLoading(false);
+      return;
+    }
+  
     const validationResponse = await validateEmailForPasswordReset(email);
-
+  
     if (validationResponse !== true) {
-
       setEmailError(validationResponse);
       setIsLoading(false);
       return;
     }
-
+  
     try {
       await sendVerificationCode(email);
       setShowEmailSentModal(true);
@@ -58,6 +74,7 @@ const ResetPasswordModal = ({ onClose }) => {
       setIsLoading(false);
     }
   };
+  
 
   const handleEmailSentModalClose = () => {
     setShowEmailSentModal(false);
@@ -107,31 +124,41 @@ const ResetPasswordModal = ({ onClose }) => {
                 <InputText
                   labelMarginTop="10px"
                   labelFontSize="16px"
-                  label="¿Cuál es tu correo electrónico?"
+                  label="Correo electrónico"
                   placeholder="Ingrese su correo electrónico"
                   className="w-[100%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
                   value={email}
                   onChange={(e) => {
-                    setEmail(e.target.value);
-                    setEmailError(""); // Limpiar mensaje de error al cambiar el correo
+                    const value = e.target.value;
+                    setEmail(value);
+            
+                    if (!value.trim()) {
+                      setEmailError("El campo no puede estar vacío.");
+                    } else if (/\s/.test(value)) {
+                      setEmailError("El correo no puede contener espacios.");
+                    } else {
+                      setEmailError(""); 
+                    }
                   }}
                 />
                 {emailError && (
                 <span
                   style={{
                     color: "#BA1A1A",
-                    textAlign: "center", // Centrar horizontalmente
+                    textAlign: "start", // Centrar horizontalmente
                     display: "block", // Para que ocupe toda la anchura disponible
-                    marginTop: "8px", // Espaciado entre el campo y el mensaje
+                    marginTop: "8px",
+                    fontSize: "14px",
+                     // Espaciado entre el campo y el mensaje
                   }}
-                  className="error-message"
+                  className="text-error-err2"
                 >
                   {emailError}
                 </span>
               )}
 
               </div>
-              <div className="w-full pl-[5%] sm:pl-0 sm:w-auto mb-3">
+              <div className="w-full pl-[5%] sm:pr-[10%] sm:w-auto mb-3">
                 <Button
                   text={
                     isLoading
@@ -139,7 +166,7 @@ const ResetPasswordModal = ({ onClose }) => {
                       : "Enviar correo de restablecimiento de contraseña"
                   }
                   onClick={handleSendCode}
-                  disabled={isLoading || !email}
+                  disabled={isLoading}
                   variant="combExp"
                 />
               </div>
