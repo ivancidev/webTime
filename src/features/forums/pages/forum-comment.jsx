@@ -5,20 +5,18 @@ import { NavbarO } from "../../../components/navbar/navbarO";
 import { supabase } from "../../../services/supabaseClient";
 import { useEffect, useState } from "react";
 
-import { useParams, useLocation, useNavigate, } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 
-import {
-    CircularProgress,
-  } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 export const ForumComment = () => {
-    const { id } = useParams(); 
-   
-    const location = useLocation(); 
+    const { id } = useParams();
 
-    const imageUrl = location.state?.imgUrl || "https://i1.sndcdn.com/avatars-000329607942-t9hnvm-t240x240.jpg";
+    const location = useLocation();
 
-
+    const imageUrl =
+        location.state?.imgUrl ||
+        "https://i1.sndcdn.com/avatars-000329607942-t9hnvm-t240x240.jpg";
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -30,7 +28,8 @@ export const ForumComment = () => {
             setIsLoading(true);
             const { data, error } = await supabase
                 .from("comentarios")
-                .select(`
+                .select(
+                    `
                     cod_comentario,
                     comentario,
                     fecha,
@@ -41,22 +40,26 @@ export const ForumComment = () => {
                     interaccion_comentario_usuario (
                         tipo_interaccioncomentario
                     )
-                `)
+                `
+                )
                 .eq("id_foro", id)
                 .order("fecha", { ascending: false });
 
             if (error) {
                 console.error("Error al obtener comentarios:", error);
             } else {
-                
                 const comentariosConInteracciones = data.map((comentario) => {
-                    const likes = comentario.interaccion_comentario_usuario?.filter(
-                        (interaccion) => interaccion.tipo_interaccioncomentario === 1
-                    ).length || 0;
+                    const likes =
+                        comentario.interaccion_comentario_usuario?.filter(
+                            (interaccion) =>
+                                interaccion.tipo_interaccioncomentario === 1
+                        ).length || 0;
 
-                    const dislikes = comentario.interaccion_comentario_usuario?.filter(
-                        (interaccion) => interaccion.tipo_interaccioncomentario === -1
-                    ).length || 0;
+                    const dislikes =
+                        comentario.interaccion_comentario_usuario?.filter(
+                            (interaccion) =>
+                                interaccion.tipo_interaccioncomentario === -1
+                        ).length || 0;
 
                     return {
                         ...comentario,
@@ -99,25 +102,30 @@ export const ForumComment = () => {
             <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
                 <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate(-1)} />
             </div>
-            
+
             <div className="flex flex-col lg:flex-row w-full h-full">
                 <div className="flex-1">
                     <h1 className="text-secondary-sec2 font-title text-title-lg text-center">
                         Comentarios del foro
                     </h1>
-                    <img
-                        src={imageUrl}
-                        className="mx-auto mt-10 rounded-3xl object-cover w-2/3"
-                    />
+                    <div className="flex items-center justify-center lg:h-[500px]">
+                        <img
+                            src={imageUrl}
+                            className="rounded-3xl object-cover w-2/3"
+                        />
+                    </div>
                 </div>
                 <div className="flex-1 lg:mt-0 mt-10">
                     <div className="mx-5 flex-col max-h-[80vh] lg:overflow-y-scroll space-y-9 lg:pr-[75px]">
-                    {isLoading ? ( // Mostrar spinner mientras carga
+                        {isLoading ? ( // Mostrar spinner mientras carga
                             <div className="flex justify-center items-center h-40">
                                 <CircularProgress color="secondary" />
                             </div>
-                        ) : comentarios.length === 0 ? ( // Mostrar mensaje si no hay comentarios
-                            <p className="text-center">No hay comentarios aún. ¡Sé el primero en comentar!</p>
+                        ) : comentarios.length === 0 ? (
+                            <p className="text-center">
+                                No hay comentarios aún. ¡Sé el primero en
+                                comentar!
+                            </p>
                         ) : (
                             comentarios.map((reg) => (
                                 <Comment
