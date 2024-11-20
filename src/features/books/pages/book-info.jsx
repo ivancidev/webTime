@@ -1,5 +1,8 @@
 import { useState } from "react";
 import BackIcon from "../../../icons/back";
+import Star from "../../../icons/star";
+import StarHappy from "../../../icons/star-happy";
+import StarPressed from "../../../icons/star-pressed";
 import ListenIcon from "../../../icons/listen";
 import ReadIcon from "../../../icons/read";
 import { useLocation, useNavigate } from "react-router-dom";
