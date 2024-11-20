@@ -25,7 +25,9 @@ export const FormResetPassword = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+  });
   const [passwordStrength, setPasswordStrength] = useState("");
 
   const password = watch("password");
@@ -123,8 +125,6 @@ export const FormResetPassword = () => {
             }}
             validationRules2={{
               required: "Este campo es obligatorio",
-              validate: (value) =>
-                value === password || "Las contraseñas no coinciden",
             }}
             onSubmit={handleSubmit(onSubmit)}
             register={register}
