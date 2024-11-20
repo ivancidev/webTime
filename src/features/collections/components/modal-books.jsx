@@ -112,7 +112,7 @@ export const ModalBooks = ({ onClose }) => {
             >
               {[...searchBooksOld, ...searchBooksRecent].map((book) => (
                 <div
-                  className="w-1/3 flex justify-center p-2"
+                  className="md:w-1/3  sm:w-1/2 flex justify-center p-2"
                   key={book.codLibro}
                 >
                   <CardBookCol
@@ -133,7 +133,7 @@ export const ModalBooks = ({ onClose }) => {
             >
               {bookAll.map((book) => (
                 <div
-                  className="w-1/3 flex justify-center p-2"
+                  className="md:w-1/3 sm:w-1/2 flex justify-center p-2"
                   key={book.codLibro}
                 >
                   <CardBookCol
