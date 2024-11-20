@@ -91,7 +91,7 @@ const ResetPasswordModal = ({ onClose }) => {
               </div>
               <div className="w-full pl-[5%] sm:pl-0 sm:w-auto mb-3">
                 <Button
-                  text={isLoading ? "Enviando..." : "Enviar código"}
+                  text={isLoading ? "Enviando..." : "Enviar correo de restablecimiento de contraseña"}
                   onClick={handleSendCode}
                   disabled={isLoading || !email}
                   variant="combExp"
