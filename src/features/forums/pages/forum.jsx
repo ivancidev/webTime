@@ -9,7 +9,6 @@ export const Forum = () => {
     data: forums,
     isLoading: isLoadingForo,
     isError: isErrorForo,
-    error,
   } = useQuery(["forums"], forumsService);
 
   if (isLoadingForo) {
@@ -21,10 +20,7 @@ export const Forum = () => {
     );
   }
   if (isErrorForo) {
-    const errorMessage =
-      error?.response?.status === 500
-        ? "La sección de foros no está disponible en este momento"
-        : "Ha ocurrido un error al cargar los foros";
+    const errorMessage ="La sección de foros no está disponible en este momento";
 
         return (
           <div className="flex flex-col justify-center items-center min-h-screen bg-primary-pri3">
