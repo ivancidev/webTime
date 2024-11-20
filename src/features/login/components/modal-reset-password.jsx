@@ -124,7 +124,7 @@ const ResetPasswordModal = ({ onClose }) => {
                 <InputText
                   labelMarginTop="10px"
                   labelFontSize="16px"
-                  label="¿Cuál es tu correo electrónico?"
+                  label="Correo electrónico"
                   placeholder="Ingrese su correo electrónico"
                   className="w-[100%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
                   value={email}
