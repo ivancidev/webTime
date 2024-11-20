@@ -22,27 +22,15 @@ export const router = createBrowserRouter([
   },
   {
     path: "/register-user",
-    element: (
-      <ProtectedRouter>
-        <RegisterUser />
-      </ProtectedRouter>
-    ),
+    element: <RegisterUser />,
   },
   {
     path: "/preferences",
-    element: (
-      <ProtectedRouter>
-        <SelectPreferences />
-      </ProtectedRouter>
-    ),
+    element: <SelectPreferences />,
   },
   {
     path: "/profile",
-    element: (
-      <ProtectedRouter>
-        <Root />
-      </ProtectedRouter>
-    ),
+    element: <Root />,
     children: [
       {
         index: true,
@@ -64,11 +52,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/app",
-    element: (
-      <ProtectedRouter>
-        <Root />
-      </ProtectedRouter>
-    ),
+    element: <Root />,
     children: [
       {
         index: true,
@@ -86,11 +70,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/upload-files",
-    element: (
-      <ProtectedRouter>
-        <Files />
-      </ProtectedRouter>
-    ),
+    element: <Files />,
   },
   {
     path: "/register",

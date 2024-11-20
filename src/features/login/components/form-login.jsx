@@ -69,6 +69,7 @@ export const FormLogin = () => {
                             type="button"
                             onClick={handleRegisterClick} 
                             className="font-body text-body-sm text-secondary-sec2 underline hover:text-secondary-sec1"
+                            onClick={handleRegisterClick}
                             >
                             Regístrate aquí.
                             </button>
