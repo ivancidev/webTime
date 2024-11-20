@@ -11,7 +11,13 @@ export const FormResetPassword = () => {
 
   if (!email) {
     console.error("No se proporcionó un email");
-    return <p>Error: No se puede restablecer la contraseña sin un email.</p>;
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <p className="text-red-500">
+          Error: No se puede restablecer la contraseña sin un correo electrónico válido.
+        </p>
+      </div>
+    );
   }
 
   const {
@@ -49,6 +55,18 @@ export const FormResetPassword = () => {
 
   const updatePassword = async (email, newPassword) => {
     try {
+      // Verificar si el usuario existe
+      const { data: user, error: userError } = await supabase
+        .from("usuario")
+        .select("id_usuario")
+        .eq("correo", email)
+        .single();
+
+      if (userError || !user) {
+        throw new Error("Usuario no encontrado");
+      }
+
+      // Actualizar la contraseña en la base de datos sin hashing
       const { data, error } = await supabase
         .from("usuario")
         .update({ password: newPassword })
@@ -68,7 +86,7 @@ export const FormResetPassword = () => {
       alert("Contraseña actualizada correctamente");
       navigate("/login");
     } catch (error) {
-      alert("Hubo un problema al actualizar la contraseña");
+      alert("Hubo un problema al actualizar la contraseña: " + error.message);
     }
   };
 
@@ -87,19 +105,19 @@ export const FormResetPassword = () => {
           <Form
             label1="Nueva contraseña"
             label2="Confirmar contraseña"
-            placeholder1="Ingrese su contraseña"
-            placeholder2="Ingrese su contraseña"
+            placeholder1="Ingrese su nueva contraseña"
+            placeholder2="Confirme su nueva contraseña"
             textButton="Cambiar contraseña"
             showEyeIconFirstInput="true"
             validationRules1={{
               required: "Este campo es obligatorio",
               minLength: {
-                value: 2,
-                message: "Usa 2 caracteres o más",
+                value: 6,
+                message: "La contraseña debe tener al menos 6 caracteres",
               },
               maxLength: {
                 value: 128,
-                message: "Ingresa una contraseña con 128 caracteres o menos",
+                message: "La contraseña debe tener 128 caracteres o menos",
               },
               validate: validatePasswordStrength,
             }}
