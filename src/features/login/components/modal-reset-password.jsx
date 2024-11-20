@@ -83,7 +83,7 @@ const ResetPasswordModal = ({ onClose }) => {
       {showEmailSentModal && (
         <EmailSentModal email={email} onClose={handleEmailSentModalClose} />
       )}
-      <div className="w-[95%] h-[350px] sm:w-[550px] sm:h-[320px] bg-primary-pri3 rounded-xl shadow-lg">
+      <div className="w-[95%] h-[350px] sm:w-[550px] sm:h-[350px] bg-primary-pri3 rounded-xl shadow-lg">
         <div className="w-full flex justify-end p-1">
           <ButtonIcon
             onClick={onClose}
@@ -103,7 +103,7 @@ const ResetPasswordModal = ({ onClose }) => {
                 te enviaremos un correo con un enlace para restaurar tu
                 contraseña
               </p>
-              <div className="w-[85%] sm:w-auto mb-5">
+              <div className="w-[85%] sm:w-[75%] mb-5">
                 <InputText
                   labelMarginTop="10px"
                   labelFontSize="16px"
