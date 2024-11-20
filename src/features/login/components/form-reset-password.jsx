@@ -114,8 +114,8 @@ export const FormResetPassword = () => {
             validationRules1={{
               required: "Este campo es obligatorio",
               minLength: {
-                value: 6,
-                message: "La contraseña debe tener al menos 6 caracteres",
+                value: 2,
+                message: "La contraseña debe tener al menos 2 caracteres",
               },
               maxLength: {
                 value: 128,
