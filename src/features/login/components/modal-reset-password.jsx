@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Button from "../../../components/buttons/button";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
@@ -7,7 +6,8 @@ import { InputText } from "../../../components/input/input";
 import { useNavigate } from "react-router-dom";
 import { sendVerificationCode } from "../../../services/reset-password";
 import { verifyResetCode } from "../../../services/verify-reset-code";
-import EmailSentModal from "./modal-email-sent"; 
+import EmailSentModal from "./modal-email-sent";
+import { supabase } from "../../../services/supabaseClient";
 
 const ResetPasswordModal = ({ onClose }) => {
   const [step, setStep] = useState(1);
@@ -15,10 +15,38 @@ const ResetPasswordModal = ({ onClose }) => {
   const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showEmailSentModal, setShowEmailSentModal] = useState(false);
+  const [emailError, setEmailError] = useState("");
   const navigate = useNavigate();
+
+  const validateEmailForPasswordReset = async (email) => {
+    try {
+      const { data, error } = await supabase
+        .from("usuario")
+        .select("correo")
+        .eq("correo", email);
+
+      if (error || data.length === 0) {
+        return "El correo electrónico no está registrado \no no se ha escrito correctamente.";
+      }
+      return true;
+    } catch (err) {
+      console.error("Error al validar el correo:", err);
+      return "Ocurrió un error al validar el correo. Inténtalo nuevamente.";
+    }
+  };
 
   const handleSendCode = async () => {
     setIsLoading(true);
+    setEmailError(""); 
+
+    const validationResponse = await validateEmailForPasswordReset(email);
+
+    if (validationResponse !== true) {
+
+      setEmailError(validationResponse);
+      setIsLoading(false);
+      return;
+    }
 
     try {
       await sendVerificationCode(email);
@@ -33,7 +61,7 @@ const ResetPasswordModal = ({ onClose }) => {
 
   const handleEmailSentModalClose = () => {
     setShowEmailSentModal(false);
-    setStep(2); 
+    setStep(2);
   };
 
   const handleVerifyCode = async () => {
@@ -53,10 +81,7 @@ const ResetPasswordModal = ({ onClose }) => {
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50">
       {showEmailSentModal && (
-        <EmailSentModal
-          email={email}
-          onClose={handleEmailSentModalClose} 
-        />
+        <EmailSentModal email={email} onClose={handleEmailSentModalClose} />
       )}
       <div className="w-[95%] h-[350px] sm:w-[550px] sm:h-[320px] bg-primary-pri3 rounded-xl shadow-lg">
         <div className="w-full flex justify-end p-1">
@@ -74,8 +99,8 @@ const ResetPasswordModal = ({ onClose }) => {
                 Restablece tu contraseña
               </h1>
               <p className="text-center font-body text-body-sm text-neutral-neu0 w-[85%] sm:w-auto mt-3 mx-10">
-                Introduce el correo electrónico asociado a tu cuenta de WebTime
-                y te enviaremos un correo con un enlace para restaurar tu
+                Introduce el correo electrónico asociado a tu cuenta de WebTime y
+                te enviaremos un correo con un enlace para restaurar tu
                 contraseña
               </p>
               <div className="w-[85%] sm:w-auto mb-5">
@@ -86,12 +111,33 @@ const ResetPasswordModal = ({ onClose }) => {
                   placeholder="Ingrese su correo electrónico"
                   className="w-[100%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setEmailError(""); // Limpiar mensaje de error al cambiar el correo
+                  }}
                 />
+                {emailError && (
+                <span
+                  style={{
+                    color: "#BA1A1A",
+                    textAlign: "center", // Centrar horizontalmente
+                    display: "block", // Para que ocupe toda la anchura disponible
+                    marginTop: "8px", // Espaciado entre el campo y el mensaje
+                  }}
+                  className="error-message"
+                >
+                  {emailError}
+                </span>
+              )}
+
               </div>
               <div className="w-full pl-[5%] sm:pl-0 sm:w-auto mb-3">
                 <Button
-                  text={isLoading ? "Enviando..." : "Enviar correo de restablecimiento de contraseña"}
+                  text={
+                    isLoading
+                      ? "Enviando..."
+                      : "Enviar correo de restablecimiento de contraseña"
+                  }
                   onClick={handleSendCode}
                   disabled={isLoading || !email}
                   variant="combExp"
