@@ -146,7 +146,6 @@ export const ForumComment = () => {
                         )}
                         <div>
                             <InputComment
-                                maxChars={500}
                                 profileImage={profileImage}
                                 placeholder="Agregar comentario"
                                 textButton="Comentar"
