@@ -1,12 +1,10 @@
 import { useState } from "react";
 import BackIcon from "../../../icons/back";
-import Star from "../../../icons/star";
-import StarHappy from "../../../icons/star-happy";
-import StarPressed from "../../../icons/star-pressed";
 import ListenIcon from "../../../icons/listen";
 import ReadIcon from "../../../icons/read";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useBookDetails } from "../../../hooks/use-book-details";
+import { StarRow } from "../components/star-row";
 import { DetailRow } from "../components/detail-row";
 import { CircularProgress } from "@mui/material";
 import { ReadBook } from "../components/readBook";
@@ -52,12 +50,18 @@ export const BookInfo = () => {
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate(-1)} />
       </div>
       <div className="flex flex-col lg:flex-row items-center md:justify-evenly px-5">
-        <div className="relative w-full max-w-[80%] aspect-square sm:w-[440px] md:h-[400px] bg-neutral-neu2 rounded-3xl mb-0 md:mb-10">
-          <img
-            src={book.enlacePortada}
-            className="w-full max-w-[85%] sm:w-80 sm:h-[470px] rounded-3xl absolute inset-0 m-auto object-cover"
-          />
+        <div>
+          <div className="relative w-full max-w-[80%] aspect-square sm:w-[440px] md:h-[400px] bg-neutral-neu2 rounded-3xl mb-0 md:mb-10">
+            <img
+              src={book.enlacePortada}
+              className="w-full max-w-[85%] sm:w-80 sm:h-[470px] rounded-3xl absolute inset-0 m-auto object-cover"
+            />
+          </div>
+          <div className="relative w-full max-w-[80%] sm:w-[440px]">
+            <StarRow/>
+          </div>
         </div>
+        
         <div className="mx-5">
           <div className="flex flex-col md:flex-row md:justify-between ">
             <h1 className="max-w-[500px] font-display text-display-sm sm:text-display-lg text-secondary-sec2 mt-10 md:mt-5">

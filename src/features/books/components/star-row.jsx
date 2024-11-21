@@ -4,10 +4,18 @@ import StarHappy from "../../../icons/star-happy";
 import StarPressed from "../../../icons/star-pressed";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 
-export const Carousel = () => {
+export const StarRow = () => {
   
     return (
-        <div className="w-full h-auto px-6 sm:px-12">
+        <div className="flex flex-row w-full justify-center h-auto">
+            <ButtonIcon 
+                SvgIcon={StarHappy}  
+                variant="combColBlue"
+            />
+            <ButtonIcon SvgIcon={StarPressed} />
+            <ButtonIcon SvgIcon={Star} />
+            <ButtonIcon SvgIcon={Star} />
+            <ButtonIcon SvgIcon={Star} />
         </div>
     );
 };
