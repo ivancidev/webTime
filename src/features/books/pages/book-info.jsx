@@ -49,9 +49,9 @@ export const BookInfo = () => {
       <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate(-1)} />
       </div>
-      <div className="flex flex-col lg:flex-row items-center md:justify-evenly px-5">
-        <div>
-          <div className="relative w-full max-w-[80%] aspect-square sm:w-[440px] md:h-[400px] bg-neutral-neu2 rounded-3xl mb-0 md:mb-14">
+      <div className="flex flex-col lg:flex-row items-center md:justify-evenly px-5 md:mt-8">
+        <div className="flex flex-col w-full md:w-auto items-center sm:mb-8">
+          <div className="relative w-full max-w-[80%] aspect-square sm:w-[500px] md:h-[400px] bg-neutral-neu2 rounded-3xl mb-5 md:mb-14">
             <img
               src={book.enlacePortada}
               className="w-full max-w-[85%] sm:w-80 sm:h-[470px] rounded-3xl absolute inset-0 m-auto object-cover"
@@ -64,7 +64,7 @@ export const BookInfo = () => {
         
         <div className="mx-5">
           <div className="flex flex-col md:flex-row md:justify-between">
-            <h1 className="max-w-[500px] font-display text-display-sm sm:text-display-lg text-secondary-sec2 mt-10 md:mt-5">
+            <h1 className="max-w-[500px] font-display text-display-sm sm:text-display-lg text-secondary-sec2 mt-8 md:mt-5">
               {book.nombreLibro}
             </h1>
             <div className="flex flex-row space-x-8 mt-4">

@@ -6,7 +6,6 @@ import ButtonIcon from "../../../components/buttons/buttonIcon";
 
 export const StarRow = () => {
     const [selectedStars, setSelectedStars] = useState(0);
-
     const handleStarClick = (index) => {
         if (index === 4) {
             setSelectedStars(5);
