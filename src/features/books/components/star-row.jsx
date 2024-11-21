@@ -7,15 +7,27 @@ import ButtonIcon from "../../../components/buttons/buttonIcon";
 export const StarRow = () => {
   
     return (
-        <div className="flex flex-row w-full justify-center h-auto">
+        <div className="flex flex-row w-full justify-center h-auto space-x-2">
             <ButtonIcon 
                 SvgIcon={StarHappy}  
-                variant="combColBlue"
+                variant="combYe"
             />
-            <ButtonIcon SvgIcon={StarPressed} />
-            <ButtonIcon SvgIcon={Star} />
-            <ButtonIcon SvgIcon={Star} />
-            <ButtonIcon SvgIcon={Star} />
+            <ButtonIcon 
+                SvgIcon={StarPressed}  
+                variant="combYe"
+            />
+            <ButtonIcon 
+                SvgIcon={Star}  
+                variant="combYe"
+            />
+            <ButtonIcon 
+                SvgIcon={Star}  
+                variant="combYe"
+            />
+            <ButtonIcon 
+                SvgIcon={Star}  
+                variant="combYe"
+            />
         </div>
     );
 };

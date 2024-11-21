@@ -22,6 +22,7 @@ const ButtonIcon = ({
     combColNeu:
       "text-neutral-neu0 bg-neutral-neu2 hover:bg-secondary-sec2 hover:text-primary-pri3", //boton gris
     combColNeu2: "text-neutral-neu0 bg-transparent hover:text-secondary-sec2 ", //boton gris que cambia a celeste
+    comboYe: "text-yellow-400",
   };
 
   return (
