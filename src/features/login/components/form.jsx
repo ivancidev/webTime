@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Button from "../../../components/buttons/button"; 
 import { InputText } from "../../../components/input/input";
 import EyeOff from "../../../icons/eyeOff";
 import EyeOn from "../../../icons/eyeOn";
-import { useLogin } from '../../../hooks/use-login';
 import ResetPasswordModal from "./modal-reset-password";
 
 export const Form = ({
