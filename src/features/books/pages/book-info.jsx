@@ -63,7 +63,7 @@ export const BookInfo = () => {
         </div>
         
         <div className="mx-5">
-          <div className="flex flex-col md:flex-row md:justify-between ">
+          <div className="flex flex-col md:flex-row md:justify-between">
             <h1 className="max-w-[500px] font-display text-display-sm sm:text-display-lg text-secondary-sec2 mt-10 md:mt-5">
               {book.nombreLibro}
             </h1>
