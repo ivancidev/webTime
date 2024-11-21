@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 
 import { CircularProgress } from "@mui/material";
+import { InputComment } from "../components/input-comment";
 
 export const ForumComment = () => {
     const { id } = useParams();
@@ -22,6 +23,9 @@ export const ForumComment = () => {
 
     const navigate = useNavigate();
     const [comentarios, setComentarios] = useState([]);
+
+    const user = JSON.parse(localStorage.getItem("user")); // Obteniendo el usuario del localStorage
+    const profileImage = user?.avatar; // Imagen de perfil del usuario
 
     useEffect(() => {
         const getComentarios = async () => {
@@ -140,6 +144,14 @@ export const ForumComment = () => {
                                 />
                             ))
                         )}
+                        <div>
+                            <InputComment
+                                maxChars={500}
+                                profileImage={profileImage}
+                                placeholder="Agregar comentario"
+                                textButton="Comentar"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
