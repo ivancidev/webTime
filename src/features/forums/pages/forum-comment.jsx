@@ -143,14 +143,14 @@ export const ForumComment = () => {
                                     avatar={reg.usuario?.avatar}
                                 />
                             ))
-                        )}
+                        )}{/* 
                         <div>
                             <InputComment
                                 profileImage={profileImage}
                                 placeholder="Agregar comentario"
                                 textButton="Comentar"
                             />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
