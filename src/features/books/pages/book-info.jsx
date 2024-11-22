@@ -12,6 +12,8 @@ import { TextLarge } from "../../register/components/text-large";
 import { useAudio } from "../../../context/audio-context";
 import { IconOclock } from "../icons/oclock";
 import { IconDocument } from "../icons/document";
+import { ModalCollection } from "../modals/modal-collecion";
+
 import addToColection from "../../../icons/addToColection";
 
 export const BookInfo = () => {
@@ -23,6 +25,7 @@ export const BookInfo = () => {
     const [showCreateColectionk, setshowCreateColectionk] = useState(false);
     const { showAudioPlay, setShowAudioPlay } = useAudio();
     const user = JSON.parse(localStorage.getItem("user"));
+    const [showCollection, setShowCollection] = useState(false);
 
     if (!book) {
         return (
@@ -139,7 +142,12 @@ export const BookInfo = () => {
                 </div>
             )}
 
-            {showCreateColectionk && <div>{console.log("abrir modal")}</div>}
+            {showCreateColectionk && (
+                <ModalCollection
+                    onClose={() => setshowCreateColectionk(false)}
+                    text={"Añadir a colección"}
+                />
+            )}
         </div>
     );
 };
