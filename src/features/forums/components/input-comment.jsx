@@ -6,7 +6,7 @@ export const InputComment = ({
   maxChars = 500,
   onComment,
   placeholder,
-  profileImage, 
+  profileImage,
   textButton,
 }) => {
   const [comment, setComment] = useState("");
@@ -18,7 +18,7 @@ export const InputComment = ({
   };
 
   return (
-    <div className="py-5 px-8 bg-primary-pri3 border border-neutral-neu1 rounded-xl w-full">
+    <div className="pt-5 pb-3 px-8 bg-primary-pri3 border border-neutral-neu1 rounded-xl w-full">
       <div className="flex flex-col">
         <div className="flex flex-row">
           <div className="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden">
