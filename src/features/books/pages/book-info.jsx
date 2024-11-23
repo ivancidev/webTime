@@ -26,7 +26,8 @@ export const BookInfo = () => {
   const { bookDetails, error, loading } = useBookDetails(book);
   const [showReadBook, setShowReadBook] = useState(false);
   const { showAudioPlay, setShowAudioPlay } = useAudio();
-  const [showCollection, setShowCollection] = useState(true);
+  const [showCollection, setShowCollection] = useState(false);
+  const [showQualifiti, setshowQualifiti] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   // const book = JSON.parse(localStorage.getItem("book"));
   const [starRating, setStarRating] = useState(0);
@@ -38,45 +39,39 @@ export const BookInfo = () => {
     console.log('libro:' +book.codLibro);
     
     try{
-
-      let { data: datainfo, error: errorUser } = await supabase
-      .from('calificacion')
-      .select('idUsuario')
-      .eq('codLibro', book.codLibro)
-    
-    if(datainfo.length > 0){
-  
-      const {error: ratingErroru } = await supabase
+        let { data: datainfo, error: errorUser } = await supabase
         .from('calificacion')
-        .update({ calificacion: rating})
-        .eq('idUsuario', user.id_usuario)
+        .select('idUsuario')
         .eq('codLibro', book.codLibro)
+      if(datainfo.length > 0){
+    
+        const {error: ratingErroru } = await supabase
+          .from('calificacion')
+          .update({ calificacion: rating})
+          .eq('idUsuario', user.id_usuario)
+          .eq('codLibro', book.codLibro)
 
-        if (ratingErroru) {
-          console.error('Error al actualizar la calificación:', ratingErroru);
+          if (ratingErroru) {
+            console.error('Error al actualizar la calificación:', ratingErroru);
+          } else {
+            console.log('Calificación actualizada correctamente.');
+          }
+      }else{
+        const { error: ratingErrori } = await supabase
+          .from('calificacion')
+          .insert([
+            { idUsuario: user.id_usuario, codLibro: book.codLibro ,calificacion: rating},])
+            
+        if (ratingErrori) {
+          console.error('Error al insertar la calificación:', ratingErrori);
         } else {
-          console.log('Calificación actualizada correctamente.');
+          console.log('Calificación insertada correctamente.');
         }
-    }else{
-
-      const { error: ratingErrori } = await supabase
-        .from('calificacion')
-        .insert([
-          { idUsuario: user.id_usuario, codLibro: book.codLibro ,calificacion: rating},])
-          
-      if (ratingErrori) {
-        console.error('Error al insertar la calificación:', ratingErrori);
-      } else {
-        console.log('Calificación insertada correctamente.');
       }
-    }
-
     }catch(error){
       console.log('Error inesperado: '+error)
     }
   }
-  
-
   
   if (!book) {
     return (
@@ -113,7 +108,7 @@ export const BookInfo = () => {
             />
           </div>
           <div className="flex justify-center w-full max-w-[80%] sm:w-[440px] mt-11 md:mt-14">
-            <Button text="calificar" variant="combExp2"/>
+            <Button text="calificar" variant="combExp2" onClick={() => setshowQualifiti(true)}/>
           </div>
         </div>
         
@@ -178,6 +173,9 @@ export const BookInfo = () => {
       )}
       {showCollection && (
         <ModalCollection onClose={() => setShowCollection(false)} text={"Añadir a colección"} />
+      )}
+      {showQualifiti && (
+        <ModalQualifi onClose={() => setshowQualifiti(false)}/>
       )}
     </div>
   );

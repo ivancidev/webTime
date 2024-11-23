@@ -3,7 +3,7 @@ import ButtonIcon from "../../../components/buttons/buttonIcon";
 import { StarRow } from "../components/star-row";
 import CloseIcon from "../../../icons/close";
 
-export const ModalQualifi = () => {
+export const ModalQualifi = ({onClose}) => {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50">
@@ -18,6 +18,7 @@ export const ModalQualifi = () => {
                     <Button
                         text="Cancelar"
                         variant="combCol2"
+                        onClick={onClose}
                     />
                     
                     <Button
