@@ -4,6 +4,7 @@ import CloseIcon from "../../../icons/close";
 import { useState } from "react";
 import FooterButtonsCol from "../../collections/components/footer-buttons-collection";
 import { supabase } from "../../../services/supabaseClient";
+import Modal from "../../../modals/modal";
 export const ModalCreateCollection = ({
     codLibro,
     onClose,
@@ -102,9 +103,15 @@ export const ModalCreateCollection = ({
     const openmod = () => {
         setIsModalOpenC(true);
     };
+    const closemod = () => {
+        setIsModalOpenC(false);
+    };
+    const handleCancel = () => {
+        onClose();
+    };
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50 ">
-            <div className="w-[521px] h-auto bg-primary-pri3 rounded-xl p-6">
+            <div className=" lg:w-[521px] h-auto bg-primary-pri3 rounded-xl p-6">
                 <div className="w-full flex items-center">
                     <div className="flex justify-center w-full">
                         <h1 className="text-secondary-sec2 w-auto text-center text-title-md font-semibold pt-8">
@@ -219,6 +226,13 @@ export const ModalCreateCollection = ({
                     pr="10"
                 />
             </div>
+            {isModalOpenC && (
+                <Modal
+                    onClose={closemod}
+                    text="¿Está seguro de que desea cancelar?"
+                    onConfirm={handleCancel}
+                />
+            )}
         </div>
     );
 };
