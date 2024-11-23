@@ -32,18 +32,20 @@ export const Profile = () => {
     getCompletedBooks();
     getCollectionBooks();
   }, []);
-  console.log(collectionBooks);
 
   return (
     <section className="max-h-screen">
       <div className="sticky top-2 sm:relative ml-6 md:ml-8 lg:ml-14 md:mt-8">
-        <ButtonIcon SvgIcon={BackIcon} onClick={() => {
-          if (selectedSection === "Concluidos") {
-            navigate("/app"); 
-          } else {
-            setSelectedSection("Concluidos");
-          }
-        }}/>
+        <ButtonIcon
+          SvgIcon={BackIcon}
+          onClick={() => {
+            if (selectedSection === "Concluidos") {
+              navigate("/app");
+            } else {
+              setSelectedSection("Concluidos");
+            }
+          }}
+        />
       </div>
       <div className="flex justify-center items-center lg:space-x-64 flex-col md:flex-row space-x-4 mt-5 lg:mt-0">
         <div>
@@ -82,13 +84,11 @@ export const Profile = () => {
             <span className="text-body-md font-body">Colecciones</span>
           </div>
         </div>
-
         <div className="flex flex-row items-center mx-8 md:mx-14">
           <div className="w-2 h-2 bg-secondary-sec2 rounded-full"></div>
           <div className="flex-grow border-t border-secondary-sec2"></div>
           <div className="w-2 h-2 bg-secondary-sec2 rounded-full"></div>
         </div>
-
         {selectedSection === "Concluidos" ? (
           <CompletedBooksSection />
         ) : (

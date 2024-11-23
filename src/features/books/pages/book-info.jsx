@@ -15,6 +15,7 @@ import { useAudio } from "../../../context/audio-context";
 import { IconOclock } from "../icons/oclock";
 import { IconDocument } from "../icons/document";
 import { supabase } from "../../../services/supabaseClient";
+import { ModalCollection } from "../modals/modal-collecion";
 
 export const BookInfo = () => {
   const location = useLocation();
@@ -23,6 +24,7 @@ export const BookInfo = () => {
   const { bookDetails, error, loading } = useBookDetails(book);
   const [showReadBook, setShowReadBook] = useState(false);
   const { showAudioPlay, setShowAudioPlay } = useAudio();
+  const [showCollection, setShowCollection] = useState(true);
   const user = JSON.parse(localStorage.getItem("user"));
   // const book = JSON.parse(localStorage.getItem("book"));
   const [starRating, setStarRating] = useState(0);
@@ -151,7 +153,7 @@ export const BookInfo = () => {
             </div>
           </div>
           <div className="max-w-[500px] mt-8 mb-8 sm:my-10">
-            <TextLarge text={book.sinopsis} max={250} message="Leer"/>
+            <TextLarge text={book.sinopsis} max={250} message="Leer" />
           </div>
         </div>
       </div>
@@ -165,6 +167,9 @@ export const BookInfo = () => {
             codBook={book.codLibro}
           />
         </div>
+      )}
+      {showCollection && (
+        <ModalCollection onClose={() => setShowCollection(false)} text={"Añadir a colección"} />
       )}
     </div>
   );
