@@ -13,6 +13,7 @@ import { TextLarge } from "../../register/components/text-large";
 import { useAudio } from "../../../context/audio-context";
 import { IconOclock } from "../icons/oclock";
 import { IconDocument } from "../icons/document";
+import { supabase } from "../../../services/supabaseClient";
 
 export const BookInfo = () => {
   const location = useLocation();
@@ -22,7 +23,56 @@ export const BookInfo = () => {
   const [showReadBook, setShowReadBook] = useState(false);
   const { showAudioPlay, setShowAudioPlay } = useAudio();
   const user = JSON.parse(localStorage.getItem("user"));
+  // const book = JSON.parse(localStorage.getItem("book"));
+  const [starRating, setStarRating] = useState(0);
 
+  const handleStarRatingChange = async (rating) => {
+    setStarRating(rating);
+    console.log('La calificacion es:'+rating);
+    console.log('usuario:'+user.id_usuario);
+    console.log('libro:' +book.codLibro);
+    
+    try{
+
+      let { data: datainfo, error: errorUser } = await supabase
+      .from('calificacion')
+      .select('idUsuario')
+      .eq('codLibro', book.codLibro)
+    
+    if(datainfo.length > 0){
+  
+      const {error: ratingErroru } = await supabase
+        .from('calificacion')
+        .update({ calificacion: rating})
+        .eq('idUsuario', user.id_usuario)
+        .eq('codLibro', book.codLibro)
+
+        if (ratingErroru) {
+          console.error('Error al actualizar la calificación:', ratingErroru);
+        } else {
+          console.log('Calificación actualizada correctamente.');
+        }
+    }else{
+
+      const { error: ratingErrori } = await supabase
+        .from('calificacion')
+        .insert([
+          { idUsuario: user.id_usuario, codLibro: book.codLibro ,calificacion: rating},])
+          
+      if (ratingErrori) {
+        console.error('Error al insertar la calificación:', ratingErrori);
+      } else {
+        console.log('Calificación insertada correctamente.');
+      }
+    }
+
+    }catch(error){
+      console.log('Error inesperado: '+error)
+    }
+  }
+  
+
+  
   if (!book) {
     return (
       <div className="text-neutral-50">
@@ -58,7 +108,7 @@ export const BookInfo = () => {
             />
           </div>
           <div className="relative w-full max-w-[80%] sm:w-[440px]">
-            <StarRow/>
+            <StarRow value={handleStarRatingChange}/>
           </div>
         </div>
         
