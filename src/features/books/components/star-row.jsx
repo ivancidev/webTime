@@ -18,7 +18,7 @@ export const StarRow = ({
     };
     
     return (
-        <div className="animate-pulse flex flex-row w-full justify-center h-auto space-x-2">
+        <div className="flex flex-row w-full justify-center h-auto space-x-2 hover:space-x-2.5">
             {Array.from({ length: 5 }, (_, index) => (
                 <ButtonIcon
                     key={index}

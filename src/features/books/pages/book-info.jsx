@@ -15,6 +15,7 @@ import { useAudio } from "../../../context/audio-context";
 import { IconOclock } from "../icons/oclock";
 import { IconDocument } from "../icons/document";
 import { supabase } from "../../../services/supabaseClient";
+import { ModalQualifi } from "../modals/modal-qualifi";
 import { ModalCollection } from "../modals/modal-collecion";
 
 export const BookInfo = () => {
@@ -101,6 +102,7 @@ export const BookInfo = () => {
     <div className="flex max-h-screen flex-col bg-primary-pri3">
       <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate(-1)} />
+        <ModalQualifi/>
       </div>
       <div className="flex flex-col lg:flex-row items-center md:justify-evenly px-5 md:mt-8">
         <div className="flex flex-col w-full md:w-auto items-center sm:mb-8">
