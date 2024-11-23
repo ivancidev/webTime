@@ -15,6 +15,7 @@ import { IconDocument } from "../icons/document";
 import { ModalCollection } from "../modals/modal-collecion";
 
 import addToColection from "../../../icons/addToColection";
+import { ModalCreateCollection } from "../modals/modal-create-collection";
 
 export const BookInfo = () => {
     const location = useLocation();
@@ -22,7 +23,7 @@ export const BookInfo = () => {
     const navigate = useNavigate();
     const { bookDetails, error, loading } = useBookDetails(book);
     const [showReadBook, setShowReadBook] = useState(false);
-    const [showCreateColectionk, setshowCreateColectionk] = useState(false);
+    const [showCreateColectionk, setshowCreateColectionk] = useState(true);
     const { showAudioPlay, setShowAudioPlay } = useAudio();
     const user = JSON.parse(localStorage.getItem("user"));
     const [showCollection, setShowCollection] = useState(false);
@@ -143,9 +144,13 @@ export const BookInfo = () => {
             )}
 
             {showCreateColectionk && (
-                <ModalCollection
+                // <ModalCollection
+                //     onClose={() => setshowCreateColectionk(false)}
+                //     text={"Añadir a colección"}
+                // />
+                <ModalCreateCollection
                     onClose={() => setshowCreateColectionk(false)}
-                    text={"Añadir a colección"}
+                    text={"Crear Colección de Libro"}
                 />
             )}
         </div>
