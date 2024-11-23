@@ -3,8 +3,13 @@ import ButtonIcon from "../../../components/buttons/buttonIcon";
 import CloseIcon from "../../../icons/close";
 import { useState } from "react";
 import FooterButtonsCol from "../../collections/components/footer-buttons-collection";
-
-export const ModalCreateCollection = ({ onClose, text, onConfirm }) => {
+import { supabase } from "../../../services/supabaseClient";
+export const ModalCreateCollection = ({
+    codLibro,
+    onClose,
+    text,
+    onConfirm,
+}) => {
     const {
         register,
         handleSubmit,
@@ -12,10 +17,16 @@ export const ModalCreateCollection = ({ onClose, text, onConfirm }) => {
     } = useForm({
         mode: "onChange",
     });
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
     const [isModalOpenC, setIsModalOpenC] = useState(false);
     const [charCount, setCharCount] = useState(0);
+    const [errorMessage, setErrorMessage] = useState("");
     const user = JSON.parse(localStorage.getItem("user"));
     const onSubmit = async (data) => {
+        console.log("desde el boton");
         setIsLoading(true);
         setOpenDialog(true);
 
@@ -33,6 +44,7 @@ export const ModalCreateCollection = ({ onClose, text, onConfirm }) => {
 
         try {
             // Insertar en la tabla "Coleccion"
+            console.log("entra");
             const { data: collectionData, error: collectionError } =
                 await supabase
                     .from("Coleccion")
@@ -45,16 +57,44 @@ export const ModalCreateCollection = ({ onClose, text, onConfirm }) => {
                     .single();
 
             if (collectionError) {
-                //console.error("Error al insertar colección:", collectionError);
                 setIsLoading(false);
                 setErrorMessage("Hubo un error al guardar la colección.");
                 return;
             }
 
+            const idColeccion = collectionData.idColeccion;
+            try {
+                const { data: bookData, error: bookError } = await supabase
+                    .from("RegistroColeccion")
+                    .insert({
+                        idColeccion,
+                        codLibro,
+                    })
+                    .select("*");
+
+                if (bookError) {
+                    console.error(
+                        "Error al insertar en RegistroColeccion:",
+                        bookError
+                    );
+                    setErrorMessage(
+                        "Hubo un error al agregar el libro a la colección."
+                    );
+                    return;
+                }
+            } catch (error) {
+                console.error(
+                    "Error inesperado al insertar en RegistroColeccion:",
+                    error
+                );
+                setErrorMessage(
+                    "Error inesperado al guardar el libro en la colección."
+                );
+            }
+
             setIsLoading(false);
             setIsSuccess(true);
         } catch (error) {
-            //console.error("Error inesperado al guardar la colección:", error);
             setIsLoading(false);
             setErrorMessage("Hubo un error inesperado. Intenta nuevamente.");
         }
