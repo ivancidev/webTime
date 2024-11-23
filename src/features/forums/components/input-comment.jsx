@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Button from "../../../components/buttons/button";
 import UserProf from "../../../icons/userProfile";
 
@@ -10,9 +10,80 @@ export const InputComment = ({
   textButton,
 }) => {
   const [comment, setComment] = useState("");
+  const [error, setError] = useState("Mínimo 5 caracteres"); 
+  const [errorType, setErrorType] = useState("length"); 
+  const currentRequest = useRef(null); 
+
+  const analyzeComment = async (text) => {
+    try {
+      if (currentRequest.current) {
+        currentRequest.current.abort();
+      }
+      const controller = new AbortController();
+      currentRequest.current = controller;
+
+      const response = await fetch(
+        "https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=AIzaSyD9XWKx5mZRJ1B9yrvwMMHdDRqgMDbjsAA",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            comment: { text },
+            languages: ["es"],
+            requestedAttributes: { TOXICITY: {} },
+          }),
+          signal: controller.signal,
+        }
+      );
+      const result = await response.json();
+      const toxicityScore = result.attributeScores.TOXICITY.summaryScore.value;
+      return toxicityScore >= 0.2;
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        console.error("Error al analizar el comentario:", error);
+      }
+      return false;
+    }
+  };
 
   const handleInputChange = (e) => {
-    setComment(e.target.value);
+    const text = e.target.value;
+    setComment(text);
+  
+    if (text.trim().length < 5) {
+      setError("Mínimo 5 caracteres");
+      setErrorType("length");
+    } else if (text.length > maxChars) {
+      setError(" ");
+      setErrorType("length");
+    } else {
+      setError("");
+      setErrorType("");
+    }
+  };
+
+  const handleComment = async () => {
+    if (comment.trim().length < 5) {
+      setError("Mínimo 5 caracteres");
+      setErrorType("length");
+      return;
+    }
+
+    if (comment.length > maxChars) {
+      setError(" ");
+      setErrorType("length");
+      return;
+    }
+
+    const isOffensive = await analyzeComment(comment);
+    if (isOffensive) {
+      setError("El comentario contiene contenido ofensivo o inapropiado.");
+      setErrorType("offensive");
+    } else {
+      setError("");
+      setErrorType("");
+      onComment(comment);
+    }
   };
 
   return (
@@ -53,19 +124,25 @@ export const InputComment = ({
             <Button
               text={textButton}
               variant={
-                comment.trim().length >= 5 && comment.length <= maxChars
+                comment.trim().length >= 5 &&
+                comment.length <= maxChars &&
+                !error
                   ? "combColBlackBlue"
                   : "combDesactivate2"
               }
-              onClick={() => onComment(comment)}
-              disabled={comment.trim().length <= 5 || comment.trim().length > 500}
+              onClick={handleComment}
+              disabled={!!error}
             />
           </div>
         </div>
       </div>
-      {comment.trim().length < 5 && (
-        <p className="flex justify-end text-body-sm text-green-600 p-2">
-          Mínimo 5 caracteres
+      {error && (
+        <p
+          className={`flex justify-end text-body-sm p-2 ${
+            errorType === "length" ? "text-green-600" : "text-error-err2"
+          }`}
+        >
+          {error}
         </p>
       )}
     </div>
