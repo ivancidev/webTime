@@ -15,7 +15,7 @@ export const StarRow = () => {
     };
 
     return (
-        <div className="group flex flex-row w-full justify-center h-auto space-x-2">
+        <div className="animate-pulse flex flex-row w-full justify-center h-auto space-x-2">
             {Array.from({ length: 5 }, (_, index) => (
                 <ButtonIcon
                     key={index}

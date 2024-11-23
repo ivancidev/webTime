@@ -7,6 +7,7 @@ export default function StarHappy() {
       width={48} 
       height={48} 
       viewBox="0 0 24 24"
+      //class="motion-safe:animate-spin"
     >
         <path 
           fill="currentColor" 

@@ -8,6 +8,7 @@ import { StarRow } from "../components/star-row";
 import { DetailRow } from "../components/detail-row";
 import { CircularProgress } from "@mui/material";
 import { ReadBook } from "../components/readBook";
+import Button from "../../../components/buttons/button";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 import { TextLarge } from "../../register/components/text-large";
 import { useAudio } from "../../../context/audio-context";
@@ -51,14 +52,14 @@ export const BookInfo = () => {
       </div>
       <div className="flex flex-col lg:flex-row items-center md:justify-evenly px-5 md:mt-8">
         <div className="flex flex-col w-full md:w-auto items-center sm:mb-8">
-          <div className="relative w-full max-w-[80%] aspect-square sm:w-[500px] md:h-[400px] bg-neutral-neu2 rounded-3xl mb-5 md:mb-14">
+          <div className="relative w-full max-w-[80%] aspect-square sm:w-[500px] sm:h-[400px] bg-neutral-neu2 rounded-3xl">
             <img
               src={book.enlacePortada}
-              className="w-full max-w-[85%] sm:w-80 sm:h-[470px] rounded-3xl absolute inset-0 m-auto object-cover"
+              className="w-full max-w-[85%] sm:w-80 md:h-[470px] rounded-3xl absolute inset-0 m-auto object-cover"
             />
           </div>
-          <div className="relative w-full max-w-[80%] sm:w-[440px]">
-            <StarRow/>
+          <div className="flex justify-center w-full max-w-[80%] sm:w-[440px] mt-10 md:mt-14">
+            <Button text="calificar" variant="combExp2"/>
           </div>
         </div>
         
