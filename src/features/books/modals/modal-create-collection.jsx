@@ -5,6 +5,14 @@ import { useState } from "react";
 import FooterButtonsCol from "../../collections/components/footer-buttons-collection";
 import { supabase } from "../../../services/supabaseClient";
 import Modal from "../../../modals/modal";
+import {
+    CircularProgress,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+} from "@mui/material";
+import CheckRegister from "../../../icons/checkRegister";
+import Button from "../../../components/buttons/button";
 export const ModalCreateCollection = ({
     codLibro,
     onClose,
@@ -225,6 +233,65 @@ export const ModalCreateCollection = ({
                     onSubmit={handleSubmit(onSubmit)}
                     pr="10"
                 />
+                <Dialog
+                    open={openDialog}
+                    onClose={null}
+                    sx={{
+                        "& .MuiPaper-root": {
+                            borderRadius: "16px",
+                        },
+                    }}
+                >
+                    {isLoading ? (
+                        <>
+                            <DialogTitle className="text-center text-primary-pri1">
+                                Cargando...
+                            </DialogTitle>
+                            <DialogContent className="flex flex-col items-center justify-center">
+                                <CircularProgress />
+                            </DialogContent>
+                        </>
+                    ) : isSuccess ? (
+                        <>
+                            <DialogTitle className=" text-center flex flex-col items-center text-primary-pri1">
+                                <div className="mt-1">
+                                    <CheckRegister />
+                                </div>
+                                <h3 className="font-body text-body-lg mt-1 ">
+                                    Colección creada exitosamente
+                                </h3>
+                            </DialogTitle>
+
+                            <DialogContent className="flex flex-col items-center justify-center space-y-2">
+                                <Button
+                                    text="Aceptar"
+                                    onClick={() => {
+                                        setOpenDialog(false);
+                                        onClose();
+                                    }}
+                                />
+                            </DialogContent>
+                        </>
+                    ) : errorMessage ? (
+                        <>
+                            <DialogTitle className="text-center text-secondary-sec2">
+                                Error
+                            </DialogTitle>
+                            <DialogContent className="flex flex-col items-center justify-center">
+                                <p>
+                                    {errorMessage ||
+                                        "Ocurrió un error. Inténtalo de nuevo."}
+                                </p>
+                                <Button
+                                    text="Aceptar"
+                                    onClick={() => setOpenDialog(false)}
+                                />
+                            </DialogContent>
+                        </>
+                    ) : (
+                        ""
+                    )}
+                </Dialog>
             </div>
             {isModalOpenC && (
                 <Modal
