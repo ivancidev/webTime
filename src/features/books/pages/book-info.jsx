@@ -29,7 +29,7 @@ export const BookInfo = () => {
   const [showCollection, setShowCollection] = useState(false);
   const [showQualifiti, setshowQualifiti] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
-  // const book = JSON.parse(localStorage.getItem("book"));
+  
   const [starRating, setStarRating] = useState(0);
 
   const handleStarRatingChange = async (rating) => {
@@ -37,30 +37,32 @@ export const BookInfo = () => {
     console.log('La calificacion es:'+rating);
     console.log('usuario:'+user.id_usuario);
     console.log('libro:' +book.codLibro);
-    
+  }
+
+  const submitQalification = async()=>{
     try{
-        let { data: datainfo, error: errorUser } = await supabase
+      let { data: datainfo, error: errorUser } = await supabase
         .from('calificacion')
         .select('idUsuario')
         .eq('codLibro', book.codLibro)
       if(datainfo.length > 0){
-    
+
         const {error: ratingErroru } = await supabase
           .from('calificacion')
-          .update({ calificacion: rating})
+          .update({ calificacion: starRating})
           .eq('idUsuario', user.id_usuario)
           .eq('codLibro', book.codLibro)
 
-          if (ratingErroru) {
-            console.error('Error al actualizar la calificación:', ratingErroru);
-          } else {
-            console.log('Calificación actualizada correctamente.');
-          }
+        if (ratingErroru) {
+          console.error('Error al actualizar la calificación:', ratingErroru);
+        } else {
+          console.log('Calificación actualizada correctamente.');
+        }
       }else{
         const { error: ratingErrori } = await supabase
           .from('calificacion')
           .insert([
-            { idUsuario: user.id_usuario, codLibro: book.codLibro ,calificacion: rating},])
+            { idUsuario: user.id_usuario, codLibro: book.codLibro ,calificacion: starRating},])
             
         if (ratingErrori) {
           console.error('Error al insertar la calificación:', ratingErrori);
@@ -71,8 +73,13 @@ export const BookInfo = () => {
     }catch(error){
       console.log('Error inesperado: '+error)
     }
+    closeQAModal();
   }
   
+  const closeQAModal = () =>{ 
+    setshowQualifiti(false);
+  } 
+
   if (!book) {
     return (
       <div className="text-neutral-50">
@@ -108,7 +115,7 @@ export const BookInfo = () => {
             />
           </div>
           <div className="flex justify-center w-full max-w-[80%] sm:w-[440px] mt-11 md:mt-14">
-            <Button text="calificar" variant="combExp2" onClick={() => setshowQualifiti(true)}/>
+            <Button text="Calificar" variant="combExp2" onClick={() => setshowQualifiti(true)}/>
           </div>
         </div>
         
@@ -175,7 +182,9 @@ export const BookInfo = () => {
         <ModalCollection onClose={() => setShowCollection(false)} text={"Añadir a colección"} />
       )}
       {showQualifiti && (
-        <ModalQualifi onClose={() => setshowQualifiti(false)}/>
+        <ModalQualifi onClose={closeQAModal}
+        status={handleStarRatingChange} 
+        onClick={submitQalification}/>
       )}
     </div>
   );
