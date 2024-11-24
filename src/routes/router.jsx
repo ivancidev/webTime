@@ -14,6 +14,7 @@ import { Login } from "../features/login/pages/login";
 import { ResetPassword } from "../features/login/pages/reset-password";
 import { CreateCollection } from "../features/collections/pages/create-collection";
 import { Forum } from "../features/forums/pages/forum";
+import { ViewCollections } from "../features/collections/pages/view-collections";
 
 export const router = createBrowserRouter([
   {
