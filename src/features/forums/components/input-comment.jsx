@@ -23,7 +23,7 @@ export const InputComment = ({
       currentRequest.current = controller;
 
       const response = await fetch(
-        "https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=AIzaSyD9XWKx5mZRJ1B9yrvwMMHdDRqgMDbjsAA",
+        `https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=${import.meta.env.VITE_API_KEY}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
