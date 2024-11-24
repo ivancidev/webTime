@@ -46,6 +46,10 @@ export const router = createBrowserRouter([
         element: <CreateCollection />,
       },
       {
+      path: "view-collection", // Nueva ruta para ver colecciones
+      element: <ViewCollections />,
+      },
+      {
         path: "forums",
         element: <Forum />,
       },
