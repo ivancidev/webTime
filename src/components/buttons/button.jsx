@@ -18,7 +18,8 @@ const Button = ({
     combExp: "w-[95%] sm:w-96 text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1 mb-5",
     combExp2: "w-[85%] sm:w-90 text-secondary-sec2 bg-neutral-neu3 border-[1px] border-secondary-sec2 hover:bg-secondary-sec2 hover:text-primary-pri3",
     combSize: "w-36 text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1",
-    combColBlackBlue: "text-primary-pri2 hover:text-secondary-sec2"
+    combColBlackBlue: "text-primary-pri2 hover:text-secondary-sec2",
+    combDesactivate2: "text-neutral-neu1"
   };
 
   return (
