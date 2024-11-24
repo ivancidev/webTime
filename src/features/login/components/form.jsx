@@ -60,7 +60,7 @@ export const Form = ({
               <span
                 className={`text-sm ${
                   passwordStrength === "Contraseña insegura"
-                    ? "text-red-500"
+                    ? "text-error-err2"
                     : passwordStrength === "Contraseña buena"
                     ? "text-orange-500"
                     : "text-green-500"
