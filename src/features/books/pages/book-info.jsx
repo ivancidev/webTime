@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BackIcon from "../../../icons/back";
 import Star from "../../../icons/star";
 import ListenIcon from "../../../icons/listen";
@@ -31,6 +31,7 @@ export const BookInfo = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   
   const [starRating, setStarRating] = useState(0);
+  const [mean, setMean] = useState(0); // Estado para almacenar el promedio
 
   const handleStarRatingChange = async (rating) => {
     setStarRating(rating);
@@ -38,6 +39,35 @@ export const BookInfo = () => {
     console.log('usuario:'+user.id_usuario);
     console.log('libro:' +book.codLibro);
   }
+
+  useEffect(() => {
+    const fetchCalifications = async () => {
+      try {
+        const { data: califications, error } = await supabase
+          .from("calificacion")
+          .select("calificacion")
+          .eq("codLibro", book.codLibro);
+
+        if (error) {
+          console.error("Error al obtener las calificaciones:", error);
+          return;
+        }
+
+        if (!califications || califications.length === 0) {
+          setMean(0);
+        } else {
+          const calificaciones = califications.map((item) => item.calificacion);
+          const suma = calificaciones.reduce((acumulador, valorActual) => acumulador + valorActual, 0);
+          setMean(suma / calificaciones.length);
+        }
+
+      } catch (e) {
+        console.error("Error inesperado:", e);
+      }
+    };
+
+    fetchCalifications();
+  }, [book.codLibro]);
 
   const submitQalification = async()=>{
     try{
@@ -76,20 +106,7 @@ export const BookInfo = () => {
     closeQAModal();
   }
   
-  const calification = async()=>{
-    let { data: calificationdata, error: errorCali } = await supabase
-      .from('calificacion')
-      .select('calificacion')
-      .eq('codLibro', book.codLibro)
-
-    console.log(calificationdata);  
-
-    //promedio
-    if (calificationdata.length === 0) console.log(0); 
-    const suma = arr.reduce((acumulador, valorActual) => acumulador + valorActual, 0);
-    
-    console.log(suma / arr.length);
-  }
+  
   const closeQAModal = () =>{ 
     setshowQualifiti(false);
   } 
@@ -170,9 +187,7 @@ export const BookInfo = () => {
               </div>
               <div className="flex items-center bg-gray-200 px-4 py-2 rounded-lg gap-2">
                 <Star className="w-5 h-5 mr-2" size="22"/>
-                <p className="text-body-sm font-body">
-                  meow
-                </p>
+                <p className="text-body-sm font-body">{mean.toFixed(2)}</p>
               </div>
             </div>
           </div>
