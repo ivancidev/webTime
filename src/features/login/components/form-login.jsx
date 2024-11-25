@@ -65,7 +65,7 @@ export const FormLogin = () => {
         .single();
   
       if (userError || !userData) {
-        return "¡Nombre de usuario o correo incorrecto!"; 
+        return "¡Contraseña incorrecta!"; 
       }
   
       if (userData.password !== password) {

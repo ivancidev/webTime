@@ -45,13 +45,17 @@ const ResetPasswordModal = ({ onClose }) => {
   const handleSendCode = async () => {
     setIsLoading(true);
     setEmailError(""); 
-  
+    
     if (!email.trim()) {
       setEmailError("El campo no puede estar vacío.");
       setIsLoading(false);
       return;
     } else if (/\s/.test(email)) {
       setEmailError("El correo no puede contener espacios.");
+      setIsLoading(false);
+      return;
+    } else if (!/^[a-zA-Z0-9._%+-]+@gmail/.test(email)) {
+      setEmailError("Correo electrónico no válido.");
       setIsLoading(false);
       return;
     }

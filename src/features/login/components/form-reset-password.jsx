@@ -108,8 +108,8 @@ export const FormResetPassword = () => {
           <Form
             label1="Nueva contraseña"
             label2="Confirmar contraseña"
-            placeholder1="Ingrese su nueva contraseña"
-            placeholder2="Confirme su nueva contraseña"
+            placeholder1="Ingrese su contraseña"
+            placeholder2="Ingrese su contraseña"
             textButton="Cambiar contraseña"
             showEyeIconFirstInput="true"
             validationRules1={{
