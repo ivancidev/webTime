@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import Button from "../../../components/buttons/button";
 import UserProf from "../../../icons/userProfile";
+import CircularProgress from "@mui/material/CircularProgress"; // Importa CircularProgress
 
 export const InputComment = ({
   maxChars = 500,
@@ -10,9 +11,10 @@ export const InputComment = ({
   textButton,
 }) => {
   const [comment, setComment] = useState("");
-  const [error, setError] = useState("Mínimo 5 caracteres"); 
-  const [errorType, setErrorType] = useState("length"); 
-  const currentRequest = useRef(null); 
+  const [error, setError] = useState("Mínimo 5 caracteres");
+  const [errorType, setErrorType] = useState("length");
+  const [isSubmitting, setIsSubmitting] = useState(false); // Estado para controlar el envío
+  const currentRequest = useRef(null);
 
   const analyzeComment = async (text) => {
     try {
@@ -49,7 +51,7 @@ export const InputComment = ({
   const handleInputChange = (e) => {
     const text = e.target.value;
     setComment(text);
-  
+
     if (text.trim().length < 5) {
       setError("Mínimo 5 caracteres");
       setErrorType("length");
@@ -63,26 +65,34 @@ export const InputComment = ({
   };
 
   const handleComment = async () => {
-    if (comment.trim().length < 5) {
-      setError("Mínimo 5 caracteres");
-      setErrorType("length");
-      return;
-    }
+    if (isSubmitting) return; // Prevenir múltiples clics mientras se procesa
+    setIsSubmitting(true); // Activar el estado de envío
 
-    if (comment.length > maxChars) {
-      setError(" ");
-      setErrorType("length");
-      return;
-    }
+    try {
+      if (comment.trim().length < 5) {
+        setError("Mínimo 5 caracteres");
+        setErrorType("length");
+        return;
+      }
 
-    const isOffensive = await analyzeComment(comment);
-    if (isOffensive) {
-      setError("El comentario contiene contenido ofensivo o inapropiado.");
-      setErrorType("offensive");
-    } else {
-      setError("");
-      setErrorType("");
-      onComment(comment);
+      if (comment.length > maxChars) {
+        setError(" ");
+        setErrorType("length");
+        return;
+      }
+
+      const isOffensive = await analyzeComment(comment);
+      if (isOffensive) {
+        setError("El comentario contiene contenido ofensivo o inapropiado.");
+        setErrorType("offensive");
+      } else {
+        setError("");
+        setErrorType("");
+        onComment(comment);
+        setComment(""); // Limpiar el campo después de enviar
+      }
+    } finally {
+      setIsSubmitting(false); // Desactivar el estado de envío al finalizar
     }
   };
 
@@ -121,18 +131,21 @@ export const InputComment = ({
             >
               ({comment.length}/{maxChars})
             </p>
-            <Button
-              text={textButton}
-              variant={
-                comment.trim().length >= 5 &&
-                comment.length <= maxChars &&
-                !error
-                  ? "combColBlackBlue"
-                  : "combDesactivate2"
-              }
-              onClick={handleComment}
-              disabled={!!error}
-            />
+            <div className="flex items-center">
+              {isSubmitting && <CircularProgress size={20} className="mr-2" />} {/* Indicador */}
+              <Button
+                text={textButton}
+                variant={
+                  comment.trim().length >= 5 &&
+                  comment.length <= maxChars &&
+                  !error
+                    ? "combColBlackBlue"
+                    : "combDesactivate2"
+                }
+                onClick={handleComment}
+                disabled={isSubmitting || !!error} // Deshabilitar el botón durante el envío
+              />
+            </div>
           </div>
         </div>
       </div>
