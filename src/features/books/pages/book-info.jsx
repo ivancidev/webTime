@@ -76,6 +76,20 @@ export const BookInfo = () => {
     closeQAModal();
   }
   
+  const calification = async()=>{
+    let { data: calificationdata, error: errorCali } = await supabase
+      .from('calificacion')
+      .select('calificacion')
+      .eq('codLibro', book.codLibro)
+
+    console.log(calificationdata);  
+
+    //promedio
+    if (calificationdata.length === 0) console.log(0); 
+    const suma = arr.reduce((acumulador, valorActual) => acumulador + valorActual, 0);
+    
+    console.log(suma / arr.length);
+  }
   const closeQAModal = () =>{ 
     setshowQualifiti(false);
   } 
