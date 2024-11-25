@@ -75,6 +75,9 @@ export const BookInfo = () => {
         .from('calificacion')
         .select('idUsuario')
         .eq('codLibro', book.codLibro)
+        .eq('idUsuario', user.id_usuario)
+      
+      console.log(datainfo);
       if(datainfo.length > 0){
 
         const {error: ratingErroru } = await supabase
