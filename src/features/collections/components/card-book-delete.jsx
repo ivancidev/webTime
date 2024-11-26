@@ -40,10 +40,7 @@ export const CardBook = ({
       {/* Botón de eliminar con "X" */}
       <button
         className="absolute top-2 right-2 bg-error-err2 text-primary-pri3 font-label text-label-sm w-7 h-7 rounded-full z-10 flex items-center justify-center hover:bg-error-err3"
-        onClick={(e) => {
-          e.stopPropagation(); // Evita que el clic en la "X" dispare handleClick
-          onDelete?.(book);
-        }}
+        onClick={handleDeleteClick} // Abre el modal
       >
         X
       </button>
