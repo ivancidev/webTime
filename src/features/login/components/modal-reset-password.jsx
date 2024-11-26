@@ -4,19 +4,19 @@ import ButtonIcon from "../../../components/buttons/buttonIcon";
 import CloseIcon from "../../../icons/close";
 import { InputText } from "../../../components/input/input";
 import { useNavigate } from "react-router-dom";
-import { sendVerificationCode } from "../../../services/reset-password";
-import { verifyResetCode } from "../../../services/verify-reset-code";
+import { sendEmail } from "../../../services/reset-password";
 import EmailSentModal from "./modal-email-sent";
 import { supabase } from "../../../services/supabaseClient";
+const BASE_URL_RESET_PASSWORD = import.meta.env.VITE_URL_REST_PASSWORD;
 
 const ResetPasswordModal = ({ onClose }) => {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
-  const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showEmailSentModal, setShowEmailSentModal] = useState(false);
   const [emailError, setEmailError] = useState("");
   const navigate = useNavigate();
+  
 
   const validateEmailForPasswordReset = async (email) => {
     if (!email.trim()) {
@@ -42,7 +42,7 @@ const ResetPasswordModal = ({ onClose }) => {
     }
   };
 
-  const handleSendCode = async () => {
+  const handleSendEmail = async () => {
     setIsLoading(true);
     setEmailError(""); 
     
@@ -69,10 +69,11 @@ const ResetPasswordModal = ({ onClose }) => {
     }
   
     try {
-      await sendVerificationCode(email);
+      await sendEmail(email, BASE_URL_RESET_PASSWORD);
+      localStorage.setItem("email", email);
       setShowEmailSentModal(true);
     } catch (error) {
-      console.error("Error al enviar el código:", error);
+      console.error("Error al enviar el email:", error);
       alert(error.message);
     } finally {
       setIsLoading(false);
@@ -82,21 +83,8 @@ const ResetPasswordModal = ({ onClose }) => {
 
   const handleEmailSentModalClose = () => {
     setShowEmailSentModal(false);
+    onClose();
     setStep(2);
-  };
-
-  const handleVerifyCode = async () => {
-    setIsLoading(true);
-
-    try {
-      await verifyResetCode(email, code);
-      navigate("/reset-password", { state: { email } });
-    } catch (error) {
-      console.error("Error al verificar el código:", error);
-      alert(error.message);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
@@ -169,38 +157,8 @@ const ResetPasswordModal = ({ onClose }) => {
                       ? "Enviando..."
                       : "Enviar correo de restablecimiento de contraseña"
                   }
-                  onClick={handleSendCode}
+                  onClick={handleSendEmail}
                   disabled={isLoading}
-                  variant="combExp"
-                />
-              </div>
-            </>
-          )}
-          {step === 2 && (
-            <>
-              {/* Contenido del paso 2 */}
-              <h1 className="text-center bg-gradient-to-r from-secondary-sec3 via-secondary-sec1 to-secondary-sec2 bg-clip-text text-transparent w-auto font-title text-title-md">
-                Ingresa el código
-              </h1>
-              <p className="text-center font-body text-body-sm text-neutral-neu0 w-[85%] sm:w-auto mt-3 mx-10">
-                Introduce el código enviado a tu correo.
-              </p>
-              <div className="w-[85%] sm:w-auto mb-5">
-                <InputText
-                  labelMarginTop="10px"
-                  labelFontSize="16px"
-                  label="Código de verificación"
-                  placeholder="Ingrese el código"
-                  className="w-[100%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                />
-              </div>
-              <div className="w-full pl-[5%] sm:pl-0 sm:w-auto mb-3">
-                <Button
-                  text={isLoading ? "Verificando..." : "Verificar código"}
-                  onClick={handleVerifyCode}
-                  disabled={!code}
                   variant="combExp"
                 />
               </div>
