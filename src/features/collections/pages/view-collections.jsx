@@ -29,7 +29,7 @@ export const ViewCollections = () => {
   } = useGetUserCollectionBooks(idColeccion);
 
   useEffect(() => {
-    setFilteredBooks(booksOld); // Inicializar libros filtrados con todos los libros
+    setFilteredBooks(booksOld); 
   }, [booksOld]);
 
   if (isLoadingOld) {
