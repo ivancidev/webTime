@@ -55,6 +55,22 @@ export const CardBook = ({
       <h1 className="mx-2 mb-1 mt-1 md:mb-0 font-label text-center text-label-sm truncate px-1 text-neutral-neu0 group-hover:text-secondary-sec2">
         {authorBook}
       </h1>
+      
+      {/* Modal de confirmación */}
+            {isModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-neu1 bg-opacity-30"
+          onClick={(e) => e.stopPropagation()} // Detener propagación aquí
+        >
+          <DeleteBookModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            onConfirm={handleConfirmDelete}
+            bookName={titleBook} // Pasar el nombre del libro al modal
+            bookId={book.codLibro}
+          />
+        </div>
+      )}
     </div>
   );
 };
