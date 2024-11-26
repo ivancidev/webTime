@@ -15,9 +15,11 @@ export const CardCreateCollection = ({
             >
                 <div
                     className="w-[65px] h-[90px] flex justify-center items-center rounded-lg bg-gray-300"
-                    style={{ backgroundColor: "#D9D9D9" }} // Color plomo
+                    style={{ backgroundColor: "#D9D9D9" }}
                 >
-                    <span className="text-2xl font-bold text-gray-700">+</span>
+                    <span className="text-5xl font-bold text-gray-700 pb-2">
+                        +
+                    </span>
                 </div>
                 <div className="rounded-full"></div>
                 <div className="flex flex-col">

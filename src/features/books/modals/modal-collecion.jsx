@@ -31,7 +31,7 @@ export const ModalCollection = ({ onClose, text, codLibro }) => {
     }, [setCollectionBooks, setIsLoading]);
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50 ">
+        <div className="fixed inset-0 flex items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50">
             <div className="w-[521px] h-auto bg-primary-pri3 rounded-xl p-6">
                 <div className="w-full flex items-center">
                     <div className="flex justify-center w-full">
@@ -47,7 +47,7 @@ export const ModalCollection = ({ onClose, text, codLibro }) => {
                         />
                     </div>
                 </div>
-                <section className="h-96 overflow-y-auto">
+                <section className="h-96 overflow-y-auto px-6">
                     {isLoading == false && (
                         <CardCreateCollection codLibro={codLibro} />
                     )}
