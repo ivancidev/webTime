@@ -17,7 +17,8 @@ const Button = ({
     combCol4: "w-[45px] md:w-[145px] text-secondary-sec1 bg-primary-pri3 border-[1px] border-secondary-sec1 rounded-[10px] hover:bg-neutral-neu2 ", //boton blanco con borde azul
     combExp: "w-[95%] sm:w-96 text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1 mb-5",
     combSize: "w-36 text-primary-pri3 bg-secondary-sec2 hover:bg-secondary-sec1",
-    combColBlackBlue: "text-primary-pri2 hover:text-secondary-sec2"
+    combColBlackBlue: "text-primary-pri2 hover:text-secondary-sec2",
+    combDesactivate2: "text-neutral-neu1"
   };
 
   return (
