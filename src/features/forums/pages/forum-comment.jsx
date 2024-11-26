@@ -5,15 +5,21 @@ import { NavbarO } from "../../../components/navbar/navbarO";
 import { supabase } from "../../../services/supabaseClient";
 import { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
+import {
+  CircularProgress,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 import { InputComment } from "../components/input-comment";
 import { addComment } from "../../../services/comment-service";
+import { Replies } from "../components/replies";
+import { addReply } from "../../../services/reply-service";
+import CheckRegister from "../../../icons/checkRegister";
 
 export const ForumComment = () => {
   const { id } = useParams();
-
   const location = useLocation();
-
   const imageUrl =
     location.state?.imgUrl ||
     "https://i1.sndcdn.com/avatars-000329607942-t9hnvm-t240x240.jpg";
@@ -21,10 +27,21 @@ export const ForumComment = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [comentarios, setComentarios] = useState([]);
+  const [text, setText] = useState("");
   const [comentarioText, setComentarioText] = useState("");
+  const [activeComment, setActiveComment] = useState(null);
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const profileImage = user?.avatar;
   const idUsuario = user?.id_usuario;
+  const [showRepliesFor, setShowRepliesFor] = useState(null);
+  const handleShowReplies = (codComentario) => {
+    setShowRepliesFor((prev) =>
+      prev === codComentario ? null : codComentario
+    );
+  };
+
   useEffect(() => {
     const getComentarios = async () => {
       setIsLoading(true);
@@ -75,8 +92,25 @@ export const ForumComment = () => {
     getComentarios();
   }, [id]);
 
-  const handleCommentSubmit = async (comentarioText) => {
-    if (!comentarioText.trim()) {
+  useEffect(() => {
+    if (dialogOpen) {
+      const timer = setTimeout(() => {
+        setDialogOpen(false);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [dialogOpen]);
+
+  const handleReplyClick = (codComentario, usuarioNombre) => {
+    setActiveComment((prev) => (prev === codComentario ? null : codComentario));
+    setReplyingTo(usuarioNombre || "Anónimo");
+  };
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleCommentSubmit = async (text) => {
+    if (!text.trim()) {
       return;
     }
 
@@ -85,14 +119,43 @@ export const ForumComment = () => {
       return;
     }
 
-    const result = await addComment(comentarioText, id, idUsuario);
+    const nuevoComentario = {
+      comentario: text,
+      fecha: new Date().toISOString(),
+      usuario: {
+        nombre: user?.nombre || "Anónimo",
+        avatar: profileImage,
+      },
+      likes: 0,
+      dislikes: 0,
+    };
 
-    if (result.success) {
-      setComentarioText("");
+    if (activeComment) {
+      const result = await addReply(text, activeComment, idUsuario);
+      if (result.success) {
+        setText("Respuesta Publicada");
+        setDialogOpen(true);
+        setActiveComment(null);
+        handleShowReplies(activeComment);
+      } else {
+        console.error("Error al enviar la respuesta:", result.error);
+      }
     } else {
-      console.error("Error al enviar el comentario:", result.error);
+      const result = await addComment(text, id, idUsuario);
+      if (result.success) {
+        setComentarios((prevComentarios) => [
+          { ...nuevoComentario, cod_comentario: result.newId },
+          ...prevComentarios,
+        ]);
+        setComentarioText("");
+        setText("Comentario Publicado");
+        setDialogOpen(true);
+      } else {
+        console.error("Error al enviar el comentario:", result.error);
+      }
     }
   };
+
   const formatTime = (fecha) => {
     const now = new Date();
     const fechaComentario = new Date(fecha);
@@ -116,7 +179,6 @@ export const ForumComment = () => {
   return (
     <div className="flex max-h-screen flex-col bg-primary-pri3 overflow-auto">
       <NavbarO />
-
       <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate(-1)} />
       </div>
@@ -130,8 +192,8 @@ export const ForumComment = () => {
           </div>
         </div>
         <div className="flex-1 lg:mt-0 mt-10">
-          <div className="mx-5 flex-col max-h-[360px] lg:overflow-y-scroll space-y-9 lg:pr-[75px]">
-            {isLoading ? ( // Mostrar spinner mientras carga
+          <div className="mx-5 flex-col max-h-[360px] lg:overflow-y-scroll space-y-5 lg:pr-16">
+            {isLoading ? (
               <div className="flex justify-center items-center h-40">
                 <CircularProgress color="secondary" />
               </div>
@@ -141,20 +203,45 @@ export const ForumComment = () => {
               </p>
             ) : (
               comentarios.map((reg) => (
-                <Comment
-                  key={reg.cod_comentario}
-                  codComentario={reg.cod_comentario}
-                  nickname={reg.usuario?.nombre || "Anónimo"}
-                  text={reg.comentario}
-                  time={formatTime(reg.fecha)}
-                  numLikes={reg.likes}
-                  numDislikes={reg.dislikes}
-                  avatar={reg.usuario?.avatar}
-                />
+                <div key={reg.cod_comentario}>
+                  <Comment
+                    codComentario={reg.cod_comentario}
+                    nickname={reg.usuario?.nombre || "Anónimo"}
+                    text={reg.comentario}
+                    time={formatTime(reg.fecha)}
+                    avatar={reg.usuario?.avatar}
+                    onReply={() =>
+                      handleReplyClick(reg.cod_comentario, reg.usuario?.nombre)
+                    }
+                    onShowReplies={() => handleShowReplies(reg.cod_comentario)}
+                  />
+                  {showRepliesFor === reg.cod_comentario && (
+                    <div
+                      className="mt-5 overflow-y-auto pr-3"
+                      style={{ height: "200px" }}
+                    >
+                      <Replies codComentario={reg.cod_comentario} />
+                    </div>
+                  )}
+
+                  {activeComment === reg.cod_comentario && (
+                    <div className="ml-6 mt-5">
+                      <p className="font-body text-body-sm text-neutral-neu0 mb-1">
+                        Respondiendo a {replyingTo}
+                      </p>
+                      <InputComment
+                        profileImage={profileImage}
+                        placeholder="Agregar respuesta"
+                        textButton="Enviar"
+                        onComment={handleCommentSubmit}
+                      />
+                    </div>
+                  )}
+                </div>
               ))
             )}
           </div>
-          <div className="mt-8 mx-5 ">
+          <div className="mx-5 mt-5">
             <InputComment
               profileImage={profileImage}
               placeholder="Agregar comentario"
@@ -164,6 +251,22 @@ export const ForumComment = () => {
           </div>
         </div>
       </div>
+      <Dialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        sx={{
+          "& .MuiPaper-root": {
+            borderRadius: "16px",
+          },
+        }}
+      >
+        <DialogTitle className=" text-center flex flex-col items-center text-primary-pri1">
+          <div className="mt-3">
+            <CheckRegister />
+          </div>
+          <h3 className="font-body text-body-lg my-3">{text}</h3>
+        </DialogTitle>
+      </Dialog>
     </div>
   );
 };
