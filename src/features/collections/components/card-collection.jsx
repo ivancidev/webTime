@@ -2,7 +2,18 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-cards";
 import { EffectCards } from "swiper/modules";
+import { useNavigate } from "react-router-dom";
+
 export const CardCollection = ({ collectionName, books }) => {
+  const navigate = useNavigate();
+
+  const handleCollectionClick = () => {
+    // Guardar el ID de la colección en localStorage
+    localStorage.setItem("collectionId", collectionId);
+    // Redirigir a la página de vista de colecciones
+    navigate("/profile/view-collection");
+  };
+  
   return (
     <div>
       <Swiper
