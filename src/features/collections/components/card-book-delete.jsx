@@ -22,6 +22,15 @@ export const CardBook = ({
   const handleDeleteClick = (e) => {
     e.stopPropagation();
     setIsModalOpen(true);
+  }
+  const handleConfirmDelete = () => {
+    onDelete?.(book);
+    setIsModalOpen(false);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div
