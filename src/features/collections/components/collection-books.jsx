@@ -71,6 +71,7 @@ export const CollectionBooks = () => {
               key={collection.idColeccion}
               collectionName={collection.nombre}
               books={collection.libros}
+              collectionId={collection.idColeccion}
             />
           ))}
         </div>
