@@ -21,7 +21,7 @@ export const ModalQualifi = ({onClose, status, onClick, stars,initialValue, mens
                 <div className="p-3 space-y-1">
                     <StarRow value= {status} initialValue={initialValue}/>
                     <p className="font-body text-body-md text-neutral-neu1 p-2 text-center">
-                        {mensajeConfirmacion ? 'Calificación actualizada' : 'Seleccione una calificación'  }
+                        {mensajeConfirmacion ? 'Calificación guardada' : 'Seleccione una calificación'  }
                     </p>
                 </div>
                 <div className="flex items-center justify-around space-x-4">
