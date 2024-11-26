@@ -13,7 +13,7 @@ export const CardCollection = ({ collectionName, books }) => {
     // Redirigir a la página de vista de colecciones
     navigate("/profile/view-collection");
   };
-  
+
   return (
     <div>
       <Swiper
@@ -35,7 +35,10 @@ export const CardCollection = ({ collectionName, books }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <h3 className="w-60 mx-2 font-label text-center text-label-md mt-2 truncate px-1 hover:text-secondary-sec2 cursor-pointer">
+      <h3
+        onClick={handleCollectionClick}
+        className="w-60 mx-2 font-label text-center text-label-lg mt-2 truncate px-1 hover:text-secondary-sec2 cursor-pointer text-xl font-semibold"
+      >
         {collectionName}
       </h3>
     </div>
