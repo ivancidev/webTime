@@ -5,7 +5,6 @@ import CloseIcon from "../../../icons/close";
 import { InputText } from "../../../components/input/input";
 import { useNavigate } from "react-router-dom";
 import { sendEmail } from "../../../services/reset-password";
-import { verifyResetCode } from "../../../services/verify-reset-code";
 import EmailSentModal from "./modal-email-sent";
 import { supabase } from "../../../services/supabaseClient";
 const BASE_URL_RESET_PASSWORD = import.meta.env.VITE_URL_REST_PASSWORD;
@@ -71,9 +70,10 @@ const ResetPasswordModal = ({ onClose }) => {
   
     try {
       await sendEmail(email, BASE_URL_RESET_PASSWORD);
+      localStorage.setItem("email", email);
       setShowEmailSentModal(true);
     } catch (error) {
-      console.error("Error al enviar el código:", error);
+      console.error("Error al enviar el email:", error);
       alert(error.message);
     } finally {
       setIsLoading(false);

@@ -1,13 +1,12 @@
 import { Form } from "../components/form";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
 
 export const FormResetPassword = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const email = location.state?.email;
+  const email = localStorage.getItem("email");
 
   if (!email) {
     console.error("No se proporcionó un email");
