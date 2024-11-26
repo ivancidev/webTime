@@ -28,11 +28,11 @@ export const BookInfo = () => {
   const { showAudioPlay, setShowAudioPlay } = useAudio();
   const [showCollection, setShowCollection] = useState(false);
   const [showQualifiti, setshowQualifiti] = useState(false);
+  const [showMean, setShowMean] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
-  
-  const [starRating, setStarRating] = useState(0);
   const [mean, setMean] = useState(0); // Estado para almacenar el promedio
-
+  const [starRating, setStarRating] = useState(0);
+  
   const handleStarRatingChange = async (rating) => {
     setStarRating(rating);
     console.log('La calificacion es:'+rating);
@@ -47,7 +47,7 @@ export const BookInfo = () => {
           .from("calificacion")
           .select("calificacion")
           .eq("codLibro", book.codLibro);
-
+        
         if (error) {
           console.error("Error al obtener las calificaciones:", error);
           return;
@@ -59,6 +59,7 @@ export const BookInfo = () => {
           const calificaciones = califications.map((item) => item.calificacion);
           const suma = calificaciones.reduce((acumulador, valorActual) => acumulador + valorActual, 0);
           setMean(suma / calificaciones.length);
+          setShowMean(true);
         }
 
       } catch (e) {
@@ -188,10 +189,13 @@ export const BookInfo = () => {
                   {book.duracion_audio} min
                 </p>
               </div>
-              <div className="flex items-center bg-gray-200 px-4 py-2 rounded-lg gap-2">
-                <Star className="w-5 h-5 mr-2" size="22"/>
-                <p className="text-body-sm font-body">{mean.toFixed(2)}</p>
-              </div>
+              {showMean &&(
+                <div className="flex items-center bg-gray-200 px-4 py-2 rounded-lg gap-2">
+                  <Star className="w-5 h-5 mr-2" size="22"/>
+                  <p className="text-body-sm font-body">{mean.toFixed(1)}</p>
+                </div>
+              )}
+              
             </div>
           </div>
           <div className="max-w-[500px] mt-8 mb-8 sm:my-10">
