@@ -183,8 +183,10 @@ export const BookInfo = () => {
       )}
       {showQualifiti && (
         <ModalQualifi onClose={closeQAModal}
-        status={handleStarRatingChange} 
-        onClick={submitQalification}/>
+          status={handleStarRatingChange} 
+          onClick={submitQalification}
+          
+        />
       )}
     </div>
   );

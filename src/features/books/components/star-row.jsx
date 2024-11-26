@@ -8,7 +8,6 @@ export const StarRow = ({
     value
 }) => {
     const [selectedStars, setSelectedStars] = useState(0);
-    
     const handleStarClick = (index) => {
         const newRating = index === 4 ? 5 : index + 1;
         setSelectedStars(newRating);

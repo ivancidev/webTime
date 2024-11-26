@@ -18,7 +18,6 @@ export const ModalQualifi = ({onClose, status, onClick}) => {
                         variant="combCol2"
                         onClick={onClose}
                     />
-                    
                     <Button
                         text="Confirmar"
                         variant="combCol1"
