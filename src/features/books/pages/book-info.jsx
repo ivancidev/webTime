@@ -40,7 +40,7 @@ export const BookInfo = () => {
     console.log('libro:' +book.codLibro);
   }
 
-  useEffect(() => {
+  useEffect(() =>  {
     const fetchCalifications = async () => {
       try {
         const { data: califications, error } = await supabase
@@ -97,7 +97,7 @@ export const BookInfo = () => {
           .from('calificacion')
           .insert([
             { idUsuario: user.id_usuario, codLibro: book.codLibro ,calificacion: starRating},])
-            
+             
         if (ratingErrori) {
           console.error('Error al insertar la calificación:', ratingErrori);
         } else {

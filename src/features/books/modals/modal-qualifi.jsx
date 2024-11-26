@@ -2,10 +2,22 @@ import Button from "../../../components/buttons/button";
 import { StarRow } from "../components/star-row";
 
 export const ModalQualifi = ({onClose, status, onClick}) => {
-    
+    const handleClickOutside = (e) => {
+        
+        if (e.target.id === "modal-overlay") {
+          onClose();
+        }
+      };
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50">
-            <div className="p-6 bg-primary-pri3 drop-shadow-xl rounded-xl w-[300px]">
+        <div
+            id = 'modal-overlay' 
+            className="fixed inset-0 flex items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50"
+            onClick={handleClickOutside} 
+        >
+            <div 
+                className="p-6 bg-primary-pri3 drop-shadow-xl rounded-xl w-[300px]" 
+                onClick={(e) => e.stopPropagation()}
+            >
                 <div className="p-3 space-y-1">
                     <StarRow value= {status}/>
                     <p className="font-body text-body-md text-neutral-neu1 p-2 text-center">
@@ -29,4 +41,6 @@ export const ModalQualifi = ({onClose, status, onClick}) => {
         </div>
         
     );
+
+    
 };
