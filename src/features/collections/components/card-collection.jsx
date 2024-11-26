@@ -8,9 +8,7 @@ export const CardCollection = ({ collectionName, books }) => {
   const navigate = useNavigate();
 
   const handleCollectionClick = () => {
-    // Guardar el ID de la colección en localStorage
     localStorage.setItem("collectionId", collectionId);
-    // Redirigir a la página de vista de colecciones
     navigate("/profile/view-collection");
   };
 
