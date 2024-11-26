@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { DeleteBookModal } from "../components/delete-book-modal";
 
 export const CardBook = ({
   titleBook,
