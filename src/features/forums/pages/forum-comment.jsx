@@ -16,6 +16,7 @@ import { addComment } from "../../../services/comment-service";
 import { Replies } from "../components/replies";
 import { addReply } from "../../../services/reply-service";
 import CheckRegister from "../../../icons/checkRegister";
+import Button from "../../../components/buttons/button";
 
 export const ForumComment = () => {
   const { id } = useParams();
@@ -91,15 +92,6 @@ export const ForumComment = () => {
 
     getComentarios();
   }, [id]);
-
-  useEffect(() => {
-    if (dialogOpen) {
-      const timer = setTimeout(() => {
-        setDialogOpen(false);
-      }, 1500);
-      return () => clearTimeout(timer);
-    }
-  }, [dialogOpen]);
 
   const handleReplyClick = (codComentario, usuarioNombre) => {
     setActiveComment((prev) => (prev === codComentario ? null : codComentario));
@@ -261,11 +253,14 @@ export const ForumComment = () => {
         }}
       >
         <DialogTitle className=" text-center flex flex-col items-center text-primary-pri1">
-          <div className="mt-3">
+          <div className="mt-1">
             <CheckRegister />
           </div>
-          <h3 className="font-body text-body-lg my-3">{text}</h3>
+          <h3 className="font-body text-body-lg mt-3">{text}</h3>
         </DialogTitle>
+        <DialogContent className="flex flex-col items-center justify-center space-y-2">
+          <Button text="Aceptar" onClick={handleDialogClose} />
+        </DialogContent>
       </Dialog>
     </div>
   );
