@@ -5,18 +5,11 @@ import { NavbarO } from "../../../components/navbar/navbarO";
 import { supabase } from "../../../services/supabaseClient";
 import { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import {
-  CircularProgress,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@mui/material";
+import { Alert, CircularProgress, Snackbar } from "@mui/material";
 import { InputComment } from "../components/input-comment";
 import { addComment } from "../../../services/comment-service";
 import { Replies } from "../components/replies";
 import { addReply } from "../../../services/reply-service";
-import CheckRegister from "../../../icons/checkRegister";
-import Button from "../../../components/buttons/button";
 
 export const ForumComment = () => {
   const { id } = useParams();
@@ -32,7 +25,7 @@ export const ForumComment = () => {
   const [comentarioText, setComentarioText] = useState("");
   const [activeComment, setActiveComment] = useState(null);
   const [replyingTo, setReplyingTo] = useState(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const profileImage = user?.avatar;
   const idUsuario = user?.id_usuario;
@@ -125,8 +118,8 @@ export const ForumComment = () => {
     if (activeComment) {
       const result = await addReply(text, activeComment, idUsuario);
       if (result.success) {
-        setText("Respuesta Publicada");
-        setDialogOpen(true);
+        setText("Respuesta publicada correctamente");
+        setSnackbarOpen(true);
         setActiveComment(null);
         handleShowReplies(activeComment);
       } else {
@@ -140,8 +133,8 @@ export const ForumComment = () => {
           ...prevComentarios,
         ]);
         setComentarioText("");
-        setText("Comentario Publicado");
-        setDialogOpen(true);
+        setText("Comentario publicado correctamente");
+        setSnackbarOpen(true);
       } else {
         console.error("Error al enviar el comentario:", result.error);
       }
@@ -238,25 +231,19 @@ export const ForumComment = () => {
           </div>
         </div>
       </div>
-      <Dialog
-        open={dialogOpen}
-        onClose={handleDialogClose}
-        sx={{
-          "& .MuiPaper-root": {
-            borderRadius: "16px",
-          },
-        }}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
       >
-        <DialogTitle className=" text-center flex flex-col items-center text-primary-pri1">
-          <div className="mt-1">
-            <CheckRegister />
-          </div>
-          <h3 className="font-body text-body-lg mt-3">{text}</h3>
-        </DialogTitle>
-        <DialogContent className="flex flex-col items-center justify-center space-y-2">
-          <Button text="Aceptar" onClick={handleDialogClose} />
-        </DialogContent>
-      </Dialog>
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          {text}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
