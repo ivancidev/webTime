@@ -146,37 +146,41 @@ export const Comment = ({
       <div>
         <TextLarge text={text} max={200} message="Mostrar" />
       </div>
-      <div className="flex flex-row items-center mt-4">
-        <div className="group flex items-center hover:text-secondary-sec2">
-          <ButtonIcon
-            SvgIcon={userInteraccion === "1" ? LikePressed : Like}
-            variant="group-hover:combColBlackBlue combColBlue"
-            onClick={() => handleInteraccion("1")}
-          />
-          <h2 className="text-body-md mr-5 group-hover:text-secondary-sec2">
-            {likes}
-          </h2>
+      <div className="flex flex-col sm:flex-row items-center mt-4">
+        <div className="flex flex-row">
+          <div className="group flex items-center hover:text-secondary-sec2">
+            <ButtonIcon
+              SvgIcon={userInteraccion === "1" ? LikePressed : Like}
+              variant="group-hover:combColBlackBlue combColBlue"
+              onClick={() => handleInteraccion("1")}
+            />
+            <h2 className="text-body-md mr-5 group-hover:text-secondary-sec2">
+              {likes}
+            </h2>
+          </div>
+          <div className="group flex items-center hover:text-secondary-sec2">
+            <ButtonIcon
+              SvgIcon={userInteraccion === "-1" ? DislikePressed : Dislike}
+              variant="group-hover:combColBlackBlue combColBlue"
+              onClick={() => handleInteraccion("-1")}
+            />
+            <h2 className="text-body-md mr-5 group-hover:text-secondary-sec2">
+              {dislikes}
+            </h2>
+          </div>          
         </div>
-        <div className="group flex items-center hover:text-secondary-sec2">
-          <ButtonIcon
-            SvgIcon={userInteraccion === "-1" ? DislikePressed : Dislike}
-            variant="group-hover:combColBlackBlue combColBlue"
-            onClick={() => handleInteraccion("-1")}
-          />
-          <h2 className="text-body-md mr-5 group-hover:text-secondary-sec2">
-            {dislikes}
-          </h2>
+        <div className="flex flex-row">
+          <Button text="Responder" variant="combColBlackBlue" onClick={onReply} />
+          {replies.length > 0 && (
+            <Button
+              text={`${replies.length} ${
+                replies.length === 1 ? "respuesta" : "respuestas"
+              }`}
+              variant="combColBlackBlue"
+              onClick={onShowReplies}
+            />
+          )}
         </div>
-        <Button text="Responder" variant="combColBlackBlue" onClick={onReply} />
-        {replies.length > 0 && (
-          <Button
-            text={`${replies.length} ${
-              replies.length === 1 ? "respuesta" : "respuestas"
-            }`}
-            variant="combColBlackBlue"
-            onClick={onShowReplies}
-          />
-        )}
       </div>
     </div>
   );

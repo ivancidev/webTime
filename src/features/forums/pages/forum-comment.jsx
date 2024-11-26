@@ -162,8 +162,8 @@ export const ForumComment = () => {
             <img src={imageUrl} className="rounded-3xl object-cover w-2/3" />
           </div>
         </div>
-        <div className="flex-1 lg:mt-0 mt-10">
-          <div className="mx-5 flex-col max-h-[360px] lg:overflow-y-scroll space-y-5 lg:pr-16">
+        <div className="flex flex-1 flex-col max-h-[600px]">
+          <div className="flex-1 mx-5 flex-col overflow-y-scroll space-y-5 lg:pr-5">
             {isLoading ? (
               <div className="flex justify-center items-center h-40">
                 <CircularProgress />
@@ -207,7 +207,7 @@ export const ForumComment = () => {
               ))
             )}
           </div>
-          <div className="mx-5 mt-5">
+          <div className="sticky bottom-0 bg-white p-4">
             <InputComment
               profileImage={profileImage}
               placeholder="Agregar comentario"
