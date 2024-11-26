@@ -19,6 +19,10 @@ export const CardBook = ({
     });
   };
 
+  const handleDeleteClick = (e) => {
+    e.stopPropagation();
+    setIsModalOpen(true);
+
   return (
     <div
       className="relative w-40 h-50 bg-primary-pri3 rounded-2xl flex flex-col justify-start cursor-pointer group sm:w-60 sm:h-[340px] flex-none"
