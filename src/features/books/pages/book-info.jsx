@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BackIcon from "../../../icons/back";
 import Star from "../../../icons/star";
 import ListenIcon from "../../../icons/listen";
@@ -28,10 +28,11 @@ export const BookInfo = () => {
   const { showAudioPlay, setShowAudioPlay } = useAudio();
   const [showCollection, setShowCollection] = useState(false);
   const [showQualifiti, setshowQualifiti] = useState(false);
+  const [showMean, setShowMean] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
-  
+  const [mean, setMean] = useState(0); // Estado para almacenar el promedio
   const [starRating, setStarRating] = useState(0);
-
+  
   const handleStarRatingChange = async (rating) => {
     setStarRating(rating);
     console.log('La calificacion es:'+rating);
@@ -39,12 +40,45 @@ export const BookInfo = () => {
     console.log('libro:' +book.codLibro);
   }
 
+  useEffect(() => {
+    const fetchCalifications = async () => {
+      try {
+        const { data: califications, error } = await supabase
+          .from("calificacion")
+          .select("calificacion")
+          .eq("codLibro", book.codLibro);
+        
+        if (error) {
+          console.error("Error al obtener las calificaciones:", error);
+          return;
+        }
+
+        if (!califications || califications.length === 0) {
+          setMean(0);
+        } else {
+          const calificaciones = califications.map((item) => item.calificacion);
+          const suma = calificaciones.reduce((acumulador, valorActual) => acumulador + valorActual, 0);
+          setMean(suma / calificaciones.length);
+          setShowMean(true);
+        }
+
+      } catch (e) {
+        console.error("Error inesperado:", e);
+      }
+    };
+
+    fetchCalifications();
+  }, [book.codLibro]);
+
   const submitQalification = async()=>{
     try{
       let { data: datainfo, error: errorUser } = await supabase
         .from('calificacion')
         .select('idUsuario')
         .eq('codLibro', book.codLibro)
+        .eq('idUsuario', user.id_usuario)
+      
+      console.log(datainfo);
       if(datainfo.length > 0){
 
         const {error: ratingErroru } = await supabase
@@ -75,6 +109,7 @@ export const BookInfo = () => {
     }
     closeQAModal();
   }
+  
   
   const closeQAModal = () =>{ 
     setshowQualifiti(false);
@@ -154,12 +189,13 @@ export const BookInfo = () => {
                   {book.duracion_audio} min
                 </p>
               </div>
-              <div className="flex items-center bg-gray-200 px-4 py-2 rounded-lg gap-2">
-                <Star className="w-5 h-5 mr-2" size="22"/>
-                <p className="text-body-sm font-body">
-                  meow
-                </p>
-              </div>
+              {showMean &&(
+                <div className="flex items-center bg-gray-200 px-4 py-2 rounded-lg gap-2">
+                  <Star className="w-5 h-5 mr-2" size="22"/>
+                  <p className="text-body-sm font-body">{mean.toFixed(1)}</p>
+                </div>
+              )}
+              
             </div>
           </div>
           <div className="max-w-[500px] mt-8 mb-8 sm:my-10">
