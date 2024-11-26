@@ -36,12 +36,13 @@ export const Replies = ({ codComentario }) => {
     <div className="ml-5 space-y-5">
       {isLoadingR ? (
         <CircularProgress />
-      ) : replies.length === 0 ? (
-        <p className="font-body text-body-md text-secondary-sec2 text-center mt-2 mb-4">
-          No hay respuestas para este comentario.
-        </p>
       ) : (
-        <div className="mt-5 overflow-y-auto pr-3" style={{ height: "200px" }}>
+        <div
+          className={`mt-5  space-y-5 ${
+            replies.length > 2 ? "overflow-y-auto pb-1 pr-3" : ""
+          }`}
+          style={{ height: replies.length > 2 ? "200px" : "auto" }}
+        >
           {replies.map((reply) => (
             <Reply
               key={reply.cod_respuesta}

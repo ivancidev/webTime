@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import DislikePressed from "../../../icons/dislike-pressed";
 import { supabase } from "../../../services/supabaseClient";
 import UserProf from "../../../icons/userProfile";
+import { useGetReply } from "../../../hooks/use-get-reply";
 
 export const Comment = ({
   nickname,
@@ -23,6 +24,7 @@ export const Comment = ({
   const [userInteraccion, setUserInteraccion] = useState("0");
   const [likes, setLikes] = useState(numLikes || 0);
   const [dislikes, setDislikes] = useState(numDislikes || 0);
+  const { replies, isLoadingR, error } = useGetReply(codComentario);
 
   useEffect(() => {
     const fetchUserInteraccion = async () => {
@@ -166,11 +168,15 @@ export const Comment = ({
           </h2>
         </div>
         <Button text="Responder" variant="combColBlackBlue" onClick={onReply} />
-        <Button
-          text="Ver respuestas"
-          variant="combColBlackBlue"
-          onClick={onShowReplies}
-        />
+        {replies.length > 0 && (
+          <Button
+            text={`${replies.length} ${
+              replies.length === 1 ? "respuesta" : "respuestas"
+            }`}
+            variant="combColBlackBlue"
+            onClick={onShowReplies}
+          />
+        )}
       </div>
     </div>
   );
