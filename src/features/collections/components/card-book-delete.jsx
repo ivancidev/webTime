@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DeleteBookModal } from "../components/delete-book-modal";
+import { DeleteBookModal } from "../components/delete-book-modal"; // Asegúrate de que la ruta es correcta
 
 export const CardBook = ({
   titleBook,
@@ -10,7 +10,7 @@ export const CardBook = ({
   onDelete,
 }) => {
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
 
   const handleClick = () => {
     localStorage.setItem("book", JSON.stringify(book));
@@ -20,16 +20,17 @@ export const CardBook = ({
   };
 
   const handleDeleteClick = (e) => {
-    e.stopPropagation();
-    setIsModalOpen(true);
-  }
+    e.stopPropagation(); // Evita que el clic en la "X" dispare el evento de la tarjeta
+    setIsModalOpen(true); // Abre el modal
+  };
+
   const handleConfirmDelete = () => {
-    onDelete?.(book);
-    setIsModalOpen(false);
+    onDelete?.(book); // Llama a la función de eliminación proporcionada por el padre
+    setIsModalOpen(false); // Cierra el modal
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setIsModalOpen(false); // Cierra el modal
   };
 
   return (
@@ -55,9 +56,9 @@ export const CardBook = ({
       <h1 className="mx-2 mb-1 mt-1 md:mb-0 font-label text-center text-label-sm truncate px-1 text-neutral-neu0 group-hover:text-secondary-sec2">
         {authorBook}
       </h1>
-      
+
       {/* Modal de confirmación */}
-            {isModalOpen && (
+      {isModalOpen && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-neu1 bg-opacity-30"
           onClick={(e) => e.stopPropagation()} // Detener propagación aquí
