@@ -36,53 +36,53 @@ export const ForumComment = () => {
     );
   };
 
+  const getComentarios = async () => {
+    setIsLoading(true);
+    const { data, error } = await supabase
+      .from("comentarios")
+      .select(
+        `
+                  cod_comentario,
+                  comentario,
+                  fecha,
+                  usuario (
+                      nombre,
+                      avatar
+                  ),
+                  interaccion_comentario_usuario (
+                      tipo_interaccioncomentario
+                  )
+              `
+      )
+      .eq("id_foro", id)
+      .order("fecha", { ascending: false });
+
+    if (error) {
+      console.error("Error al obtener comentarios:", error);
+    } else {
+      const comentariosConInteracciones = data.map((comentario) => {
+        const likes =
+          comentario.interaccion_comentario_usuario?.filter(
+            (interaccion) => interaccion.tipo_interaccioncomentario === 1
+          ).length || 0;
+
+        const dislikes =
+          comentario.interaccion_comentario_usuario?.filter(
+            (interaccion) => interaccion.tipo_interaccioncomentario === -1
+          ).length || 0;
+
+        return {
+          ...comentario,
+          likes,
+          dislikes,
+        };
+      });
+      setComentarios(comentariosConInteracciones);
+    }
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const getComentarios = async () => {
-      setIsLoading(true);
-      const { data, error } = await supabase
-        .from("comentarios")
-        .select(
-          `
-                    cod_comentario,
-                    comentario,
-                    fecha,
-                    usuario (
-                        nombre,
-                        avatar
-                    ),
-                    interaccion_comentario_usuario (
-                        tipo_interaccioncomentario
-                    )
-                `
-        )
-        .eq("id_foro", id)
-        .order("fecha", { ascending: false });
-
-      if (error) {
-        console.error("Error al obtener comentarios:", error);
-      } else {
-        const comentariosConInteracciones = data.map((comentario) => {
-          const likes =
-            comentario.interaccion_comentario_usuario?.filter(
-              (interaccion) => interaccion.tipo_interaccioncomentario === 1
-            ).length || 0;
-
-          const dislikes =
-            comentario.interaccion_comentario_usuario?.filter(
-              (interaccion) => interaccion.tipo_interaccioncomentario === -1
-            ).length || 0;
-
-          return {
-            ...comentario,
-            likes,
-            dislikes,
-          };
-        });
-        setComentarios(comentariosConInteracciones);
-      }
-      setIsLoading(false);
-    };
-
     getComentarios();
   }, [id]);
 
@@ -104,17 +104,6 @@ export const ForumComment = () => {
       return;
     }
 
-    const nuevoComentario = {
-      comentario: text,
-      fecha: new Date().toISOString(),
-      usuario: {
-        nombre: user?.nombre || "Anónimo",
-        avatar: profileImage,
-      },
-      likes: 0,
-      dislikes: 0,
-    };
-
     if (activeComment) {
       const result = await addReply(text, activeComment, idUsuario);
       if (result.success) {
@@ -128,13 +117,10 @@ export const ForumComment = () => {
     } else {
       const result = await addComment(text, id, idUsuario);
       if (result.success) {
-        setComentarios((prevComentarios) => [
-          { ...nuevoComentario, cod_comentario: result.newId },
-          ...prevComentarios,
-        ]);
         setComentarioText("");
         setText("Comentario publicado correctamente");
         setSnackbarOpen(true);
+        getComentarios();
       } else {
         console.error("Error al enviar el comentario:", result.error);
       }
