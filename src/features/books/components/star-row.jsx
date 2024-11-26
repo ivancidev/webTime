@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Star from "../../../icons/star";
 import StarHappy from "../../../icons/star-happy";
 import StarPressed from "../../../icons/star-pressed";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 
+
 export const StarRow = ({
-    value
+    value,
+    initialValue
 }) => {
     const [selectedStars, setSelectedStars] = useState(0);
     
+    useEffect(() => {
+        if (initialValue) {
+            setSelectedStars(initialValue);
+        }
+    }, [initialValue]);
+
     const handleStarClick = (index) => {
         const newRating = index === 4 ? 5 : index + 1;
         setSelectedStars(newRating);

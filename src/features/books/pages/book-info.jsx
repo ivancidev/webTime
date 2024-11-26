@@ -68,7 +68,7 @@ export const BookInfo = () => {
     };
 
     fetchCalifications();
-  }, [book.codLibro]);
+  }, [book.codLibro, user.id_usuario, starRating]);
 
   const submitQalification = async()=>{
     try{
@@ -110,7 +110,36 @@ export const BookInfo = () => {
     closeQAModal();
   }
   
+  const setinitialValue = async () =>{
+    try {
+      const { data, error } = await supabase
+        .from("calificacion")
+        .select("calificacion")
+        .eq("idUsuario", user.id_usuario) 
+        .eq("codLibro", book.codLibro);
   
+      if (error) {
+        console.error("Error al obtener la calificación previa:", error);
+        setStarRating(0);
+        return;
+      }
+  
+      if (data.length > 0) {
+        setStarRating(data[0].calificacion); 
+      } else {
+        setStarRating(0);
+      }
+    } catch (err) {
+      console.error("Error inesperado al obtener la calificación:", err);
+      setStarRating(0); 
+    }
+  }
+
+  const openQAModal = async () => {
+    await setinitialValue(); 
+    setshowQualifiti(true);  
+  };
+
   const closeQAModal = () =>{     
     setStarRating(0);
     setshowQualifiti(false);
@@ -151,7 +180,7 @@ export const BookInfo = () => {
             />
           </div>
           <div className="flex justify-center w-full max-w-[80%] sm:w-[440px] mt-11 md:mt-14">
-            <Button text="Calificar" variant="combExp2" onClick={() => setshowQualifiti(true)}/>
+            <Button text="Calificar" variant="combExp2" onClick={openQAModal}/>
           </div>
         </div>
         
@@ -219,10 +248,13 @@ export const BookInfo = () => {
         <ModalCollection onClose={() => setShowCollection(false)} text={"Añadir a colección"} />
       )}
       {showQualifiti && (
-        <ModalQualifi onClose={closeQAModal}
-        status={handleStarRatingChange} 
-        onClick={submitQalification}
-        stars = {starRating}/>
+        <ModalQualifi 
+          onClose={closeQAModal}
+          status={handleStarRatingChange} 
+          onClick={submitQalification}
+          stars = {starRating}
+          initialValue={starRating}
+        />
       )}
     </div>
   );
