@@ -23,7 +23,6 @@ export const BookInfo = () => {
     const navigate = useNavigate();
     const { bookDetails, error, loading } = useBookDetails(book);
     const [showReadBook, setShowReadBook] = useState(false);
-    const [showCreateColectionk, setshowCreateColectionk] = useState(true);
     const { showAudioPlay, setShowAudioPlay } = useAudio();
     const user = JSON.parse(localStorage.getItem("user"));
     const [showCollection, setShowCollection] = useState(false);
@@ -93,7 +92,7 @@ export const BookInfo = () => {
                                         ? "combColBlue"
                                         : "combColBlack"
                                 }`}
-                                onClick={() => setshowCreateColectionk(true)}
+                                onClick={() => setShowCollection(true)}
                             />
                         </div>
                     </div>
@@ -143,17 +142,12 @@ export const BookInfo = () => {
                 </div>
             )}
 
-            {showCreateColectionk && (
+            {showCollection && (
                 <ModalCollection
-                    onClose={() => setshowCreateColectionk(false)}
+                    onClose={() => setShowCollection(false)}
                     text={"Añadir a colección"}
                     codLibro={book.codLibro}
                 />
-                // <ModalCreateCollection
-                //     codLibro={book.codLibro}
-                //     onClose={() => setshowCreateColectionk(false)}
-                //     text={"Crear Colección de Libro"}
-                // />
             )}
         </div>
     );

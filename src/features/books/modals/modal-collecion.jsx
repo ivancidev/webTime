@@ -48,7 +48,10 @@ export const ModalCollection = ({ onClose, text, codLibro }) => {
                     </div>
                 </div>
                 <section className="h-96 overflow-y-auto">
-                    <CardCreateCollection codLibro={codLibro} />
+                    {isLoading == false && (
+                        <CardCreateCollection codLibro={codLibro} />
+                    )}
+
                     {isLoading ? (
                         <div className="text-center my-32 font-body text-body-md text-neutral-neu0 mx-4">
                             Cargando colecciones...
