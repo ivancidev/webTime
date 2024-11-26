@@ -111,7 +111,7 @@ export const BookInfo = () => {
   }
   
   
-  const closeQAModal = () =>{ 
+  const closeQAModal = () =>{
     setshowQualifiti(false);
   } 
 
@@ -220,7 +220,8 @@ export const BookInfo = () => {
       {showQualifiti && (
         <ModalQualifi onClose={closeQAModal}
         status={handleStarRatingChange} 
-        onClick={submitQalification}/>
+        onClick={submitQalification}
+        stars = {starRating}/>
       )}
     </div>
   );

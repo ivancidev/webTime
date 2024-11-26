@@ -1,7 +1,7 @@
 import Button from "../../../components/buttons/button";
 import { StarRow } from "../components/star-row";
 
-export const ModalQualifi = ({onClose, status, onClick}) => {
+export const ModalQualifi = ({onClose, status, onClick, stars}) => {
     const handleClickOutside = (e) => {
         
         if (e.target.id === "modal-overlay") {
@@ -33,14 +33,13 @@ export const ModalQualifi = ({onClose, status, onClick}) => {
                     
                     <Button
                         text="Confirmar"
-                        variant="combCol1"
+                        variant={stars > 0 ? "combCol1" : "combDesactivate"}
                         onClick={onClick}
+                        disabled={stars <= 0} // Botón desactivado si no hay estrellas seleccionadas
                     />
                 </div>
             </div> 
-        </div>
-        
+        </div>  
     );
-
     
 };
