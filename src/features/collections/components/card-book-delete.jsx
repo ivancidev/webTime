@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { DeleteBookModal } from "../components/delete-book-modal";
 
 export const CardBook = ({
   titleBook,
@@ -8,12 +10,26 @@ export const CardBook = ({
   onDelete,
 }) => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClick = () => {
     localStorage.setItem("book", JSON.stringify(book));
-    navigate(`book-info/${book.codLibro}`, {
+    navigate(`/app/book-info/${book.codLibro}`, {
       state: { book },
     });
+  };
+
+  const handleDeleteClick = (e) => {
+    e.stopPropagation();
+    setIsModalOpen(true);
+  }
+  const handleConfirmDelete = () => {
+    onDelete?.(book);
+    setIsModalOpen(false);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -24,10 +40,7 @@ export const CardBook = ({
       {/* Botón de eliminar con "X" */}
       <button
         className="absolute top-2 right-2 bg-error-err2 text-primary-pri3 font-label text-label-sm w-7 h-7 rounded-full z-10 flex items-center justify-center hover:bg-error-err3"
-        onClick={(e) => {
-          e.stopPropagation(); // Evita que el clic en la "X" dispare handleClick
-          onDelete?.(book);
-        }}
+        onClick={handleDeleteClick} // Abre el modal
       >
         X
       </button>
@@ -42,6 +55,22 @@ export const CardBook = ({
       <h1 className="mx-2 mb-1 mt-1 md:mb-0 font-label text-center text-label-sm truncate px-1 text-neutral-neu0 group-hover:text-secondary-sec2">
         {authorBook}
       </h1>
+      
+      {/* Modal de confirmación */}
+            {isModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-neu1 bg-opacity-30"
+          onClick={(e) => e.stopPropagation()} // Detener propagación aquí
+        >
+          <DeleteBookModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            onConfirm={handleConfirmDelete}
+            bookName={titleBook} // Pasar el nombre del libro al modal
+            bookId={book.codLibro}
+          />
+        </div>
+      )}
     </div>
   );
 };
