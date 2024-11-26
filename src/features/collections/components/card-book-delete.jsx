@@ -10,10 +10,11 @@ export const CardBook = ({
   onDelete,
 }) => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClick = () => {
     localStorage.setItem("book", JSON.stringify(book));
-    navigate(`book-info/${book.codLibro}`, {
+    navigate(`/app/book-info/${book.codLibro}`, {
       state: { book },
     });
   };
