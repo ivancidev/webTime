@@ -187,10 +187,10 @@ export const ForumComment = () => {
           <div className="mx-5 flex-col max-h-[360px] lg:overflow-y-scroll space-y-5 lg:pr-16">
             {isLoading ? (
               <div className="flex justify-center items-center h-40">
-                <CircularProgress color="secondary" />
+                <CircularProgress />
               </div>
             ) : comentarios.length === 0 ? (
-              <p className="text-center">
+              <p className="text-center text-secondary-sec2 font-body text-body-md">
                 No hay comentarios aún. ¡Sé el primero en comentar!
               </p>
             ) : (
@@ -208,12 +208,7 @@ export const ForumComment = () => {
                     onShowReplies={() => handleShowReplies(reg.cod_comentario)}
                   />
                   {showRepliesFor === reg.cod_comentario && (
-                    <div
-                      className="mt-5 overflow-y-auto pr-3"
-                      style={{ height: "200px" }}
-                    >
-                      <Replies codComentario={reg.cod_comentario} />
-                    </div>
+                    <Replies codComentario={reg.cod_comentario} />
                   )}
 
                   {activeComment === reg.cod_comentario && (

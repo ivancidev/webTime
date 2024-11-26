@@ -35,19 +35,23 @@ export const Replies = ({ codComentario }) => {
   return (
     <div className="ml-5 space-y-5">
       {isLoadingR ? (
-        <CircularProgress color="secondary" />
+        <CircularProgress />
       ) : replies.length === 0 ? (
-        <p>No hay respuestas para este comentario.</p>
+        <p className="font-body text-body-md text-secondary-sec2 text-center mt-2 mb-4">
+          No hay respuestas para este comentario.
+        </p>
       ) : (
-        replies.map((reply) => (
-          <Reply
-            key={reply.cod_respuesta}
-            nickname={reply.usuario?.nombre || "Anónimo"}
-            text={reply.respuesta}
-            time={formatTime(reply.fecha_respuesta)}
-            avatar={reply.usuario?.avatar}
-          />
-        ))
+        <div className="mt-5 overflow-y-auto pr-3" style={{ height: "200px" }}>
+          {replies.map((reply) => (
+            <Reply
+              key={reply.cod_respuesta}
+              nickname={reply.usuario?.nombre || "Anónimo"}
+              text={reply.respuesta}
+              time={formatTime(reply.fecha_respuesta)}
+              avatar={reply.usuario?.avatar}
+            />
+          ))}
+        </div>
       )}
     </div>
   );

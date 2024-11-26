@@ -21,8 +21,8 @@ export const Comment = ({
   onShowReplies,
 }) => {
   const [userInteraccion, setUserInteraccion] = useState("0");
-  const [likes, setLikes] = useState(numLikes);
-  const [dislikes, setDislikes] = useState(numDislikes);
+  const [likes, setLikes] = useState(numLikes || 0);
+  const [dislikes, setDislikes] = useState(numDislikes || 0);
 
   useEffect(() => {
     const fetchUserInteraccion = async () => {
