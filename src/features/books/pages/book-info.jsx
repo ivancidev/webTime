@@ -111,7 +111,8 @@ export const BookInfo = () => {
   }
   
   
-  const closeQAModal = () =>{
+  const closeQAModal = () =>{     
+    setStarRating(0);
     setshowQualifiti(false);
   } 
 
