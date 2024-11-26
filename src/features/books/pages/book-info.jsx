@@ -68,7 +68,7 @@ export const BookInfo = () => {
     };
 
     fetchCalifications();
-  }, [book.codLibro, user.id_usuario, starRating]);
+  }, [book.codLibro, starRating, showMean]);
 
   const submitQalification = async()=>{
     try{
