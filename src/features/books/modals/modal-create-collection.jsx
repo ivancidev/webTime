@@ -26,7 +26,7 @@ export const ModalCreateCollection = ({
     } = useForm({
         mode: "onChange",
     });
-
+    //console.log("llega libro a modal", codLibro);
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);

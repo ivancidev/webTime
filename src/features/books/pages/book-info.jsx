@@ -144,15 +144,16 @@ export const BookInfo = () => {
             )}
 
             {showCreateColectionk && (
-                // <ModalCollection
-                //     onClose={() => setshowCreateColectionk(false)}
-                //     text={"Añadir a colección"}
-                // />
-                <ModalCreateCollection
-                    codLibro={book.codLibro}
+                <ModalCollection
                     onClose={() => setshowCreateColectionk(false)}
-                    text={"Crear Colección de Libro"}
+                    text={"Añadir a colección"}
+                    codLibro={book.codLibro}
                 />
+                // <ModalCreateCollection
+                //     codLibro={book.codLibro}
+                //     onClose={() => setshowCreateColectionk(false)}
+                //     text={"Crear Colección de Libro"}
+                // />
             )}
         </div>
     );
