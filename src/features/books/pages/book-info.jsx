@@ -32,6 +32,7 @@ export const BookInfo = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const [mean, setMean] = useState(0); // Estado para almacenar el promedio
   const [starRating, setStarRating] = useState(0);
+  const [mensajeConfirmacion, setmensajeC] = useState(false);
   
   const handleStarRatingChange = async (rating) => {
     setStarRating(rating);
@@ -104,10 +105,12 @@ export const BookInfo = () => {
           console.log('Calificación insertada correctamente.');
         }
       }
+      setmensajeC(true);
     }catch(error){
       console.log('Error inesperado: '+error)
     }
-    closeQAModal();
+    // closeQAModal();
+    // setmensajeC(false);
   }
   
   const setinitialValue = async () =>{
@@ -142,7 +145,9 @@ export const BookInfo = () => {
 
   const closeQAModal = () =>{     
     setStarRating(0);
+    setmensajeC(false);
     setshowQualifiti(false);
+
   } 
 
   if (!book) {
@@ -254,6 +259,7 @@ export const BookInfo = () => {
           onClick={submitQalification}
           stars = {starRating}
           initialValue={starRating}
+          mensajeConfirmacion={mensajeConfirmacion}
         />
       )}
     </div>

@@ -1,7 +1,7 @@
 import Button from "../../../components/buttons/button";
 import { StarRow } from "../components/star-row";
 
-export const ModalQualifi = ({onClose, status, onClick, stars,initialValue}) => {
+export const ModalQualifi = ({onClose, status, onClick, stars,initialValue, mensajeConfirmacion }) => {
     const handleClickOutside = (e) => {
         
         if (e.target.id === "modal-overlay") {
@@ -21,12 +21,12 @@ export const ModalQualifi = ({onClose, status, onClick, stars,initialValue}) => 
                 <div className="p-3 space-y-1">
                     <StarRow value= {status} initialValue={initialValue}/>
                     <p className="font-body text-body-md text-neutral-neu1 p-2 text-center">
-                        Seleccione una calificación
+                        {mensajeConfirmacion ? 'Calificación actualizada' : 'Seleccione una calificación'  }
                     </p>
                 </div>
                 <div className="flex items-center justify-around space-x-4">
                     <Button
-                        text="Cancelar"
+                        text={mensajeConfirmacion? "Cerrar": "Cancelar"}
                         variant="combCol2"
                         onClick={onClose}
                     />
