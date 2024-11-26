@@ -1,4 +1,3 @@
-// src/hooks/use-get-user-collection-books.js
 import { useState, useEffect } from "react";
 import { supabase } from "../services/supabaseClient";
 
@@ -33,8 +32,6 @@ export const useGetUserCollectionBooks = (idColeccion) => {
           .eq("idColeccion", idColeccion);
 
         if (error) throw error;
-
-        // Extraer los libros de la respuesta
         const booksFromCollection = data.map((record) => record.libro);
         setBooks(booksFromCollection);
       } catch (error) {
