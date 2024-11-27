@@ -209,6 +209,11 @@ export const BookInfo = () => {
                 variant={`${showReadBook ? "combColBlue" : "combColBlack"}`}
                 onClick={() => setShowReadBook(true)}
               />
+              <ButtonIcon
+                SvgIcon={addToColection}
+                variant={`${showReadBook ? "combColBlue" : "combColBlack"}`}
+                onClick={() => setShowCollection(true)}
+              />
             </div>
           </div>
           <div className="flex flex-col h-40 justify-around sm:justify-between mt-8">
@@ -254,7 +259,11 @@ export const BookInfo = () => {
         </div>
       )}
       {showCollection && (
-        <ModalCollection onClose={() => setShowCollection(false)} text={"Añadir a colección"} />
+        <ModalCollection
+          onClose={() => setShowCollection(false)}
+          text={"Añadir a colección"}
+          codLibro={book.codLibro}
+        />
       )}
       {showQualifiti && (
         <ModalQualifi 
