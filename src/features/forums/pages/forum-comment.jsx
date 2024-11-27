@@ -162,7 +162,7 @@ export const ForumComment = () => {
             <img src={imageUrl} className="rounded-3xl object-cover w-2/3" />
           </div>
         </div>
-        <div className="flex flex-1 flex-col mt-5 sm:mt-0">
+        <div className="flex flex-1 flex-col mt-5 lg:mt-0">
           <div className="flex-1 mx-5 flex-col overflow-y-auto space-y-5 lg:pr-5">
             {isLoading ? (
               <div className="flex justify-center items-center h-40">
