@@ -189,9 +189,9 @@ export const FormUser = () => {
                 message: "Nombre de usuario no debe exceder 20 caracteres",
               },
               validate: {
-                noMultipleSpaces: (value) =>
-                  !/\s{2,}/.test(value) ||
-                  "No se permiten espacios múltiples consecutivos",
+                noSpaces: (value) =>
+                  !/\s/.test(value) ||
+                  "El nombre de usuario no debe contener espacios",
                 validate: validateNameUser,
               },
             }}

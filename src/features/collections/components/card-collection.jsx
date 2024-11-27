@@ -2,7 +2,18 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-cards";
 import { EffectCards } from "swiper/modules";
-export const CardCollection = ({ collectionName, books }) => {
+import { useNavigate } from "react-router-dom";
+
+export const CardCollection = ({ collectionName, books , collectionId}) => {
+  const navigate = useNavigate();
+
+  const handleCollectionClick = () => {
+    // Guardar el ID de la colección en localStorage
+    localStorage.setItem("collectionId", collectionId);
+    // Redirigir a la página de vista de colecciones
+    navigate("/profile/view-collection");
+  };
+
   return (
     <div>
       <Swiper
@@ -10,6 +21,8 @@ export const CardCollection = ({ collectionName, books }) => {
         grabCursor={true}
         modules={[EffectCards]}
         className="w-60 h-[285px]"
+        onClick={handleCollectionClick}
+
       >
         {books.slice(0, 4).map((book, index) => (
           <SwiperSlide
@@ -24,7 +37,10 @@ export const CardCollection = ({ collectionName, books }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <h3 className="w-60 mx-2 font-label text-center text-label-md mt-2 truncate px-1 hover:text-secondary-sec2 cursor-pointer">
+      <h3
+        onClick={handleCollectionClick}
+        className="w-60 mx-2 font-label text-center text-label-lg mt-2 truncate px-1 hover:text-secondary-sec2 cursor-pointer text-xl font-semibold"
+      >
         {collectionName}
       </h3>
     </div>

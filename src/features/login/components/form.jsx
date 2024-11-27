@@ -1,10 +1,8 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Button from "../../../components/buttons/button"; 
+import { useState } from "react";
+import Button from "../../../components/buttons/button";
 import { InputText } from "../../../components/input/input";
 import EyeOff from "../../../icons/eyeOff";
 import EyeOn from "../../../icons/eyeOn";
-import { useLogin } from '../../../hooks/use-login';
 import ResetPasswordModal from "./modal-reset-password";
 
 export const Form = ({
@@ -17,8 +15,8 @@ export const Form = ({
   showButtonForgetPassword,
   validationRules1 = {},
   validationRules2 = {},
-  onSubmit, 
-  register, 
+  onSubmit,
+  register,
   errors,
   passwordStrength,
 }) => {
@@ -39,11 +37,13 @@ export const Form = ({
             labelFontSize="16px"
             errorFontSize="14px"
             labelMarginTop="10px"
-            register={register} 
+            register={register}
             name="usernameOrEmail"
-            validationRules={validationRules1} 
+            validationRules={validationRules1}
             errors={errors}
-            type={!showEyeIconFirstInput || showPasswordFirst ? "text" : "password"}
+            type={
+              !showEyeIconFirstInput || showPasswordFirst ? "text" : "password"
+            }
             className="w-[100%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
             icon={
               showEyeIconFirstInput && (
@@ -56,13 +56,13 @@ export const Form = ({
               )
             }
           />
-          
+
           <div className="mb-0">
             {!errors.usernameOrEmail && passwordStrength && (
               <span
                 className={`text-sm ${
                   passwordStrength === "Contraseña insegura"
-                    ? "text-red-500"
+                    ? "text-error-err2"
                     : passwordStrength === "Contraseña buena"
                     ? "text-orange-500"
                     : "text-green-500"
@@ -81,7 +81,7 @@ export const Form = ({
             labelMarginTop="6px"
             register={register}
             name="password"
-            validationRules={validationRules2} 
+            validationRules={validationRules2}
             errors={errors}
             type={showPasswordSecond ? "text" : "password"}
             className="w-[100%] sm:w-96 bg-transparent border-[1px] rounded border-neutral-neu0 h-[40px] p-2 pr-12 placeholder-neutral-neu0 text-primary-pri1 font-body text-body-md"
@@ -105,7 +105,10 @@ export const Form = ({
             </button>
           )}
           {isModalOpen && (
-            <ResetPasswordModal onClose={closeModal} onConfirm={closeModal} />
+            <ResetPasswordModal
+              onClose={closeModal}
+              onConfirm={closeModal}
+            />
           )}
         </div>
         <div className="w-full pl-[5%] sm:pl-0 sm:w-auto mb-3">
