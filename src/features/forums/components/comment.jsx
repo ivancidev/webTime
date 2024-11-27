@@ -148,7 +148,7 @@ export const Comment = ({
       </div>
       <div className="flex flex-col sm:flex-row items-center mt-4">
         <div className="flex flex-row">
-          <div className="group flex items-center hover:text-secondary-sec2">
+          <div className="ml-5 group flex items-center hover:text-secondary-sec2">
             <ButtonIcon
               SvgIcon={userInteraccion === "1" ? LikePressed : Like}
               variant="group-hover:combColBlackBlue combColBlue"

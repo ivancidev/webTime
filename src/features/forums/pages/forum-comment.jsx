@@ -153,17 +153,17 @@ export const ForumComment = () => {
       <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate(-1)} />
       </div>
-      <div className="flex flex-col lg:flex-row w-full h-full">
+      <div className="flex flex-col lg:flex-row w-full" style={{ height: "calc(100vh - 10rem)" }}>
         <div className="flex-1">
           <h1 className="text-secondary-sec2 font-title text-title-lg text-center">
             Comentarios del foro
           </h1>
-          <div className="flex items-center justify-center lg:h-[500px]">
+          <div className="flex items-center justify-center lg:h-[500px] mt-5">
             <img src={imageUrl} className="rounded-3xl object-cover w-2/3" />
           </div>
         </div>
-        <div className="flex flex-1 flex-col max-h-[600px]">
-          <div className="flex-1 mx-5 flex-col overflow-y-scroll space-y-5 lg:pr-5">
+        <div className="flex flex-1 flex-col mt-5 sm:mt-0">
+          <div className="flex-1 mx-5 flex-col overflow-y-auto space-y-5 lg:pr-5">
             {isLoading ? (
               <div className="flex justify-center items-center h-40">
                 <CircularProgress />
