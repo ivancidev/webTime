@@ -124,6 +124,16 @@ export const BookInfo = () => {
           codLibro={book.codLibro}
         />
       )}
+      {showQualifiti && (
+        <ModalQualifi 
+          onClose={closeQAModal}
+          status={handleStarRatingChange} 
+          onClick={submitQalification}
+          stars = {starRating}
+          initialValue={starRating}
+          mensajeConfirmacion={mensajeConfirmacion}
+        />
+      )}
     </div>
   );
 };
