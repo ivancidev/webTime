@@ -14,6 +14,7 @@ import { Login } from "../features/login/pages/login";
 import { ResetPassword } from "../features/login/pages/reset-password";
 import { CreateCollection } from "../features/collections/pages/create-collection";
 import { Forum } from "../features/forums/pages/forum";
+import { ViewCollections } from "../features/collections/pages/view-collections";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
       {
         path: "register-collection",
         element: <CreateCollection />,
+      },
+      {
+      path: "view-collection", // Nueva ruta para ver colecciones
+      element: <ViewCollections />,
       },
       {
         path: "forums",
