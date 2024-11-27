@@ -13,6 +13,7 @@ import { useAudio } from "../../../context/audio-context";
 import { IconOclock } from "../icons/oclock";
 import { IconDocument } from "../icons/document";
 import { ModalCollection } from "../modals/modal-collecion";
+import addToColection from "../../../icons/addToColection";
 
 export const BookInfo = () => {
   const location = useLocation();
@@ -21,8 +22,8 @@ export const BookInfo = () => {
   const { bookDetails, error, loading } = useBookDetails(book);
   const [showReadBook, setShowReadBook] = useState(false);
   const { showAudioPlay, setShowAudioPlay } = useAudio();
-  const [showCollection, setShowCollection] = useState(true);
   const user = JSON.parse(localStorage.getItem("user"));
+  const [showCollection, setShowCollection] = useState(false);
 
   if (!book) {
     return (
@@ -73,6 +74,12 @@ export const BookInfo = () => {
                 variant={`${showReadBook ? "combColBlue" : "combColBlack"}`}
                 onClick={() => setShowReadBook(true)}
               />
+
+              <ButtonIcon
+                SvgIcon={addToColection}
+                variant={`${showReadBook ? "combColBlue" : "combColBlack"}`}
+                onClick={() => setShowCollection(true)}
+              />
             </div>
           </div>
           <div className="flex flex-col h-40 justify-around sm:justify-between mt-8">
@@ -110,8 +117,13 @@ export const BookInfo = () => {
           />
         </div>
       )}
+
       {showCollection && (
-        <ModalCollection onClose={() => setShowCollection(false)} text={"Añadir a colección"} />
+        <ModalCollection
+          onClose={() => setShowCollection(false)}
+          text={"Añadir a colección"}
+          codLibro={book.codLibro}
+        />
       )}
     </div>
   );

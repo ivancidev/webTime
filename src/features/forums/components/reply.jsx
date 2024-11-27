@@ -1,6 +1,5 @@
 import { TextLarge } from "../../register/components/text-large";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
-import Button from "../../../components/buttons/button";
 import Dislike from "../../../icons/dislike";
 import Like from "../../../icons/like";
 import LikePressed from "../../../icons/like-pressed";
@@ -8,20 +7,16 @@ import { useState, useEffect } from "react";
 import DislikePressed from "../../../icons/dislike-pressed";
 import { supabase } from "../../../services/supabaseClient";
 import UserProf from "../../../icons/userProfile";
-import { useGetReply } from "../../../hooks/use-get-reply";
 
-export const Comment = ({
+export const Reply = ({
   nickname,
   text,
   time,
   numLikes,
   numDislikes,
-  codComentario,
+  codRespuesta,
   avatar,
-  onReply,
-  onShowReplies,
 }) => {
-  const { replies, isLoadingR, error } = useGetReply(codComentario);
   const [userInteraccion, setUserInteraccion] = useState("0");
   const [likes, setLikes] = useState(numLikes);
   const [dislikes, setDislikes] = useState(numDislikes);
@@ -29,7 +24,6 @@ export const Comment = ({
   useEffect(() => {
     const fetchUserInteraccion = async () => {
       const user = JSON.parse(localStorage.getItem("user"));
-      console.log(user);
       if (!user) {
         console.warn("Usuario no autenticado.");
         return;
@@ -37,9 +31,9 @@ export const Comment = ({
 
       try {
         const { data, error } = await supabase
-          .from("interaccion_comentario_usuario")
-          .select("tipo_interaccioncomentario")
-          .eq("cod_comentario", codComentario)
+          .from("interaccion_respuesta_usuario")
+          .select("tipointeraccionrespuesta")
+          .eq("cod_respuesta", codRespuesta)
           .eq("id_usuario", user.id_usuario);
 
         if (error) {
@@ -48,9 +42,8 @@ export const Comment = ({
         }
 
         if (data.length > 0) {
-          setUserInteraccion(data[0].tipo_interaccioncomentario.toString());
+          setUserInteraccion(data[0].tipointeraccionrespuesta.toString());
         } else {
-          //console.log(`No se encontró interacción para el comentario ${codComentario}`);
           setUserInteraccion("0");
         }
       } catch (err) {
@@ -59,12 +52,12 @@ export const Comment = ({
     };
 
     fetchUserInteraccion();
-  }, [codComentario]);
+  }, [codRespuesta]);
 
   const handleInteraccion = async (tipoInteraccion) => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
-      alert("Por favor, inicia sesión para interactuar con este comentario.");
+      alert("Por favor, inicia sesión para interactuar con esta respuesta.");
       return;
     }
 
@@ -72,9 +65,9 @@ export const Comment = ({
     try {
       if (userInteraccion === tipoInteraccion) {
         const { error } = await supabase
-          .from("interaccion_comentario_usuario")
+          .from("interaccion_respuesta_usuario")
           .delete()
-          .eq("cod_comentario", codComentario)
+          .eq("cod_respuesta", codRespuesta)
           .eq("id_usuario", userId);
 
         if (!error) {
@@ -86,9 +79,9 @@ export const Comment = ({
         }
       } else {
         const { error: deleteError } = await supabase
-          .from("interaccion_comentario_usuario")
+          .from("interaccion_respuesta_usuario")
           .delete()
-          .eq("cod_comentario", codComentario)
+          .eq("cod_respuesta", codRespuesta)
           .eq("id_usuario", userId);
 
         if (deleteError) {
@@ -97,11 +90,11 @@ export const Comment = ({
         }
 
         const { error: upsertError } = await supabase
-          .from("interaccion_comentario_usuario")
+          .from("interaccion_respuesta_usuario")
           .upsert({
-            cod_comentario: codComentario,
+            cod_respuesta: codRespuesta,
             id_usuario: userId,
-            tipo_interaccioncomentario: tipoInteraccion,
+            tipointeraccionrespuesta: tipoInteraccion,
           });
 
         if (!upsertError) {
@@ -147,40 +140,26 @@ export const Comment = ({
       <div>
         <TextLarge text={text} max={200} message="Mostrar" />
       </div>
-      <div className="flex flex-col sm:flex-row items-center mt-4">
-        <div className="flex flex-row">
-          <div className="ml-5 group flex items-center hover:text-secondary-sec2">
-            <ButtonIcon
-              SvgIcon={userInteraccion === "1" ? LikePressed : Like}
-              variant="group-hover:combColBlackBlue combColBlue"
-              onClick={() => handleInteraccion("1")}
-            />
-            <h2 className="text-body-md mr-5 group-hover:text-secondary-sec2">
-              {likes}
-            </h2>
-          </div>
-          <div className="group flex items-center hover:text-secondary-sec2">
-            <ButtonIcon
-              SvgIcon={userInteraccion === "-1" ? DislikePressed : Dislike}
-              variant="group-hover:combColBlackBlue combColBlue"
-              onClick={() => handleInteraccion("-1")}
-            />
-            <h2 className="text-body-md mr-5 group-hover:text-secondary-sec2">
-              {dislikes}
-            </h2>
-          </div>          
+      <div className="flex flex-row items-center mt-4">
+        <div className="group flex items-center hover:text-secondary-sec2">
+          <ButtonIcon
+            SvgIcon={userInteraccion === "1" ? LikePressed : Like}
+            variant="group-hover:combColBlackBlue combColBlue"
+            onClick={() => handleInteraccion("1")}
+          />
+          <h2 className="text-body-md mr-5 group-hover:text-secondary-sec2">
+            {likes}
+          </h2>
         </div>
-        <div className="flex flex-row">
-          <Button text="Responder" variant="combColBlackBlue" onClick={onReply} />
-          {replies.length > 0 && (
-            <Button
-              text={`${replies.length} ${
-                replies.length === 1 ? "respuesta" : "respuestas"
-              }`}
-              variant="combColBlackBlue"
-              onClick={onShowReplies}
-            />
-          )}
+        <div className="group flex items-center hover:text-secondary-sec2">
+          <ButtonIcon
+            SvgIcon={userInteraccion === "-1" ? DislikePressed : Dislike}
+            variant="group-hover:combColBlackBlue combColBlue"
+            onClick={() => handleInteraccion("-1")}
+          />
+          <h2 className="text-body-md mr-5 group-hover:text-secondary-sec2">
+            {dislikes}
+          </h2>
         </div>
       </div>
     </div>
