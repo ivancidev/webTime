@@ -21,14 +21,15 @@ export const Comment = ({
   onReply,
   onShowReplies,
 }) => {
-  const [userInteraccion, setUserInteraccion] = useState("0");
-  const [likes, setLikes] = useState(numLikes || 0);
-  const [dislikes, setDislikes] = useState(numDislikes || 0);
   const { replies, isLoadingR, error } = useGetReply(codComentario);
+  const [userInteraccion, setUserInteraccion] = useState("0");
+  const [likes, setLikes] = useState(numLikes);
+  const [dislikes, setDislikes] = useState(numDislikes);
 
   useEffect(() => {
     const fetchUserInteraccion = async () => {
       const user = JSON.parse(localStorage.getItem("user"));
+      console.log(user);
       if (!user) {
         console.warn("Usuario no autenticado.");
         return;
@@ -148,7 +149,7 @@ export const Comment = ({
       </div>
       <div className="flex flex-col sm:flex-row items-center mt-4">
         <div className="flex flex-row">
-          <div className="group flex items-center hover:text-secondary-sec2">
+          <div className="ml-5 group flex items-center hover:text-secondary-sec2">
             <ButtonIcon
               SvgIcon={userInteraccion === "1" ? LikePressed : Like}
               variant="group-hover:combColBlackBlue combColBlue"

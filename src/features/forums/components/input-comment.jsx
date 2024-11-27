@@ -149,15 +149,17 @@ export const InputComment = ({
           </div>
         </div>
       </div>
-      {error && (
-        <p
-          className={`flex justify-end text-body-sm p-2 ${
-            errorType === "length" ? "text-green-600" : "text-error-err2"
-          }`}
-        >
-          {error}
-        </p>
-      )}
+      <div className="h-6 mt-2">
+        {error && (
+          <p
+            className={`flex justify-end text-body-sm p-2 ${
+              errorType === "length" ? "text-green-600" : "text-error-err2"
+            }`}
+          >
+            {error}
+          </p>
+        )}
+      </div>
     </div>
   );
 };

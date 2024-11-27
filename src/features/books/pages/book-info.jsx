@@ -18,9 +18,7 @@ import { IconDocument } from "../icons/document";
 import { supabase } from "../../../services/supabaseClient";
 import { ModalQualifi } from "../modals/modal-qualifi";
 import { ModalCollection } from "../modals/modal-collecion";
-
 import addToColection from "../../../icons/addToColection";
-import { ModalCreateCollection } from "../modals/modal-create-collection";
 
 export const BookInfo = () => {
   const location = useLocation();
@@ -153,26 +151,26 @@ export const BookInfo = () => {
 
   } 
 
-    if (!book) {
-        return (
-            <div className="text-neutral-50">
-                ¡No se encontraron detalles del libro!
-            </div>
-        );
-    }
+  if (!book) {
+    return (
+      <div className="text-neutral-50">
+        ¡No se encontraron detalles del libro!
+      </div>
+    );
+  }
 
-    if (loading) {
-        return (
-            <div className="flex flex-col justify-center items-center min-h-screen bg-primary-pri3">
-                <CircularProgress color="primary" size={80} />
-                <h2 className="mt-4 text-xl">Cargando libro...</h2>
-            </div>
-        );
-    }
+  if (loading) {
+    return (
+      <div className="flex flex-col justify-center items-center min-h-screen bg-primary-pri3">
+        <CircularProgress color="primary" size={80} />
+        <h2 className="mt-4 text-xl">Cargando libro...</h2>
+      </div>
+    );
+  }
 
-    if (error) {
-        return <div>Error al obtener detalles del libro: {error.message}</div>;
-    }
+  if (error) {
+    return <div>Error al obtener detalles del libro: {error.message}</div>;
+  }
 
   return (
     <div className="flex max-h-screen flex-col bg-primary-pri3">

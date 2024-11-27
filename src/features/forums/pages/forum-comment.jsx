@@ -42,17 +42,17 @@ export const ForumComment = () => {
       .from("comentarios")
       .select(
         `
-                  cod_comentario,
-                  comentario,
-                  fecha,
-                  usuario (
-                      nombre,
-                      avatar
-                  ),
-                  interaccion_comentario_usuario (
-                      tipo_interaccioncomentario
-                  )
-              `
+            cod_comentario,
+            comentario,
+            fecha,
+            usuario (
+                nombre,
+                avatar
+            ),
+            interaccion_comentario_usuario (
+                tipo_interaccioncomentario
+            )
+        `
       )
       .eq("id_foro", id)
       .order("fecha", { ascending: false });
@@ -153,17 +153,17 @@ export const ForumComment = () => {
       <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate(-1)} />
       </div>
-      <div className="flex flex-col lg:flex-row w-full h-full">
+      <div className="flex flex-col lg:flex-row w-full" style={{ height: "calc(100vh - 10rem)" }}>
         <div className="flex-1">
           <h1 className="text-secondary-sec2 font-title text-title-lg text-center">
             Comentarios del foro
           </h1>
-          <div className="flex items-center justify-center lg:h-[500px]">
+          <div className="flex items-center justify-center lg:h-[500px] mt-5">
             <img src={imageUrl} className="rounded-3xl object-cover w-2/3" />
           </div>
         </div>
-        <div className="flex flex-1 flex-col max-h-[600px]">
-          <div className="flex-1 mx-5 flex-col overflow-y-scroll space-y-5 lg:pr-5">
+        <div className="flex flex-1 flex-col mt-5 lg:mt-0">
+          <div className="flex-1 mx-5 flex-col overflow-y-auto space-y-5 lg:pr-5">
             {isLoading ? (
               <div className="flex justify-center items-center h-40">
                 <CircularProgress />
@@ -180,19 +180,17 @@ export const ForumComment = () => {
                     nickname={reg.usuario?.nombre || "Anónimo"}
                     text={reg.comentario}
                     time={formatTime(reg.fecha)}
+                    numLikes={reg.likes}
+                    numDislikes={reg.dislikes}
                     avatar={reg.usuario?.avatar}
                     onReply={() =>
                       handleReplyClick(reg.cod_comentario, reg.usuario?.nombre)
                     }
                     onShowReplies={() => handleShowReplies(reg.cod_comentario)}
                   />
-                  {showRepliesFor === reg.cod_comentario && (
-                    <Replies codComentario={reg.cod_comentario} />
-                  )}
-
                   {activeComment === reg.cod_comentario && (
                     <div className="ml-6 mt-5">
-                      <p className="font-body text-body-sm text-neutral-neu0 mb-1">
+                      <p className="font-body text-body-sm text-neutral-neu0 mb-1 pl-2">
                         Respondiendo a {replyingTo}
                       </p>
                       <InputComment
@@ -202,6 +200,9 @@ export const ForumComment = () => {
                         onComment={handleCommentSubmit}
                       />
                     </div>
+                  )}
+                  {showRepliesFor === reg.cod_comentario && (
+                    <Replies codComentario={reg.cod_comentario} />
                   )}
                 </div>
               ))

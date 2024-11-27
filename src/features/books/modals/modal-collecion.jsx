@@ -4,11 +4,18 @@ import { useCollectionBooks } from "../../../hooks/use-get-collections";
 import CloseIcon from "../../../icons/close";
 import { CardAddCollection } from "../components/card-collection";
 import { CardCreateCollection } from "../components/card-createCollection";
+import { addBookToCollection } from "../../../services/add-book-collection";
+import { SnackbarNotification } from "../components/snack-notification";
 
 export const ModalCollection = ({ onClose, text, codLibro }) => {
     const user = JSON.parse(localStorage.getItem("user"));
     const [collectionBooks, setCollectionBooks] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [notification, setNotification] = useState({
+        open: false,
+        message: "",
+        severity: "info",
+    });
 
     useEffect(() => {
         const getCollectionBooks = async () => {
@@ -30,9 +37,37 @@ export const ModalCollection = ({ onClose, text, codLibro }) => {
         }
     }, [setCollectionBooks, setIsLoading]);
 
+    const handleAddBookToCollection = async (idColeccion) => {
+        try {
+            await addBookToCollection(idColeccion, codLibro, setNotification);
+        } catch (error) {
+            console.error("Error al agregar libro a colección:", error);
+        }
+    };
+
+    const handleCloseNotification = () => {
+        setNotification({ ...notification, open: false });
+        setTimeout(() => {
+            if (notification.severity === "success") {
+                onClose();
+            }
+        }, 500);
+    };
+
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50">
-            <div className="w-[521px] h-auto bg-primary-pri3 rounded-xl p-6">
+        <div
+            id="modal-backdrop"
+            className="fixed inset-0 flex items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50"
+            onClick={(e) => {
+                if (e.target.id === "modal-backdrop") {
+                    onClose();
+                }
+            }}
+        >
+            <div
+                className="w-[521px] h-auto bg-primary-pri3 rounded-xl p-6"
+                onClick={(e) => e.stopPropagation()}
+            >
                 <div className="w-full flex items-center">
                     <div className="flex justify-center w-full">
                         <h1 className="text-secondary-sec2 w-auto text-center text-title-md font-semibold">
@@ -65,16 +100,32 @@ export const ModalCollection = ({ onClose, text, codLibro }) => {
                         </div>
                     ) : (
                         collectionBooks.map((collection) => (
-                            <CardAddCollection
+                            <div
+                                onClick={() =>
+                                    handleAddBookToCollection(
+                                        collection.idColeccion
+                                    )
+                                }
                                 key={collection.idColeccion}
-                                collectionName={collection.nombre}
-                                amountBooks={collection.libros.length}
-                                books={collection.libros}
-                            />
+                            >
+                                <CardAddCollection
+                                    key={collection.idColeccion}
+                                    collectionName={collection.nombre}
+                                    amountBooks={collection.libros.length}
+                                    books={collection.libros}
+                                />
+                            </div>
                         ))
                     )}
                 </section>
             </div>
+            <SnackbarNotification
+                open={notification.open}
+                message={notification.message}
+                severity={notification.severity}
+                onClose={handleCloseNotification}
+            />
+            ;
         </div>
     );
 };
