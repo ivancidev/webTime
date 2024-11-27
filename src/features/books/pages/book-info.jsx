@@ -110,7 +110,10 @@ export const BookInfo = () => {
     }catch(error){
       console.log('Error inesperado: '+error)
     }
-    // closeQAModal();
+    setTimeout(() => {
+      closeQAModal();
+    },1500);
+    
     // setmensajeC(false);
   }
   
