@@ -25,18 +25,21 @@ export const ModalQualifi = ({onClose, status, onClick, stars,initialValue, mens
                     </p>
                 </div>
                 <div className="flex items-center justify-around space-x-4">
+                    {!mensajeConfirmacion && (
+                        <Button
+                            text="Confirmar"
+                            variant={stars > 0 ? "combCol1" : "combDesactivate"}
+                            onClick={onClick}
+                            disabled={stars <= 0}
+                        />
+                    )}
                     <Button
-                        text={mensajeConfirmacion? "Cerrar": "Cancelar"}
+                        text={mensajeConfirmacion ? "Cerrar" : "Cancelar"}
                         variant="combCol2"
                         onClick={onClose}
                     />
-                    <Button
-                        text="Confirmar"
-                        variant={stars > 0 ? "combCol1" : "combDesactivate"}
-                        onClick={onClick}
-                        disabled={stars <= 0} // Botón desactivado si no hay estrellas seleccionadas
-                    />
                 </div>
+
             </div> 
         </div>  
     );
