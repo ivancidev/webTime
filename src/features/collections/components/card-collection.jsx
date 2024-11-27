@@ -21,6 +21,7 @@ export const CardCollection = ({ collectionName, books , collectionId}) => {
         grabCursor={true}
         modules={[EffectCards]}
         className="w-60 h-[285px]"
+        onClick={handleCollectionClick}
       >
         {books.slice(0, 4).map((book, index) => (
           <SwiperSlide
