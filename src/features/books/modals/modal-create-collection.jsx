@@ -118,8 +118,19 @@ export const ModalCreateCollection = ({
         onClose();
     };
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50 ">
-            <div className=" lg:w-[521px] h-auto bg-primary-pri3 rounded-xl p-6">
+        <div
+            id="modal-backdrop"
+            className="fixed inset-0 flex items-center justify-center bg-neutral-neu1 bg-opacity-30 z-50"
+            onClick={(e) => {
+                if (e.target.id === "modal-backdrop") {
+                    onClose();
+                }
+            }}
+        >
+            <div
+                className=" lg:w-[521px] h-auto bg-primary-pri3 rounded-xl p-6"
+                onClick={(e) => e.stopPropagation()}
+            >
                 <div className="w-full flex items-center">
                     <div className="flex justify-center w-full">
                         <h1 className="text-secondary-sec2 w-auto text-center text-title-md font-semibold pt-8">
