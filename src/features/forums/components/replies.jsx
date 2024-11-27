@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material";
 import { useGetReply } from "../../../hooks/use-get-reply";
 import { Reply } from "./reply";
 
@@ -5,7 +6,11 @@ export const Replies = ({ codComentario }) => {
   const { replies, isLoadingR, error } = useGetReply(codComentario);
 
   if (isLoadingR) {
-    return <p>Cargando respuestas...</p>;
+    return (
+      <div className="flex justify-center items-center h-40">
+        <CircularProgress />
+      </div>
+    );
   }
 
   if (error) {
@@ -46,8 +51,11 @@ export const Replies = ({ codComentario }) => {
           {replies.map((reply) => (
             <Reply
               key={reply.cod_respuesta}
+              codRespuesta={reply.cod_respuesta}
               nickname={reply.usuario?.nombre || "Anónimo"}
               text={reply.respuesta}
+              numLikes={reply.likes}
+              numDislikes={reply.dislikes}
               time={formatTime(reply.fecha_respuesta)}
               avatar={reply.usuario?.avatar}
             />

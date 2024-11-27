@@ -3,44 +3,66 @@ import { supabase } from "../services/supabaseClient";
 
 export const useGetReply = (codComentario) => {
   const [replies, setReplies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingR, setIsLoadingR] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchReplies = async () => {
-      setIsLoading(true);
+      setIsLoadingR(true);
       try {
         const { data, error } = await supabase
           .from("respuesta")
           .select(
             `
-            cod_respuesta,
-            respuesta,
-            fecha_respuesta,
-            usuario (
-              nombre,
-              avatar
-            )
-          `
+              cod_respuesta,
+              respuesta,
+              fecha_respuesta,
+              usuario (
+                nombre,
+                avatar
+              ),
+              interaccion_respuesta_usuario (
+                tipointeraccionrespuesta
+              )
+            `
           )
           .eq("cod_comentario", codComentario)
           .order("fecha_respuesta", { ascending: false });
 
-        if (error) throw error;
+        if (error) {
+          setError("Error al obtener respuestas.");
+          console.error(error);
+        } else {
+          const repliesConInteracciones = data.map((reply) => {
+            const likes =
+              reply.interaccion_respuesta_usuario?.filter(
+                (interaccion) => interaccion.tipointeraccionrespuesta === 1
+              ).length || 0;
 
-        setReplies(data);
+            const dislikes =
+              reply.interaccion_respuesta_usuario?.filter(
+                (interaccion) => interaccion.tipointeraccionrespuesta === -1
+              ).length || 0;
+
+            return {
+              ...reply,
+              likes,
+              dislikes,
+            };
+          });
+
+          setReplies(repliesConInteracciones);
+        }
       } catch (err) {
-        console.error("Error al obtener respuestas:", err);
-        setError(err.message);
+        console.error("Error inesperado:", err);
+        setError("Error al obtener respuestas.");
       } finally {
-        setIsLoading(false);
+        setIsLoadingR(false);
       }
     };
 
-    if (codComentario) {
-      fetchReplies();
-    }
+    fetchReplies();
   }, [codComentario]);
 
-  return { replies, isLoading, error };
+  return { replies, isLoadingR, error };
 };

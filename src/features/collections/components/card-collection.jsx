@@ -9,7 +9,7 @@ export const CardCollection = ({ collectionName, books }) => {
         effect={"cards"}
         grabCursor={true}
         modules={[EffectCards]}
-        className="w-60 h-[285px]"
+        className="w-40 h-52 sm:h-[285px] sm:w-60"
       >
         {books.slice(0, 4).map((book, index) => (
           <SwiperSlide
