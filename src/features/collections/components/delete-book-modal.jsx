@@ -5,8 +5,15 @@ import CloseIcon from "../../../icons/close";
 import { deleteBookFromCollection } from "../../../services/delete-book-collection";
 import { deleteEmptyCollection } from "../../../services/delete-empty-collection"; // Importa la nueva función
 import { useNavigate } from "react-router-dom"; // Importar useNavigate
+import Alert from "../icons/alert";
 
-export const DeleteBookModal = ({ isOpen, onClose, onConfirm, bookName, bookId }) => {
+export const DeleteBookModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  bookName,
+  bookId,
+}) => {
   const navigate = useNavigate(); // Inicializa el hook de navegación
 
   if (!isOpen) return null;
@@ -32,14 +39,18 @@ export const DeleteBookModal = ({ isOpen, onClose, onConfirm, bookName, bookId }
         const checkResult = await deleteEmptyCollection(idColeccion);
 
         if (checkResult.success) {
-          console.log("La colección estaba vacía y fue eliminada. Redirigiendo...");
+          console.log(
+            "La colección estaba vacía y fue eliminada. Redirigiendo..."
+          );
           navigate("/profile"); // Redirigir al perfil si la colección se eliminó
         } else {
           window.location.reload(); // Refrescar la página si la colección aún tiene libros
         }
       } else {
         console.error("Error al eliminar el libro:", result.error);
-        alert("Hubo un error al intentar eliminar el libro. Por favor, inténtalo de nuevo.");
+        alert(
+          "Hubo un error al intentar eliminar el libro. Por favor, inténtalo de nuevo."
+        );
       }
     } catch (error) {
       console.error("Error inesperado al eliminar el libro:", error);
@@ -62,11 +73,14 @@ export const DeleteBookModal = ({ isOpen, onClose, onConfirm, bookName, bookId }
 
         {/* Contenido del modal */}
         <div className="text-center">
+          <div className="flex justify-center mb-2">
+            <Alert />
+          </div>
+
           <h2 className="text-title-sm font-title text-secondary-sec2">
             ¿Está seguro de eliminar este libro {bookName} de la Colección?
           </h2>
           <p className="text-body-sm font-body text-neutral-neu0 mt-3">
-            <span className="text-error-err2 font-bold mr-2">⚠️</span>
             Eliminar el libro hará que no aparezca en la Colección
           </p>
         </div>
@@ -78,11 +92,7 @@ export const DeleteBookModal = ({ isOpen, onClose, onConfirm, bookName, bookId }
             onClick={handleConfirmDelete}
             variant="combCol1"
           />
-          <Button
-            text="Cancelar"
-            onClick={onClose}
-            variant="combCol1"
-          />
+          <Button text="Cancelar" onClick={onClose} variant="combCol2" />
         </div>
       </div>
     </div>

@@ -5,12 +5,16 @@ import CloseSmall from "../icons/closeSmall";
 export const CardBookCol = ({
   titleBook,
   frontBook,
+  margin = "mr-0",
   deleteBook,
   isSelect,
   toggleSelect,
 }) => {
   return (
-    <div className="relative w-[130px] bg-primary-pri3  mr-8 rounded-2xl flex flex-col justify-start  cursor-pointer hover:text-secondary-sec2 mt-2">
+    <div
+      className={`relative w-[130px] bg-primary-pri3 rounded-2xl flex flex-col justify-start cursor-pointer hover:text-secondary-sec2 mt-2 sm:mr-8 ${margin}`}
+    >
+      {" "}
       {deleteBook && (
         <div className="absolute top-2 right-2 ">
           <button
@@ -21,7 +25,6 @@ export const CardBookCol = ({
           </button>
         </div>
       )}
-
       {isSelect && (
         <div className="absolute top-2 right-2">
           <button className="w-5 h-5 bg-secondary-sec2 flex items-center justify-center rounded-full ">
@@ -33,7 +36,7 @@ export const CardBookCol = ({
         <img
           src={frontBook}
           alt="book cover"
-          className={`w-[140px] h-40 rounded-2xl border ${
+          className={`w-[130px] h-40 rounded-2xl border ${
             isSelect ? " border-secondary-sec2" : "border-transparent"
           } hover:border-secondary-sec2`}
         />

@@ -4,7 +4,7 @@ import "swiper/css/effect-cards";
 import { EffectCards } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
 
-export const CardCollection = ({ collectionName, books , collectionId}) => {
+export const CardCollection = ({ collectionName, books, collectionId }) => {
   const navigate = useNavigate();
 
   const handleCollectionClick = () => {
@@ -20,9 +20,8 @@ export const CardCollection = ({ collectionName, books , collectionId}) => {
         effect={"cards"}
         grabCursor={true}
         modules={[EffectCards]}
-        className="w-60 h-[285px]"
+        className="w-40 h-52 sm:h-[285px] sm:w-60"
         onClick={handleCollectionClick}
-
       >
         {books.slice(0, 4).map((book, index) => (
           <SwiperSlide
@@ -39,7 +38,7 @@ export const CardCollection = ({ collectionName, books , collectionId}) => {
       </Swiper>
       <h3
         onClick={handleCollectionClick}
-        className="w-60 mx-2 font-label text-center text-label-lg mt-2 truncate px-1 hover:text-secondary-sec2 cursor-pointer text-xl font-semibold"
+        className="w-60 mx-2 font-label text-center text-label-md mt-2 truncate px-1 hover:text-secondary-sec2 cursor-pointer"
       >
         {collectionName}
       </h3>
