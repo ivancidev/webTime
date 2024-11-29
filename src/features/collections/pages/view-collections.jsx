@@ -8,6 +8,7 @@ import { CardBook } from "../components/card-book-delete";
 import { ModalFilter } from "../../books/components/modal-filter";
 import { useGetUserCollectionBooks } from "../../../hooks/use-get-user-collection-books";
 import { useNavigate } from "react-router-dom";
+import BackIcon from "../../../icons/back";
 
 export const ViewCollections = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +30,7 @@ export const ViewCollections = () => {
   } = useGetUserCollectionBooks(idColeccion);
 
   useEffect(() => {
-    setFilteredBooks(booksOld); 
+    setFilteredBooks(booksOld);
   }, [booksOld]);
 
   if (isLoadingOld) {
@@ -54,23 +55,34 @@ export const ViewCollections = () => {
     <div className="flex flex-col min-h-screen bg-primary-pri3">
       <div className="flex-grow">
         {/* Cabecera: Título y Barra de Búsqueda */}
-        <div className="sticky top-0 sm:relative w-full py-2 px-6 bg-primary-pri3 sm:pr-12 flex flex-wrap sm:flex-row justify-between items-center mt-2 sm:mt-6 z-40">
-          <h1 className="text-secondary-sec2 font-title text-title-md sm:text-lg">
-            Mi Colección
-          </h1>
-          <div className="flex items-center space-x-3">
-            <SearchBarCollection
-              booksOld={booksOld}
-              onSearchResults={(results) => setFilteredBooks(results)}
-              searchText={searchText}
-              setSearchText={setSearchText}
-              placeholder="Buscar en esta colección"
-            />
+        <div className="sticky top-0 sm:relative w-full py-2 px-6 bg-primary-pri3 sm:pr-12 flex flex-wrap sm:flex-col items-between justify-center mt-2 sm:mt-6 z-40">
+          <div className="w-full">
             <ButtonIcon
-              SvgIcon={FilterIcon}
-              variant="combColNeu"
-              onClick={handleFilterClick}
+              SvgIcon={BackIcon}
+              onClick={() => {
+                navigate("/profile");
+              }}
             />
+          </div>
+
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center ml-0 md:ml-20">
+            <h1 className="text-secondary-sec2 font-title text-title-lg sm:text-md my-3">
+              Mi Colección
+            </h1>
+            <div className="flex items-center space-x-3">
+              <SearchBarCollection
+                booksOld={booksOld}
+                onSearchResults={(results) => setFilteredBooks(results)}
+                searchText={searchText}
+                setSearchText={setSearchText}
+                placeholder="Buscar en esta colección"
+              />
+              <ButtonIcon
+                SvgIcon={FilterIcon}
+                variant="combColNeu"
+                onClick={handleFilterClick}
+              />
+            </div>
           </div>
         </div>
         {/* Mostrar Libros */}
@@ -79,7 +91,7 @@ export const ViewCollections = () => {
             No se encontraron libros con ese título o autor
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4 py-6 place-items-center">
             {filteredBooks.map((book) => (
               <CardBook
                 key={book.codLibro}
