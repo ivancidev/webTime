@@ -4,13 +4,10 @@ import StarHappy from "../../../icons/star-happy";
 import StarPressed from "../../../icons/star-pressed";
 import ButtonIcon from "../../../components/buttons/buttonIcon";
 
+export const StarRow = ({ value, initialValue }) => {
+    const [selectedStars, setSelectedStars] = useState(initialValue || 0);
+    const [hoveredStars, setHoveredStars] = useState(0);
 
-export const StarRow = ({
-    value,
-    initialValue
-}) => {
-    const [selectedStars, setSelectedStars] = useState(0);
-    
     useEffect(() => {
         if (initialValue) {
             setSelectedStars(initialValue);
@@ -18,28 +15,44 @@ export const StarRow = ({
     }, [initialValue]);
 
     const handleStarClick = (index) => {
-        const newRating = index === 4 ? 5 : index + 1;
+        const newRating = index + 1;
         setSelectedStars(newRating);
         if (value) {
-            value(newRating); 
+            value(newRating);
         }
     };
-    
+
+    const handleMouseEnter = (index) => {
+        setHoveredStars(index + 1);
+    };
+
+    const handleMouseLeave = () => {
+        setHoveredStars(0);
+    };
+
     return (
-        <div className="flex flex-row w-full justify-center h-auto space-x-2 hover:space-x-2.5">
+        <div className="flex flex-row w-full justify-center h-auto space-x-2">
             {Array.from({ length: 5 }, (_, index) => (
-                <ButtonIcon
+                <div
                     key={index}
-                    SvgIcon={
-                        selectedStars === 5
-                            ? StarHappy
-                            : selectedStars >= index + 1
-                            ? StarPressed
-                            : Star
+                    className="cursor-pointer"
+                    onMouseEnter={() => handleMouseEnter(index)}
+                    onMouseLeave={handleMouseLeave}
+                    onClick={() => handleStarClick(index)}
+                >
+                    <ButtonIcon
+                        SvgIcon={
+                            hoveredStars > 0
+                                ? hoveredStars >= index + 1
+                                    ? StarPressed
+                                    : Star
+                                : selectedStars >= index + 1
+                                ? (selectedStars === 5 ? StarHappy : StarPressed)
+                                : Star
                     }
                     variant="combColskyblue"
-                    onClick={() => handleStarClick(index)}
-                />
+                    />
+                </div>
             ))}
         </div>
     );
