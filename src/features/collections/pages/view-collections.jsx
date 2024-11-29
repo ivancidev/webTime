@@ -56,7 +56,7 @@ export const ViewCollections = () => {
       <div className="flex-grow">
         {/* Cabecera: Título y Barra de Búsqueda */}
         <div className="sticky top-0 sm:relative w-full py-2 px-6 bg-primary-pri3 sm:pr-12 flex flex-wrap sm:flex-col items-between justify-center mt-2 sm:mt-6 z-40">
-          <div className="w-full">
+          <div className="w-full sm:pl-8">
             <ButtonIcon
               SvgIcon={BackIcon}
               onClick={() => {

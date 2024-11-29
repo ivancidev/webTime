@@ -153,7 +153,10 @@ export const ForumComment = () => {
       <div className="sticky top-0 sm:relative flex items-center bg-transparent rounded-3xl ml-2 sm:ml-8 p-2 z-40">
         <ButtonIcon SvgIcon={BackIcon} onClick={() => navigate(-1)} />
       </div>
-      <div className="flex flex-col lg:flex-row w-full" style={{ height: "calc(100vh - 10rem)" }}>
+      <div
+        className="flex flex-col lg:flex-row w-full"
+        style={{ height: "calc(100vh - 10rem)" }}
+      >
         <div className="flex-1">
           <h1 className="text-secondary-sec2 font-title text-title-lg text-center">
             Comentarios del foro
@@ -208,7 +211,7 @@ export const ForumComment = () => {
               ))
             )}
           </div>
-          <div className="sticky bottom-0 bg-white p-4">
+          <div className="sticky bottom-0 bg-white pt-4 px-4 pb-2">
             <InputComment
               profileImage={profileImage}
               placeholder="Agregar comentario"
