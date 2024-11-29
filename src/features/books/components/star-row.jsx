@@ -15,8 +15,16 @@ export const StarRow = ({ value, initialValue }) => {
     }, [initialValue]);
 
     const handleStarClick = (index) => {
-        const newRating = index + 1;
+        let newRating;
+    
+        if (selectedStars === index + 1) {
+            newRating = 0;
+        } else {
+            newRating = index + 1;
+        }
+    
         setSelectedStars(newRating);
+    
         if (value) {
             value(newRating);
         }
