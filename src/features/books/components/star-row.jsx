@@ -42,15 +42,17 @@ export const StarRow = ({ value, initialValue }) => {
                 >
                     <ButtonIcon
                         SvgIcon={
-                            hoveredStars > 0
-                                ? hoveredStars >= index + 1
-                                    ? StarPressed
-                                    : Star
+                            hoveredStars > selectedStars
+                                ? hoveredStars ===5
+                                    ? StarHappy
+                                    : hoveredStars >=index + 1
+                                        ? StarPressed:
+                                        Star
                                 : selectedStars >= index + 1
                                 ? (selectedStars === 5 ? StarHappy : StarPressed)
                                 : Star
-                    }
-                    variant="combColskyblue"
+                        }
+                        variant="combColskyblue"
                     />
                 </div>
             ))}
