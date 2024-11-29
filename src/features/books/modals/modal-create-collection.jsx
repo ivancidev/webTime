@@ -18,6 +18,7 @@ export const ModalCreateCollection = ({
     onClose,
     text,
     onConfirm,
+    refreshCollections,
 }) => {
     const {
         register,
@@ -90,6 +91,9 @@ export const ModalCreateCollection = ({
                         "Hubo un error al agregar el libro a la colección."
                     );
                     return;
+                }
+                if (refreshCollections) {
+                    refreshCollections();
                 }
             } catch (error) {
                 console.error(
