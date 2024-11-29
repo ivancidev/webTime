@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DeleteBookModal } from "../components/delete-book-modal"; // Asegúrate de que la ruta es correcta
+import Close from "../../../icons/closeS";
 
 export const CardBook = ({
   titleBook,
@@ -43,7 +44,7 @@ export const CardBook = ({
         className="absolute top-2 right-2 bg-error-err2 text-primary-pri3 font-label text-label-sm w-7 h-7 rounded-full z-10 flex items-center justify-center hover:bg-error-err3"
         onClick={handleDeleteClick} // Abre el modal
       >
-        X
+        <Close />
       </button>
       <img
         src={frontBook}
