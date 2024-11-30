@@ -17,25 +17,23 @@ export const ModalCollection = ({ onClose, text, codLibro }) => {
         severity: "info",
     });
 
-    useEffect(() => {
-        const getCollectionBooks = async () => {
-            setIsLoading(true);
-            try {
-                const collections = await useCollectionBooks(user.id_usuario);
-                setCollectionBooks(collections);
-            } catch (error) {
-                console.error("Error al obtener colecciones:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        if (user) {
-            getCollectionBooks();
-        } else {
+    const fetchCollections = async () => {
+        setIsLoading(true);
+        try {
+            const collections = await useCollectionBooks(user.id_usuario);
+            setCollectionBooks(collections);
+        } catch (error) {
+            console.error("Error al obtener colecciones:", error);
+        } finally {
             setIsLoading(false);
         }
-    }, [setCollectionBooks, setIsLoading]);
+    };
+
+    useEffect(() => {
+        if (user) {
+            fetchCollections();
+        }
+    }, []);
 
     const handleAddBookToCollection = async (idColeccion) => {
         try {
@@ -84,7 +82,10 @@ export const ModalCollection = ({ onClose, text, codLibro }) => {
                 </div>
                 <section className="h-96 overflow-y-auto px-6">
                     {isLoading == false && (
-                        <CardCreateCollection codLibro={codLibro} />
+                        <CardCreateCollection
+                            codLibro={codLibro}
+                            refreshCollections={fetchCollections}
+                        />
                     )}
 
                     {isLoading ? (
