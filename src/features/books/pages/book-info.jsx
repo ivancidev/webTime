@@ -37,9 +37,6 @@ export const BookInfo = () => {
 
     const handleStarRatingChange = async (rating) => {
         setStarRating(rating);
-        console.log("La calificacion es:" + rating);
-        console.log("usuario:" + user.id_usuario);
-        console.log("libro:" + book.codLibro);
     };
 
     useEffect(() => {

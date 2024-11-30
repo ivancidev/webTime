@@ -41,7 +41,6 @@ export const Home = () => {
     loading: loadingTopRated,
     error: errorTopRated,
   } = useTopRatedBooks();
-  console.log(topRatedBooks);
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser.id_usuario) {

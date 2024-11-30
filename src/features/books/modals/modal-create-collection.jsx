@@ -36,13 +36,10 @@ export const ModalCreateCollection = ({
     const [errorMessage, setErrorMessage] = useState("");
     const user = JSON.parse(localStorage.getItem("user"));
     const onSubmit = async (data) => {
-        console.log("desde el boton");
         setIsLoading(true);
         setOpenDialog(true);
 
         const { nameCollection, description } = data;
-        //console.log(nameCollection);
-        //console.log(description);
 
         if (!user || !user.id_usuario) {
             setIsLoading(false);

@@ -28,20 +28,15 @@ export const DeleteBookModal = ({
     }
 
     try {
-      // Eliminar el libro de la colección
       const result = await deleteBookFromCollection(idColeccion, bookId);
 
       if (result.success) {
-        console.log("Libro eliminado exitosamente de la colección.");
         onConfirm(bookId); // Notifica al padre que el libro fue eliminado
 
         // Verificar si la colección está vacía y eliminarla si corresponde
         const checkResult = await deleteEmptyCollection(idColeccion);
 
         if (checkResult.success) {
-          console.log(
-            "La colección estaba vacía y fue eliminada. Redirigiendo..."
-          );
           navigate("/profile"); // Redirigir al perfil si la colección se eliminó
         } else {
           window.location.reload(); // Refrescar la página si la colección aún tiene libros
