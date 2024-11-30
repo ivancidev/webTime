@@ -41,8 +41,6 @@ export const FormCollection = () => {
     setOpenDialog(true);
 
     const { nameCollection, description } = data;
-    //console.log(nameCollection);
-    //console.log(description);
 
     if (addBooks.length === 0) {
       setIsLoading(false);
@@ -73,7 +71,6 @@ export const FormCollection = () => {
         .single();
 
       if (collectionError) {
-        //console.error("Error al insertar colección:", collectionError);
         setIsLoading(false);
         setErrorMessage("Hubo un error al guardar la colección.");
         return;
@@ -91,7 +88,6 @@ export const FormCollection = () => {
           });
 
         if (bookError) {
-          //console.error("Error al insertar libro:", bookError);
           return { error: bookError };
         }
         return { success: true };
@@ -101,7 +97,6 @@ export const FormCollection = () => {
       setIsLoading(false);
       setIsSuccess(true);
     } catch (error) {
-      //console.error("Error inesperado al guardar la colección:", error);
       setIsLoading(false);
       setErrorMessage("Hubo un error inesperado. Intenta nuevamente.");
     }

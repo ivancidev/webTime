@@ -50,7 +50,6 @@ export const Comment = ({
         if (data.length > 0) {
           setUserInteraccion(data[0].tipo_interaccioncomentario.toString());
         } else {
-          //console.log(`No se encontró interacción para el comentario ${codComentario}`);
           setUserInteraccion("0");
         }
       } catch (err) {
