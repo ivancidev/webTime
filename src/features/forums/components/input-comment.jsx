@@ -25,7 +25,9 @@ export const InputComment = ({
       currentRequest.current = controller;
 
       const response = await fetch(
-        `https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=${import.meta.env.VITE_API_KEY}`,
+        `https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=${
+          import.meta.env.VITE_API_KEY
+        }`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -132,7 +134,8 @@ export const InputComment = ({
               ({comment.length}/{maxChars})
             </p>
             <div className="flex items-center">
-              {isSubmitting && <CircularProgress size={20} className="mr-2" />} {/* Indicador */}
+              {isSubmitting && <CircularProgress size={20} className="mr-2" />}{" "}
+              {/* Indicador */}
               <Button
                 text={textButton}
                 variant={
@@ -149,7 +152,7 @@ export const InputComment = ({
           </div>
         </div>
       </div>
-      <div className="h-6 mt-2">
+      <div className="h-6">
         {error && (
           <p
             className={`flex justify-end text-body-sm p-2 ${

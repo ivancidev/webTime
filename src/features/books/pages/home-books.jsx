@@ -10,6 +10,7 @@ import { CardBook } from "../components/cardBook";
 import { ModalFilter } from "../../books/components/modal-filter";
 import { fetchUserBooks } from "../../../services/fetch-user-category";
 import { useCompletedBooks } from "../../../hooks/use-get-books-completed";
+import { useTopRatedBooks } from "../../../hooks/use-rated-books";
 
 export const Home = () => {
   const [selectedPreferences, setSelectedPreferences] = useState([]);
@@ -35,6 +36,12 @@ export const Home = () => {
     error: errorRecent,
   } = useGetBooks(true);
 
+  const {
+    books: topRatedBooks,
+    loading: loadingTopRated,
+    error: errorTopRated,
+  } = useTopRatedBooks();
+  console.log(topRatedBooks);
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser.id_usuario) {
@@ -188,7 +195,7 @@ export const Home = () => {
             <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-10 sm:ml-20">
               Mejor calificados
             </h1>
-            <Carousel books={booksOld} completedBooks={completedBooks} />
+            <Carousel books={topRatedBooks} completedBooks={completedBooks} />
             <h1 className="text-secondary-sec2 font-title text-title-md my-6 ml-10 sm:ml-20">
               Recién agregados
             </h1>

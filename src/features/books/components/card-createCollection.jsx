@@ -4,6 +4,7 @@ import { ModalCreateCollection } from "../modals/modal-create-collection";
 export const CardCreateCollection = ({
     collectionName = "Crear una nueva colección",
     codLibro,
+    refreshCollections,
 }) => {
     const [showCreateColectionk, setshowCreateColectionk] = useState(false);
     //console.log("llega libro ", codLibro);
@@ -34,6 +35,7 @@ export const CardCreateCollection = ({
                     codLibro={codLibro}
                     onClose={() => setshowCreateColectionk(false)}
                     text={"Crear Colección de Libro"}
+                    refreshCollections={refreshCollections}
                 />
             )}
         </>
