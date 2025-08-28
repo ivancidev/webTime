@@ -12,7 +12,7 @@ VITE_SUPABASE_KEY=tu-supabase-key
 
 4. Ejecutar el proyecto
 
-Una vez configuradas las variables de entorno, puedes iniciar el servidor de desarrollo con el comando:
+Una vez configuradas las variables de entorno, puedes iniciar el servidor de desarrollo:
 
 ```
 npm run dev
