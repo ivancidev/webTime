@@ -1,6 +1,6 @@
 # Webtime 📘
 
-## Configuración de las variables de entorno env
+## Configuración de las variables de entorno
 
 1. Crea un archivo llamado `.env`.
 2. Abre el archivo `.env` y añade las siguientes variables de entorno:
