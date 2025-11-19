@@ -2,8 +2,8 @@
 
 ## Configuración de las variables de entorno
 
-1. Crea un archivo llamado `.env`.
-2. Abre el archivo `.env` y añade las siguientes variables de entorno:
+1. Crear un archivo llamado `.env`.
+2. Abrir el archivo `.env` y añade las siguientes variables de entorno:
 
 ```
 VITE_SUPABASE_URL=https://tu-supabase-url.supabase.co
